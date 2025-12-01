@@ -2,356 +2,313 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وصلة | بوابة  حدائق العاصمة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>وصلة | دليل حدائق العاصمة</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#1e3799">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://via.placeholder.com/192.png?text=وصلة">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #1a2b48;       /* كحلي ملكي */
-            --secondary: #27ae60;     /* أخضر نقي */
-            --gold: #d4af37;          /* ذهبي فخم */
-            --gold-light: #f3e5ab;
-            --bg: #f8f9fa;
-            --dark: #2d3436;
+            --primary: #1e3799;       
+            --secondary: #27ae60;     
+            --accent: #fbc531;   
+            --dark: #2c3e50;
+            --light: #f4f6f8;
             --white: #ffffff;
-            --danger: #c0392b;
+            --gray: #95a5a6;
         }
 
-        body { font-family: 'Cairo', sans-serif; margin: 0; background-color: var(--bg); color: var(--dark); padding-bottom: 80px; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Cairo', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); padding-bottom: 90px; user-select: none; }
         a { text-decoration: none; }
 
-        /* --- الهيدر الملكي --- */
-        header { 
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); 
-            color: white; 
-            padding: 25px 20px 40px; 
-            border-bottom-left-radius: 40px; 
-            border-bottom-right-radius: 40px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* شريط العروض (Ticker) */
-        .ticker-wrap { 
-            position: fixed; top: 0; width: 100%; height: 35px; background: #000; z-index: 2000; display: none; align-items: center; 
-            border-bottom: 2px solid var(--gold);
-        }
-        .ticker-head { background: var(--gold); color: #000; padding: 0 15px; height: 100%; display: flex; align-items: center; font-weight: bold; font-size: 0.85rem; }
-        .ticker-content { color: #fff; white-space: nowrap; animation: ticker 30s linear infinite; font-size: 0.9rem; padding: 0 10px; font-weight: 600; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        .nav-bar { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; margin-top: 20px; }
-        
-        /* اللوجو والاسم */
-        .brand { display: flex; align-items: center; gap: 10px; }
-        .logo-icon { font-size: 2rem; color: var(--gold); text-shadow: 0 0 15px rgba(212,175,55,0.5); }
-        .app-name { 
-            font-family: 'Amiri', serif; font-size: 2.2rem; font-weight: 700; 
-            background: linear-gradient(to bottom, #fff 0%, #d4af37 100%); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-        }
-
-        .btn-add { 
-            background: linear-gradient(45deg, var(--gold), #f1c40f); color: #0f172a; 
-            padding: 8px 18px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; 
-            box-shadow: 0 4px 15px rgba(212,175,55,0.4); transition: 0.3s; 
-            display: flex; align-items: center; gap: 5px;
-        }
+        /* --- الهيدر --- */
+        header { background: linear-gradient(135deg, #0c2461, #1e3799); color: white; padding: 15px 20px 25px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 900; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .logo { font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+        .logo i { color: var(--accent); }
+        .install-btn { background: rgba(255,255,255,0.2); font-size: 0.8rem; padding: 5px 12px; border-radius: 20px; cursor: pointer; display: none; }
 
         /* --- البحث --- */
-        .search-wrapper { margin: -30px 20px 20px; background: white; padding: 10px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; gap: 10px; position: relative; z-index: 10; }
-        .search-box { flex: 1; border: none; outline: none; padding: 5px 10px; font-family: 'Cairo'; font-size: 1rem; }
+        .search-container { position: relative; margin-top: -25px; padding: 0 15px; z-index: 910; }
+        .search-box { width: 100%; padding: 12px 45px 12px 15px; border-radius: 15px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); font-family: 'Cairo'; font-size: 1rem; outline: none; }
+        .search-icon { position: absolute; top: 12px; right: 30px; color: var(--gray); }
 
-        /* --- التبويبات الرئيسية --- */
-        .main-tabs { display: flex; justify-content: center; gap: 10px; margin-top: 20px; padding: 0 10px; flex-wrap: wrap; }
-        .tab-btn { 
-            background: rgba(255,255,255,0.08); color: #bdc3c7; border: 1px solid rgba(255,255,255,0.1); 
-            padding: 8px 16px; border-radius: 15px; cursor: pointer; transition: 0.3s; font-size: 0.9rem;
-            display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 70px;
-        }
-        .tab-btn i { font-size: 1.2rem; }
-        .tab-btn.active { background: var(--white); color: var(--primary); transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .tab-btn.active i { color: var(--gold); }
-
-        /* --- التصنيفات الفرعية --- */
-        .categories-wrapper { overflow-x: auto; white-space: nowrap; padding: 0 20px 15px; scrollbar-width: none; display: none; }
-        .categories-wrapper.show { display: block; }
-        .cat-chip { 
-            display: inline-block; padding: 8px 18px; background: white; border: 1px solid #eee; 
-            border-radius: 50px; margin-left: 8px; cursor: pointer; transition: 0.3s; 
-            color: #555; font-weight: 600; font-size: 0.9rem; 
-        }
-        .cat-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+        /* --- التصنيفات (Chips) --- */
+        .cats-wrap { overflow-x: auto; white-space: nowrap; padding: 15px; scrollbar-width: none; }
+        .cat-chip { display: inline-block; padding: 8px 16px; background: white; border-radius: 25px; margin-left: 8px; font-size: 0.9rem; color: var(--dark); border: 1px solid #eee; transition: 0.2s; }
+        .cat-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(30, 55, 153, 0.2); }
 
         /* --- الشبكة --- */
-        .container { padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 15px; }
-        @media (min-width: 600px) { .container { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); } }
+        .container { padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 15px; min-height: 50vh; }
+        @media(min-width: 600px) { .container { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); } }
 
-        .card { 
-            background: white; border-radius: 18px; padding: 12px; display: flex; gap: 15px; position: relative; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.3s; border: 1px solid transparent; overflow: hidden; cursor: pointer;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .card { background: white; border-radius: 16px; padding: 10px; display: flex; gap: 12px; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: 0.2s; border: 1px solid transparent; }
+        .card.featured { border: 1px solid var(--accent); background: #fffdf2; }
+        
+        .card-img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; background: #eee; flex-shrink: 0; }
+        .card-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .card h3 { margin: 0 0 4px; font-size: 1rem; color: var(--primary); line-height: 1.3; }
+        .sub-text { font-size: 0.8rem; color: var(--gray); display: flex; align-items: center; gap: 5px; }
+        
+        /* أدوات الكارت (قلب + مشاركة) */
+        .card-tools { position: absolute; top: 10px; left: 10px; display: flex; gap: 8px; }
+        .tool-btn { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.9); display: flex; align-items: center; justify-content: center; color: var(--gray); box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; }
+        .tool-btn.fav.active { color: #e74c3c; }
+        .tool-btn:active { transform: scale(0.9); }
 
-        /* مميز */
-        .card.featured { border: 1px solid var(--gold); background: linear-gradient(to right, #fffff0, #fff); }
-        .badge-crown { position: absolute; top: 0; left: 0; background: var(--gold); color: #000; font-size: 0.7rem; padding: 3px 10px; border-bottom-right-radius: 12px; font-weight: bold; }
+        /* حالة متاح */
+        .status-dot { width: 10px; height: 10px; background: var(--secondary); border-radius: 50%; position: absolute; top: 10px; right: 10px; box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);} 100% {box-shadow: 0 0 0 5px rgba(46, 204, 113, 0);} }
 
-        /* متاح */
-        .badge-live { position: absolute; top: 12px; right: 12px; display: flex; align-items: center; gap: 5px; font-size: 0.7rem; color: var(--secondary); font-weight: bold; background: rgba(39, 174, 96, 0.1); padding: 2px 8px; border-radius: 10px; }
-        .dot { width: 8px; height: 8px; background: var(--secondary); border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);} 70% {box-shadow: 0 0 0 6px rgba(46, 204, 113, 0);} 100% {box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);} }
+        /* --- شريط التنقل السفلي (Bottom Nav) --- */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0 20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--gray); font-size: 0.75rem; cursor: pointer; transition: 0.2s; position: relative; }
+        .nav-item i { font-size: 1.4rem; }
+        .nav-item.active { color: var(--primary); font-weight: bold; }
+        .nav-item.active::after { content: ''; width: 5px; height: 5px; background: var(--primary); border-radius: 50%; margin-top: 2px; }
 
-        /* العروض داخل الكارت */
-        .offer-tag { display: block; color: var(--danger); font-size: 0.75rem; font-weight: bold; margin-top: 5px; }
-
-        .card-img { width: 90px; height: 90px; border-radius: 12px; object-fit: cover; background: #f1f2f6; flex-shrink: 0; border: 1px solid #eee; }
-        .card-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .card-info h3 { margin: 0 0 5px; font-size: 1.05rem; color: var(--primary); font-weight: 700; line-height: 1.3; }
-        .sub-cat { font-size: 0.8rem; color: #7f8c8d; display: flex; align-items: center; gap: 5px; }
-
-        .card-actions { margin-top: 10px; display: flex; gap: 8px; }
-        .act-btn { width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: 0.2s; font-size: 1rem; border: 1px solid rgba(0,0,0,0.05); }
-        .act-call { background: #f0f4f8; color: var(--primary); }
-        .act-wa { background: #e8f5e9; color: var(--secondary); }
-        .act-loc { background: #fffcf5; color: #f39c12; }
-
-        /* لودينج */
-        .loading { text-align: center; padding: 50px; grid-column: 1/-1; color: #bdc3c7; }
+        /* --- Skeleton Loading (التحميل الاحترافي) --- */
+        .skeleton { background: #e0e0e0; border-radius: 8px; animation: shimmer 1.5s infinite linear; background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%); background-size: 1000px 100%; }
+        @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+        .sk-card { height: 110px; background: white; border-radius: 16px; padding: 10px; display: flex; gap: 12px; margin-bottom: 15px; }
+        .sk-img { width: 85px; height: 85px; border-radius: 12px; }
+        .sk-line { height: 12px; margin-bottom: 8px; border-radius: 4px; }
 
         /* Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; backdrop-filter: blur(5px); overflow-y: auto; }
-        .modal-box { background: white; margin: 10% auto; width: 92%; max-width: 500px; border-radius: 20px; overflow: hidden; position: relative; animation: slideUp 0.4s; }
-        @keyframes slideUp { from {transform:translateY(100px);opacity:0} to {transform:translateY(0);opacity:1} }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 5000; overflow-y: auto; backdrop-filter: blur(5px); }
+        .modal-box { background: white; margin: 15% auto; width: 90%; max-width: 500px; border-radius: 20px; overflow: hidden; position: relative; animation: slideUp 0.3s; }
+        @keyframes slideUp { from {transform:translateY(100px);} to {transform:translateY(0);} }
 
-        .fab { position: fixed; bottom: 25px; left: 25px; background: #25D366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 100; transition: 0.3s; }
-        footer { text-align: center; color: #b2bec3; padding: 30px; font-size: 0.85rem; margin-top: 20px; }
+        /* Fab */
+        .fab-add { position: fixed; bottom: 85px; left: 20px; background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 5px 15px rgba(30, 55, 153, 0.3); z-index: 90; transition: 0.3s; }
+        .fab-add:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
 
-<div class="ticker-wrap" id="ticker">
-    <div class="ticker-head">⚡ عروض</div>
-    <div class="ticker-content" id="tickerTxt"></div>
-</div>
-
 <header>
     <div class="nav-bar">
-        <div class="brand">
-            <i class="fas fa-map-location-dot logo-icon"></i>
-            <span class="app-name">وصلة</span>
-        </div>
-        <a href="https://forms.gle/iGmmzXMt9amqkepu7" target="_blank" class="btn-add">
-            <i class="fas fa-plus"></i> إضافة
-        </a>
+        <div class="logo"><i class="fas fa-map-location-dot"></i> وصلة</div>
+        <div id="installBtn" class="install-btn">تثبيت التطبيق 📲</div>
     </div>
-    
-    <div class="main-tabs">
-        <div class="tab-btn active" onclick="setMain('all', this)"><i class="fas fa-th-large"></i><small>الكل</small></div>
-        <div class="tab-btn" onclick="setMain('comm', this)"><i class="fas fa-store"></i><small>خدمات</small></div>
-        <div class="tab-btn" onclick="setMain('gov', this)"><i class="fas fa-landmark"></i><small>حكومي</small></div>
-        <div class="tab-btn" onclick="setMain('worship', this)"><i class="fas fa-mosque"></i><small>عبادة</small></div>
+    <div style="text-align: center; color: rgba(255,255,255,0.9); margin-bottom: 15px;">
+        <h2 style="margin:0; font-size:1.4rem;">دليل حدائق العاصمة</h2>
     </div>
 </header>
 
-<div class="search-wrapper">
-    <input type="text" id="search" class="search-box" placeholder="ابحث عن (مطعم، سباك، صيدلية)...">
-    <i class="fas fa-search" style="color:#bdc3c7;"></i>
+<div class="search-container">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" id="search" class="search-box" placeholder="ابحث عن (مطعم، سباك، دكتور)...">
 </div>
 
-<div id="subCats" class="categories-wrapper show">
-    <div class="cat-chip active" onclick="setSub('all', this)">الكل</div>
-    <div class="cat-chip" onclick="setSub('food', this)">🍽️ مطاعم</div>
-    <div class="cat-chip" onclick="setSub('market', this)">🛒 ماركت</div>
-    <div class="cat-chip" onclick="setSub('medical', this)">🩺 صحة</div>
-    <div class="cat-chip" onclick="setSub('maintenance', this)">🔧 صيانة</div>
-    <div class="cat-chip" onclick="setSub('transport', this)">🚌 نقل</div>
-    <div class="cat-chip" onclick="setSub('education', this)">🎓 تعليم</div>
-    <div class="cat-chip" onclick="setSub('fashion', this)">👗 أزياء</div>
+<div class="cats-wrap" id="catsContainer">
+    <div class="cat-chip active" onclick="filter('all', this)">الكل</div>
+    <div class="cat-chip" onclick="filter('food', this)">🍔 مطاعم</div>
+    <div class="cat-chip" onclick="filter('market', this)">🛒 ماركت</div>
+    <div class="cat-chip" onclick="filter('medical', this)">💊 طبية</div>
+    <div class="cat-chip" onclick="filter('maintenance', this)">🔧 صيانة</div>
+    <div class="cat-chip" onclick="filter('transport', this)">🚌 مواصلات</div>
+    <div class="cat-chip" onclick="filter('gov', this)">🏛️ حكومي</div>
 </div>
 
 <div class="container" id="grid">
-    <div class="loading"><i class="fas fa-circle-notch fa-spin fa-2x"></i><br><br>جاري تحميل البيانات...</div>
+    <div class="sk-card"><div class="sk-img skeleton"></div><div style="flex:1"><div class="sk-line skeleton" style="width:60%"></div><div class="sk-line skeleton" style="width:40%"></div></div></div>
+    <div class="sk-card"><div class="sk-img skeleton"></div><div style="flex:1"><div class="sk-line skeleton" style="width:70%"></div><div class="sk-line skeleton" style="width:30%"></div></div></div>
+    <div class="sk-card"><div class="sk-img skeleton"></div><div style="flex:1"><div class="sk-line skeleton" style="width:50%"></div><div class="sk-line skeleton" style="width:40%"></div></div></div>
 </div>
 
-<a href="https://wa.me/?text=دليل وصلة - دليلك الشامل" class="fab"><i class="fab fa-whatsapp"></i></a>
+<a href="https://forms.gle/iGmmzXMt9amqkepu7" target="_blank" class="fab-add"><i class="fas fa-plus"></i></a>
 
-<footer><p>© 2025 وصلة - بوابتك للعاصمة ❤️</p></footer>
+<div class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+    <div class="nav-item" onclick="switchTab('fav', this)"><i class="fas fa-heart"></i><span>المفضلة</span></div>
+    <div class="nav-item" onclick="switchTab('offers', this)"><i class="fas fa-tags"></i><span>العروض</span></div>
+    <div class="nav-item" onclick="window.open('https://wa.me/?text=تطبيق وصلة', '_blank')"><i class="fas fa-share-alt"></i><span>نشر</span></div>
+</div>
 
 <div id="modal" class="modal" onclick="if(event.target==this)closeM()">
     <div class="modal-box">
-        <span onclick="closeM()" style="position:absolute; top:15px; left:15px; background:rgba(0,0,0,0.6); color:white; width:32px; height:32px; text-align:center; line-height:32px; border-radius:50%; cursor:pointer; z-index:10; font-size:1.2rem;">×</span>
+        <span onclick="closeM()" style="position:absolute; top:15px; left:15px; background:rgba(0,0,0,0.6); color:white; width:30px; height:30px; text-align:center; line-height:30px; border-radius:50%; cursor:pointer; z-index:10;">✕</span>
         <img id="mImg" src="" style="width:100%; height:220px; object-fit:cover;">
-        <div style="padding:25px;">
-            <div style="display:flex; justify-content:space-between; align-items:start;">
-                <h2 id="mName" style="margin:0; color:var(--primary); font-family:'Amiri'; font-size:1.8rem;"></h2>
-                <div id="mLive" style="display:none;" class="badge-live"><div class="dot"></div> متاح</div>
-            </div>
+        <div style="padding:20px;">
+            <h2 id="mName" style="color:var(--primary); margin:0 0 5px;"></h2>
+            <div id="mSub" style="color:#777; font-size:0.9rem;"></div>
+            <p id="mDesc" style="color:#333; line-height:1.6; margin:15px 0; font-size:0.95rem;"></p>
             
-            <p id="mSub" style="color:#7f8c8d; font-size:0.9rem; margin:5px 0;"></p>
-            
-            <div id="mOffer" style="background:#fff0f0; color:#c0392b; padding:12px; border-radius:12px; margin:15px 0; display:none; border:1px dashed #e74c3c;">
-                <i class="fas fa-bullhorn"></i> <b>عرض خاص:</b> <span id="mOfferTxt"></span>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <a id="mCall" href="#" class="btn-action" style="flex:1; background:var(--primary); color:white; padding:12px; border-radius:10px; text-align:center;"><i class="fas fa-phone"></i> اتصال</a>
+                <a id="mWa" href="#" class="btn-action" style="flex:1; background:var(--secondary); color:white; padding:12px; border-radius:10px; text-align:center;"><i class="fab fa-whatsapp"></i> واتساب</a>
             </div>
-
-            <p id="mDesc" style="color:#2d3436; line-height:1.7; font-size:1rem; margin:15px 0;"></p>
-            
-            <a id="mLoc" href="#" target="_blank" style="display:block; background:#fffcf0; padding:12px; text-align:center; border-radius:12px; margin-bottom:20px; color:#f39c12; font-weight:bold; border:1px solid #f1c40f; text-decoration:none;">
-                <i class="fas fa-location-dot"></i> الذهاب للموقع (Google Maps)
-            </a>
-
-            <div style="display:flex; gap:12px;">
-                <a id="mCall" href="#" class="btn-add" style="flex:1; justify-content:center; background:var(--primary); color:white; height:45px;"><i class="fas fa-phone"></i> اتصال</a>
-                <a id="mWa" href="#" class="btn-add" style="flex:1; justify-content:center; background:var(--secondary); color:white; height:45px;"><i class="fab fa-whatsapp"></i> واتساب</a>
-            </div>
+            <a id="mLoc" href="#" target="_blank" style="display:block; margin-top:10px; background:#fff8e1; color:#f39c12; padding:12px; border-radius:10px; text-align:center; font-weight:bold;"><i class="fas fa-map-marker-alt"></i> الموقع على الخريطة</a>
         </div>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // ✅ تم تحديث الرابط هنا
     const sheetID = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheetID);
 
-    let db = [], mainF = 'all', subF = 'all';
+    let db = [], favs = JSON.parse(localStorage.getItem('wasla_favs')) || [];
+    let currentView = 'home'; // home, fav, offers
 
     function fixImg(u) {
         if(!u || u.length<5) return 'https://via.placeholder.com/400x250?text=WASLA';
         let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/);
-        // طلب صورة متوسطة (s600) لسرعة التحميل
         return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u;
     }
 
     function init() {
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
-            // تجاهل الصف الأول (العناوين)
-            const rows = res.data.slice(1);
-            
-            // قراءة الأعمدة بالأرقام (Mapping) - A=0, B=1 ...
-            db = rows.map((r, i) => ({
+            db = res.data.slice(1).map((r, i) => ({
                 id: i,
-                name: r[1],          // B: الاسم
-                type: getType(r[2]), // C: التصنيف الرئيسي
-                cat: getCat(r[2]),   // C: التصنيف الفرعي (للفلترة)
-                sub: r[3],           // D: التصنيف الفرعي (للعرض)
-                area: r[4],          // E: المنطقة
-                desc: r[5],          // F: الوصف
-                ph: r[6],            // G: موبايل
-                wa: r[7],            // H: واتساب
-                img: fixImg(r[8]),   // I: صورة
-                loc: r[9],           // J: لوكيشن
-                offer: r[10],        // K: عرض
-                live: (r[11] && (r[11].includes('TRUE') || r[11].includes('نعم'))), // L: متاح
-                feat: (r[12] && (r[12].includes('TRUE') || r[12].includes('نعم')))  // M: مميز
+                name: r[1],
+                cat: getCat(r[2]),
+                sub: r[3],
+                area: r[4],
+                desc: r[5],
+                ph: r[6],
+                wa: r[7],
+                img: fixImg(r[8]),
+                loc: r[9],
+                offer: r[10],
+                live: (r[11] && r[11].includes('TRUE')),
+                feat: (r[12] && r[12].includes('TRUE'))
             })).filter(x => x.name);
-            
-            setupTicker();
             render();
         }});
     }
 
-    function getType(t) { 
-        if(!t) return 'comm'; 
-        if(t.includes('حكومي')) return 'gov'; 
-        if(t.includes('عبادة')) return 'worship'; 
-        return 'comm'; 
-    }
-    
     function getCat(t) {
-        if(!t) return 'other';
-        const s = t.trim();
+        if(!t) return 'other'; const s = t.trim();
         if(s.includes('مطاعم')) return 'food';
         if(s.includes('ماركت')) return 'market';
         if(s.includes('طب')) return 'medical';
         if(s.includes('صيانة')) return 'maintenance';
         if(s.includes('تعليم')) return 'education';
         if(s.includes('مواصلات')) return 'transport';
-        if(s.includes('ملابس') || s.includes('أزياء')) return 'fashion';
+        if(s.includes('حكومي')) return 'gov';
         return 'other';
     }
 
-    function setupTicker() {
-        // جمع العروض من العمود K
-        const offers = db.filter(x => x.offer && x.offer.length > 2).map(x => `🔥 ${x.name}: ${x.offer}`);
-        if(offers.length > 0) {
-            document.getElementById('ticker').style.display = 'flex';
-            const txt = offers.join('     •     ') + '     •     ' + offers.join('     •     ');
-            document.getElementById('tickerTxt').innerHTML = txt;
-        }
-    }
-
-    function render() {
+    function render(filterCat = 'all', search = '') {
         const g = document.getElementById('grid');
-        const s = document.getElementById('search').value.toLowerCase();
         g.innerHTML = '';
 
-        const list = db.filter(x => {
-            const mMatch = (mainF === 'all') ? true : (mainF === x.type);
-            const sMatch = (mainF !== 'comm') ? true : (subF === 'all' || subF === x.cat);
-            const txtMatch = x.name.toLowerCase().includes(s) || (x.desc && x.desc.toLowerCase().includes(s));
-            return mMatch && sMatch && txtMatch;
-        });
+        let list = db;
 
-        // ترتيب: المتاح > المميز > العادي
-        list.sort((a,b) => (b.live - a.live) || (b.feat - a.feat));
-
-        if(list.length === 0) {
-            g.innerHTML = '<div style="text-align:center; grid-column:1/-1; padding:40px; color:#95a5a6;"><i class="fas fa-box-open fa-3x"></i><p>لا توجد نتائج مطابقة</p></div>';
-            return;
+        // 1. فلترة حسب التبويب السفلي (Home / Fav / Offers)
+        if (currentView === 'fav') {
+            list = db.filter(x => favs.includes(x.id));
+            if(list.length === 0) { g.innerHTML = '<div style="text-align:center; padding:50px; grid-column:1/-1;">لا توجد مفضلة بعد ❤️</div>'; return; }
+        } else if (currentView === 'offers') {
+            list = db.filter(x => x.offer && x.offer.length > 2);
+            if(list.length === 0) { g.innerHTML = '<div style="text-align:center; padding:50px; grid-column:1/-1;">لا توجد عروض حالياً 🔥</div>'; return; }
         }
 
+        // 2. فلترة البحث والتصنيف
+        list = list.filter(x => {
+            const catMatch = (filterCat === 'all' || x.cat === filterCat);
+            const searchMatch = x.name.toLowerCase().includes(search) || (x.desc && x.desc.includes(search));
+            return catMatch && searchMatch;
+        });
+
+        // ترتيب
+        list.sort((a,b) => (b.live - a.live) || (b.feat - a.feat));
+
+        if(list.length === 0) { g.innerHTML = '<div style="text-align:center; padding:50px; grid-column:1/-1;">لا توجد نتائج 🔍</div>'; return; }
+
         list.forEach(x => {
-            const crown = x.feat ? '<span class="badge-crown"><i class="fas fa-crown"></i> مميز</span>' : '';
-            const live = x.live ? '<span class="badge-live"><div class="dot"></div> متاح</span>' : '';
-            const offer = x.offer ? `<span class="offer-tag">🔥 ${x.offer}</span>` : '';
-            const cls = x.feat ? 'card featured' : 'card';
-            
-            // أزرار الكارت
-            let btns = '';
-            if(x.ph) btns += `<a href="tel:${x.ph}" class="act-btn act-call" onclick="event.stopPropagation()"><i class="fas fa-phone"></i></a>`;
-            if(x.wa) btns += `<a href="https://wa.me/${x.wa}" class="act-btn act-wa" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i></a>`;
-            if(x.loc) btns += `<a href="${x.loc}" target="_blank" class="act-btn act-loc" onclick="event.stopPropagation()"><i class="fas fa-location-arrow"></i></a>`;
+            const isFav = favs.includes(x.id) ? 'active' : '';
+            const featClass = x.feat ? 'featured' : '';
+            const liveBadge = x.live ? '<div class="status-dot"></div>' : '';
+            const offerTag = x.offer ? `<span style="color:#e74c3c; font-size:0.75rem; display:block; margin-top:5px;">🔥 ${x.offer}</span>` : '';
 
             g.innerHTML += `
-            <div class="${cls}" onclick="openM(${x.id})">
-                ${crown} ${live}
+            <div class="card ${featClass}" onclick="openM(${x.id})">
+                ${liveBadge}
+                <div class="card-tools">
+                    <div class="tool-btn fav ${isFav}" onclick="toggleFav(${x.id}, event)"><i class="fas fa-heart"></i></div>
+                    <div class="tool-btn" onclick="shareItem('${x.name}', '${x.desc}', event)"><i class="fas fa-share"></i></div>
+                </div>
                 <img src="${x.img}" class="card-img" referrerpolicy="no-referrer" loading="lazy">
-                <div class="card-info">
+                <div class="card-body">
                     <h3>${x.name}</h3>
-                    <div class="sub-cat"><i class="fas fa-tag"></i> ${x.sub}</div>
-                    ${offer}
-                    <div class="card-actions">${btns}</div>
+                    <div class="sub-text"><i class="fas fa-tag"></i> ${x.sub}</div>
+                    <div class="sub-text"><i class="fas fa-map-marker-alt"></i> ${x.area}</div>
+                    ${offerTag}
                 </div>
             </div>`;
         });
     }
 
-    // Modal
+    // --- المنطق (Logic) ---
+    
+    // التبديل بين الصفحات السفلية
+    window.switchTab = (view, el) => {
+        currentView = view;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+        
+        // إخفاء/إظهار التصنيفات والبحث حسب الصفحة
+        if(view === 'home') {
+            document.getElementById('catsContainer').style.display = 'block';
+            document.querySelector('.search-container').style.display = 'block';
+        } else {
+            document.getElementById('catsContainer').style.display = 'none';
+            document.querySelector('.search-container').style.display = 'none';
+        }
+        render();
+    };
+
+    // المفضلة
+    window.toggleFav = (id, e) => {
+        e.stopPropagation();
+        if(favs.includes(id)) favs = favs.filter(i => i !== id);
+        else favs.push(id);
+        localStorage.setItem('wasla_favs', JSON.stringify(favs));
+        render(document.querySelector('.cat-chip.active').innerText === 'الكل' ? 'all' : '...', document.getElementById('search').value);
+    };
+
+    // المشاركة
+    window.shareItem = (name, desc, e) => {
+        e.stopPropagation();
+        const text = `شوف المكان ده في حدائق العاصمة:\n*${name}*\n${desc}\n\nموجود على تطبيق وصلة!`;
+        if (navigator.share) {
+            navigator.share({ title: name, text: text, url: window.location.href });
+        } else {
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+    };
+
+    // الفلترة والبحث
+    window.filter = (c, el) => {
+        document.querySelectorAll('.cat-chip').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        render(c, document.getElementById('search').value);
+    };
+    document.getElementById('search').addEventListener('input', (e) => {
+        // البحث يعتمد على التصنيف المختار حالياً
+        render('all', e.target.value); 
+    });
+
+    // تفاصيل
     window.openM = (id) => {
         const x = db.find(i => i.id === id);
         document.getElementById('mName').innerText = x.name;
-        document.getElementById('mSub').innerHTML = `<span style="background:#eee; padding:2px 8px; border-radius:5px;">${x.sub}</span> <span style="background:#e3f2fd; padding:2px 8px; border-radius:5px;">${x.area}</span>`;
+        document.getElementById('mSub').innerText = `${x.sub} - ${x.area}`;
+        document.getElementById('mDesc').innerText = x.desc || '';
+        document.getElementById('mImg').src = x.img.replace('=s600','=s1000');
         
-        // صورة أكبر في التفاصيل
-        document.getElementById('mImg').src = x.img.replace('=s600','=s800');
-        document.getElementById('mDesc').innerText = x.desc || 'لا يوجد وصف متاح.';
-        
-        // متاح
-        document.getElementById('mLive').style.display = x.live ? 'flex' : 'none';
-
-        // عرض خاص
-        const off = document.getElementById('mOffer');
-        if(x.offer) { off.style.display='block'; document.getElementById('mOfferTxt').innerText = x.offer; }
-        else off.style.display='none';
-
-        // لوكيشن
         const loc = document.getElementById('mLoc');
-        if(x.loc) { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
+        if(x.loc) { loc.style.display='block'; loc.href=x.loc; } else loc.style.display='none';
 
         document.getElementById('mCall').href = `tel:${x.ph}`;
         document.getElementById('mWa').href = `https://wa.me/${x.wa}`;
@@ -359,21 +316,21 @@
     }
     window.closeM = () => document.getElementById('modal').style.display = 'none';
 
-    // Filters Logic
-    window.setMain = (t, el) => {
-        mainF = t; 
-        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-        el.classList.add('active');
-        document.getElementById('subCats').style.display = (t==='comm' || t==='all') ? 'block':'none';
-        render();
-    }
-    window.setSub = (c, el) => {
-        subF = c;
-        document.querySelectorAll('.cat-chip').forEach(b=>b.classList.remove('active'));
-        el.classList.add('active');
-        render();
-    }
-    document.getElementById('search').addEventListener('input', render);
+    // تثبيت التطبيق (PWA)
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const btn = document.getElementById('installBtn');
+        btn.style.display = 'block';
+        btn.addEventListener('click', () => {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choice) => {
+                if (choice.outcome === 'accepted') btn.style.display = 'none';
+                deferredPrompt = null;
+            });
+        });
+    });
 
     init();
 </script>

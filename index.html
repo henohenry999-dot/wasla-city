@@ -3,102 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>وجهتي | دليل العاصمة</title>
-    <meta name="theme-color" content="#2c3e50">
+    <title>وجهتي | بوابة العاصمة</title>
+    <meta name="theme-color" content="#1a2b48">
     <meta name="apple-mobile-web-app-capable" content="yes">
     
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #2c3e50; --gold: #f1c40f; --green: #27ae60; --bg: #f3f4f6; --white: #ffffff;
+            --primary: #1a2b48; --gold: #d4af37; --gold-light: #f1c40f; 
+            --green: #27ae60; --bg: #f3f4f6; --white: #ffffff; --red: #c0392b;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 85px; user-select: none; }
         
-        /* شريط الأخبار */
-        .ticker-wrap { position: fixed; top: 0; width: 100%; height: 30px; background: #000; z-index: 2000; display: none; align-items: center; }
-        .ticker-content { display: inline-block; white-space: nowrap; animation: ticker 30s linear infinite; color: #fff; font-size: 0.8rem; }
+        /* --- 1. شريط أخبار المدينة (الأعلى) --- */
+        .news-ticker-wrap {
+            position: fixed; top: 0; width: 100%; height: 32px; 
+            background: linear-gradient(90deg, #2c3e50, #000); 
+            z-index: 2100; display: none; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .news-badge { background: var(--red); color: white; height: 100%; padding: 0 15px; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; z-index: 2; box-shadow: 2px 0 10px rgba(0,0,0,0.3); }
+        .news-content { display: inline-block; white-space: nowrap; animation: ticker 35s linear infinite; color: #fff; font-size: 0.85rem; padding-right: 10px; font-weight: 500; }
+
+        /* --- 2. شريط العروض الفخم (أسفل الأخبار) --- */
+        .offers-ticker-wrap {
+            position: fixed; top: 32px; width: 100%; height: 35px; 
+            background: linear-gradient(90deg, #FFD700, #FDB931); /* تدرج ذهبي */
+            z-index: 2000; display: none; align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .offers-badge { background: var(--primary); color: var(--gold); height: 100%; padding: 0 15px; font-weight: 900; font-size: 0.75rem; display: flex; align-items: center; z-index: 2; }
+        .offers-content { display: inline-block; white-space: nowrap; animation: ticker 30s linear infinite; color: #000; font-size: 0.9rem; padding-right: 10px; font-weight: 700; }
+
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* الهيدر */
-        header { margin-top: 30px; background: linear-gradient(135deg, #2c3e50, #4ca1af); color: white; padding: 20px 20px 40px; border-radius: 0 0 30px 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        /* --- الهيدر --- */
+        header { 
+            margin-top: 67px; /* مسافة للشريطين */
+            background: linear-gradient(135deg, #1a2b48 0%, #2c3e50 100%); 
+            color: white; padding: 25px 20px 45px; 
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); 
+        }
         .nav { display: flex; justify-content: space-between; align-items: center; }
-        .brand h1 { margin: 0; font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
-        .brand span { color: var(--gold); }
-        .brand p { margin: 0; font-size: 0.75rem; opacity: 0.9; }
         
-        .install-btn { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; display: none; border: 1px solid rgba(255,255,255,0.3); }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { 
+            font-size: 2rem; color: var(--gold); 
+            filter: drop-shadow(0 0 5px rgba(255,215,0,0.5)); 
+        }
+        .brand h1 { margin: 0; font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; background: -webkit-linear-gradient(#fff, #eee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand p { margin: 0; font-size: 0.8rem; color: var(--gold); font-weight: bold; letter-spacing: 0.5px; }
+        
+        .install-btn { background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; display: none; border: 1px solid rgba(255,255,255,0.2); }
 
         /* البحث */
-        .search-box { margin: -25px 20px 15px; background: white; padding: 5px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; align-items: center; position: relative; z-index: 10; }
-        .search-box input { flex: 1; border: none; padding: 12px; border-radius: 15px; outline: none; font-family: 'Tajawal'; }
-        .near-btn { color: var(--primary); padding: 10px; font-size: 1.2rem; cursor: pointer; }
+        .search-box { margin: -30px 20px 15px; background: white; padding: 5px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.03); }
+        .search-box input { flex: 1; border: none; padding: 12px 15px; border-radius: 15px; outline: none; font-family: 'Tajawal'; font-size: 1rem; }
+        .near-btn { color: var(--primary); padding: 12px; font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
+        .near-btn:active { transform: scale(0.9); color: var(--gold); }
 
         /* التصنيفات */
         .cats { overflow-x: auto; white-space: nowrap; padding: 0 20px 15px; scrollbar-width: none; }
-        .chip { display: inline-flex; align-items: center; gap: 5px; padding: 8px 16px; background: white; border: 1px solid #eee; border-radius: 50px; margin-left: 8px; cursor: pointer; transition: 0.3s; font-size: 0.85rem; font-weight: 600; color: #555; }
-        .chip.active { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); }
-        .chip i { color: var(--gold); } .chip.active i { color: white; }
+        .chip { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: white; border: 1px solid #eee; border-radius: 50px; margin-left: 8px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; font-weight: 700; color: #555; }
+        .chip.active { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); box-shadow: 0 5px 15px rgba(26, 43, 72, 0.2); }
+        .chip i { color: var(--gold); font-size: 1rem; } .chip.active i { color: white; }
 
         /* الشبكة */
         .grid { padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 15px; }
         @media(min-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); } }
 
-        .card { background: white; border-radius: 15px; padding: 10px; display: flex; gap: 12px; position: relative; box-shadow: 0 3px 10px rgba(0,0,0,0.03); overflow: hidden; transition: 0.2s; border: 1px solid transparent; }
-        .card.featured { border: 1px solid var(--gold); background: #fffdf7; }
+        .card { background: white; border-radius: 18px; padding: 12px; display: flex; gap: 12px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.04); overflow: hidden; transition: 0.2s; border: 1px solid transparent; }
+        .card.featured { border: 1px solid var(--gold); background: linear-gradient(to right, #fffff0, #ffffff); }
+        .card:active { transform: scale(0.98); }
         
-        .c-img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; background: #eee; flex-shrink: 0; }
+        .c-img { width: 90px; height: 90px; border-radius: 14px; object-fit: cover; background: #eee; flex-shrink: 0; }
         .c-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .c-name { margin: 0 0 5px; font-size: 1rem; color: var(--primary); font-weight: 700; line-height: 1.2; }
-        .c-sub { font-size: 0.8rem; color: #777; }
+        .c-name { margin: 0 0 5px; font-size: 1.1rem; color: var(--primary); font-weight: 800; line-height: 1.2; }
+        .c-sub { font-size: 0.85rem; color: #7f8c8d; }
         
-        .badge { position: absolute; font-size: 0.6rem; padding: 2px 8px; border-radius: 8px; font-weight: bold; z-index: 2; }
-        .badge.feat { top: 0; left: 0; background: var(--gold); color: #000; border-top-left-radius: 15px; border-bottom-right-radius: 8px; }
-        .badge.live { top: 10px; right: 10px; display: flex; align-items: center; gap: 4px; color: var(--green); background: rgba(39,174,96,0.1); padding: 2px 6px; }
-        .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 1s infinite; }
+        /* العلامات */
+        .badge { position: absolute; font-size: 0.65rem; padding: 3px 10px; border-radius: 8px; font-weight: 800; z-index: 2; }
+        .badge.feat { top: 0; left: 0; background: var(--gold); color: #000; border-top-left-radius: 18px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .badge.live { top: 12px; right: 12px; display: flex; align-items: center; gap: 5px; color: var(--green); background: rgba(39,174,96,0.1); padding: 4px 8px; border-radius: 20px; }
+        .dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: blink 1.5s infinite; }
         @keyframes blink { 50% {opacity: 0.4} }
 
-        .actions { margin-top: 8px; display: flex; gap: 10px; }
-        .act-btn { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: 0.2s; }
-        .act-call { background: #edf2f7; color: var(--primary); }
+        /* شارة العرض داخل الكارت */
+        .offer-tag { display: inline-block; background: #fff0f0; color: #c0392b; font-size: 0.7rem; padding: 2px 8px; border-radius: 6px; margin-top: 5px; font-weight: bold; border: 1px solid #ffcccc; }
+
+        .actions { margin-top: 10px; display: flex; gap: 10px; }
+        .act-btn { width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: 0.2s; border: 1px solid rgba(0,0,0,0.05); }
+        .act-call { background: #f0f4f8; color: var(--primary); }
         .act-wa { background: #e8f5e9; color: var(--green); }
         .act-loc { background: #fff8e1; color: #f39c12; }
 
         /* القوائم السفلية */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0 25px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-top-left-radius: 20px; border-top-right-radius: 20px; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #bdc3c7; font-size: 0.7rem; cursor: pointer; transition: 0.2s; flex: 1; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0 25px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-top-left-radius: 25px; border-top-right-radius: 25px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #bdc3c7; font-size: 0.75rem; cursor: pointer; transition: 0.2s; flex: 1; font-weight: 600; }
         .nav-item i { font-size: 1.4rem; }
-        .nav-item.active { color: var(--primary); font-weight: bold; transform: translateY(-3px); }
+        .nav-item.active { color: var(--primary); font-weight: 800; transform: translateY(-3px); }
+        .nav-item.active i { color: var(--gold); }
         
         /* الزر العائم */
-        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8rem; box-shadow: 0 5px 15px rgba(44, 62, 80, 0.4); border: 4px solid white; z-index: 1100; cursor: pointer; }
+        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: linear-gradient(135deg, var(--primary), #34495e); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; box-shadow: 0 8px 20px rgba(44, 62, 80, 0.4); border: 4px solid white; z-index: 1100; cursor: pointer; transition: 0.3s; }
+        .fab:active { transform: translateX(-50%) scale(0.95); }
 
         /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; overflow-y: auto; }
-        .modal-box { background: white; margin: 10% auto; width: 92%; max-width: 500px; border-radius: 20px; overflow: hidden; animation: slideUp 0.3s; position: relative; }
-        @keyframes slideUp { from{transform:translateY(100px)} to{transform:translateY(0)} }
-        .close-btn { position: absolute; top: 15px; left: 15px; width: 30px; height: 30px; background: #eee; border-radius: 50%; text-align: center; line-height: 30px; cursor: pointer; font-weight: bold; z-index: 10; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; overflow-y: auto; backdrop-filter: blur(5px); }
+        .modal-box { background: white; margin: 10% auto; width: 92%; max-width: 500px; border-radius: 25px; overflow: hidden; animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
+        @keyframes slideUp { from{transform:translateY(100px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .close-btn { position: absolute; top: 15px; left: 15px; width: 35px; height: 35px; background: rgba(255,255,255,0.8); border-radius: 50%; text-align: center; line-height: 35px; cursor: pointer; font-weight: bold; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.1); font-size: 1.2rem; }
 
         /* Form Styling */
-        .form-group { padding: 20px; }
-        .form-input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Tajawal'; outline: none; }
-        .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Tajawal'; background: white; }
-        .submit-btn { width: 100%; padding: 12px; background: var(--green); color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; }
+        .form-group { padding: 25px; }
+        .form-title { text-align: center; color: var(--primary); margin-bottom: 20px; font-weight: 800; font-size: 1.3rem; }
+        .form-input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; transition: 0.3s; }
+        .form-input:focus { border-color: var(--gold); background: white; }
+        .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-family: 'Tajawal'; background: #f9f9f9; cursor: pointer; }
+        .submit-btn { width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .submit-btn:hover { transform: translateY(-2px); }
         
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: 1/-1; }
     </style>
 </head>
 <body>
 
-<div class="ticker-wrap" id="ticker"><div class="ticker-content" id="tickerTxt"></div></div>
+<div class="news-ticker-wrap" id="newsTicker">
+    <div class="news-badge">📢 أخبار المدينة</div>
+    <div class="news-content" id="newsTxt"></div>
+</div>
+
+<div class="offers-ticker-wrap" id="offersTicker">
+    <div class="offers-badge">🔥 عروض مميزة</div>
+    <div class="offers-content" id="offersTxt"></div>
+</div>
 
 <header>
     <div class="nav">
         <div class="brand">
-            <h1>وجهتي <span>.</span></h1>
-            <p>دليل العاصمة الذكي | <span id="count">0</span> مكان</p>
+            <div class="logo-icon"><i class="fas fa-map-location-dot"></i></div>
+            <div>
+                <h1>وجهتي</h1>
+                <p>دليل المدينة في جيبك</p>
+            </div>
         </div>
         <div id="installBtn" class="install-btn"><i class="fas fa-download"></i> تثبيت</div>
     </div>
@@ -107,18 +157,19 @@
 <div id="mainView">
     <div class="search-box">
         <input type="text" id="search" placeholder="ابحث عن (مطعم، نجار، مسجد)...">
-        <div class="near-btn" onclick="sortByLoc()"><i class="fas fa-location-dot"></i></div>
+        <div class="near-btn" onclick="sortByLoc()"><i class="fas fa-location-crosshairs"></i></div>
     </div>
 
     <div class="cats">
         <div class="chip active" onclick="filter('all', this)">الكل</div>
-        <div class="chip" onclick="filter('gov', this)">🏛️ حكومي</div>
-        <div class="chip" onclick="filter('worship', this)">🕌 عبادة</div>
-        <div class="chip" onclick="filter('food', this)">🍔 مطاعم</div>
-        <div class="chip" onclick="filter('market', this)">🛒 ماركت</div>
-        <div class="chip" onclick="filter('medical', this)">💊 صحة</div>
-        <div class="chip" onclick="filter('crafts', this)">🛠️ صنايعية</div>
-        <div class="chip" onclick="filter('transport', this)">🚌 مواصلات</div>
+        <div class="chip" onclick="filter('food', this)"><i class="fas fa-utensils"></i> مطاعم</div>
+        <div class="chip" onclick="filter('market', this)"><i class="fas fa-shopping-basket"></i> ماركت</div>
+        <div class="chip" onclick="filter('crafts', this)"><i class="fas fa-hammer"></i> صنايعية</div>
+        <div class="chip" onclick="filter('medical', this)"><i class="fas fa-user-md"></i> صحة</div>
+        <div class="chip" onclick="filter('transport', this)"><i class="fas fa-car"></i> مواصلات</div>
+        <div class="chip" onclick="filter('gov', this)"><i class="fas fa-landmark"></i> حكومي</div>
+        <div class="chip" onclick="filter('worship', this)"><i class="fas fa-mosque"></i> عبادة</div>
+        <div class="chip" onclick="filter('news', this)"><i class="fas fa-newspaper"></i> أخبار</div>
     </div>
 
     <div class="grid" id="grid">
@@ -131,7 +182,8 @@
 <div class="bottom-nav">
     <div class="nav-item active" onclick="setView('home', this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="nav-item" onclick="setView('offers', this)"><i class="fas fa-tags"></i>العروض</div>
-    <div style="width: 50px;"></div> <div class="nav-item" onclick="setView('fav', this)"><i class="fas fa-heart"></i>المفضلة</div>
+    <div style="width: 50px;"></div>
+    <div class="nav-item" onclick="setView('fav', this)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="nav-item" onclick="openAddForm()"><i class="fas fa-bullhorn"></i>أعلن</div>
 </div>
 
@@ -140,60 +192,62 @@
         <div class="close-btn" onclick="closeM()">✕</div>
         <img id="mImg" src="" style="width:100%; height:250px; object-fit:cover;">
         <div style="padding:20px;">
-            <h2 id="mName" style="color:var(--primary); margin:0;"></h2>
-            <p id="mSub" style="color:#777; margin:5px 0; font-size:0.9rem;"></p>
+            <div style="display:flex; justify-content:space-between; align-items:start;">
+                <h2 id="mName" style="color:var(--primary); margin:0; font-weight:800;"></h2>
+                <div id="mLive" style="display:none;" class="badge live" style="position:static"><div class="dot"></div> متاح</div>
+            </div>
+            <p id="mSub" style="color:#777; margin:5px 0; font-size:0.9rem; font-weight:600;"></p>
             
-            <div id="mHours" style="background:#f0f8ff; color:#2980b9; padding:10px; border-radius:10px; font-size:0.9rem; margin-top:10px; display:none;">
+            <div id="mHours" style="background:#f0f8ff; color:#2980b9; padding:10px; border-radius:10px; font-size:0.9rem; margin-top:10px; display:none; font-weight:600;">
                 <i class="far fa-clock"></i> <span id="mHoursTxt"></span>
             </div>
 
-            <p id="mDesc" style="line-height:1.6; color:#333; margin:15px 0;"></p>
+            <p id="mDesc" style="line-height:1.7; color:#333; margin:15px 0; font-size:0.95rem;"></p>
             
             <div style="display:flex; gap:10px;">
-                <button onclick="toggleFavFromModal()" style="flex:1; padding:10px; border:1px solid #ddd; background:white; border-radius:10px;">
+                <button onclick="toggleFavFromModal()" style="flex:1; padding:12px; border:1px solid #ddd; background:white; border-radius:12px; font-weight:bold;">
                     <i id="favIcon" class="far fa-heart"></i> حفظ
                 </button>
-                <a id="mLoc" href="#" target="_blank" style="flex:2; background:#fffbf0; padding:10px; text-align:center; border-radius:10px; color:#f39c12; font-weight:bold; border:1px solid #ffeaa7; text-decoration:none;">
+                <a id="mLoc" href="#" target="_blank" style="flex:2; background:#fffbf0; padding:12px; text-align:center; border-radius:12px; color:#f39c12; font-weight:bold; border:1px solid #ffeaa7; text-decoration:none;">
                     <i class="fas fa-location-arrow"></i> الموقع
                 </a>
             </div>
             <br>
             <div style="display:flex; gap:10px;">
-                <a id="mCall" href="#" style="flex:1; display:flex; align-items:center; justify-content:center; background:var(--primary); color:white; height:45px; border-radius:12px; font-weight:bold; text-decoration:none;">اتصال</a>
-                <a id="mWa" href="#" style="flex:1; display:flex; align-items:center; justify-content:center; background:var(--green); color:white; height:45px; border-radius:12px; font-weight:bold; text-decoration:none;">واتساب</a>
+                <a id="mCall" href="#" style="flex:1; display:flex; align-items:center; justify-content:center; background:var(--primary); color:white; height:50px; border-radius:12px; font-weight:bold; text-decoration:none; font-size:1.1rem;">اتصال</a>
+                <a id="mWa" href="#" style="flex:1; display:flex; align-items:center; justify-content:center; background:var(--green); color:white; height:50px; border-radius:12px; font-weight:bold; text-decoration:none; font-size:1.1rem;">واتساب</a>
             </div>
         </div>
     </div>
 </div>
 
 <div id="formModal" class="modal">
-    <div class="modal-box" style="margin-top: 15%;">
+    <div class="modal-box" style="margin-top: 10%;">
         <div class="close-btn" onclick="document.getElementById('formModal').style.display='none'">✕</div>
-        <div style="padding:20px; text-align:center;">
-            <h3 style="color:var(--primary); margin-top:0;">إضافة نشاط / إعلان</h3>
-            <p style="color:#777; font-size:0.9rem;">سيتم إرسال البيانات للمراجعة عبر واتساب</p>
-            
-            <div class="form-group">
-                <input type="text" id="addName" class="form-input" placeholder="اسم النشاط / المحل">
-                <select id="addCat" class="form-select">
-                    <option value="">اختر التصنيف...</option>
-                    <option value="مطاعم">مطاعم</option>
-                    <option value="ماركت">ماركت</option>
-                    <option value="صيانة">صيانة وحرف</option>
-                    <option value="طبي">طبي</option>
-                    <option value="أخرى">أخرى</option>
-                </select>
-                <input type="text" id="addDesc" class="form-input" placeholder="وصف مختصر للخدمة">
-                <button class="submit-btn" onclick="submitToWhatsApp()">إرسال الطلب <i class="fab fa-whatsapp"></i></button>
-            </div>
+        <div class="form-group">
+            <h3 class="form-title">إضافة نشاط / إعلان</h3>
+            <input type="text" id="addName" class="form-input" placeholder="اسم النشاط / المحل">
+            <select id="addCat" class="form-select">
+                <option value="">اختر التصنيف...</option>
+                <option value="مطاعم">مطاعم</option>
+                <option value="ماركت">ماركت</option>
+                <option value="صيانة">صيانة وحرف</option>
+                <option value="طبي">طبي</option>
+                <option value="مواصلات">مواصلات</option>
+                <option value="أخرى">أخرى</option>
+            </select>
+            <input type="text" id="addDesc" class="form-input" placeholder="وصف مختصر / العرض">
+            <button class="submit-btn" onclick="submitToWhatsApp()">إرسال للمراجعة <i class="fab fa-whatsapp"></i></button>
         </div>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴 إعدادات الأدمن
-    const adminPhone = "201014394475"; // اكتب رقمك هنا (بدون +) لاستقبال الطلبات
+    // 🔴 رقمك لاستقبال الطلبات (بدون +)
+    const adminPhone = "201000000000"; 
+    
+    // رابط الشيت
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet);
 
@@ -206,9 +260,9 @@
                 ph: r[6], wa: r[7], img: fixImg(r[8]), loc: r[9], offer: r[10],
                 live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), hours: r[13]
             })).filter(x => x.name);
-            document.getElementById('count').innerText = db.length;
+            
+            checkTickers();
             render();
-            checkTicker();
         }});
     }
 
@@ -220,14 +274,34 @@
 
     function getCat(m, s) {
         if(!m) return 'other'; const t = (m+' '+s).toLowerCase();
+        if(t.includes('أخبار')) return 'news';
         if(t.includes('نجار')||t.includes('سباك')||t.includes('كهرب')||t.includes('صيانة')) return 'crafts';
         if(t.includes('أكل')||t.includes('مطعم')) return 'food';
         if(t.includes('ماركت')) return 'market';
         if(t.includes('طب')) return 'medical';
         if(t.includes('مواصلات')) return 'transport';
         if(t.includes('حكوم')) return 'gov';
-        if(t.includes('عباد')||t.includes('مسجد')) return 'worship';
+        if(t.includes('عباد')) return 'worship';
         return 'other';
+    }
+
+    function checkTickers() {
+        // 1. شريط الأخبار
+        const news = db.filter(x => x.cat === 'news').map(x => `📢 ${x.desc}`);
+        if(news.length) {
+            document.getElementById('newsTicker').style.display = 'flex';
+            document.getElementById('newsTxt').innerHTML = news.join(' &nbsp;&nbsp; | &nbsp;&nbsp; ');
+            document.getElementById('offersTicker').style.top = '32px'; // إزاحة شريط العروض للأسفل
+            document.querySelector('header').style.marginTop = '67px';
+        }
+
+        // 2. شريط العروض (يظهر الاسم + العرض)
+        const offers = db.filter(x => x.offer && x.offer.length>2).map(x => `🔥 ${x.name}: ${x.offer}`);
+        if(offers.length) {
+            document.getElementById('offersTicker').style.display = 'flex';
+            document.getElementById('offersTxt').innerHTML = offers.join(' &nbsp;&nbsp; • &nbsp;&nbsp; ');
+            if(!news.length) document.querySelector('header').style.marginTop = '35px';
+        }
     }
 
     function render() {
@@ -235,6 +309,9 @@
         const s = document.getElementById('search').value.toLowerCase();
         
         let list = db.filter(x => {
+            // استثناء الأخبار من الشبكة الرئيسية إلا لو اختار تصنيف أخبار
+            if(x.cat === 'news' && curCat !== 'news') return false; 
+
             if(view === 'fav' && !favs.includes(x.id)) return false;
             if(view === 'offers' && (!x.offer || x.offer.length < 2)) return false;
             const catMatch = (curCat === 'all' || x.cat === curCat);
@@ -249,7 +326,7 @@
         list.forEach(x => {
             const feat = x.feat ? '<div class="badge feat">👑 مميز</div>' : '';
             const live = x.live ? '<div class="badge live"><div class="dot"></div> متاح</div>' : '';
-            const offer = x.offer ? `<div style="color:#c0392b;font-size:0.75rem;margin-top:5px;font-weight:bold;">🔥 ${x.offer}</div>` : '';
+            const offer = x.offer ? `<div class="offer-tag">🔥 ${x.offer}</div>` : '';
             
             g.innerHTML += `
             <div class="card ${x.feat?'featured':''}" onclick="openM(${x.id})">
@@ -269,7 +346,7 @@
         });
     }
 
-    // إضافة عبر الواتساب (بدون فورم خارجي)
+    // إضافة عبر الواتساب
     window.openAddForm = () => document.getElementById('formModal').style.display = 'block';
     
     window.submitToWhatsApp = () => {
@@ -303,9 +380,11 @@
         const l = document.getElementById('mLoc');
         if(x.loc) { l.style.display='block'; l.href = x.loc; } else l.style.display='none';
 
-        const f = document.getElementById('favIcon');
-        f.className = favs.includes(id) ? 'fas fa-heart' : 'far fa-heart';
-        f.style.color = favs.includes(id) ? 'red' : '#555';
+        document.getElementById('mLive').style.display = x.live ? 'flex' : 'none';
+        
+        const favBtn = document.getElementById('favIcon');
+        favBtn.className = favs.includes(id) ? 'fas fa-heart' : 'far fa-heart';
+        favBtn.style.color = favs.includes(id) ? 'red' : '#555';
 
         document.getElementById('mCall').href = `tel:${x.ph}`;
         document.getElementById('mWa').href = `https://wa.me/${x.wa}`;
@@ -319,21 +398,31 @@
     }
     window.closeM = () => document.getElementById('modal').style.display = 'none';
 
-    function checkTicker() {
-        const offers = db.filter(x => x.offer && x.offer.length>2).map(x => x.offer);
-        if(offers.length) {
-            document.querySelector('.ticker-wrap').style.display = 'flex';
-            document.querySelector('.ticker-content').innerHTML = offers.join(' &nbsp; | &nbsp; ');
-        }
+    // الأقرب لي
+    window.sortByLoc = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                const lat = pos.coords.latitude; const lon = pos.coords.longitude;
+                db.forEach(i => {
+                    if(i.loc && i.loc.includes('@')) {
+                        const m = i.loc.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+                        if(m) i.dist = Math.sqrt(Math.pow(m[1]-lat,2) + Math.pow(m[2]-lon,2));
+                    } else i.dist = 999;
+                });
+                db.sort((a,b) => a.dist - b.dist);
+                render();
+            }, () => alert("فعل GPS"));
+        } else alert("لا يدعم GPS");
     }
 
-    // تثبيت PWA
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault(); deferredPrompt = e;
-        document.getElementById('installBtn').style.display = 'block';
-        document.getElementById('installBtn').addEventListener('click', () => {
+        const btn = document.getElementById('installBtn');
+        btn.style.display = 'block';
+        btn.addEventListener('click', () => {
             deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((c) => { if(c.outcome==='accepted') btn.style.display='none'; });
         });
     });
 
@@ -341,3 +430,10 @@
 </script>
 </body>
 </html>
+
+
+    init();
+</script>    });
+</body>
+</html>
+

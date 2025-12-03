@@ -12,13 +12,12 @@
     
     <style>
         :root {
-            --primary: #1a2b48; --gold: #d4af37; --gold-light: #f1c40f; 
-            --green: #27ae60; --bg: #f3f4f6; --white: #ffffff; --red: #c0392b;
+            --primary: #1a2b48; --gold: #d4af37; --bg: #f3f4f6; --white: #ffffff; --red: #c0392b; --green: #27ae60;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 85px; user-select: none; }
         
-        /* --- 1. شريط أخبار المدينة (الأعلى) --- */
+        /* 1. شريط الأخبار */
         .news-ticker-wrap {
             position: fixed; top: 0; width: 100%; height: 32px; 
             background: linear-gradient(90deg, #2c3e50, #000); 
@@ -27,10 +26,10 @@
         .news-badge { background: var(--red); color: white; height: 100%; padding: 0 15px; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; z-index: 2; box-shadow: 2px 0 10px rgba(0,0,0,0.3); }
         .news-content { display: inline-block; white-space: nowrap; animation: ticker 35s linear infinite; color: #fff; font-size: 0.85rem; padding-right: 10px; font-weight: 500; }
 
-        /* --- 2. شريط العروض الفخم (أسفل الأخبار) --- */
+        /* 2. شريط العروض */
         .offers-ticker-wrap {
             position: fixed; top: 32px; width: 100%; height: 35px; 
-            background: linear-gradient(90deg, #FFD700, #FDB931); /* تدرج ذهبي */
+            background: linear-gradient(90deg, #FFD700, #FDB931); 
             z-index: 2000; display: none; align-items: center; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
@@ -39,9 +38,9 @@
 
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* --- الهيدر --- */
+        /* الهيدر */
         header { 
-            margin-top: 67px; /* مسافة للشريطين */
+            margin-top: 67px; 
             background: linear-gradient(135deg, #1a2b48 0%, #2c3e50 100%); 
             color: white; padding: 25px 20px 45px; 
             border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; 
@@ -50,10 +49,7 @@
         .nav { display: flex; justify-content: space-between; align-items: center; }
         
         .brand { display: flex; align-items: center; gap: 10px; }
-        .logo-icon { 
-            font-size: 2rem; color: var(--gold); 
-            filter: drop-shadow(0 0 5px rgba(255,215,0,0.5)); 
-        }
+        .logo-icon { font-size: 2rem; color: var(--gold); filter: drop-shadow(0 0 5px rgba(255,215,0,0.5)); }
         .brand h1 { margin: 0; font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; background: -webkit-linear-gradient(#fff, #eee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .brand p { margin: 0; font-size: 0.8rem; color: var(--gold); font-weight: bold; letter-spacing: 0.5px; }
         
@@ -63,7 +59,6 @@
         .search-box { margin: -30px 20px 15px; background: white; padding: 5px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.03); }
         .search-box input { flex: 1; border: none; padding: 12px 15px; border-radius: 15px; outline: none; font-family: 'Tajawal'; font-size: 1rem; }
         .near-btn { color: var(--primary); padding: 12px; font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
-        .near-btn:active { transform: scale(0.9); color: var(--gold); }
 
         /* التصنيفات */
         .cats { overflow-x: auto; white-space: nowrap; padding: 0 20px 15px; scrollbar-width: none; }
@@ -84,14 +79,12 @@
         .c-name { margin: 0 0 5px; font-size: 1.1rem; color: var(--primary); font-weight: 800; line-height: 1.2; }
         .c-sub { font-size: 0.85rem; color: #7f8c8d; }
         
-        /* العلامات */
         .badge { position: absolute; font-size: 0.65rem; padding: 3px 10px; border-radius: 8px; font-weight: 800; z-index: 2; }
-        .badge.feat { top: 0; left: 0; background: var(--gold); color: #000; border-top-left-radius: 18px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .badge.feat { top: 0; left: 0; background: var(--gold); color: #000; border-top-left-radius: 18px; border-bottom-right-radius: 10px; }
         .badge.live { top: 12px; right: 12px; display: flex; align-items: center; gap: 5px; color: var(--green); background: rgba(39,174,96,0.1); padding: 4px 8px; border-radius: 20px; }
         .dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: blink 1.5s infinite; }
         @keyframes blink { 50% {opacity: 0.4} }
 
-        /* شارة العرض داخل الكارت */
         .offer-tag { display: inline-block; background: #fff0f0; color: #c0392b; font-size: 0.7rem; padding: 2px 8px; border-radius: 6px; margin-top: 5px; font-weight: bold; border: 1px solid #ffcccc; }
 
         .actions { margin-top: 10px; display: flex; gap: 10px; }
@@ -100,31 +93,24 @@
         .act-wa { background: #e8f5e9; color: var(--green); }
         .act-loc { background: #fff8e1; color: #f39c12; }
 
-        /* القوائم السفلية */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0 25px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-top-left-radius: 25px; border-top-right-radius: 25px; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #bdc3c7; font-size: 0.75rem; cursor: pointer; transition: 0.2s; flex: 1; font-weight: 600; }
         .nav-item i { font-size: 1.4rem; }
         .nav-item.active { color: var(--primary); font-weight: 800; transform: translateY(-3px); }
         .nav-item.active i { color: var(--gold); }
         
-        /* الزر العائم */
         .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: linear-gradient(135deg, var(--primary), #34495e); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; box-shadow: 0 8px 20px rgba(44, 62, 80, 0.4); border: 4px solid white; z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.95); }
 
-        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; overflow-y: auto; backdrop-filter: blur(5px); }
-        .modal-box { background: white; margin: 10% auto; width: 92%; max-width: 500px; border-radius: 25px; overflow: hidden; animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
+        .modal-box { background: white; margin: 10% auto; width: 92%; max-width: 500px; border-radius: 25px; overflow: hidden; animation: slideUp 0.4s; position: relative; }
         @keyframes slideUp { from{transform:translateY(100px);opacity:0} to{transform:translateY(0);opacity:1} }
         .close-btn { position: absolute; top: 15px; left: 15px; width: 35px; height: 35px; background: rgba(255,255,255,0.8); border-radius: 50%; text-align: center; line-height: 35px; cursor: pointer; font-weight: bold; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.1); font-size: 1.2rem; }
 
-        /* Form Styling */
         .form-group { padding: 25px; }
-        .form-title { text-align: center; color: var(--primary); margin-bottom: 20px; font-weight: 800; font-size: 1.3rem; }
-        .form-input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; transition: 0.3s; }
-        .form-input:focus { border-color: var(--gold); background: white; }
+        .form-input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; }
         .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-family: 'Tajawal'; background: #f9f9f9; cursor: pointer; }
-        .submit-btn { width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .submit-btn:hover { transform: translateY(-2px); }
+        .submit-btn { width: 100%; padding: 14px; background: var(--green); color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px; }
         
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: 1/-1; }
     </style>
@@ -197,20 +183,11 @@
                 <div id="mLive" style="display:none;" class="badge live" style="position:static"><div class="dot"></div> متاح</div>
             </div>
             <p id="mSub" style="color:#777; margin:5px 0; font-size:0.9rem; font-weight:600;"></p>
-            
-            <div id="mHours" style="background:#f0f8ff; color:#2980b9; padding:10px; border-radius:10px; font-size:0.9rem; margin-top:10px; display:none; font-weight:600;">
-                <i class="far fa-clock"></i> <span id="mHoursTxt"></span>
-            </div>
-
+            <div id="mHours" style="background:#f0f8ff; color:#2980b9; padding:10px; border-radius:10px; font-size:0.9rem; margin-top:10px; display:none; font-weight:600;"><i class="far fa-clock"></i> <span id="mHoursTxt"></span></div>
             <p id="mDesc" style="line-height:1.7; color:#333; margin:15px 0; font-size:0.95rem;"></p>
-            
             <div style="display:flex; gap:10px;">
-                <button onclick="toggleFavFromModal()" style="flex:1; padding:12px; border:1px solid #ddd; background:white; border-radius:12px; font-weight:bold;">
-                    <i id="favIcon" class="far fa-heart"></i> حفظ
-                </button>
-                <a id="mLoc" href="#" target="_blank" style="flex:2; background:#fffbf0; padding:12px; text-align:center; border-radius:12px; color:#f39c12; font-weight:bold; border:1px solid #ffeaa7; text-decoration:none;">
-                    <i class="fas fa-location-arrow"></i> الموقع
-                </a>
+                <button onclick="toggleFavFromModal()" style="flex:1; padding:12px; border:1px solid #ddd; background:white; border-radius:12px; font-weight:bold;"><i id="favIcon" class="far fa-heart"></i> حفظ</button>
+                <a id="mLoc" href="#" target="_blank" style="flex:2; background:#fffbf0; padding:12px; text-align:center; border-radius:12px; color:#f39c12; font-weight:bold; border:1px solid #ffeaa7; text-decoration:none;"><i class="fas fa-location-arrow"></i> الموقع</a>
             </div>
             <br>
             <div style="display:flex; gap:10px;">
@@ -225,7 +202,7 @@
     <div class="modal-box" style="margin-top: 10%;">
         <div class="close-btn" onclick="document.getElementById('formModal').style.display='none'">✕</div>
         <div class="form-group">
-            <h3 class="form-title">إضافة نشاط / إعلان</h3>
+            <h3 style="text-align:center; color:var(--primary); margin-bottom:20px;">إضافة نشاط / إعلان</h3>
             <input type="text" id="addName" class="form-input" placeholder="اسم النشاط / المحل">
             <select id="addCat" class="form-select">
                 <option value="">اختر التصنيف...</option>
@@ -244,12 +221,11 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴 رقمك لاستقبال الطلبات (بدون +)
     const adminPhone = "201000000000"; 
     
-    // رابط الشيت
+    // إضافة Date.now() لمنع الكاش وتحديث البيانات فوراً
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet);
+    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
 
     let db = [], favs = JSON.parse(localStorage.getItem('favs')) || [], curCat='all', view='home', curID;
 
@@ -272,34 +248,33 @@
         return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u;
     }
 
+    // منطق تصنيف ذكي (يقبل الهمزات وبدونها)
     function getCat(m, s) {
         if(!m) return 'other'; const t = (m+' '+s).toLowerCase();
-        if(t.includes('أخبار')) return 'news';
-        if(t.includes('نجار')||t.includes('سباك')||t.includes('كهرب')||t.includes('صيانة')) return 'crafts';
+        if(t.includes('أخبار') || t.includes('اخبار') || t.includes('news') || t.includes('خبر')) return 'news';
+        if(t.includes('نجار')||t.includes('سباك')||t.includes('كهرب')||t.includes('صيانة')||t.includes('حرف')) return 'crafts';
         if(t.includes('أكل')||t.includes('مطعم')) return 'food';
         if(t.includes('ماركت')) return 'market';
-        if(t.includes('طب')) return 'medical';
+        if(t.includes('طب')||t.includes('عياد')) return 'medical';
         if(t.includes('مواصلات')) return 'transport';
         if(t.includes('حكوم')) return 'gov';
-        if(t.includes('عباد')) return 'worship';
+        if(t.includes('عباد')||t.includes('مسجد')) return 'worship';
         return 'other';
     }
 
     function checkTickers() {
-        // 1. شريط الأخبار
         const news = db.filter(x => x.cat === 'news').map(x => `📢 ${x.desc}`);
         if(news.length) {
             document.getElementById('newsTicker').style.display = 'flex';
-            document.getElementById('newsTxt').innerHTML = news.join(' &nbsp;&nbsp; | &nbsp;&nbsp; ');
-            document.getElementById('offersTicker').style.top = '32px'; // إزاحة شريط العروض للأسفل
+            document.getElementById('newsTxt').innerHTML = news.join('    |    ');
+            document.getElementById('offersTicker').style.top = '32px'; 
             document.querySelector('header').style.marginTop = '67px';
         }
 
-        // 2. شريط العروض (يظهر الاسم + العرض)
         const offers = db.filter(x => x.offer && x.offer.length>2).map(x => `🔥 ${x.name}: ${x.offer}`);
         if(offers.length) {
             document.getElementById('offersTicker').style.display = 'flex';
-            document.getElementById('offersTxt').innerHTML = offers.join(' &nbsp;&nbsp; • &nbsp;&nbsp; ');
+            document.getElementById('offersTxt').innerHTML = offers.join('    •    ');
             if(!news.length) document.querySelector('header').style.marginTop = '35px';
         }
     }
@@ -309,9 +284,7 @@
         const s = document.getElementById('search').value.toLowerCase();
         
         let list = db.filter(x => {
-            // استثناء الأخبار من الشبكة الرئيسية إلا لو اختار تصنيف أخبار
             if(x.cat === 'news' && curCat !== 'news') return false; 
-
             if(view === 'fav' && !favs.includes(x.id)) return false;
             if(view === 'offers' && (!x.offer || x.offer.length < 2)) return false;
             const catMatch = (curCat === 'all' || x.cat === curCat);
@@ -346,22 +319,18 @@
         });
     }
 
-    // إضافة عبر الواتساب
     window.openAddForm = () => document.getElementById('formModal').style.display = 'block';
     
     window.submitToWhatsApp = () => {
         const n = document.getElementById('addName').value;
         const c = document.getElementById('addCat').value;
         const d = document.getElementById('addDesc').value;
-        
         if(!n || !c) { alert('الاسم والتصنيف مطلوبين'); return; }
-        
         const msg = `طلب إضافة جديد لتطبيق وجهتي:%0a- الاسم: ${n}%0a- التصنيف: ${c}%0a- الوصف: ${d}`;
         window.open(`https://wa.me/${adminPhone}?text=${msg}`, '_blank');
         document.getElementById('formModal').style.display = 'none';
     }
 
-    // باقي الدوال
     window.filter = (c, el) => { curCat = c; document.querySelectorAll('.chip').forEach(i=>i.classList.remove('active')); el.classList.add('active'); render(); }
     document.getElementById('search').addEventListener('input', render);
     
@@ -398,7 +367,6 @@
     }
     window.closeM = () => document.getElementById('modal').style.display = 'none';
 
-    // الأقرب لي
     window.sortByLoc = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pos) => {
@@ -420,10 +388,7 @@
         e.preventDefault(); deferredPrompt = e;
         const btn = document.getElementById('installBtn');
         btn.style.display = 'block';
-        btn.addEventListener('click', () => {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((c) => { if(c.outcome==='accepted') btn.style.display='none'; });
-        });
+        btn.addEventListener('click', () => { deferredPrompt.prompt(); });
     });
 
     init();

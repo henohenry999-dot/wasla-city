@@ -3,289 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>وجهتي | دليل المدينة</title>
-    <meta name="theme-color" content="#1a2b48">
+    <title>حدائق العاصمة | دليلك الشامل</title>
+    <meta name="theme-color" content="#27ae60">
     <meta name="apple-mobile-web-app-capable" content="yes">
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        :root { --primary: #1a2b48; --gold: #d4af37; --bg: #f3f4f6; --white: #ffffff; --green: #27ae60; --red: #c0392b; }
+        :root {
+            --primary: #27ae60;       /* أخضر حدائق العاصمة المميز */
+            --dark: #2c3e50;          /* كحلي غامق للهيدر */
+            --gold: #f1c40f;          /* ذهبي للعروض */
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --news-bg: #e74c3c;       /* أحمر للأخبار */
+        }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 85px; user-select: none; }
+        body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; }
+        
+        /* --- 1. أشرطة التنبيهات (News & Ads) --- */
+        .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; }
         
         /* شريط الأخبار */
-        .news-ticker-wrap { position: fixed; top: 0; width: 100%; height: 32px; background: #000; z-index: 2100; display: none; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .news-badge { background: var(--red); color: white; height: 100%; padding: 0 15px; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; z-index: 2; box-shadow: 2px 0 10px rgba(0,0,0,0.3); }
-        .news-content { display: inline-block; white-space: nowrap; animation: ticker 35s linear infinite; color: #fff; font-size: 0.85rem; padding-right: 10px; font-weight: 500; }
-
-        /* شريط العروض */
-        .offers-ticker-wrap { position: fixed; top: 32px; width: 100%; height: 35px; background: linear-gradient(90deg, #FFD700, #FDB931); z-index: 2000; display: none; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .offers-badge { background: var(--primary); color: var(--gold); height: 100%; padding: 0 15px; font-weight: 900; font-size: 0.75rem; display: flex; align-items: center; z-index: 2; }
-        .offers-content { display: inline-block; white-space: nowrap; animation: ticker 30s linear infinite; color: #000; font-size: 0.9rem; padding-right: 10px; font-weight: 700; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        /* الهيدر */
-        header { margin-top: 67px; background: linear-gradient(135deg, #1a2b48 0%, #2c3e50 100%); color: white; padding: 25px 20px 45px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
-        .nav { display: flex; justify-content: space-between; align-items: center; }
-        .brand { display: flex; align-items: center; gap: 10px; }
-        .logo-icon { font-size: 2rem; color: var(--gold); filter: drop-shadow(0 0 5px rgba(255,215,0,0.5)); }
-        .brand h1 { margin: 0; font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; background: -webkit-linear-gradient(#fff, #eee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .brand p { margin: 0; font-size: 0.8rem; color: var(--gold); font-weight: bold; letter-spacing: 0.5px; }
-        .install-btn { background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; display: none; border: 1px solid rgba(255,255,255,0.2); }
-
-        /* البحث والتصنيفات */
-        .search-box { margin: -30px 20px 15px; background: white; padding: 5px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; align-items: center; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.03); }
-        .search-box input { flex: 1; border: none; padding: 12px 15px; border-radius: 15px; outline: none; font-family: 'Tajawal'; font-size: 1rem; }
-        .near-btn { color: var(--primary); padding: 12px; font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
+        .news-bar { height: 32px; background: #2c3e50; color: white; display: flex; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .news-label { background: var(--news-bg); height: 100%; padding: 0 15px; font-weight: bold; display: flex; align-items: center; font-size: 0.75rem; }
+        .news-text { white-space: nowrap; animation: scroll 35s linear infinite; padding: 0 10px; flex: 1; overflow: hidden; font-weight: 500; }
         
-        .cats { overflow-x: auto; white-space: nowrap; padding: 0 20px 15px; scrollbar-width: none; }
-        .chip { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: white; border: 1px solid #eee; border-radius: 50px; margin-left: 8px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; font-weight: 700; color: #555; }
-        .chip.active { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); box-shadow: 0 5px 15px rgba(26, 43, 72, 0.2); }
-        .chip i { color: var(--gold); font-size: 1rem; } .chip.active i { color: white; }
-
-        /* الشبكة */
-        .grid { padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 15px; }
-        @media(min-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); } }
-        .card { background: white; border-radius: 18px; padding: 12px; display: flex; gap: 12px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.04); overflow: hidden; transition: 0.2s; border: 1px solid transparent; }
-        .card.featured { border: 1px solid var(--gold); background: linear-gradient(to right, #fffff0, #ffffff); }
-        .c-img { width: 90px; height: 90px; border-radius: 14px; object-fit: cover; background: #eee; flex-shrink: 0; }
-        .c-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .c-name { margin: 0 0 5px; font-size: 1.1rem; color: var(--primary); font-weight: 800; line-height: 1.2; }
-        .c-sub { font-size: 0.85rem; color: #7f8c8d; }
+        /* شريط الإعلانات */
+        .ads-bar { height: 32px; background: linear-gradient(90deg, #f1c40f, #f39c12); color: black; display: flex; align-items: center; font-size: 0.85rem; font-weight: bold; }
+        .ads-text { white-space: nowrap; animation: scroll 25s linear infinite; padding: 0 10px; flex: 1; overflow: hidden; }
         
-        /* العلامات */
-        .badge { position: absolute; font-size: 0.65rem; padding: 3px 10px; border-radius: 8px; font-weight: 800; z-index: 2; }
-        .badge.feat { top: 0; left: 0; background: var(--gold); color: #000; border-top-left-radius: 18px; border-bottom-right-radius: 10px; }
-        .badge.live { top: 12px; right: 12px; display: flex; align-items: center; gap: 5px; color: var(--green); background: rgba(39,174,96,0.1); padding: 4px 8px; border-radius: 20px; }
-        .dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: blink 1.5s infinite; }
-        @keyframes blink { 50% {opacity: 0.4} }
-        .offer-tag { display: inline-block; background: #fff0f0; color: #c0392b; font-size: 0.7rem; padding: 2px 8px; border-radius: 6px; margin-top: 5px; font-weight: bold; border: 1px solid #ffcccc; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        .actions { margin-top: 10px; display: flex; gap: 10px; }
-        .act-btn { width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: 0.2s; border: 1px solid rgba(0,0,0,0.05); }
-        .act-call { background: #f0f4f8; color: var(--primary); }
-        .act-wa { background: #e8f5e9; color: var(--green); }
-        .act-loc { background: #fff8e1; color: #f39c12; }
-
-        /* القائمة السفلية */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0 25px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-top-left-radius: 25px; border-top-right-radius: 25px; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #bdc3c7; font-size: 0.75rem; cursor: pointer; transition: 0.2s; flex: 1; font-weight: 600; }
-        .nav-item.active { color: var(--primary); font-weight: 800; transform: translateY(-3px); }
-        .nav-item.active i { color: var(--gold); }
+        /* --- 2. الهيدر --- */
+        header { 
+            margin-top: 64px; /* مسافة للشريطين */
+            background: linear-gradient(135deg, var(--primary), #1abc9c); 
+            color: white; padding: 20px; 
+            border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;
+        }
         
-        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: linear-gradient(135deg, var(--primary), #34495e); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; box-shadow: 0 8px 20px rgba(44, 62, 80, 0.4); border: 4px solid white; z-index: 1100; cursor: pointer; transition: 0.3s; }
-        .fab:active { transform: translateX(-50%) scale(0.95); }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .app-icon { 
+            width: 50px; height: 50px; background: white; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            color: var(--primary); font-size: 1.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .app-icon i.leaf { position: absolute; top: -5px; right: -5px; font-size: 1.2rem; color: var(--gold); background: var(--dark); border-radius: 50%; padding: 2px; border: 2px solid white; }
+        .app-title h1 { margin: 0; font-size: 1.3rem; font-weight: 900; }
+        .app-title p { margin: 0; font-size: 0.7rem; opacity: 0.9; }
 
-        /* القائمة العائمة */
-        .fab-container { position: fixed; bottom: 90px; left: 20px; z-index: 1500; display: flex; flex-direction: column-reverse; gap: 15px; align-items: center; }
-        .fab-action { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; transform: scale(0); transition: 0.3s; opacity: 0; position: relative; }
-        .fab-action::after { content: attr(data-label); position: absolute; left: 55px; background: rgba(0,0,0,0.8); color: white; padding: 4px 8px; border-radius: 5px; font-size: 0.8rem; white-space: nowrap; pointer-events: none; }
-        .fab-container.open .fab-action { transform: scale(1); opacity: 1; }
-        .fab-add { background: var(--green); }
-        .fab-ad { background: var(--gold); color: #000; }
+        /* مربع العداد */
+        .counter-box { 
+            background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px; 
+            text-align: center; color: white; border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+        }
+        .counter-num { font-size: 1.2rem; font-weight: 800; color: var(--gold); display: block; line-height: 1; }
+        .counter-lbl { font-size: 0.6rem; }
 
-        /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; overflow-y: auto; backdrop-filter: blur(5px); }
-        .modal-box { background: white; margin: 10% auto; width: 92%; max-width: 500px; border-radius: 25px; overflow: hidden; animation: slideUp 0.4s; position: relative; }
-        @keyframes slideUp { from{transform:translateY(100px);opacity:0} to{transform:translateY(0);opacity:1} }
-        .close-btn { position: absolute; top: 15px; left: 15px; width: 35px; height: 35px; background: rgba(255,255,255,0.8); border-radius: 50%; text-align: center; line-height: 35px; cursor: pointer; font-weight: bold; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.1); font-size: 1.2rem; }
-
-        /* Form */
-        .form-content { padding: 25px; }
-        .form-input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; }
-        .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #e0e0e0; border-radius: 12px; font-family: 'Tajawal'; background: #f9f9f9; cursor: pointer; }
-        .submit-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+        /* --- 3. المحتوى الرئيسي --- */
+        #mainView { padding: 0 15px; margin-top: -25px; position: relative; z-index: 10; }
         
-        .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: 1/-1; }
+        .search-wrap { background: white; padding: 5px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; gap: 10px; margin-bottom: 15px; }
+        .search-inp { flex: 1; border: none; padding: 12px; outline: none; font-family: 'Tajawal'; font-size: 1rem; border-radius: 15px; }
+        
+        /* التصنيفات */
+        .cats-wrap { overflow-x: auto; white-space: nowrap; padding-bottom: 10px; scrollbar-width: none; }
+        .cat-btn { display: inline-block; padding: 8px 15px; background: white; border: 1px solid #eee; border-radius: 20px; margin-left: 5px; cursor: pointer; font-size: 0.85rem; transition: 0.3s; color: #555; font-weight: 600; }
+        .cat-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 12px; }
+        
+        /* الكروت */
+        .card { background: white; border-radius: 15px; padding: 10px; display: flex; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: 0.2s; }
+        .card:active { transform: scale(0.98); }
+        .card.featured { border: 1px solid var(--gold); background: #fffdf9; }
+        
+        /* كارت الأخبار المميز */
+        .card.news-card { background: #fff; border-right: 4px solid var(--news-bg); flex-direction: column; }
+        .card.news-card .c-img { width: 100%; height: 120px; }
+        .news-source { font-size: 0.65rem; background: #eee; padding: 3px 8px; border-radius: 4px; color: #555; display: inline-block; margin-bottom: 5px; font-weight: bold; }
+
+        .c-img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; background: #eee; }
+        .c-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .c-title { margin: 0 0 5px; font-size: 1rem; font-weight: 700; color: var(--dark); }
+        .c-sub { font-size: 0.75rem; color: #777; display: flex; align-items: center; gap: 5px; }
+        .c-offer { font-size: 0.75rem; color: #c0392b; font-weight: bold; margin-top: 6px; background: #fff0f0; padding: 2px 6px; border-radius: 4px; width: fit-content; }
+
+        /* --- 4. القائمة السفلية والزر العائم --- */
+        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; border-radius: 20px 20px 0 0; }
+        .btm-item { text-align: center; color: #ccc; font-size: 0.7rem; cursor: pointer; transition: 0.3s; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .btm-item i { font-size: 1.3rem; }
+        .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
+
+        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1100; cursor: pointer; transition: 0.3s; }
+        .fab:active { transform: translateX(-50%) scale(0.9); }
+
+        /* --- 5. النوافذ المنبثقة (Modals) --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
+        .modal-content { background: white; width: 90%; max-width: 400px; border-radius: 20px; padding: 25px; position: relative; animation: pop 0.3s; max-height: 85vh; overflow-y: auto; }
+        @keyframes pop { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+        
+        .form-input, .form-select { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; }
+        .btn-submit { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3); }
+        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
-<div class="news-ticker-wrap" id="newsTicker"><div class="news-badge">📢 أخبار المدينة</div><div class="news-content" id="newsTxt"></div></div>
-<div class="offers-ticker-wrap" id="offersTicker"><div class="offers-badge">🔥 عروض مميزة</div><div class="offers-content" id="offersTxt"></div></div>
+<div class="ticker-container">
+    <div class="news-bar" id="newsBar" style="display:none">
+        <div class="news-label">أخبار</div>
+        <div class="news-text" id="newsText"></div>
+    </div>
+    <div class="ads-bar" id="adsBar" style="display:none">
+        <div class="ads-text" id="adsText"></div>
+    </div>
+</div>
 
 <header>
-    <div class="nav">
-        <div class="brand">
-            <div class="logo-icon"><i class="fas fa-map-location-dot"></i></div>
-            <div><h1>وجهتي</h1><p>دليل المدينة في جيبك</p></div>
+    <div class="logo-area">
+        <div class="app-icon">
+            <i class="fas fa-city"></i>
+            <i class="fas fa-leaf leaf"></i>
         </div>
-        <div id="installBtn" class="install-btn"><i class="fas fa-download"></i> تثبيت</div>
+        <div class="app-title">
+            <h1>حدائق العاصمة</h1>
+            <p>دليلك الشامل</p>
+        </div>
+    </div>
+    <div class="counter-box">
+        <span class="counter-num" id="shopCount">0</span>
+        <span class="counter-lbl">خدمة متاحة</span>
     </div>
 </header>
 
-<div class="fab-container" id="fabMenu">
-    <div class="fab-action fab-add" data-label="إضافة نشاط" onclick="openAddForm('activity')"><i class="fas fa-store"></i></div>
-    <div class="fab-action fab-ad" data-label="حجز إعلان" onclick="openAddForm('ad')"><i class="fas fa-bullhorn"></i></div>
-</div>
-<div class="fab" onclick="toggleFab()"><i class="fas fa-plus"></i></div>
-
 <div id="mainView">
-    <div class="search-box">
-        <input type="text" id="search" placeholder="ابحث عن (مطعم، نجار، مسجد)...">
-        <div class="near-btn" onclick="sortByLoc()"><i class="fas fa-location-crosshairs"></i></div>
+    <div class="search-wrap">
+        <input type="text" id="search" class="search-inp" placeholder="ابحث عن (سباك، مطعم، مدرسة)...">
+        <i class="fas fa-search" style="color:#ccc; align-self:center; padding-left:10px;"></i>
     </div>
 
-    <div class="cats">
-        <div class="chip active" onclick="filter('all', this)">الكل</div>
-        <div class="chip" onclick="filter('food', this)"><i class="fas fa-utensils"></i> مطاعم</div>
-        <div class="chip" onclick="filter('market', this)"><i class="fas fa-shopping-basket"></i> ماركت</div>
-        <div class="chip" onclick="filter('crafts', this)"><i class="fas fa-hammer"></i> صنايعية</div>
-        <div class="chip" onclick="filter('medical', this)"><i class="fas fa-user-md"></i> صحة</div>
-        <div class="chip" onclick="filter('transport', this)"><i class="fas fa-car"></i> مواصلات</div>
-        <div class="chip" onclick="filter('gov', this)"><i class="fas fa-landmark"></i> حكومي</div>
-        <div class="chip" onclick="filter('worship', this)"><i class="fas fa-mosque"></i> عبادة</div>
-        <div class="chip" onclick="filter('news', this)"><i class="fas fa-newspaper"></i> أخبار</div>
+    <div class="cats-wrap">
+        <div class="cat-btn active" onclick="filter('all', this)">الكل</div>
+        <div class="cat-btn" onclick="filter('news', this)">📰 أخبار مصورة</div>
+        <div class="cat-btn" onclick="filter('gov', this)">🏛️ مصالح حكومية</div>
+        <div class="cat-btn" onclick="filter('worship', this)">🕌 دور عبادة</div>
+        <div class="cat-btn" onclick="filter('school', this)">🎓 تعليم</div>
+        <div class="cat-btn" onclick="filter('food', this)">🍔 مطاعم</div>
+        <div class="cat-btn" onclick="filter('market', this)">🛒 ماركت</div>
+        <div class="cat-btn" onclick="filter('crafts', this)">🛠️ صنايعية</div>
+        <div class="cat-btn" onclick="filter('transport', this)">🚌 مواصلات</div>
+        <div class="cat-btn" onclick="filter('medical', this)">💊 خدمات طبية</div>
     </div>
 
-    <div class="grid" id="grid"><div class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br>جاري التحميل...</div></div>
-</div>
-
-<div class="bottom-nav">
-    <div class="nav-item active" onclick="setView('home', this)"><i class="fas fa-home"></i>الرئيسية</div>
-    <div class="nav-item" onclick="setView('offers', this)"><i class="fas fa-tags"></i>العروض</div>
-    <div style="width: 50px;"></div> <div class="nav-item" onclick="setView('fav', this)"><i class="fas fa-heart"></i>المفضلة</div>
-    <div class="nav-item" onclick="openAddForm('ad')"><i class="fas fa-bullhorn"></i>أعلن</div>
-</div>
-
-<div id="modal" class="modal" onclick="if(event.target==this)closeM()">
-    <div class="modal-box">
-        <div class="close-btn" onclick="closeM()">✕</div>
-        <img id="mImg" src="" style="width:100%; height:250px; object-fit:cover;">
-        <div style="padding:20px;">
-            <div style="display:flex; justify-content:space-between; align-items:start;">
-                <h2 id="mName" style="color:var(--primary); margin:0; font-weight:800;"></h2>
-                <div id="mLive" style="display:none;" class="badge live" style="position:static"><div class="dot"></div> متاح</div>
-            </div>
-            <p id="mSub" style="color:#777; margin:5px 0; font-size:0.9rem; font-weight:600;"></p>
-            <div id="mHours" style="background:#f0f8ff; color:#2980b9; padding:10px; border-radius:10px; font-size:0.9rem; margin-top:10px; display:none; font-weight:600;"><i class="far fa-clock"></i> <span id="mHoursTxt"></span></div>
-            <p id="mDesc" style="line-height:1.7; color:#333; margin:15px 0; font-size:0.95rem;"></p>
-            <div style="display:flex; gap:10px;">
-                <button onclick="toggleFavFromModal()" style="flex:1; padding:12px; border:1px solid #ddd; background:white; border-radius:12px; font-weight:bold;"><i id="favIcon" class="far fa-heart"></i> حفظ</button>
-                <a id="mLoc" href="#" target="_blank" style="flex:2; background:#fffbf0; padding:12px; text-align:center; border-radius:12px; color:#f39c12; font-weight:bold; border:1px solid #ffeaa7; text-decoration:none;"><i class="fas fa-location-arrow"></i> الموقع</a>
-            </div>
-            <br>
-            <div style="display:flex; gap:10px;">
-                <a id="mCall" href="#" style="flex:1; display:flex; align-items:center; justify-content:center; background:var(--primary); color:white; height:50px; border-radius:12px; font-weight:bold; text-decoration:none; font-size:1.1rem;">اتصال</a>
-                <a id="mWa" href="#" style="flex:1; display:flex; align-items:center; justify-content:center; background:var(--green); color:white; height:50px; border-radius:12px; font-weight:bold; text-decoration:none; font-size:1.1rem;">واتساب</a>
-            </div>
+    <div class="grid" id="grid">
+        <div style="text-align:center; padding:40px; color:#999; grid-column:1/-1;">
+            <i class="fas fa-circle-notch fa-spin fa-2x"></i><br>جاري جلب البيانات...
         </div>
     </div>
 </div>
+
+<div class="btm-nav">
+    <div class="btm-item active" onclick="render()"><i class="fas fa-home"></i>الرئيسية</div>
+    <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
+    <div style="width:50px"></div>
+    <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
+    <div class="btm-item" onclick="showForm('ad')"><i class="fas fa-bullhorn"></i>إعلان</div>
+</div>
+
+<div class="fab" onclick="showForm('shop')"><i class="fas fa-plus"></i></div>
 
 <div id="formModal" class="modal">
-    <div class="modal-box" style="margin-top:10%;">
-        <div class="close-btn" onclick="document.getElementById('formModal').style.display='none'">✕</div>
-        <div class="form-content">
-            <h3 style="text-align:center; color:var(--primary); margin-top:0;" id="formTitle">📝 إضافة جديد</h3>
-            <form id="submitForm" onsubmit="submitData(event)">
-                <input name="Name" type="text" class="form-input" placeholder="اسم النشاط / المحل" required>
-                <select name="Category" class="form-input" required>
-                    <option value="">اختر التصنيف...</option>
-                    <option value="مطاعم">مطاعم</option>
-                    <option value="ماركت">ماركت</option>
-                    <option value="صيانة">صيانة وحرف</option>
-                    <option value="طبي">طبي</option>
-                    <option value="مواصلات">مواصلات</option>
-                    <option value="أخرى">أخرى</option>
-                </select>
-                <input name="Description" type="text" class="form-input" placeholder="وصف الخدمة / مواعيد العمل" required>
-                <input name="Contact" type="text" class="form-input" placeholder="رقم الهاتف" required>
-                <button type="submit" id="btnSubmit" class="submit-btn">إرسال الطلب 🚀</button>
-            </form>
+    <div class="modal-content">
+        <span onclick="document.getElementById('formModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer; font-weight:bold; font-size:1.2rem;">✕</span>
+        <h3 style="text-align:center; color:var(--dark); margin-top:0;" id="formTitle">إضافة طلب</h3>
+        
+        <form id="reqForm" onsubmit="sendData(event)">
+            <input type="hidden" name="Type" id="reqType" value="نشاط">
+            <input type="hidden" name="Date" value="New"> 
+            
+            <label style="font-size:0.85rem; font-weight:bold; color:#555; display:block; margin-bottom:5px;">نوع الطلب:</label>
+            <select class="form-select" id="visibleTypeSelector" onchange="document.getElementById('reqType').value = this.value">
+                <option value="نشاط">📝 إضافة نشاط تجاري / خدمي</option>
+                <option value="إعلان">📢 حجز إعلان مميز</option>
+            </select>
+
+            <input type="text" name="Name" class="form-input" placeholder="الاسم (المحل / النشاط)" required>
+            
+            <select name="Category" class="form-select">
+                <option value="">اختر التصنيف...</option>
+                <option value="مطاعم">مطاعم</option>
+                <option value="ماركت">ماركت</option>
+                <option value="صيانة">صيانة وحرف</option>
+                <option value="طبي">طبي</option>
+                <option value="مواصلات">مواصلات</option>
+                <option value="تعليم">تعليم</option>
+                <option value="أخرى">أخرى</option>
+            </select>
+
+            <input type="text" name="Description" class="form-input" placeholder="الوصف / تفاصيل الخدمة" required>
+            <input type="text" name="Contact" class="form-input" placeholder="رقم الهاتف للتواصل" required>
+            
+            <button type="submit" id="submitBtn" class="btn-submit">إرسال الطلب 🚀</button>
+        </form>
+    </div>
+</div>
+
+<div id="detailsModal" class="modal" onclick="if(event.target==this)this.style.display='none'">
+    <div class="modal-content">
+        <span onclick="document.getElementById('detailsModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer; font-weight:bold; background:white; padding:5px 10px; border-radius:50%;">✕</span>
+        <img id="dImg" src="" style="width:100%; height:220px; object-fit:cover; border-radius:15px; margin-bottom:15px;">
+        <div style="display:flex; justify-content:space-between; align-items:start;">
+            <h2 id="dName" style="color:var(--dark); margin:0;"></h2>
+            <span id="dSource" style="background:#eee; padding:2px 8px; border-radius:5px; font-size:0.7rem; display:none;"></span>
         </div>
+        <p id="dSub" style="color:#777; font-size:0.9rem; margin:5px 0;"></p>
+        <p id="dDesc" style="color:#333; line-height:1.6; margin:15px 0; font-size:0.95rem;"></p>
+        
+        <div style="display:flex; gap:10px;">
+            <a id="dCall" href="#" class="btn-submit" style="text-align:center; text-decoration:none; flex:1; display:flex; align-items:center; justify-content:center; gap:5px;"><i class="fas fa-phone"></i> اتصال</a>
+            <a id="dWa" href="#" class="btn-submit" style="text-align:center; text-decoration:none; flex:1; background:var(--primary); display:flex; align-items:center; justify-content:center; gap:5px;"><i class="fab fa-whatsapp"></i> واتساب</a>
+        </div>
+        <a id="dLoc" href="#" target="_blank" class="btn-submit" style="text-align:center; text-decoration:none; background:#f39c12; margin-top:10px; display:block;"><i class="fas fa-location-arrow"></i> الموقع على الخريطة</a>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // ✅✅ تم دمج الرابط السحري الصحيح هنا ✅✅
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzdXrGQtER7gQjeO2qQsS5dDC6nJqYy_mOccZpgUxEDCt1ZSlAPWNGEXWEF5Lm0hhjycA/exec';
-
+    // ✅ الرابط الجديد الذي أرسلته تم دمجه هنا
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxBQ3ZUNXU2vtqJ8MZ07gUnlk-R2qSVvHVFbYT004_oiQuZewdMHrQz3bNxarrzxMGQqg/exec';
+    
+    // رابط الشيت (Live_Data)
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
 
-    let db = [], favs = JSON.parse(localStorage.getItem('favs')) || [], curCat='all', view='home', curID;
+    let db = [], curCat = 'all', favs = JSON.parse(localStorage.getItem('favs')) || [];
 
-    // --- إرسال البيانات للشيت مباشرة ---
-    function submitData(e) {
+    function init() {
+        document.getElementById('formModal').style.display = 'none';
+        Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
+            // قراءة الأعمدة الجديدة من A إلى O
+            db = res.data.slice(1).map((r, i) => ({
+                id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], desc: r[5],
+                ph: r[6], wa: r[7], img: fixImg(r[8]), loc: r[9], offer: r[10],
+                live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
+                hours: r[13], newsSrc: r[14] 
+            })).filter(x => x.name);
+            
+            document.getElementById('shopCount').innerText = db.length;
+            setupTickers();
+            render();
+        }});
+    }
+
+    // إرسال البيانات (نشاط أو إعلان) إلى شيت Pending
+    function sendData(e) {
         e.preventDefault();
-        const btn = document.getElementById('btnSubmit');
+        const btn = document.getElementById('submitBtn');
         btn.disabled = true; btn.innerText = "جاري الإرسال...";
         
-        const formData = new FormData(document.getElementById('submitForm'));
+        const form = document.getElementById('reqForm');
+        const formData = new FormData(form);
         const data = {};
         formData.forEach((value, key) => data[key] = value);
 
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(json => {
-            if(json.result === 'success') {
+        fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
+        .then(r => r.json())
+        .then(res => {
+            if(res.result === 'success') {
                 alert("✅ تم استلام طلبك بنجاح! سيتم مراجعته.");
-                document.getElementById('formModal').style.display='none';
-                document.getElementById('submitForm').reset();
+                document.getElementById('formModal').style.display = 'none';
+                form.reset();
             } else {
-                alert("❌ حدث خطأ من السيرفر: " + JSON.stringify(json));
+                alert("❌ حدث خطأ، يرجى المحاولة لاحقاً.");
             }
             btn.disabled = false; btn.innerText = "إرسال الطلب 🚀";
         })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert("⚠️ فشل الاتصال! تأكد من الإنترنت.");
+        .catch(err => {
+            console.error(err);
+            alert("⚠️ تأكد من الاتصال بالإنترنت.");
             btn.disabled = false; btn.innerText = "إرسال الطلب 🚀";
         });
     }
 
-    function init() {
-        Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
-            db = res.data.slice(1).map((r, i) => ({
-                id: i, name: safeTxt(r[1]), cat: getCat(r[2], r[3]), sub: safeTxt(r[3]), area: safeTxt(r[4]), desc: safeTxt(r[5]),
-                ph: safeTxt(r[6]), wa: safeTxt(r[7]), img: fixImg(r[8]), loc: safeTxt(r[9]), offer: safeTxt(r[10]),
-                live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), hours: safeTxt(r[13])
-            })).filter(x => x.name);
-            checkTickers(); render();
-        }});
-    }
-
-    function safeTxt(t) { return (t && t !== 'undefined') ? t : ''; }
-    function fixImg(u) {
-        if(!u || u.length<5) return 'https://via.placeholder.com/400x250?text=Wojhaty';
-        let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/);
-        return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u;
+    function showForm(type) {
+        document.getElementById('formModal').style.display = 'flex';
+        const sel = document.getElementById('visibleTypeSelector');
+        const hidden = document.getElementById('reqType');
+        
+        if(type === 'ad') { sel.value = 'إعلان'; hidden.value = 'إعلان'; }
+        else { sel.value = 'نشاط'; hidden.value = 'نشاط'; }
     }
 
     function getCat(m, s) {
         if(!m) return 'other'; const t = (m+' '+s).toLowerCase();
-        if(t.includes('أخبار') || t.includes('اخبار') || t.includes('news')) return 'news';
-        if(t.includes('نجار')||t.includes('سباك')||t.includes('كهرب')||t.includes('صيانة')||t.includes('حرف')) return 'crafts';
-        if(t.includes('أكل')||t.includes('مطعم')) return 'food';
+        if(t.includes('أخبار') || t.includes('news')) return 'news';
+        if(t.includes('مطعم')||t.includes('أكل')) return 'food';
         if(t.includes('ماركت')) return 'market';
-        if(t.includes('طب')||t.includes('عياد')) return 'medical';
+        if(t.includes('طب')) return 'medical';
+        if(t.includes('صيانة')||t.includes('حرف')) return 'crafts';
         if(t.includes('مواصلات')) return 'transport';
+        if(t.includes('تعليم')||t.includes('مدرسة')) return 'school';
         if(t.includes('حكوم')) return 'gov';
         if(t.includes('عباد')) return 'worship';
+        if(t.includes('إلكترون')) return 'tech';
         return 'other';
     }
 
-    function checkTickers() {
-        const news = db.filter(x => x.cat === 'news').map(x => `📢 ${x.desc}`);
+    function fixImg(u) {
+        if(!u || u.length<5) return 'https://via.placeholder.com/400x250?text=Capital';
+        let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/);
+        return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u;
+    }
+
+    function setupTickers() {
+        const news = db.filter(x => x.cat === 'news').map(x => `📢 ${x.desc} (${x.newsSrc || 'الإدارة'})`);
         if(news.length) {
-            document.getElementById('newsTicker').style.display = 'flex';
-            document.getElementById('newsTxt').innerHTML = news.join('    |    ');
-            document.getElementById('offersTicker').style.top = '32px'; 
-            document.querySelector('header').style.marginTop = '67px';
+            document.getElementById('newsBar').style.display = 'flex';
+            document.getElementById('newsText').innerText = news.join('   |   ');
+            document.querySelector('header').style.marginTop = '94px';
         }
-        const offers = db.filter(x => x.offer && x.offer.length>2).map(x => `🔥 ${x.name}: ${x.offer}`);
-        if(offers.length) {
-            document.getElementById('offersTicker').style.display = 'flex';
-            document.getElementById('offersTxt').innerHTML = offers.join('    •    ');
-            if(!news.length) document.querySelector('header').style.marginTop = '35px';
+        
+        const ads = db.filter(x => x.offer && x.offer.length > 2).map(x => `🔥 ${x.name}: ${x.offer}`);
+        if(ads.length) {
+            document.getElementById('adsBar').style.display = 'flex';
+            document.getElementById('adsText').innerText = ads.join('   •   ');
         }
     }
 
@@ -294,109 +341,68 @@
         const s = document.getElementById('search').value.toLowerCase();
         
         let list = db.filter(x => {
-            if(x.cat === 'news' && curCat !== 'news') return false; 
-            if(view === 'fav' && !favs.includes(x.id)) return false;
-            if(view === 'offers' && (!x.offer || x.offer.length < 2)) return false;
-            const catMatch = (curCat === 'all' || x.cat === curCat);
-            const txtMatch = x.name.toLowerCase().includes(s) || (x.desc && x.desc.includes(s));
-            return catMatch && txtMatch;
+            if(curCat === 'fav') return favs.includes(x.id);
+            if(curCat === 'offers') return x.offer && x.offer.length > 2;
+            if(x.cat === 'news' && curCat !== 'news') return false; // إخفاء الأخبار من الرئيسية
+            
+            const matchCat = (curCat === 'all' || x.cat === curCat);
+            const matchSearch = x.name.toLowerCase().includes(s) || (x.desc && x.desc.includes(s));
+            return matchCat && matchSearch;
         });
 
-        list.sort((a,b) => (b.feat - a.feat) || (b.live - a.live));
-
-        if(list.length === 0) { g.innerHTML = '<div class="loading">لا توجد نتائج</div>'; return; }
+        if(list.length===0) { g.innerHTML='<p style="text-align:center; grid-column:1/-1; color:#999;">لا توجد نتائج</p>'; return; }
 
         list.forEach(x => {
-            const feat = x.feat ? '<div class="badge feat">👑 مميز</div>' : '';
-            const live = x.live ? '<div class="badge live"><div class="dot"></div> متاح</div>' : '';
-            const offer = x.offer ? `<div class="offer-tag">🔥 ${x.offer}</div>` : '';
+            const isNews = x.cat === 'news';
+            const badge = isNews ? `<span style="position:absolute;top:10px;left:10px;background:red;color:white;padding:2px 8px;border-radius:5px;font-size:0.7rem;">خبر عاجل</span>` : (x.feat ? `<span style="position:absolute;top:0;left:0;background:#f1c40f;padding:2px 8px;border-radius:0 0 10px 0;font-size:0.7rem;font-weight:bold;">مميز</span>` : '');
             
+            const src = isNews && x.newsSrc ? `<div class="news-source">مصدر: ${x.newsSrc}</div>` : '';
+            const cardClass = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
+
             g.innerHTML += `
-            <div class="card ${x.feat?'featured':''}" onclick="openM(${x.id})">
-                ${feat} ${live}
-                <img src="${x.img}" class="c-img" referrerpolicy="no-referrer" loading="lazy">
-                <div class="c-info">
-                    <h3 class="c-name">${x.name}</h3>
-                    <div class="c-sub">${x.sub}</div>
-                    ${offer}
-                    <div class="actions">
-                        ${x.ph ? `<div class="act-btn act-call" onclick="event.stopPropagation();window.open('tel:${x.ph}')"><i class="fas fa-phone"></i></div>` : ''}
-                        ${x.wa ? `<div class="act-btn act-wa" onclick="event.stopPropagation();window.open('https://wa.me/${x.wa}')"><i class="fab fa-whatsapp"></i></div>` : ''}
-                        ${x.loc ? `<div class="act-btn act-loc" onclick="event.stopPropagation();window.open('${x.loc}')"><i class="fas fa-location-arrow"></i></div>` : ''}
-                    </div>
+            <div class="${cardClass}" onclick="openD(${x.id})">
+                ${badge}
+                <img src="${x.img}" class="c-img" loading="lazy">
+                <div class="c-body">
+                    ${src}
+                    <div class="c-title">${x.name}</div>
+                    <div class="c-sub">${isNews ? '' : `<i class="fas fa-map-marker-alt"></i> ` + x.sub}</div>
+                    ${x.offer ? `<div class="c-offer">🔥 ${x.offer}</div>` : ''}
                 </div>
             </div>`;
         });
     }
 
-    // إدارة النوافذ
-    window.toggleFab = () => document.getElementById('fabMenu').classList.toggle('open');
-    window.openAddForm = (type) => {
-        document.getElementById('fabMenu').classList.remove('open');
-        document.getElementById('formTitle').innerText = (type === 'ad') ? '📢 حجز إعلان' : '📝 إضافة نشاط';
-        document.getElementById('formModal').style.display = 'block';
+    window.filter = (c, el) => {
+        curCat = c; 
+        if(el) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+        render();
     }
-
-    window.filter = (c, el) => { curCat = c; document.querySelectorAll('.chip').forEach(i=>i.classList.remove('active')); el.classList.add('active'); render(); }
     document.getElementById('search').addEventListener('input', render);
-    window.setView = (v, el) => { view = v; document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active')); if(el) el.classList.add('active'); render(); }
 
-    window.openM = (id) => {
-        curID = id; const x = db.find(i=>i.id===id);
-        document.getElementById('mName').innerText = x.name;
-        document.getElementById('mSub').innerText = `${x.sub} | ${x.area}`;
-        document.getElementById('mDesc').innerText = x.desc || 'لا يوجد وصف';
-        document.getElementById('mImg').src = x.img.replace('=s600','=s1000');
+    window.openD = (id) => {
+        const x = db.find(i => i.id === id);
+        document.getElementById('dName').innerText = x.name;
+        document.getElementById('dSub').innerText = x.cat === 'news' ? x.sub : (x.sub + ' | ' + x.area);
+        document.getElementById('dDesc').innerText = x.desc;
+        document.getElementById('dImg').src = x.img.replace('=s600','=s1000');
         
-        const h = document.getElementById('mHours');
-        if(x.hours) { h.style.display='block'; document.getElementById('mHoursTxt').innerText = x.hours; } else h.style.display='none';
+        const src = document.getElementById('dSource');
+        if(x.cat === 'news' && x.newsSrc) { src.style.display='block'; src.innerText = "المصدر: " + x.newsSrc; } 
+        else src.style.display='none';
+
+        document.getElementById('dCall').href = `tel:${x.ph}`;
+        document.getElementById('dWa').href = `https://wa.me/${x.wa}`;
+        document.getElementById('dLoc').href = x.loc || '#';
         
-        const l = document.getElementById('mLoc');
-        if(x.loc) { l.style.display='block'; l.href = x.loc; } else l.style.display='none';
-
-        document.getElementById('mLive').style.display = x.live ? 'flex' : 'none';
-        
-        const favBtn = document.getElementById('favIcon');
-        favBtn.className = favs.includes(id) ? 'fas fa-heart' : 'far fa-heart';
-        favBtn.style.color = favs.includes(id) ? 'red' : '#555';
-
-        document.getElementById('mCall').href = `tel:${x.ph}`;
-        document.getElementById('mWa').href = `https://wa.me/${x.wa}`;
-        document.getElementById('modal').style.display = 'block';
+        document.getElementById('detailsModal').style.display = 'flex';
     }
-
-    window.toggleFavFromModal = () => {
-        if(favs.includes(curID)) favs = favs.filter(i=>i!==curID); else favs.push(curID);
-        localStorage.setItem('favs', JSON.stringify(favs));
-        openM(curID); if(view==='fav') render();
-    }
-    window.closeM = () => document.getElementById('modal').style.display = 'none';
-
-    window.sortByLoc = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((pos) => {
-                const lat = pos.coords.latitude; const lon = pos.coords.longitude;
-                db.forEach(i => {
-                    if(i.loc && i.loc.includes('@')) {
-                        const m = i.loc.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-                        if(m) i.dist = Math.sqrt(Math.pow(m[1]-lat,2) + Math.pow(m[2]-lon,2));
-                    } else i.dist = 999;
-                });
-                db.sort((a,b) => a.dist - b.dist);
-                render();
-            }, () => alert("فعل GPS"));
-        } else alert("لا يدعم GPS");
-    }
-
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault(); deferredPrompt = e;
-        const btn = document.getElementById('installBtn');
-        btn.style.display = 'block';
-        btn.addEventListener('click', () => { deferredPrompt.prompt(); });
-    });
 
     init();
 </script>
 </body>
 </html>
+

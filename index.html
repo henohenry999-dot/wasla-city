@@ -12,62 +12,38 @@
     
     <style>
         :root {
-            --primary: #27ae60;       /* الأخضر الرئيسي */
-            --dark: #2c3e50;          /* الكحلي */
-            --gold: #f1c40f;          /* الذهبي */
-            --bg: #f8f9fa;
-            --news-bg: #c0392b;       /* الأحمر للأخبار */
-            --ads-bg: #e67e22;        /* البرتقالي للعروض */
+            --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f8f9fa; --news-bg: #c0392b;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; }
         
-        /* --- أشرطة التنبيهات --- */
+        /* التنبيهات */
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        
-        /* شريط الأخبار */
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .ticker-label { height: 100%; padding: 0 15px; font-weight: 800; display: flex; align-items: center; font-size: 0.7rem; white-space: nowrap; z-index: 2; }
         .lbl-news { background: var(--news-bg); color: white; }
         .lbl-ads { background: var(--gold); color: black; }
-        
         .ticker-text { white-space: nowrap; padding: 0 10px; flex: 1; overflow: hidden; font-weight: 500; }
-        /* تحسين الأداء: استخدام transform بدلاً من margin */
-        .scrolling { display: inline-block; animation: scroll 35s linear infinite; }
-        
-        /* شريط العروض */
+        .scrolling { display: inline-block; animation: scroll 60s linear infinite; }
         .ads-bar { height: 32px; background: #fff8e1; color: black; display: flex; align-items: center; font-size: 0.85rem; font-weight: bold; border-bottom: 1px solid #eee; }
-        
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* --- الهيدر --- */
+        /* الهيدر */
         header { 
-            margin-top: 64px; /* مسافة للشريطين */
-            background: linear-gradient(135deg, var(--primary), #1abc9c); 
-            color: white; padding: 15px 20px; 
-            border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;
+            margin-top: 64px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 15px 20px; 
+            border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
+            display: flex; justify-content: space-between; align-items: center;
         }
-        
         .logo-area { display: flex; align-items: center; gap: 12px; }
-        .app-icon { 
-            width: 45px; height: 45px; background: white; border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center; 
-            color: var(--primary); font-size: 1.6rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        .app-icon { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.6rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .app-title h1 { margin: 0; font-size: 1.6rem; font-weight: 900; line-height: 1; }
-        .app-title p { margin: 0; font-size: 0.75rem; opacity: 0.9; letter-spacing: 0.5px; }
-
-        .counter-box { 
-            background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: 12px; 
-            text-align: center; color: white; border: 1px solid rgba(255,255,255,0.2);
-        }
+        .app-title p { margin: 0; font-size: 0.75rem; opacity: 0.9; }
+        .counter-box { background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: 12px; text-align: center; color: white; border: 1px solid rgba(255,255,255,0.2); }
         .counter-num { font-size: 1.1rem; font-weight: 800; color: var(--gold); display: block; line-height: 1; }
         .counter-lbl { font-size: 0.6rem; }
 
-        /* --- المحتوى --- */
+        /* المحتوى */
         #mainView { padding: 0 15px; margin-top: -20px; position: relative; z-index: 10; }
-        
         .search-wrap { background: white; padding: 5px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; gap: 10px; margin-bottom: 15px; }
         .search-inp { flex: 1; border: none; padding: 12px; outline: none; font-family: 'Tajawal'; font-size: 1rem; border-radius: 15px; }
         
@@ -77,12 +53,9 @@
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 12px; min-height: 200px; }
         
-        /* الكارت */
-        .card { background: white; border-radius: 16px; padding: 10px; display: flex; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); position: relative; overflow: hidden; transition: transform 0.2s; content-visibility: auto; /* تحسين أداء */ }
+        .card { background: white; border-radius: 16px; padding: 10px; display: flex; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); position: relative; overflow: hidden; transition: transform 0.2s; content-visibility: auto; }
         .card:active { transform: scale(0.98); }
         .card.featured { border: 1px solid var(--gold); background: #fffdf5; }
-        
-        /* كارت الأخبار */
         .card.news-card { background: #fff; border-right: 4px solid var(--news-bg); flex-direction: column; gap: 8px; }
         .card.news-card .c-img { width: 100%; height: 140px; }
         
@@ -113,44 +86,36 @@
 <body>
 
 <div class="ticker-container">
-    <div class="news-bar" id="newsBar" style="display:none">
-        <div class="ticker-label lbl-news">أخبار</div>
-        <div class="ticker-text"><span class="scrolling" id="newsText"></span></div>
-    </div>
-    <div class="ads-bar" id="adsBar" style="display:none">
-        <div class="ticker-label lbl-ads">🔥 عروض مميزة</div>
-        <div class="ticker-text"><span class="scrolling" id="adsText"></span></div>
-    </div>
+    <div class="news-bar" id="newsBar" style="display:none"><div class="ticker-label lbl-news">أخبار</div><div class="ticker-text"><span class="scrolling" id="newsText"></span></div></div>
+    <div class="ads-bar" id="adsBar" style="display:none"><div class="ticker-label lbl-ads">🔥 عروض مميزة</div><div class="ticker-text"><span class="scrolling" id="adsText"></span></div></div>
 </div>
 
 <header>
     <div class="logo-area">
         <div class="app-icon"><i class="fas fa-location-dot"></i></div>
-        <div class="app-title">
-            <h1>هنا</h1>
-            <p>دليلك في جيبك</p>
-        </div>
+        <div class="app-title"><h1>هنا</h1><p>دليلك في جيبك</p></div>
     </div>
-    <div class="counter-box">
-        <span class="counter-num" id="shopCount">0</span>
-        <span class="counter-lbl">مكان</span>
-    </div>
+    <div class="counter-box"><span class="counter-num" id="shopCount">0</span><span class="counter-lbl">مكان</span></div>
 </header>
 
 <div id="mainView">
     <div class="search-wrap">
-        <input type="text" id="search" class="search-inp" placeholder="ابحث عن (سباك، مطعم، مدرسة)...">
+        <input type="text" id="search" class="search-inp" placeholder="ابحث عن (عقارات، ديكور، سباك)...">
         <i class="fas fa-search" style="color:#ccc; align-self:center; padding-left:10px;"></i>
     </div>
 
     <div class="cats-wrap">
         <div class="cat-btn active" onclick="filter('all', this)">الكل</div>
         <div class="cat-btn" onclick="filter('news', this)">📰 أخبار</div>
+        <div class="cat-btn" onclick="filter('realestate', this)">🏠 عقارات</div>
         <div class="cat-btn" onclick="filter('gov', this)">🏛️ حكومي</div>
         <div class="cat-btn" onclick="filter('food', this)">🍔 مطاعم</div>
         <div class="cat-btn" onclick="filter('market', this)">🛒 ماركت</div>
         <div class="cat-btn" onclick="filter('crafts', this)">🛠️ صنايعية</div>
+        <div class="cat-btn" onclick="filter('decor', this)">🎨 ديكور</div>
+        <div class="cat-btn" onclick="filter('clothes', this)">👗 ملابس</div>
         <div class="cat-btn" onclick="filter('medical', this)">💊 صحة</div>
+        <div class="cat-btn" onclick="filter('services', this)">💼 خدمات</div>
         <div class="cat-btn" onclick="filter('transport', this)">🚌 مواصلات</div>
         <div class="cat-btn" onclick="filter('school', this)">🎓 تعليم</div>
     </div>
@@ -163,7 +128,7 @@
 </div>
 
 <div class="btm-nav">
-    <div class="btm-item active" onclick="render()"><i class="fas fa-home"></i>الرئيسية</div>
+    <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
     <div style="width:50px"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
@@ -181,26 +146,32 @@
             <input type="hidden" name="Type" id="reqType" value="نشاط">
             <input type="hidden" name="Date" value="New"> 
             
-            <select class="form-select" id="visibleTypeSelector" onchange="document.getElementById('reqType').value = this.value">
-                <option value="نشاط">📝 إضافة نشاط</option>
-                <option value="إعلان">📢 حجز إعلان</option>
+            <select class="form-select" id="visibleTypeSelector" onchange="toggleFormFields(this.value)">
+                <option value="نشاط">📝 إضافة نشاط جديد</option>
+                <option value="إعلان">📢 حجز إعلان مميز</option>
             </select>
 
-            <input type="text" name="Name" class="form-input" placeholder="الاسم" required>
+            <input type="text" name="Name" class="form-input" placeholder="الاسم (المحل / النشاط)" required>
             
-            <select name="Category" class="form-select">
-                <option value="">التصنيف...</option>
-                <option value="مطاعم">مطاعم</option>
-                <option value="ماركت">ماركت</option>
-                <option value="صيانة">صيانة</option>
-                <option value="طبي">طبي</option>
-                <option value="مواصلات">مواصلات</option>
-                <option value="تعليم">تعليم</option>
-                <option value="أخرى">أخرى</option>
-            </select>
+            <div id="catField">
+                <select name="Category" class="form-select">
+                    <option value="">اختر التصنيف...</option>
+                    <option value="عقارات">عقارات</option>
+                    <option value="ديكور">ديكور وتشطيبات</option>
+                    <option value="ملابس">ملابس وأحذية</option>
+                    <option value="مطاعم">مطاعم وكافيهات</option>
+                    <option value="ماركت">سوبر ماركت</option>
+                    <option value="صيانة">صيانة وحرف</option>
+                    <option value="خدمات">خدمات عامة</option>
+                    <option value="طبي">طبي وصيدليات</option>
+                    <option value="مواصلات">مواصلات</option>
+                    <option value="تعليم">تعليم وحضانات</option>
+                    <option value="أخرى">أخرى</option>
+                </select>
+            </div>
 
-            <input type="text" name="Description" class="form-input" placeholder="الوصف" required>
-            <input type="text" name="Contact" class="form-input" placeholder="رقم الهاتف" required>
+            <input type="text" name="Description" class="form-input" placeholder="الوصف / تفاصيل الخدمة" required>
+            <input type="text" name="Contact" class="form-input" placeholder="رقم الهاتف للتواصل (مطلوب)" required>
             
             <button type="submit" id="submitBtn" class="btn-submit">إرسال 🚀</button>
         </form>
@@ -229,8 +200,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxBQ3ZUNXU2vtqJ8MZ07gUnlk-R2qSVvHVFbYT004_oiQuZewdMHrQz3bNxarrzxMGQqg/exec';
-    
-    // رابط الشيت
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
 
@@ -245,11 +214,36 @@
                 live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
                 hours: r[13], newsSrc: r[14] 
             })).filter(x => x.name);
-            
             document.getElementById('shopCount').innerText = db.length;
-            setupTickers();
-            render();
+            setupTickers(); render();
         }});
+    }
+
+    // زر الرئيسية: إعادة ضبط التطبيق
+    function resetApp(el) {
+        document.getElementById('search').value = '';
+        filter('all', document.querySelector('.cats-wrap .cat-btn')); // أول زر (الكل)
+        if(el) {
+            document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+    }
+
+    // منطق الفورم الذكي
+    function toggleFormFields(type) {
+        document.getElementById('reqType').value = type;
+        const catField = document.getElementById('catField');
+        // إذا كان إعلان نخفي التصنيف، إذا نشاط نظهره
+        if (type === 'إعلان') catField.style.display = 'none';
+        else catField.style.display = 'block';
+    }
+
+    function showForm(type) {
+        document.getElementById('formModal').style.display = 'flex';
+        const sel = document.getElementById('visibleTypeSelector');
+        
+        if(type === 'ad') { sel.value = 'إعلان'; toggleFormFields('إعلان'); }
+        else { sel.value = 'نشاط'; toggleFormFields('نشاط'); }
     }
 
     function sendData(e) {
@@ -278,44 +272,36 @@
         });
     }
 
-    function showForm(type) {
-        document.getElementById('formModal').style.display = 'flex';
-        const sel = document.getElementById('visibleTypeSelector');
-        const hidden = document.getElementById('reqType');
-        
-        if(type === 'ad') { sel.value = 'إعلان'; hidden.value = 'إعلان'; }
-        else { sel.value = 'نشاط'; hidden.value = 'نشاط'; }
-    }
-
     function getCat(m, s) {
         if(!m) return 'other'; const t = (m+' '+s).toLowerCase();
         if(t.includes('أخبار') || t.includes('news')) return 'news';
+        if(t.includes('عقار')) return 'realestate';
+        if(t.includes('ديكور')||t.includes('تشطيب')) return 'decor';
+        if(t.includes('ملابس')||t.includes('أحذية')) return 'clothes';
+        if(t.includes('خدمات')||t.includes('مكتب')) return 'services';
         if(t.includes('مطعم')||t.includes('أكل')) return 'food';
         if(t.includes('ماركت')) return 'market';
-        if(t.includes('طب')) return 'medical';
+        if(t.includes('طب')||t.includes('صيدلي')) return 'medical';
         if(t.includes('صيانة')||t.includes('حرف')) return 'crafts';
         if(t.includes('مواصلات')) return 'transport';
         if(t.includes('تعليم')||t.includes('مدرسة')) return 'school';
         if(t.includes('حكوم')) return 'gov';
-        if(t.includes('عباد')) return 'worship';
         return 'other';
     }
 
     function fixImg(u) {
-        // تحسين: استخدام رابط Placeholder سريع
         if(!u || u.length<5) return 'https://via.placeholder.com/150/f0f0f0/cccccc?text=Hana';
         let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/);
         return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u;
     }
 
     function setupTickers() {
-        const news = db.filter(x => x.cat === 'news').map(x => `📢 ${x.desc} (${x.newsSrc || 'الإدارة'})`);
+        const news = db.filter(x => x.cat === 'news').map(x => `📢 ${x.name} (${x.newsSrc || 'الإدارة'})`);
         if(news.length) {
             document.getElementById('newsBar').style.display = 'flex';
             document.getElementById('newsText').innerText = news.join('   |   ');
             document.querySelector('header').style.marginTop = '94px';
         }
-        
         const ads = db.filter(x => x.offer && x.offer.length > 2).map(x => `🔥 ${x.name}: ${x.offer}`);
         if(ads.length) {
             document.getElementById('adsBar').style.display = 'flex';
@@ -326,8 +312,8 @@
     function render() {
         const g = document.getElementById('grid'); g.innerHTML = '';
         const s = document.getElementById('search').value.toLowerCase();
+        const fragment = document.createDocumentFragment();
         
-        // تحسين الأداء: تصفية البيانات في الذاكرة أولاً
         let list = db.filter(x => {
             if(curCat === 'fav') return favs.includes(x.id);
             if(curCat === 'offers') return x.offer && x.offer.length > 2;
@@ -340,19 +326,13 @@
 
         if(list.length===0) { g.innerHTML='<p style="text-align:center; grid-column:1/-1; color:#999;">لا توجد نتائج</p>'; return; }
 
-        // تحسين الأداء: بناء HTML مرة واحدة (Document Fragment)
-        const fragment = document.createDocumentFragment();
-        
         list.forEach(x => {
             const isNews = x.cat === 'news';
             const card = document.createElement('div');
             card.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
             card.onclick = () => openD(x.id);
 
-            let badgeHTML = '';
-            if(isNews) badgeHTML = `<span style="position:absolute;top:10px;left:10px;background:red;color:white;padding:2px 8px;border-radius:5px;font-size:0.7rem;">خبر عاجل</span>`;
-            else if(x.feat) badgeHTML = `<span style="position:absolute;top:0;left:0;background:#f1c40f;padding:2px 8px;border-radius:0 0 10px 0;font-size:0.7rem;font-weight:bold;">مميز</span>`;
-
+            let badgeHTML = isNews ? `<span style="position:absolute;top:10px;left:10px;background:red;color:white;padding:2px 8px;border-radius:5px;font-size:0.7rem;">خبر عاجل</span>` : (x.feat ? `<span style="position:absolute;top:0;left:0;background:#f1c40f;padding:2px 8px;border-radius:0 0 10px 0;font-size:0.7rem;font-weight:bold;">مميز</span>` : '');
             const srcHTML = isNews && x.newsSrc ? `<div class="news-src">مصدر: ${x.newsSrc}</div>` : '';
             const offerHTML = x.offer ? `<div class="c-offer">🔥 ${x.offer}</div>` : '';
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-map-marker-alt" style="color:#ccc"></i> ${x.sub}</div>`;

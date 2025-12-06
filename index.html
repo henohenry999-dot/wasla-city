@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#27ae60">
     <meta name="apple-mobile-web-app-capable" content="yes">
     
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
@@ -35,10 +35,19 @@
             border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; 
             box-shadow: 0 5px 25px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center;
         }
-        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .app-icon { width: 50px; height: 50px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .app-title h1 { margin: 0; font-size: 1.8rem; font-weight: 900; letter-spacing: 1px; font-family: sans-serif; } 
-        .app-title p { margin: 2px 0 0; font-size: 0.9rem; opacity: 1; font-weight: 700; color: #e8f5e9; } 
+        
+        /* 💎 اللوجو الزخرفي الجديد */
+        .app-title h1 { 
+            margin: 0; font-size: 2.2rem; font-weight: 700; 
+            font-family: 'Reem Kufi', sans-serif; /* الخط الزخرفي */
+            letter-spacing: 1px; 
+            background: -webkit-linear-gradient(#fff, #e0f2f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        } 
+        .app-title p { margin: -5px 0 0; font-size: 0.85rem; opacity: 1; font-weight: 700; color: #ffd54f; letter-spacing: 0.5px; }
+
         .counter-box { background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
         .counter-num { font-size: 1.2rem; font-weight: 800; color: var(--gold); display: block; line-height: 1; }
 
@@ -70,7 +79,7 @@
         .bg-transport { background: #3498db; } .bg-other { background: #95a5a6; }
 
         /* شبكة الكروت */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; scroll-margin-top: 150px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         .card { 
             background: white; border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 8px;
@@ -87,12 +96,9 @@
         .c-title { margin: 5px 0 2px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
         .c-sub { font-size: 0.7rem; color: #7f8c8d; display: flex; align-items: center; gap: 3px; font-weight: 500; }
         
-        /* 🔴 تصميم العرض الخارجي الجديد */
-        .card-offer-visible {
-            background: #fff0f0; color: var(--red); font-size: 0.65rem; font-weight: bold;
-            padding: 4px; border-radius: 6px; margin-top: 5px; border: 1px dashed var(--red);
-            display: flex; align-items: center; gap: 4px; line-height: 1.2;
-        }
+        .offer-box { margin-top: 8px; background: linear-gradient(to right, #fff0f0, #fff); border: 1px dashed var(--red); border-left: 3px solid var(--red); padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; color: var(--red); font-weight: 700; display: flex; align-items: center; gap: 5px; line-height: 1.3; }
+        .offer-box i { animation: pulse 1.5s infinite; }
+        .card-offer-visible { background: #fff0f0; color: var(--red); font-size: 0.65rem; font-weight: bold; padding: 4px; border-radius: 6px; margin-top: 5px; border: 1px dashed var(--red); display: flex; align-items: center; gap: 4px; line-height: 1.2; }
         
         .news-date { font-size: 0.65rem; color: #888; background: #f9f9f9; padding: 2px 6px; border-radius: 4px; width: fit-content; margin-top: 5px; }
         
@@ -103,6 +109,7 @@
 
         .load-more { display: block; margin: 20px auto; padding: 12px 35px; background: white; border: 1px solid #ddd; border-radius: 30px; color: var(--primary); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
 
+        /* القوائم السفلية */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; border-radius: 20px 20px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.7rem; cursor: pointer; transition: 0.2s; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .btm-item i { font-size: 1.4rem; }
@@ -117,6 +124,7 @@
         .float-ad:hover .float-txt, .float-ad.open .float-txt { display: block; }
         @keyframes wig { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} }
 
+        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
         .modal-content { background: white; width: 92%; max-width: 450px; border-radius: 20px; padding: 25px; position: relative; animation: pop 0.3s; max-height: 85vh; overflow-y: auto; }
         @keyframes pop { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
@@ -144,7 +152,7 @@
 <div class="float-ad" id="floatAd" style="display:none" onclick="openFloatAd()"><div class="float-icon"><i class="fas fa-gift"></i></div><div class="float-txt" id="floatTxt"></div></div>
 
 <header>
-    <div class="logo-area">
+    <div class="logo-area" onclick="resetApp(this)">
         <div class="app-icon"><i class="fas fa-city"></i></div>
         <div class="app-title"><h1>Hona</h1><p>دليلك في جيبك</p></div>
     </div>
@@ -273,12 +281,12 @@
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
     let favs = JSON.parse(localStorage.getItem('favs')) || [];
 
-    // 🔥 التخزين المؤقت للسرعة اللحظية
+    // 🔥 التخزين المؤقت + الترتيب المعكوس للأخبار (Newest First)
     function init() {
         document.getElementById('formModal').style.display = 'none';
         
         // 1. تحميل الكاش فوراً
-        const cached = localStorage.getItem('hona_cache_v51');
+        const cached = localStorage.getItem('hona_v53_cache');
         if(cached) {
             fullDB = JSON.parse(cached);
             document.getElementById('shopCount').innerText = fullDB.length;
@@ -292,12 +300,14 @@
                 ph: r[6], wa: r[7], img: fixImg(r[8]), loc: r[9], offer: r[10],
                 live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
                 hours: r[13], newsSrc: r[14] 
-            })).filter(x => x.name);
+            })).filter(x => x.name).reverse(); // 🔴 عكس الترتيب ليظهر الأحدث أولاً
             
-            fullDB = newData;
-            localStorage.setItem('hona_cache_v51', JSON.stringify(fullDB)); // تحديث الكاش
-            document.getElementById('shopCount').innerText = fullDB.length;
-            setupTickers(); setupFloatAd(); resetApp();
+            if (JSON.stringify(newData) !== JSON.stringify(fullDB)) {
+                fullDB = newData;
+                localStorage.setItem('hona_v53_cache', JSON.stringify(fullDB));
+                document.getElementById('shopCount').innerText = fullDB.length;
+                setupTickers(); setupFloatAd(); resetApp();
+            }
         }});
     }
 
@@ -370,9 +380,6 @@
             if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active');
         }
         
-        // 🚀 التنقل التلقائي للشبكة
-        document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
         const s = document.getElementById('search').value.toLowerCase();
         filteredDB = fullDB.filter(x => {
             if(curCat === 'fav') return favs.includes(x.id);
@@ -380,7 +387,11 @@
             if(x.cat === 'news' && curCat !== 'news') return false;
             return (curCat === 'all' || x.cat === curCat) && (x.name.toLowerCase().includes(s) || x.desc.includes(s));
         });
-        filteredDB.sort((a,b) => (b.feat - a.feat) || (b.live - a.live));
+        // ترتيب: الأخبار والمميز أولاً
+        // بما أننا عكسنا المصفوفة في البداية، فالأحدث يظهر أولاً تلقائياً
+        // لكن نحتاج لرفع "المميز" (Featured) للأعلى
+        filteredDB.sort((a,b) => (b.feat - a.feat));
+        
         page = 1; renderGrid(true);
     }
     document.getElementById('search').addEventListener('input', () => filter(curCat, null));

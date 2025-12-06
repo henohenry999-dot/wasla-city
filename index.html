@@ -82,20 +82,14 @@
         .card.news-card .c-img { width: 90px; height: 90px; }
         
         .c-img { width: 100%; height: 115px; border-radius: 12px; object-fit: cover; background: #eee; flex-shrink: 0; }
-        .c-body { flex: 1; display: flex; flex-direction: column; padding-left: 20px; /* مسافة للقلب */ }
+        .c-body { flex: 1; display: flex; flex-direction: column; padding-left: 0; }
         .c-title { margin: 5px 0 2px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
         .c-sub { font-size: 0.7rem; color: #7f8c8d; display: flex; align-items: center; gap: 3px; font-weight: 500; }
         
         .card-rating { font-size: 0.65rem; color: #f1c40f; margin-top: 2px; display: flex; align-items: center; gap: 2px; }
         .card-rating span { color: #888; font-size: 0.6rem; margin-right: 2px; }
 
-        /* 🔴 زر المفضلة (أسفل يسار الكارت) */
-        .card-fav-btn { 
-            position: absolute; bottom: 10px; left: 10px; z-index: 10; 
-            background: rgba(255,255,255,0.8); width: 32px; height: 32px; 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; transition: 0.2s; 
-        }
+        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; z-index: 10; background: rgba(255,255,255,0.8); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; transition: 0.2s; }
         .card-fav-btn i { color: #bdc3c7; font-size: 1.1rem; transition: 0.2s; }
         .card-fav-btn.active i { color: var(--red); animation: heartBeat 0.5s; }
         @keyframes heartBeat { 0%{transform:scale(1)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
@@ -126,7 +120,6 @@
         .float-ad:hover .float-txt, .float-ad.open .float-txt { display: block; }
         @keyframes wig { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} }
 
-        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
         .modal-content { background: white; width: 92%; max-width: 450px; border-radius: 20px; padding: 25px; position: relative; animation: pop 0.3s; max-height: 85vh; overflow-y: auto; }
         @keyframes pop { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
@@ -140,7 +133,6 @@
         .offer-box-modal::before { content: '🎁'; font-size: 1.5rem; display: block; margin-bottom: 5px; animation: bounce 1s infinite alternate; }
         .offer-title { color: var(--red); font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
         .offer-text { color: #333; font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
-        
         @keyframes pulseBox { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
@@ -170,7 +162,8 @@
 </header>
 
 <div id="mainView">
-    <div class="search-wrap" id="searchArea"> <input type="text" id="search" class="search-inp" placeholder="ابحث عن (اسم، نشاط)...">
+    <div class="search-wrap" id="searchArea">
+        <input type="text" id="search" class="search-inp" placeholder="ابحث عن (اسم، نشاط)...">
         <i class="fas fa-search" style="color:#ccc; align-self:center; padding-left:10px;"></i>
     </div>
 
@@ -324,7 +317,7 @@
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' style='background:%23e8f5e9'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E";
-    const adminPhone = "201000000000"; // 🔴 ضع رقمك هنا
+    const adminPhone = "201000000000"; 
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
     let favs = JSON.parse(localStorage.getItem('favs')) || [];
@@ -357,7 +350,46 @@
         }});
     }
 
-    // --- نظام التقييم (Rating) ---
+    // --- Search & Filter Logic (Revised) ---
+    function filter(c, el) {
+        curCat = c;
+        if(el) {
+            document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active');
+        }
+        
+        // 🔴 Scroll to Grid if clicking a category (not search)
+        if(c !== 'all') document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        applyFilter();
+    }
+
+    function applyFilter() {
+        const s = document.getElementById('search').value.toLowerCase();
+        filteredDB = fullDB.filter(x => {
+            if(curCat === 'fav') return favs.includes(x.id);
+            if(curCat === 'offers') return x.offer;
+            if(x.cat === 'news' && curCat !== 'news') return false; 
+            return (curCat === 'all' || x.cat === curCat) && (x.name.toLowerCase().includes(s) || (x.desc && x.desc.includes(s)));
+        });
+        filteredDB.sort((a,b) => (b.feat - a.feat));
+        page = 1; renderGrid(true);
+    }
+
+    document.getElementById('search').addEventListener('input', applyFilter); // Just filter, don't scroll
+
+    function resetApp(el) { 
+        document.getElementById('search').value=''; 
+        filter('all', document.querySelector('.cat-item'));
+        // 🔴 Scroll to Search Area (Top)
+        document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if(el) {
+            document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+    }
+
     function openAppRate(e) { e.stopPropagation(); document.getElementById('rateAppModal').style.display='flex'; }
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
     function sendAppRate() {
@@ -469,39 +501,6 @@
         
         const ads = fullDB.filter(x => x.offer).map(x => `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${x.offer}</span>`).join('   •   ');
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
-    }
-
-    function filter(c, el) {
-        curCat = c;
-        if(el) {
-            document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active');
-        }
-        
-        if(c !== 'all') document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        const s = document.getElementById('search').value.toLowerCase();
-        filteredDB = fullDB.filter(x => {
-            if(curCat === 'fav') return favs.includes(x.id);
-            if(curCat === 'offers') return x.offer;
-            if(x.cat === 'news' && curCat !== 'news') return false;
-            return (curCat === 'all' || x.cat === curCat) && (x.name.toLowerCase().includes(s) || x.desc.includes(s));
-        });
-        filteredDB.sort((a,b) => (b.feat - a.feat));
-        page = 1; renderGrid(true);
-    }
-    document.getElementById('search').addEventListener('input', () => filter(curCat, null));
-    
-    // 🔴 العودة للرئيسية والذهاب للبحث
-    function resetApp(el) { 
-        document.getElementById('search').value=''; 
-        filter('all', document.querySelector('.cat-item'));
-        document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        if(el) {
-            document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-        }
     }
 
     function openD(id) {

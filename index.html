@@ -54,9 +54,15 @@
 
         /* المحتوى */
         #mainView { padding: 0 15px; margin-top: -30px; position: relative; z-index: 10; }
+        
         .search-wrap { background: white; padding: 6px; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); display: flex; gap: 10px; margin-bottom: 20px; }
+        
         .search-inp { flex: 1; border: none; padding: 12px; outline: none; font-family: 'Tajawal'; font-size: 1rem; border-radius: 15px; }
         
+        /* 🔴 تعديل أيقونة البحث لتكون زر */
+        .search-btn { color: #999; align-self: center; padding: 0 15px; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+        .search-btn:active { color: var(--primary); transform: scale(0.9); }
+
         /* شبكة التصنيفات */
         .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: 0.2s; }
@@ -82,7 +88,7 @@
         .card.news-card .c-img { width: 90px; height: 90px; }
         
         .c-img { width: 100%; height: 115px; border-radius: 12px; object-fit: cover; background: #eee; flex-shrink: 0; }
-        .c-body { flex: 1; display: flex; flex-direction: column; padding-left: 0; }
+        .c-body { flex: 1; display: flex; flex-direction: column; }
         .c-title { margin: 5px 0 2px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
         .c-sub { font-size: 0.7rem; color: #7f8c8d; display: flex; align-items: center; gap: 3px; font-weight: 500; }
         
@@ -133,6 +139,7 @@
         .offer-box-modal::before { content: '🎁'; font-size: 1.5rem; display: block; margin-bottom: 5px; animation: bounce 1s infinite alternate; }
         .offer-title { color: var(--red); font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
         .offer-text { color: #333; font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
+        
         @keyframes pulseBox { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
@@ -163,8 +170,8 @@
 
 <div id="mainView">
     <div class="search-wrap" id="searchArea">
-        <input type="text" id="search" class="search-inp" placeholder="ابحث عن (اسم، نشاط)...">
-        <i class="fas fa-search" style="color:#ccc; align-self:center; padding-left:10px;"></i>
+        <input type="text" id="search" class="search-inp" placeholder="ابحث عن (اسم، نشاط)..." oninput="doSearch(this.value)">
+        <i class="fas fa-search search-btn" onclick="doSearch(document.getElementById('search').value)"></i>
     </div>
 
     <div class="cat-grid">
@@ -326,7 +333,7 @@
     function init() {
         document.getElementById('formModal').style.display = 'none';
         
-        const cached = localStorage.getItem('hona_v57_cache');
+        const cached = localStorage.getItem('hona_v58_cache');
         if(cached) {
             fullDB = JSON.parse(cached);
             document.getElementById('shopCount').innerText = fullDB.length;
@@ -343,14 +350,41 @@
             
             if (JSON.stringify(newData) !== JSON.stringify(fullDB)) {
                 fullDB = newData;
-                localStorage.setItem('hona_v57_cache', JSON.stringify(fullDB));
+                localStorage.setItem('hona_v58_cache', JSON.stringify(fullDB));
                 document.getElementById('shopCount').innerText = fullDB.length;
                 setupTickers(); setupFloatAd(); resetApp();
             }
         }});
     }
 
-    // --- Search & Filter Logic (Revised) ---
+    // 🔴 معالجة البحث الذكي (تجاهل الهمزات)
+    function normalizeText(text) {
+        if (!text) return "";
+        return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
+    }
+
+    function doSearch(val) {
+        const s = normalizeText(val.toLowerCase());
+        
+        // عند البحث، انتقل لـ "الكل" تلقائياً
+        if (curCat !== 'all') {
+            document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active'));
+            document.querySelector('.cat-item').classList.add('active'); 
+            curCat = 'all';
+        }
+
+        filteredDB = fullDB.filter(x => {
+            const cleanName = normalizeText(x.name.toLowerCase());
+            const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : "");
+            const cleanSub = normalizeText(x.sub ? x.sub.toLowerCase() : "");
+            
+            return cleanName.includes(s) || cleanDesc.includes(s) || cleanSub.includes(s);
+        });
+        
+        filteredDB.sort((a,b) => (b.feat - a.feat));
+        page = 1; renderGrid(true);
+    }
+
     function filter(c, el) {
         curCat = c;
         if(el) {
@@ -359,30 +393,23 @@
             if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active');
         }
         
-        // 🔴 Scroll to Grid if clicking a category (not search)
         if(c !== 'all') document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        applyFilter();
-    }
-
-    function applyFilter() {
-        const s = document.getElementById('search').value.toLowerCase();
+        document.getElementById('search').value = ''; 
         filteredDB = fullDB.filter(x => {
             if(curCat === 'fav') return favs.includes(x.id);
             if(curCat === 'offers') return x.offer;
             if(x.cat === 'news' && curCat !== 'news') return false; 
-            return (curCat === 'all' || x.cat === curCat) && (x.name.toLowerCase().includes(s) || (x.desc && x.desc.includes(s)));
+            return (curCat === 'all' || x.cat === curCat);
         });
         filteredDB.sort((a,b) => (b.feat - a.feat));
         page = 1; renderGrid(true);
     }
 
-    document.getElementById('search').addEventListener('input', applyFilter); // Just filter, don't scroll
-
     function resetApp(el) { 
         document.getElementById('search').value=''; 
         filter('all', document.querySelector('.cat-item'));
-        // 🔴 Scroll to Search Area (Top)
+        // 🔴 العودة للبحث عند الضغط على الرئيسية
         document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
         if(el) {
             document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active'));
@@ -457,7 +484,6 @@
             div.onclick = () => openD(x.id);
             
             const isFav = favs.includes(x.id) ? 'active' : '';
-            // 🔴 القلب في الأسفل يساراً
             const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
 
             const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : '';

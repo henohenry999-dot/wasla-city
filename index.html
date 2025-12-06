@@ -42,24 +42,27 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden;
         }
         .geo-logo i { font-size: 1.8rem; color: var(--primary); }
+        
         .app-title h1 { 
             margin: 0; font-size: 2.2rem; font-weight: 700; font-family: 'Reem Kufi', sans-serif; letter-spacing: 1px; 
             background: linear-gradient(to bottom, #fff, #81c784); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
         } 
-        .rate-icon { font-size: 1.2rem; color: var(--gold); margin-right: 5px; cursor: pointer; animation: spinStar 5s infinite linear; }
+        /* الشعار الجديد */
+        .app-title p { margin: 2px 0 0; font-size: 0.8rem; opacity: 1; font-weight: 500; color: #e8f5e9; }
+
+        .header-icons { display: flex; gap: 15px; align-items: center; }
+        .rate-icon { font-size: 1.2rem; color: var(--gold); cursor: pointer; animation: spinStar 5s infinite linear; }
+        .info-icon { font-size: 1.2rem; color: white; cursor: pointer; }
         @keyframes spinStar { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
+
         .counter-box { background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
         .counter-num { font-size: 1.2rem; font-weight: 800; color: var(--gold); display: block; line-height: 1; }
 
         /* المحتوى */
         #mainView { padding: 0 15px; margin-top: -30px; position: relative; z-index: 10; }
-        
         .search-wrap { background: white; padding: 6px; border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); display: flex; gap: 10px; margin-bottom: 20px; }
-        
         .search-inp { flex: 1; border: none; padding: 12px; outline: none; font-family: 'Tajawal'; font-size: 1rem; border-radius: 15px; }
-        
-        /* 🔴 تعديل أيقونة البحث لتكون زر */
         .search-btn { color: #999; align-self: center; padding: 0 15px; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
         .search-btn:active { color: var(--primary); transform: scale(0.9); }
 
@@ -139,7 +142,6 @@
         .offer-box-modal::before { content: '🎁'; font-size: 1.5rem; display: block; margin-bottom: 5px; animation: bounce 1s infinite alternate; }
         .offer-title { color: var(--red); font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
         .offer-text { color: #333; font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
-        
         @keyframes pulseBox { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
@@ -162,10 +164,13 @@
         <div class="geo-logo"><i class="fas fa-city"></i></div>
         <div class="app-title">
             <h1>Hona</h1>
-            <p>دليلك في جيبك <i class="fas fa-star rate-icon" onclick="openAppRate(event)"></i></p>
-        </div>
+            <p>مجتمع حدائق العاصمة</p> </div>
     </div>
-    <div class="counter-box"><span class="counter-num" id="shopCount">0</span><span class="counter-lbl">مكان</span></div>
+    
+    <div class="header-icons">
+        <i class="fas fa-info-circle info-icon" onclick="openAbout(event)"></i>
+        <i class="fas fa-star rate-icon" onclick="openAppRate(event)"></i>
+    </div>
 </header>
 
 <div id="mainView">
@@ -210,6 +215,21 @@
 
 <div class="fab" onclick="showForm('shop')"><i class="fas fa-plus"></i></div>
 
+<div id="aboutModal" class="modal">
+    <div class="modal-content" style="text-align:center;">
+        <span onclick="document.getElementById('aboutModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer;">✕</span>
+        <div class="geo-logo" style="margin:0 auto 15px;"><i class="fas fa-city" style="color:var(--primary); font-size:2rem;"></i></div>
+        <h3 style="color:var(--dark)">تطبيق Hona</h3>
+        <p style="color:#555; line-height:1.6; font-size:0.95rem;">
+            هذا التطبيق هو عمل <strong>خدمي مجاني 100%</strong> وخالص لوجه الله تعالى، لخدمة أهالي مدينة حدائق العاصمة الكرام.
+            <br><br>
+            هدفنا التسهيل عليكم ودعم أصحاب الأنشطة بلا مقابل.
+            <br><br>
+            <span style="color:var(--primary); font-weight:bold;">نسألكم الدعاء بظهر الغيب ❤️</span>
+        </p>
+    </div>
+</div>
+
 <div id="rateAppModal" class="modal">
     <div class="modal-content" style="text-align:center;">
         <span onclick="document.getElementById('rateAppModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer;">✕</span>
@@ -246,6 +266,11 @@
     <div class="modal-content">
         <span onclick="document.getElementById('formModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer; font-weight:bold;">✕</span>
         <h3 style="text-align:center; color:var(--dark); margin-top:0;" id="formTitle">إضافة طلب</h3>
+        
+        <div style="background:#e8f5e9; padding:8px; border-radius:8px; text-align:center; margin-bottom:15px; border:1px solid #c8e6c9;">
+            <i class="fas fa-check-circle" style="color:var(--primary);"></i> الإضافة مجانية تماماً لوجه الله
+        </div>
+
         <form id="reqForm" onsubmit="sendData(event)">
             <input type="hidden" name="Type" id="reqType" value="نشاط">
             <input type="hidden" name="Date" value="New"> 
@@ -333,7 +358,7 @@
     function init() {
         document.getElementById('formModal').style.display = 'none';
         
-        const cached = localStorage.getItem('hona_v58_cache');
+        const cached = localStorage.getItem('hona_v59_cache');
         if(cached) {
             fullDB = JSON.parse(cached);
             document.getElementById('shopCount').innerText = fullDB.length;
@@ -350,14 +375,15 @@
             
             if (JSON.stringify(newData) !== JSON.stringify(fullDB)) {
                 fullDB = newData;
-                localStorage.setItem('hona_v58_cache', JSON.stringify(fullDB));
+                localStorage.setItem('hona_v59_cache', JSON.stringify(fullDB));
                 document.getElementById('shopCount').innerText = fullDB.length;
                 setupTickers(); setupFloatAd(); resetApp();
             }
         }});
     }
 
-    // 🔴 معالجة البحث الذكي (تجاهل الهمزات)
+    function openAbout(e) { e.stopPropagation(); document.getElementById('aboutModal').style.display = 'flex'; }
+
     function normalizeText(text) {
         if (!text) return "";
         return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
@@ -365,22 +391,17 @@
 
     function doSearch(val) {
         const s = normalizeText(val.toLowerCase());
-        
-        // عند البحث، انتقل لـ "الكل" تلقائياً
         if (curCat !== 'all') {
             document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active'));
             document.querySelector('.cat-item').classList.add('active'); 
             curCat = 'all';
         }
-
         filteredDB = fullDB.filter(x => {
             const cleanName = normalizeText(x.name.toLowerCase());
             const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : "");
             const cleanSub = normalizeText(x.sub ? x.sub.toLowerCase() : "");
-            
             return cleanName.includes(s) || cleanDesc.includes(s) || cleanSub.includes(s);
         });
-        
         filteredDB.sort((a,b) => (b.feat - a.feat));
         page = 1; renderGrid(true);
     }
@@ -392,9 +413,7 @@
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active');
         }
-        
         if(c !== 'all') document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
         document.getElementById('search').value = ''; 
         filteredDB = fullDB.filter(x => {
             if(curCat === 'fav') return favs.includes(x.id);
@@ -409,7 +428,6 @@
     function resetApp(el) { 
         document.getElementById('search').value=''; 
         filter('all', document.querySelector('.cat-item'));
-        // 🔴 العودة للبحث عند الضغط على الرئيسية
         document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' });
         if(el) {
             document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active'));

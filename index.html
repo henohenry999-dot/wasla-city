@@ -12,43 +12,41 @@
     
     <style>
         :root {
-            --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f8f9fa; --white: #ffffff; --red: #e74c3c;
+            --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f0f2f5; --white: #ffffff; --red: #e74c3c;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; }
         
-        /* --- التنبيهات --- */
+        /* التنبيهات */
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .ads-bar { height: 32px; background: #fff8e1; color: black; display: flex; align-items: center; font-size: 0.8rem; border-bottom: 1px solid #eee; }
+        .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .ads-bar { height: 32px; background: #fff8e1; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; }
         .ticker-lbl { padding: 0 10px; font-weight: 800; display: flex; align-items: center; height: 100%; z-index: 2; font-size: 0.7rem; white-space: nowrap; }
         .lbl-news { background: var(--red); color: white; }
         .lbl-ads { background: var(--gold); color: black; }
         .track { white-space: nowrap; flex: 1; overflow: hidden; }
-        .scrolling { display: inline-block; animation: scroll 50s linear infinite; padding-right: 10px; }
+        .scrolling { display: inline-block; animation: scroll 50s linear infinite; padding-right: 10px; font-size: 0.8rem; font-weight: 500; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* --- الهيدر --- */
+        /* الهيدر */
         header { 
             margin-top: 64px; background: linear-gradient(135deg, var(--primary), #16a085); 
             color: white; padding: 15px 20px 30px; 
-            border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;
+            border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;
         }
         .logo-area { display: flex; align-items: center; gap: 10px; }
         .app-icon { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.6rem; }
         .app-title h1 { margin: 0; font-size: 1.5rem; font-weight: 900; }
-        .app-title p { margin: 0; font-size: 0.7rem; opacity: 0.9; }
         .counter-box { background: rgba(0,0,0,0.15); padding: 4px 10px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
         .counter-num { font-size: 1.1rem; font-weight: 800; color: var(--gold); display: block; line-height: 1; }
 
-        /* --- المحتوى --- */
+        /* المحتوى */
         #mainView { padding: 0 15px; margin-top: -25px; position: relative; z-index: 10; }
-        
         .search-wrap { background: white; padding: 5px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; gap: 10px; margin-bottom: 20px; }
         .search-inp { flex: 1; border: none; padding: 12px; outline: none; font-family: 'Tajawal'; font-size: 1rem; border-radius: 15px; }
         
-        /* --- شبكة التصنيفات الجديدة (الأيقونات) --- */
+        /* شبكة التصنيفات (الأيقونات) */
         .cat-grid { 
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; 
             background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px;
@@ -57,63 +55,53 @@
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
         .cat-icon { 
             width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            font-size: 1.4rem; color: white; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 1.3rem; color: white; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .cat-name { font-size: 0.75rem; font-weight: bold; color: #555; text-align: center; }
+        .cat-name { font-size: 0.7rem; font-weight: bold; color: #555; text-align: center; line-height: 1.2; }
         .cat-item:active .cat-icon { transform: scale(0.9); }
         
         /* ألوان التصنيفات */
         .bg-all { background: var(--dark); }
+        .bg-news { background: #c0392b; }
         .bg-food { background: #e67e22; }
         .bg-market { background: #27ae60; }
-        .bg-medical { background: #e74c3c; }
-        .bg-crafts { background: #34495e; }
+        .bg-tech { background: #3498db; }
+        .bg-home { background: #7f8c8d; }
+        .bg-fashion { background: #9b59b6; }
+        .bg-auto { background: #34495e; }
+        .bg-decor { background: #f39c12; }
+        .bg-med { background: #e74c3c; }
         .bg-gov { background: #8e44ad; }
-        .bg-trans { background: #f39c12; }
-        .bg-news { background: #c0392b; }
+        .bg-worship { background: #16a085; }
 
-        /* --- شبكة الكروت --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); gap: 12px; }
-        @media(min-width: 600px) { .grid { grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); } }
+        /* شبكة الكروت (عمودين) */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         .card { 
-            background: white; border-radius: 15px; padding: 10px; display: flex; gap: 12px; 
+            background: white; border-radius: 15px; padding: 8px; display: flex; flex-direction: column; gap: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.03); position: relative; overflow: hidden; 
-            transition: 0.2s; border: 1px solid transparent;
+            transition: 0.2s; border: 1px solid transparent; cursor: pointer;
         }
-        .card:active { transform: scale(0.98); }
+        .card:active { transform: scale(0.96); }
         .card.featured { border: 1px solid var(--gold); background: #fffdf9; }
+        .card.news-card { grid-column: span 2; flex-direction: row; border-right: 4px solid var(--red); padding: 10px; }
+        .card.news-card .c-img { width: 90px; height: 90px; }
         
-        /* الشارات المفقودة (تمت إعادتها) */
-        .badge-live { 
-            position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.9); color: white; 
-            padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: bold; z-index: 5;
-            display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: blink 1s infinite; }
+        .c-img { width: 100%; height: 110px; border-radius: 12px; object-fit: cover; background: #eee; }
+        .c-body { flex: 1; display: flex; flex-direction: column; }
+        .c-title { margin: 5px 0 2px; font-size: 0.9rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
+        .c-sub { font-size: 0.7rem; color: #7f8c8d; }
+        .c-offer { font-size: 0.65rem; color: #c0392b; font-weight: bold; margin-top: 4px; background: #ffebeb; padding: 2px 6px; border-radius: 4px; width: fit-content; }
+        
+        /* الشارات */
+        .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.9); color: white; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 5; display: flex; align-items: center; gap: 3px; }
+        .dot { width: 5px; height: 5px; background: white; border-radius: 50%; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
+        .badge-offer { position: absolute; top: 10px; left: 10px; background: var(--red); color: white; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 5; }
 
-        .badge-offer {
-            position: absolute; top: 10px; left: 10px; background: var(--red); color: white;
-            padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: bold; z-index: 5;
-        }
-        
-        /* كارت الأخبار */
-        .card.news-card { flex-direction: column; gap: 8px; border-right: 4px solid var(--red); }
-        .card.news-card .c-img { width: 100%; height: 140px; }
-        .news-src { 
-            font-size: 0.7rem; background: #eee; color: #555; padding: 3px 8px; 
-            border-radius: 4px; display: inline-block; margin-bottom: 5px; font-weight: bold;
-        }
+        .load-more { display: block; margin: 20px auto; padding: 10px 30px; background: white; border: 1px solid #ddd; border-radius: 25px; color: var(--primary); font-weight: bold; cursor: pointer; grid-column: span 2; }
 
-        .c-img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; background: #eee; flex-shrink: 0; }
-        .c-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        .c-title { margin: 0 0 4px; font-size: 1rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
-        .c-sub { font-size: 0.75rem; color: #777; display: flex; align-items: center; gap: 4px; }
-        
-        .load-more { display: block; margin: 20px auto; padding: 10px 30px; background: white; border: 1px solid #ddd; border-radius: 25px; color: var(--primary); font-weight: bold; cursor: pointer; }
-
-        /* القائمة السفلية */
+        /* القوائم السفلية */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; border-radius: 20px 20px 0 0; }
         .btm-item { text-align: center; color: #ccc; font-size: 0.7rem; cursor: pointer; transition: 0.2s; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .btm-item i { font-size: 1.4rem; }
@@ -129,13 +117,15 @@
         .form-input, .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; }
         .btn-submit { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
         
-        /* إعلان عائم */
+        /* الإعلان العائم */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 1900; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; overflow: hidden; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); }
         .float-ad:hover, .float-ad.open { width: 180px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; }
         .float-ad:hover .float-txt, .float-ad.open .float-txt { display: block; }
         @keyframes wig { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} }
+        
+        .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
     </style>
 </head>
 <body>
@@ -163,19 +153,21 @@
 
     <div class="cat-grid">
         <div class="cat-item" onclick="filter('all', this)"><div class="cat-icon bg-all"><i class="fas fa-th"></i></div><div class="cat-name">الكل</div></div>
-        <div class="cat-item" onclick="filter('food', this)"><div class="cat-icon bg-food"><i class="fas fa-utensils"></i></div><div class="cat-name">مطاعم</div></div>
-        <div class="cat-item" onclick="filter('market', this)"><div class="cat-icon bg-market"><i class="fas fa-shopping-basket"></i></div><div class="cat-name">ماركت</div></div>
-        <div class="cat-item" onclick="filter('medical', this)"><div class="cat-icon bg-medical"><i class="fas fa-user-md"></i></div><div class="cat-name">صحة</div></div>
-        <div class="cat-item" onclick="filter('crafts', this)"><div class="cat-icon bg-crafts"><i class="fas fa-hammer"></i></div><div class="cat-name">صنايعية</div></div>
-        <div class="cat-item" onclick="filter('transport', this)"><div class="cat-icon bg-trans"><i class="fas fa-bus"></i></div><div class="cat-name">مواصلات</div></div>
-        <div class="cat-item" onclick="filter('gov', this)"><div class="cat-icon bg-gov"><i class="fas fa-landmark"></i></div><div class="cat-name">حكومي</div></div>
-        <div class="cat-item" onclick="filter('news', this)"><div class="cat-icon bg-news"><i class="fas fa-newspaper"></i></div><div class="cat-name">أخبار</div></div>
+        <div class="cat-item" onclick="filter('food', this)"><div class="cat-icon bg-food"><i class="fas fa-utensils"></i></div><div class="cat-name">مطاعم<br>ومشروبات</div></div>
+        <div class="cat-item" onclick="filter('market', this)"><div class="cat-icon bg-market"><i class="fas fa-shopping-basket"></i></div><div class="cat-name">ماركت<br>وعطارة</div></div>
+        <div class="cat-item" onclick="filter('tech', this)"><div class="cat-icon bg-tech"><i class="fas fa-mobile-alt"></i></div><div class="cat-name">إلكترونيات<br>وتكنولوجيا</div></div>
+        <div class="cat-item" onclick="filter('home_fix', this)"><div class="cat-icon bg-home"><i class="fas fa-tools"></i></div><div class="cat-name">صيانة<br>منزلية</div></div>
+        <div class="cat-item" onclick="filter('fashion', this)"><div class="cat-icon bg-fashion"><i class="fas fa-tshirt"></i></div><div class="cat-name">ملابس<br>وأحذية</div></div>
+        <div class="cat-item" onclick="filter('auto', this)"><div class="cat-icon bg-auto"><i class="fas fa-car"></i></div><div class="cat-name">سيارات<br>ودراجات</div></div>
+        <div class="cat-item" onclick="filter('decor', this)"><div class="cat-icon bg-decor"><i class="fas fa-paint-roller"></i></div><div class="cat-name">ديكورات</div></div>
+        <div class="cat-item" onclick="filter('medical', this)"><div class="cat-icon bg-med"><i class="fas fa-user-md"></i></div><div class="cat-name">خدمات<br>طبية</div></div>
+        <div class="cat-item" onclick="filter('gov', this)"><div class="cat-icon bg-gov"><i class="fas fa-landmark"></i></div><div class="cat-name">مصالح<br>حكومية</div></div>
+        <div class="cat-item" onclick="filter('worship', this)"><div class="cat-icon bg-worship"><i class="fas fa-mosque"></i></div><div class="cat-name">دور<br>عبادة</div></div>
+        <div class="cat-item" onclick="filter('news', this)"><div class="cat-icon bg-news"><i class="fas fa-newspaper"></i></div><div class="cat-name">أخبار<br>مصورة</div></div>
     </div>
 
     <div class="grid" id="grid">
-        <div style="text-align:center; padding:40px; color:#999; grid-column:1/-1;">
-            <i class="fas fa-spinner fa-spin fa-2x"></i><br>جاري التحميل...
-        </div>
+        <div class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br>جاري التحميل...</div>
     </div>
     <button id="loadMore" class="load-more" onclick="renderMore()" style="display:none;">عرض المزيد 👇</button>
 </div>
@@ -197,25 +189,34 @@
         <form id="reqForm" onsubmit="sendData(event)">
             <input type="hidden" name="Type" id="reqType" value="نشاط">
             <input type="hidden" name="Date" value="New"> 
+            
             <select class="form-select" id="visibleTypeSelector" onchange="toggleForm(this.value)">
                 <option value="نشاط">📝 إضافة نشاط</option>
                 <option value="إعلان">📢 حجز إعلان</option>
             </select>
+
             <input type="text" name="Name" class="form-input" placeholder="الاسم" required>
+            
             <div id="catDiv">
                 <select name="Category" class="form-select">
-                    <option value="">التصنيف...</option>
-                    <option value="مطاعم">مطاعم</option><option value="ماركت">ماركت</option>
-                    <option value="صيانة">صيانة</option><option value="طبي">طبي</option>
-                    <option value="عقارات">عقارات</option><option value="ديكور">ديكور</option>
-                    <option value="مواصلات">مواصلات</option><option value="تعليم">تعليم</option>
-                    <option value="سيارات">سيارات</option><option value="ملابس">ملابس</option>
+                    <option value="">اختر التصنيف...</option>
+                    <option value="مطاعم">مطاعم ومشروبات</option>
+                    <option value="ماركت">ماركت وعطارة</option>
+                    <option value="الكترونيات">إلكترونيات وتكنولوجيا</option>
+                    <option value="صيانة">صيانة أجهزة منزلية</option>
+                    <option value="ملابس">ملابس وأحذية</option>
+                    <option value="سيارات">سيارات ودراجات</option>
+                    <option value="ديكور">ديكورات</option>
+                    <option value="طبي">خدمات طبية</option>
+                    <option value="عقارات">عقارات</option>
+                    <option value="تعليم">تعليم</option>
                     <option value="أخرى">أخرى</option>
                 </select>
-                <input type="text" name="Area" class="form-input" placeholder="المنطقة">
+                <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
                 <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن">
                 <input type="text" name="Offer" class="form-input" placeholder="هل يوجد عرض؟">
             </div>
+
             <input type="text" name="Description" class="form-input" placeholder="الوصف / التفاصيل" required>
             <input type="text" name="Contact" class="form-input" placeholder="رقم الهاتف" required>
             <button type="submit" id="submitBtn" class="btn-submit">إرسال 🚀</button>
@@ -225,11 +226,11 @@
 
 <div id="detailsModal" class="modal" onclick="if(event.target==this)this.style.display='none'">
     <div class="modal-content">
-        <span onclick="document.getElementById('detailsModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer; font-weight:bold; background:white; padding:5px 10px; border-radius:50%;">✕</span>
+        <span onclick="document.getElementById('detailsModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer; background:white; padding:5px; border-radius:50%;">✕</span>
         <img id="dImg" src="" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:15px;">
         <h2 id="dName" style="margin:0;"></h2>
         <p id="dSub" style="color:#777; font-size:0.9rem; margin:5px 0;"></p>
-        <div id="dSrcBox" style="display:none; background:#eee; padding:5px 10px; border-radius:8px; margin:5px 0; font-size:0.8rem; font-weight:bold;"></div>
+        <div id="dSrcBox" style="display:none; background:#eee; padding:5px; border-radius:5px; font-size:0.8rem; margin-bottom:10px;"></div>
         <p id="dDesc" style="line-height:1.6; margin:15px 0; font-size:0.95rem;"></p>
         <div style="display:flex; gap:10px;">
             <a id="dCall" href="#" class="btn-submit" style="text-align:center; text-decoration:none; flex:1;">اتصال</a>
@@ -246,7 +247,7 @@
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' style='background:%23e8f5e9'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E";
 
-    let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
+    let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 10, floatAdID = null;
     let favs = JSON.parse(localStorage.getItem('favs')) || [];
 
     function init() {
@@ -258,7 +259,6 @@
                 live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
                 hours: r[13], newsSrc: r[14] 
             })).filter(x => x.name);
-            
             document.getElementById('shopCount').innerText = fullDB.length;
             setupTickers(); setupFloatAd(); resetApp();
         }});
@@ -279,57 +279,59 @@
         const g = document.getElementById('grid');
         const btn = document.getElementById('loadMore');
         if(isNew) g.innerHTML = '';
-        if(filteredDB.length === 0) { g.innerHTML='<p style="text-align:center;width:100%;color:#999">لا توجد نتائج</p>'; btn.style.display='none'; return; }
+        if(filteredDB.length === 0) { g.innerHTML='<p style="text-align:center;width:100%;color:#999;grid-column:span 2">لا توجد نتائج</p>'; btn.style.display='none'; return; }
 
         const chunk = filteredDB.slice(0, page * limit);
         const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
         
         toRender.forEach(x => {
             const isNews = x.cat === 'news';
-            const card = document.createElement('div');
-            card.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
-            card.onclick = () => openD(x.id);
-
-            // 🔴 إضافة العلامات (متاح + عرض) بشكل صحيح
+            const div = document.createElement('div');
+            div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
+            div.onclick = () => openD(x.id);
+            
             const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : '';
             const offerBadge = x.offer ? `<div class="badge-offer">🔥 عرض</div>` : '';
             const newsBadge = isNews ? `<div class="badge-offer" style="background:red;">خبر</div>` : '';
-            
             const srcHTML = isNews && x.newsSrc ? `<div class="news-src">مصدر: ${x.newsSrc}</div>` : '';
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div>`;
 
-            card.innerHTML = `
+            div.innerHTML = `
                 ${liveBadge} ${offerBadge} ${newsBadge}
                 <img src="${x.img}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
                 <div class="c-body">
-                    ${srcHTML}
                     <div class="c-title">${x.name}</div>
-                    ${subHTML}
+                    ${srcHTML} ${subHTML}
                 </div>
             `;
-            g.appendChild(card);
+            g.appendChild(div);
         });
-        
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
     function renderMore() { page++; renderGrid(false); }
 
     function setupTickers() {
-        const news = fullDB.filter(x => x.cat === 'news').map(x => `<span onclick="openD(${x.id})">📢 ${x.name} (${x.newsSrc || 'الإدارة'})</span>`).join('   |   ');
+        const news = fullDB.filter(x => x.cat === 'news').map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   |   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
         
-        const ads = fullDB.filter(x => x.offer).map(x => `<span onclick="openD(${x.id})">🔥 ${x.name}: ${x.offer}</span>`).join('   •   ');
+        const ads = fullDB.filter(x => x.offer).map(x => `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${x.offer}</span>`).join('   •   ');
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
     }
 
     function filter(c, el) {
         curCat = c;
+        if(el) {
+            document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active');
+        }
+        
         const s = document.getElementById('search').value.toLowerCase();
         filteredDB = fullDB.filter(x => {
             if(curCat === 'fav') return favs.includes(x.id);
             if(curCat === 'offers') return x.offer;
-            if(x.cat === 'news' && curCat !== 'news') return false; 
+            if(x.cat === 'news' && curCat !== 'news') return false;
             return (curCat === 'all' || x.cat === curCat) && (x.name.toLowerCase().includes(s) || x.desc.includes(s));
         });
         filteredDB.sort((a,b) => (b.feat - a.feat) || (b.live - a.live));
@@ -337,7 +339,14 @@
     }
     document.getElementById('search').addEventListener('input', () => filter(curCat, null));
     
-    function resetApp(el) { document.getElementById('search').value=''; filter('all', null); }
+    function resetApp(el) {
+        document.getElementById('search').value = '';
+        filter('all', document.querySelector('.cat-item'));
+        if(el) {
+            document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+    }
 
     function openD(id) {
         const x = fullDB.find(i => i.id === id);
@@ -347,21 +356,21 @@
         document.getElementById('dImg').src = x.img.replace('s600', 's1000');
         document.getElementById('dImg').onerror = function(){this.src=DEFAULT_IMG};
         
-        // إظهار المصدر
         const srcBox = document.getElementById('dSrcBox');
-        if(x.cat === 'news' && x.newsSrc) { srcBox.style.display='block'; srcBox.innerText = "المصدر: " + x.newsSrc; } 
-        else srcBox.style.display='none';
+        if(x.cat === 'news' && x.newsSrc) { srcBox.style.display='block'; srcBox.innerText = "المصدر: " + x.newsSrc; } else srcBox.style.display='none';
 
         document.getElementById('dCall').href = `tel:${x.ph}`;
         document.getElementById('dWa').href = `https://wa.me/${x.wa}`;
-        document.getElementById('dLoc').href = x.loc || '#';
+        const loc = document.getElementById('dLoc');
+        if(x.loc && x.loc.length > 5) { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
+        
         document.getElementById('detailsModal').style.display = 'flex';
     }
 
     function toggleForm(val) { document.getElementById('reqType').value = val; document.getElementById('catDiv').style.display = (val === 'إعلان') ? 'none' : 'block'; }
     function showForm(t) { document.getElementById('formModal').style.display = 'flex'; const s = document.getElementById('visibleTypeSelector'); if(t==='ad'){s.value='إعلان';toggleForm('إعلان')}else{s.value='نشاط';toggleForm('نشاط')} }
     function sendData(e) { e.preventDefault(); const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.innerText="جاري..."; const data={}; new FormData(document.getElementById('reqForm')).forEach((v,k)=>data[k]=v); fetch(scriptURL,{method:'POST',body:JSON.stringify(data)}).then(r=>r.json()).then(()=>{alert("تم الإرسال!");document.getElementById('formModal').style.display='none';btn.disabled=false;btn.innerText="إرسال 🚀"}).catch(()=>{alert("خطأ اتصال");btn.disabled=false;btn.innerText="إرسال 🚀"}); }
-    function getCat(m,s){if(!m)return 'other';const t=(m+' '+s).toLowerCase();if(t.includes('أخبار'))return 'news';if(t.includes('عقار'))return 'realestate';if(t.includes('ديكور'))return 'decor';if(t.includes('ملابس'))return 'clothes';if(t.includes('سيارات'))return 'cars';if(t.includes('حيوان'))return 'pets';if(t.includes('جيم'))return 'gym';if(t.includes('مطعم')||t.includes('أكل'))return 'food';if(t.includes('ماركت'))return 'market';if(t.includes('طب'))return 'medical';if(t.includes('صيانة'))return 'crafts';if(t.includes('مواصلات'))return 'transport';if(t.includes('تعليم'))return 'school';if(t.includes('حكوم'))return 'gov';if(t.includes('عباد'))return 'worship';return 'other';}
+    function getCat(m,s){if(!m)return 'other';const t=(m+' '+s).toLowerCase();if(t.includes('أخبار'))return 'news';if(t.includes('عقار'))return 'realestate';if(t.includes('ديكور'))return 'decor';if(t.includes('ملابس'))return 'clothes';if(t.includes('سيارات'))return 'cars';if(t.includes('الكترون'))return 'tech';if(t.includes('حيوان'))return 'pets';if(t.includes('رياض'))return 'gym';if(t.includes('مطعم')||t.includes('أكل'))return 'food';if(t.includes('ماركت'))return 'market';if(t.includes('طب'))return 'medical';if(t.includes('صيانة')||t.includes('منزلي'))return 'home_fix';if(t.includes('مواصلات'))return 'transport';if(t.includes('تعليم'))return 'school';if(t.includes('حكوم'))return 'gov';if(t.includes('عباد'))return 'worship';return 'other';}
     function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
 
     init();

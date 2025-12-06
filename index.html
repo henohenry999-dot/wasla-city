@@ -35,19 +35,20 @@
             border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; 
             box-shadow: 0 5px 25px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center;
         }
-        .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .app-icon { width: 50px; height: 50px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
-        /* 💎 اللوجو الزخرفي الجديد */
+        .logo-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .geo-logo { 
+            width: 50px; height: 50px; background: white; border-radius: 16px; 
+            position: relative; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden;
+        }
+        .geo-logo i { font-size: 1.8rem; color: var(--primary); }
         .app-title h1 { 
-            margin: 0; font-size: 2.2rem; font-weight: 700; 
-            font-family: 'Reem Kufi', sans-serif; /* الخط الزخرفي */
-            letter-spacing: 1px; 
-            background: -webkit-linear-gradient(#fff, #e0f2f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0; font-size: 2.2rem; font-weight: 700; font-family: 'Reem Kufi', sans-serif; letter-spacing: 1px; 
+            background: linear-gradient(to bottom, #fff, #81c784); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
         } 
-        .app-title p { margin: -5px 0 0; font-size: 0.85rem; opacity: 1; font-weight: 700; color: #ffd54f; letter-spacing: 0.5px; }
-
+        .rate-icon { font-size: 1.2rem; color: var(--gold); margin-right: 5px; cursor: pointer; animation: spinStar 5s infinite linear; }
+        @keyframes spinStar { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
         .counter-box { background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
         .counter-num { font-size: 1.2rem; font-weight: 800; color: var(--gold); display: block; line-height: 1; }
 
@@ -57,16 +58,9 @@
         .search-inp { flex: 1; border: none; padding: 12px; outline: none; font-family: 'Tajawal'; font-size: 1rem; border-radius: 15px; }
         
         /* شبكة التصنيفات */
-        .cat-grid { 
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; 
-            background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
+        .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: 0.2s; }
-        .cat-icon { 
-            width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            font-size: 1.3rem; color: white; transition: 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
+        .cat-icon { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: white; transition: 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
         .cat-name { font-size: 0.65rem; font-weight: 700; color: #555; text-align: center; line-height: 1.2; }
         .cat-item:active .cat-icon { transform: scale(0.9); }
         .cat-item.active .cat-icon { transform: scale(1.1); border: 3px solid var(--gold); }
@@ -79,13 +73,9 @@
         .bg-transport { background: #3498db; } .bg-other { background: #95a5a6; }
 
         /* شبكة الكروت */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; scroll-margin-top: 180px; }
         
-        .card { 
-            background: white; border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 8px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.04); position: relative; overflow: hidden; 
-            transition: 0.2s; border: 1px solid transparent; cursor: pointer;
-        }
+        .card { background: white; border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.04); position: relative; overflow: hidden; transition: 0.2s; border: 1px solid transparent; cursor: pointer; }
         .card:active { transform: scale(0.97); }
         .card.featured { border: 1px solid var(--gold); background: #fffcf5; }
         .card.news-card { grid-column: span 2; flex-direction: row; border-right: 4px solid var(--red); padding: 12px; }
@@ -96,10 +86,19 @@
         .c-title { margin: 5px 0 2px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
         .c-sub { font-size: 0.7rem; color: #7f8c8d; display: flex; align-items: center; gap: 3px; font-weight: 500; }
         
+        /* 💎 نجوم التقييم داخل الكارت */
+        .card-rating { font-size: 0.65rem; color: #f1c40f; margin-top: 2px; display: flex; align-items: center; gap: 2px; }
+        .card-rating span { color: #888; font-size: 0.6rem; margin-right: 2px; }
+
+        /* زر المفضلة */
+        .card-fav-btn { position: absolute; top: 8px; left: 8px; z-index: 10; background: rgba(255,255,255,0.9); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: 0.2s; }
+        .card-fav-btn i { color: #ccc; font-size: 1rem; transition: 0.2s; }
+        .card-fav-btn.active i { color: var(--red); animation: heartBeat 0.5s; }
+        @keyframes heartBeat { 0%{transform:scale(1)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
+
         .offer-box { margin-top: 8px; background: linear-gradient(to right, #fff0f0, #fff); border: 1px dashed var(--red); border-left: 3px solid var(--red); padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; color: var(--red); font-weight: 700; display: flex; align-items: center; gap: 5px; line-height: 1.3; }
         .offer-box i { animation: pulse 1.5s infinite; }
         .card-offer-visible { background: #fff0f0; color: var(--red); font-size: 0.65rem; font-weight: bold; padding: 4px; border-radius: 6px; margin-top: 5px; border: 1px dashed var(--red); display: flex; align-items: center; gap: 4px; line-height: 1.2; }
-        
         .news-date { font-size: 0.65rem; color: #888; background: #f9f9f9; padding: 2px 6px; border-radius: 4px; width: fit-content; margin-top: 5px; }
         
         .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.95); color: white; padding: 2px 7px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 5; display: flex; align-items: center; gap: 3px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
@@ -109,7 +108,6 @@
 
         .load-more { display: block; margin: 20px auto; padding: 12px 35px; background: white; border: 1px solid #ddd; border-radius: 30px; color: var(--primary); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
 
-        /* القوائم السفلية */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; border-radius: 20px 20px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.7rem; cursor: pointer; transition: 0.2s; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .btm-item i { font-size: 1.4rem; }
@@ -124,16 +122,19 @@
         .float-ad:hover .float-txt, .float-ad.open .float-txt { display: block; }
         @keyframes wig { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} }
 
-        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
         .modal-content { background: white; width: 92%; max-width: 450px; border-radius: 20px; padding: 25px; position: relative; animation: pop 0.3s; max-height: 85vh; overflow-y: auto; }
         @keyframes pop { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
         
+        .rating-stars { display: flex; justify-content: center; gap: 8px; margin: 15px 0; direction: ltr; }
+        .rating-stars i { font-size: 1.8rem; color: #ddd; cursor: pointer; transition: 0.2s; }
+        .rating-stars i.gold { color: var(--gold); }
+        .rating-stars i:hover { transform: scale(1.2); }
+
         .offer-box-modal { margin: 15px 0; padding: 15px; background: linear-gradient(135deg, #fff0f0 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 12px; text-align: center; animation: pulseBox 2s infinite; position: relative; overflow: hidden; }
         .offer-box-modal::before { content: '🎁'; font-size: 1.5rem; display: block; margin-bottom: 5px; animation: bounce 1s infinite alternate; }
         .offer-title { color: var(--red); font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
         .offer-text { color: #333; font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
-        
         @keyframes pulseBox { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
@@ -153,8 +154,11 @@
 
 <header>
     <div class="logo-area" onclick="resetApp(this)">
-        <div class="app-icon"><i class="fas fa-city"></i></div>
-        <div class="app-title"><h1>Hona</h1><p>دليلك في جيبك</p></div>
+        <div class="geo-logo"><i class="fas fa-city"></i></div>
+        <div class="app-title">
+            <h1>Hona</h1>
+            <p>دليلك في جيبك <i class="fas fa-star rate-icon" onclick="openAppRate(event)"></i></p>
+        </div>
     </div>
     <div class="counter-box"><span class="counter-num" id="shopCount">0</span><span class="counter-lbl">مكان</span></div>
 </header>
@@ -200,6 +204,38 @@
 </div>
 
 <div class="fab" onclick="showForm('shop')"><i class="fas fa-plus"></i></div>
+
+<div id="rateAppModal" class="modal">
+    <div class="modal-content" style="text-align:center;">
+        <span onclick="document.getElementById('rateAppModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer;">✕</span>
+        <h3 style="color:var(--primary)">قيم تجربتك معنا</h3>
+        <p style="color:#666; font-size:0.9rem;">رأيك يهمنا لتطوير التطبيق!</p>
+        <div class="rating-stars" id="appStars">
+            <i class="fas fa-star" onclick="setAppRate(1)"></i>
+            <i class="fas fa-star" onclick="setAppRate(2)"></i>
+            <i class="fas fa-star" onclick="setAppRate(3)"></i>
+            <i class="fas fa-star" onclick="setAppRate(4)"></i>
+            <i class="fas fa-star" onclick="setAppRate(5)"></i>
+        </div>
+        <button class="btn-submit" onclick="sendAppRate()">إرسال التقييم 📤</button>
+    </div>
+</div>
+
+<div id="rateShopModal" class="modal">
+    <div class="modal-content" style="text-align:center;">
+        <span onclick="document.getElementById('rateShopModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer;">✕</span>
+        <h3 style="color:var(--dark)">تقييم الخدمة</h3>
+        <p id="rateShopName" style="color:var(--primary); font-weight:bold;"></p>
+        <div class="rating-stars" id="shopStars">
+            <i class="fas fa-star" onclick="setShopRate(1)"></i>
+            <i class="fas fa-star" onclick="setShopRate(2)"></i>
+            <i class="fas fa-star" onclick="setShopRate(3)"></i>
+            <i class="fas fa-star" onclick="setShopRate(4)"></i>
+            <i class="fas fa-star" onclick="setShopRate(5)"></i>
+        </div>
+        <button class="btn-submit" onclick="sendShopRate()">إرسال 🚀</button>
+    </div>
+</div>
 
 <div id="formModal" class="modal">
     <div class="modal-content">
@@ -251,6 +287,9 @@
         <span onclick="document.getElementById('detailsModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer; font-weight:bold; background:white; padding:5px 10px; border-radius:50%; z-index:10;">✕</span>
         <img id="dImg" src="" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:15px;">
         <h2 id="dName" style="margin:0;"></h2>
+        
+        <div id="dRating" class="rating-stars" style="justify-content:flex-start; font-size:1rem; margin:5px 0;"></div>
+        
         <p id="dSub" style="color:#777; font-size:0.9rem; margin:5px 0;"></p>
         
         <a id="dNewsLink" href="#" target="_blank" style="display:none; background:#eee; color:#333; padding:8px; border-radius:8px; text-decoration:none; font-size:0.85rem; font-weight:bold; margin:10px 0; text-align:center;">🔗 اقرأ الخبر كاملاً</a>
@@ -263,6 +302,9 @@
         </div>
 
         <p id="dDesc" style="line-height:1.6; margin:15px 0; font-size:0.95rem;"></p>
+        
+        <button class="btn-submit" onclick="openShopRate()" style="background:var(--gold); color:black; margin-bottom:10px;"><i class="fas fa-star"></i> قيم هذا المكان</button>
+
         <div style="display:flex; gap:10px;">
             <a id="dCall" href="#" class="btn-submit" style="text-align:center; text-decoration:none; flex:1;">اتصال</a>
             <a id="dWa" href="#" class="btn-submit" style="text-align:center; text-decoration:none; background:#25D366; flex:1;">واتساب</a>
@@ -280,35 +322,75 @@
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
     let favs = JSON.parse(localStorage.getItem('favs')) || [];
+    let appRating = 0, shopRating = 0, currentShopID = null, currentShopName = "";
 
-    // 🔥 التخزين المؤقت + الترتيب المعكوس للأخبار (Newest First)
     function init() {
         document.getElementById('formModal').style.display = 'none';
         
-        // 1. تحميل الكاش فوراً
-        const cached = localStorage.getItem('hona_v53_cache');
+        const cached = localStorage.getItem('hona_v56_cache');
         if(cached) {
             fullDB = JSON.parse(cached);
             document.getElementById('shopCount').innerText = fullDB.length;
             setupTickers(); setupFloatAd(); resetApp();
         }
 
-        // 2. تحديث البيانات في الخلفية
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             const newData = res.data.slice(1).map((r, i) => ({
                 id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], desc: r[5],
                 ph: r[6], wa: r[7], img: fixImg(r[8]), loc: r[9], offer: r[10],
                 live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
-                hours: r[13], newsSrc: r[14] 
-            })).filter(x => x.name).reverse(); // 🔴 عكس الترتيب ليظهر الأحدث أولاً
+                hours: r[13], newsSrc: r[14], rating: r[16] || "" // العمود Q (Rating)
+            })).filter(x => x.name).reverse();
             
             if (JSON.stringify(newData) !== JSON.stringify(fullDB)) {
                 fullDB = newData;
-                localStorage.setItem('hona_v53_cache', JSON.stringify(fullDB));
+                localStorage.setItem('hona_v56_cache', JSON.stringify(fullDB));
                 document.getElementById('shopCount').innerText = fullDB.length;
                 setupTickers(); setupFloatAd(); resetApp();
             }
         }});
+    }
+
+    // --- نظام التقييم (Rating) ---
+    function openAppRate(e) { e.stopPropagation(); document.getElementById('rateAppModal').style.display='flex'; }
+    function setAppRate(n) { appRating = n; updateStars('appStars', n); }
+    function sendAppRate() {
+        if(appRating===0) return alert("اختر نجوماً");
+        submitReview("تقييم التطبيق", "Hona App", appRating);
+        document.getElementById('rateAppModal').style.display='none';
+    }
+
+    function openShopRate() { 
+        document.getElementById('rateShopName').innerText = currentShopName;
+        document.getElementById('rateShopModal').style.display='flex'; 
+    }
+    function setShopRate(n) { shopRating = n; updateStars('shopStars', n); }
+    function sendShopRate() {
+        if(shopRating===0) return alert("اختر نجوماً");
+        submitReview("تقييم محل", currentShopName, shopRating);
+        document.getElementById('rateShopModal').style.display='none';
+    }
+
+    function updateStars(id, n) {
+        const stars = document.querySelectorAll(`#${id} i`);
+        stars.forEach((s, i) => s.classList.toggle('gold', i < n));
+    }
+
+    function submitReview(type, name, rate) {
+        const data = { Type: "تقييم", Name: name, Category: type, Description: `التقييم: ${rate} نجوم`, Contact: "", Date: new Date() };
+        fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
+        .then(() => alert("شكراً لتقييمك! ❤️"))
+        .catch(() => alert("شكراً لك!"));
+    }
+
+    // --- رسم النجوم ---
+    function getStarsHTML(rate) {
+        if(!rate) return '';
+        let stars = '';
+        for(let i=0; i<5; i++) {
+            stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`;
+        }
+        return `<div class="card-rating">${stars} <span>(${rate})</span></div>`;
     }
 
     function setupFloatAd() {
@@ -337,29 +419,40 @@
             div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
             div.onclick = () => openD(x.id);
             
+            const isFav = favs.includes(x.id) ? 'active' : '';
+            const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
+
             const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : '';
             const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : '';
             const newsBadge = isNews ? `<div class="badge-live" style="background:var(--red);right:auto;left:10px;">خبر</div>` : '';
             const srcHTML = isNews && x.newsSrc ? `<div class="news-src">مصدر: ${x.newsSrc}</div>` : '';
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div>`;
             const dateHTML = (isNews && x.hours) ? `<div class="news-date"><i class="far fa-clock"></i> ${x.hours}</div>` : '';
-            
-            // 🔴 العرض على الكارت من الخارج
             const offerHTML = x.offer ? `<div class="card-offer-visible"><i class="fas fa-gift"></i> ${x.offer.substring(0, 30)}..</div>` : '';
+            const starsHTML = x.cat !== 'news' ? getStarsHTML(x.rating) : ''; // نجوم في الكارت
 
             div.innerHTML = `
-                ${liveBadge} ${featBadge} ${newsBadge}
+                ${favBtn} ${liveBadge} ${featBadge} ${newsBadge}
                 <img src="${x.img}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
                 <div class="c-body">
                     <div class="c-title">${x.name}</div>
+                    ${starsHTML}
                     ${srcHTML} ${subHTML}
-                    ${dateHTML}
-                    ${offerHTML}
+                    ${dateHTML} ${offerHTML}
                 </div>
             `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
+    }
+
+    function toggleFav(e, id) {
+        e.stopPropagation();
+        const btn = e.currentTarget;
+        if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } 
+        else { favs.push(id); btn.classList.add('active'); }
+        localStorage.setItem('favs', JSON.stringify(favs));
+        if(curCat === 'fav') filter('fav', null);
     }
 
     function renderMore() { page++; renderGrid(false); }
@@ -380,6 +473,8 @@
             if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active');
         }
         
+        if(c !== 'all') document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
         const s = document.getElementById('search').value.toLowerCase();
         filteredDB = fullDB.filter(x => {
             if(curCat === 'fav') return favs.includes(x.id);
@@ -387,11 +482,7 @@
             if(x.cat === 'news' && curCat !== 'news') return false;
             return (curCat === 'all' || x.cat === curCat) && (x.name.toLowerCase().includes(s) || x.desc.includes(s));
         });
-        // ترتيب: الأخبار والمميز أولاً
-        // بما أننا عكسنا المصفوفة في البداية، فالأحدث يظهر أولاً تلقائياً
-        // لكن نحتاج لرفع "المميز" (Featured) للأعلى
         filteredDB.sort((a,b) => (b.feat - a.feat));
-        
         page = 1; renderGrid(true);
     }
     document.getElementById('search').addEventListener('input', () => filter(curCat, null));
@@ -400,12 +491,17 @@
 
     function openD(id) {
         const x = fullDB.find(i => i.id === id);
+        currentShopID = id; currentShopName = x.name; // للتقييم
+        
         document.getElementById('dName').innerText = x.name;
         document.getElementById('dSub').innerText = x.cat === 'news' ? x.sub : (x.sub + ' | ' + x.area);
         document.getElementById('dDesc').innerText = x.desc;
         document.getElementById('dImg').src = x.img.replace('s600', 's1000');
         document.getElementById('dImg').onerror = function(){this.src=DEFAULT_IMG};
         
+        // عرض النجوم في التفاصيل
+        document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : '';
+
         const srcBox = document.getElementById('dSrcBox');
         if(x.cat === 'news' && x.newsSrc) { srcBox.style.display='block'; srcBox.innerText = "المصدر: " + x.newsSrc; } else srcBox.style.display='none';
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -24,8 +23,8 @@
         .lbl-news { background: var(--red); color: white; }
         .lbl-ads { background: var(--gold); color: black; }
         .track { white-space: nowrap; flex: 1; overflow: hidden; display: flex; align-items: center; }
-        .scrolling { display: inline-block; animation: scroll 80s linear infinite; padding-right: 15px; font-weight: 600; font-size: 0.85rem; }
-        .ticker-item { display: inline-block; margin-left: 30px; cursor: pointer; }
+        .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 15px; font-weight: 600; font-size: 0.85rem; cursor: pointer;}
+        .ticker-item { display: inline-block; margin-left: 30px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* الهيدر */
@@ -36,24 +35,13 @@
             box-shadow: 0 5px 25px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center;
         }
         .logo-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .geo-logo { width: 50px; height: 50px; background: white; border-radius: 16px; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden; }
-        .geo-logo i { font-size: 1.8rem; color: var(--primary); }
+        .geo-logo { width: 50px; height: 50px; background: white; border-radius: 16px; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden; color: var(--primary); font-size: 1.8rem; }
         .app-title h1 { margin: 0; font-size: 2.2rem; font-weight: 700; font-family: 'Reem Kufi', sans-serif; letter-spacing: 1px; background: linear-gradient(to bottom, #fff, #81c784); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); } 
         .app-title p { margin: 2px 0 0; font-size: 0.8rem; opacity: 1; font-weight: 500; color: #e8f5e9; }
         
         .header-icons { display: flex; gap: 10px; align-items: center; }
         .icon-btn { font-size: 1.3rem; color: white; cursor: pointer; transition: 0.2s; }
-        .rate-icon { color: var(--gold); animation: spinStar 5s infinite linear; }
-        @keyframes spinStar { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
-        
-        /* عداد المحلات */
-        .shop-counter-box {
-            background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.2);
-            padding: 5px 12px; border-radius: 12px; text-align: center; backdrop-filter: blur(5px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .shop-counter-num { font-size: 1.3rem; font-weight: 900; color: var(--gold); line-height: 1; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .shop-counter-lbl { font-size: 0.65rem; color: #fff; font-weight: bold; }
+        .icon-btn:active { transform: scale(0.9); }
 
         /* المحتوى */
         #mainView { padding: 0 15px; margin-top: -30px; position: relative; z-index: 10; }
@@ -79,7 +67,10 @@
         .c-img { width: 100%; height: 115px; border-radius: 12px; object-fit: cover; background: #eee; flex-shrink: 0; }
         .c-body { flex: 1; display: flex; flex-direction: column; }
         .c-title { margin: 5px 0 2px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
-        .c-sub { font-size: 0.7rem; color: #7f8c8d; display: flex; align-items: center; gap: 3px; font-weight: 500; }
+        
+        /* 🔴 تحسين الكارت: إضافة المنطقة */
+        .c-sub { font-size: 0.65rem; color: #7f8c8d; display: flex; align-items: center; gap: 4px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
         .card-rating { font-size: 0.65rem; color: #f1c40f; margin-top: 2px; display: flex; align-items: center; gap: 2px; }
         .card-rating span { color: #888; font-size: 0.6rem; margin-right: 2px; }
 
@@ -115,11 +106,6 @@
         .modal-content { background: white; width: 92%; max-width: 450px; border-radius: 20px; padding: 25px; position: relative; max-height: 85vh; overflow-y: auto; animation: pop 0.3s; }
         @keyframes pop { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
         
-        .rating-stars { display: flex; justify-content: center; gap: 8px; margin: 15px 0; direction: ltr; }
-        .rating-stars i { font-size: 1.8rem; color: #ddd; cursor: pointer; transition: 0.2s; }
-        .rating-stars i.gold { color: var(--gold); }
-        .rating-stars i:hover { transform: scale(1.2); }
-
         .offer-box-modal { margin: 15px 0; padding: 15px; background: linear-gradient(135deg, #fff0f0 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 12px; text-align: center; animation: pulseBox 2s infinite; position: relative; overflow: hidden; }
         .offer-box-modal::before { content: '🎁'; font-size: 1.5rem; display: block; margin-bottom: 5px; animation: bounce 1s infinite alternate; }
         .offer-title { color: var(--red); font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
@@ -131,10 +117,10 @@
         .img-slider { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 15px; scroll-snap-type: x mandatory; }
         .img-slider img { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; scroll-snap-align: center; flex-shrink: 0; }
         
-        /* Emergency */
-        .emergency-list { list-style: none; padding: 0; margin: 0; text-align: right; }
+        .rating-stars { display: flex; justify-content: center; gap: 8px; margin: 15px 0; direction: ltr; }
+        .rating-stars i { font-size: 1.8rem; color: #ddd; cursor: pointer; transition: 0.2s; }
+        .rating-stars i.gold { color: var(--gold); }
         .emergency-list li { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; font-weight: bold; }
-        .emergency-list li:last-child { border-bottom: none; }
         .call-em-btn { background: var(--red); color: white; padding: 5px 15px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; }
 
         .form-input, .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; }
@@ -152,7 +138,7 @@
 <div class="float-ad" id="floatAd" style="display:none" onclick="openFloatAd()"><div class="float-icon"><i class="fas fa-gift"></i></div><div class="float-txt" id="floatTxt"></div></div>
 
 <header>
-    <div class="logo-area" onclick="resetApp(this)">
+    <div class="logo-area" onclick="forceUpdate()">
         <div class="geo-logo"><i class="fas fa-city"></i></div>
         <div class="app-title">
             <h1>Hona</h1>
@@ -161,10 +147,7 @@
     </div>
     
     <div class="header-icons">
-        <div class="shop-counter-box">
-            <span class="shop-counter-num" id="shopCount">0</span>
-            <span class="shop-counter-lbl">مكان</span>
-        </div>
+        <i class="fas fa-sync-alt icon-btn" onclick="forceUpdate()" style="font-size:1.2rem; margin-left:5px;"></i>
         <i class="fas fa-info-circle icon-btn" onclick="openAbout(event)"></i>
         <i class="fas fa-ambulance icon-btn" onclick="openEmergency(event)" style="color:#ff6b6b"></i>
     </div>
@@ -282,10 +265,9 @@
             <i class="fas fa-check-circle" style="color:var(--primary);"></i> الإضافة مجانية تماماً لوجه الله
         </div>
         <form id="reqForm" onsubmit="sendData(event)">
-            <input type="hidden" name="Type" id="reqType" value="نشاط">
             <input type="hidden" name="Date" value="New"> 
             
-            <select class="form-select" id="visibleTypeSelector" onchange="toggleForm(this.value)">
+            <select name="Type" class="form-select" onchange="toggleFields(this.value)">
                 <option value="نشاط">📝 إضافة نشاط</option>
                 <option value="إعلان">📢 حجز إعلان</option>
                 <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
@@ -332,9 +314,7 @@
         <img id="dImg" src="" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:15px; display:none;">
 
         <h2 id="dName" style="margin:0;"></h2>
-        
         <div id="dRating" class="rating-stars" style="justify-content:flex-start; font-size:1rem; margin:5px 0;"></div>
-        
         <p id="dSub" style="color:#777; font-size:0.9rem; margin:5px 0;"></p>
         
         <a id="dNewsLink" href="#" target="_blank" style="display:none; background:#eee; color:#333; padding:8px; border-radius:8px; text-decoration:none; font-size:0.85rem; font-weight:bold; margin:10px 0; text-align:center;">🔗 اقرأ الخبر كاملاً</a>
@@ -367,14 +347,11 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 رابط السكربت الجديد الخاص بك 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxRmJDUokXrpxyMnEU53rrSMphKmU1_LY8nceyRt2rPdGTrqoRR3oVQzTdvm9xZNYTKfg/exec';
-    
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
-    // ⚡ كسر الكاش لضمان تحديث البيانات فوراً
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
-    
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
+    const adminPhone = "201000000000"; 
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
     let favs = JSON.parse(localStorage.getItem('favs')) || [];
@@ -382,6 +359,10 @@
 
     function init() {
         document.getElementById('formModal').style.display = 'none';
+        
+        // 🔴 الكاش (مؤقتاً تم تعطيله لضمان التحديث)
+        // const cached = localStorage.getItem('hona_v73_cache');
+        // if(cached) { fullDB = JSON.parse(cached); setupTickers(); setupFloatAd(); resetApp(); }
         
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             const newData = res.data.slice(1).map((r, i) => ({
@@ -392,13 +373,18 @@
             })).filter(x => x.name).reverse();
             
             fullDB = newData;
-            document.getElementById('shopCount').innerText = fullDB.length;
+            // localStorage.setItem('hona_v73_cache', JSON.stringify(fullDB));
             setupTickers(); setupFloatAd(); resetApp();
         }});
     }
 
+    function forceUpdate() {
+        // localStorage.removeItem('hona_v73_cache');
+        window.location.reload();
+    }
+
     function getImages(raw) {
-        if(!raw || raw.length < 5) return []; 
+        if(!raw || raw.length < 5) return [];
         return raw.split(',').map(u => {
             let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/);
             return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim();
@@ -435,14 +421,19 @@
     function filter(c, el) {
         curCat = c;
         if(el) { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active'); }
+        // 🔴 تنظيف زر الكل (إخفاء الأخبار)
+        if (c === 'all') {
+            filteredDB = fullDB.filter(x => x.cat !== 'news');
+        } else if (c === 'fav') {
+            filteredDB = fullDB.filter(x => favs.includes(x.id));
+        } else if (c === 'offers') {
+            filteredDB = fullDB.filter(x => x.offer);
+        } else {
+            filteredDB = fullDB.filter(x => x.cat === c);
+        }
+
+        document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
         document.getElementById('search').value = ''; 
-        filteredDB = fullDB.filter(x => {
-            if(curCat === 'fav') return favs.includes(x.id);
-            if(curCat === 'offers') return x.offer;
-            if(x.cat === 'news' && curCat !== 'news') return false; 
-            return (curCat === 'all' || x.cat === curCat);
-        });
-        filteredDB.sort((a,b) => (b.feat - a.feat));
         page = 1; renderGrid(true);
     }
 
@@ -460,7 +451,7 @@
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
 
     function setupTickers() {
-        const news = fullDB.filter(x => x.cat === 'news').map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
+        const news = fullDB.filter(x => x.cat === 'news').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
         const ads = fullDB.filter(x => x.offer).map(x => `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${x.offer}</span>`).join('   •   ');
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
@@ -486,7 +477,10 @@
             const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : '';
             const newsBadge = isNews ? `<div class="badge-live" style="background:var(--red);right:auto;left:10px;">خبر</div>` : '';
             const srcHTML = isNews && x.newsSrc ? `<div class="news-src">مصدر: ${x.newsSrc}</div>` : '';
-            const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div>`;
+            
+            // 🔴 إضافة المنطقة (Area)
+            const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub} | <i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`;
+            
             const dateHTML = (isNews && x.hours) ? `<div class="news-date"><i class="far fa-clock"></i> ${x.hours}</div>` : '';
             const offerHTML = x.offer ? `<div class="card-offer-visible"><i class="fas fa-gift"></i> ${x.offer.substring(0, 30)}..</div>` : '';
             const starsHTML = x.cat !== 'news' ? getStarsHTML(x.rating) : ''; 
@@ -499,7 +493,9 @@
                 <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
                 <div class="c-body">
                     <div class="c-title">${x.name}</div>
-                    ${starsHTML} ${srcHTML} ${subHTML} ${dateHTML} ${offerHTML}
+                    ${starsHTML}
+                    ${srcHTML} ${subHTML}
+                    ${dateHTML} ${offerHTML}
                 </div>
             `;
             g.appendChild(div);
@@ -549,7 +545,7 @@
     function toggleFields(val) {
         const show = (val === 'نشاط' || val === 'إعلان');
         document.getElementById('catDiv').style.display = show ? 'block' : 'none';
-        document.getElementById('reqType').value = val; // 🔴 تصحيح مهم: تحديث نوع الطلب
+        document.getElementById('reqType').value = val; 
     }
 
     // ✅ مسح البيانات بعد الإرسال
@@ -582,8 +578,8 @@
         if(t.includes('فني')||t.includes('سباك')||t.includes('نجار'))return 'techs';
         if(t.includes('طبي')||t.includes('دكتور'))return 'medical';
         if(t.includes('تعليم')||t.includes('مدرسة'))return 'school';
-        if(t.includes('مواصلات'))return 'transport';
-        if(t.includes('سيارات'))return 'auto';
+        if(t.includes('مواصلات')||t.includes('transport'))return 'transport';
+        if(t.includes('سيارات')||t.includes('auto'))return 'auto';
         if(t.includes('الكترون'))return 'tech';
         if(t.includes('ملابس'))return 'fashion';
         if(t.includes('ديكور'))return 'decor';

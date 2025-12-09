@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -11,7 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f6f8; --white: #ffffff; --red: #e74c3c; }
+        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f8f9fa; --white: #ffffff; --red: #e74c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; }
 
@@ -23,8 +24,8 @@
         .lbl-news { background: var(--red); color: white; }
         .lbl-ads { background: var(--gold); color: black; }
         .track { white-space: nowrap; flex: 1; overflow: hidden; display: flex; align-items: center; }
-        .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 15px; font-weight: 600; font-size: 0.85rem; cursor: pointer;}
-        .ticker-item { display: inline-block; margin-left: 30px; }
+        .scrolling { display: inline-block; animation: scroll 80s linear infinite; padding-right: 15px; font-weight: 600; font-size: 0.85rem; }
+        .ticker-item { display: inline-block; margin-left: 30px; cursor: pointer; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* الهيدر */
@@ -35,11 +36,17 @@
             box-shadow: 0 5px 25px rgba(0,0,0,0.15); display: flex; justify-content: space-between; align-items: center;
         }
         .logo-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .geo-logo { width: 50px; height: 50px; background: white; border-radius: 16px; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden; color: var(--primary); font-size: 1.8rem; }
+        .geo-logo { width: 50px; height: 50px; background: white; border-radius: 16px; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden; }
+        .geo-logo i { font-size: 1.8rem; color: var(--primary); }
         .app-title h1 { margin: 0; font-size: 2.2rem; font-weight: 700; font-family: 'Reem Kufi', sans-serif; letter-spacing: 1px; background: linear-gradient(to bottom, #fff, #81c784); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); } 
         .app-title p { margin: 2px 0 0; font-size: 0.8rem; opacity: 1; font-weight: 500; color: #e8f5e9; }
         
-        /* عداد المحلات الأنيق */
+        .header-icons { display: flex; gap: 10px; align-items: center; }
+        .icon-btn { font-size: 1.3rem; color: white; cursor: pointer; transition: 0.2s; }
+        .rate-icon { color: var(--gold); animation: spinStar 5s infinite linear; }
+        @keyframes spinStar { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
+        
+        /* عداد المحلات */
         .shop-counter-box {
             background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.2);
             padding: 5px 12px; border-radius: 12px; text-align: center; backdrop-filter: blur(5px);
@@ -66,7 +73,7 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; scroll-margin-top: 180px; }
         .card { background: white; border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.04); position: relative; overflow: hidden; transition: 0.2s; border: 1px solid transparent; cursor: pointer; }
         .card:active { transform: scale(0.97); }
-        .card.featured { border: 2px solid var(--gold); background: #fffcf5; } /* تمييز الإعلانات */
+        .card.featured { border: 2px solid var(--gold); background: #fffcf5; }
         .card.news-card { grid-column: span 2; flex-direction: row; border-right: 4px solid var(--red); padding: 12px; }
         .card.news-card .c-img { width: 90px; height: 90px; }
         .c-img { width: 100%; height: 115px; border-radius: 12px; object-fit: cover; background: #eee; flex-shrink: 0; }
@@ -74,7 +81,8 @@
         .c-title { margin: 5px 0 2px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
         .c-sub { font-size: 0.7rem; color: #7f8c8d; display: flex; align-items: center; gap: 3px; font-weight: 500; }
         .card-rating { font-size: 0.65rem; color: #f1c40f; margin-top: 2px; display: flex; align-items: center; gap: 2px; }
-        
+        .card-rating span { color: #888; font-size: 0.6rem; margin-right: 2px; }
+
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; z-index: 10; background: rgba(255,255,255,0.8); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; transition: 0.2s; }
         .card-fav-btn.active i { color: var(--red); animation: heartBeat 0.5s; }
         @keyframes heartBeat { 0%{transform:scale(1)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
@@ -83,8 +91,7 @@
         .news-date { font-size: 0.65rem; color: #888; background: #f9f9f9; padding: 2px 6px; border-radius: 4px; width: fit-content; margin-top: 5px; }
         .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.95); color: white; padding: 2px 7px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 5; display: flex; align-items: center; gap: 3px; }
         .dot { width: 5px; height: 5px; background: white; border-radius: 50%; animation: blink 1s infinite; }
-        /* شارة الإعلان */
-        .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 2px 10px; border-radius: 0 0 10px 0; font-size: 0.7rem; font-weight: bold; z-index: 5; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 2px 8px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 5; }
 
         .load-more { display: block; margin: 20px auto; padding: 12px 35px; background: white; border: 1px solid #ddd; border-radius: 30px; color: var(--primary); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
 
@@ -95,7 +102,7 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-4px); }
         .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1100; cursor: pointer; }
 
-        /* الإعلان العائم (الهدية) */
+        /* الإعلان العائم */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 1900; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; box-shadow: 3px 3px 15px rgba(0,0,0,0.2); }
         .float-ad:hover, .float-ad.open { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -121,7 +128,7 @@
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
         /* Slider */
-        .img-slider { display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory; padding-bottom: 10px; margin-bottom: 15px; }
+        .img-slider { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 15px; scroll-snap-type: x mandatory; }
         .img-slider img { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; scroll-snap-align: center; flex-shrink: 0; }
         
         /* Emergency */
@@ -158,6 +165,8 @@
             <span class="shop-counter-num" id="shopCount">0</span>
             <span class="shop-counter-lbl">مكان</span>
         </div>
+        <i class="fas fa-info-circle icon-btn" onclick="openAbout(event)"></i>
+        <i class="fas fa-ambulance icon-btn" onclick="openEmergency(event)" style="color:#ff6b6b"></i>
     </div>
 </header>
 
@@ -273,9 +282,10 @@
             <i class="fas fa-check-circle" style="color:var(--primary);"></i> الإضافة مجانية تماماً لوجه الله
         </div>
         <form id="reqForm" onsubmit="sendData(event)">
+            <input type="hidden" name="Type" id="reqType" value="نشاط">
             <input type="hidden" name="Date" value="New"> 
             
-            <select name="Type" class="form-select" onchange="toggleFields(this.value)">
+            <select class="form-select" id="visibleTypeSelector" onchange="toggleForm(this.value)">
                 <option value="نشاط">📝 إضافة نشاط</option>
                 <option value="إعلان">📢 حجز إعلان</option>
                 <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
@@ -339,8 +349,12 @@
         <p id="dDesc" style="line-height:1.6; margin:15px 0; font-size:0.95rem;"></p>
         
         <div style="display:flex; gap:5px; margin-bottom:10px;">
-            <button class="btn-submit" onclick="shareShop()" style="background:#3498db; flex:1; font-size:0.8rem;"><i class="fas fa-share-alt"></i> مشاركة</button>
-            <button class="btn-submit" onclick="openShopRate()" style="background:var(--gold); color:black; flex:1; font-size:0.8rem;"><i class="fas fa-star"></i> تقييم</button>
+            <button class="btn-submit" onclick="shareShopViaWhatsapp()" style="background:#25D366; flex:1; font-size:0.8rem;"><i class="fab fa-whatsapp"></i> واتساب</button>
+            <button class="btn-submit" onclick="shareShop()" style="background:#3498db; flex:1; font-size:0.8rem;"><i class="fas fa-copy"></i> نسخ</button>
+        </div>
+        
+        <div style="display:flex; gap:5px; margin-bottom:10px;">
+             <button class="btn-submit" onclick="openShopRate()" style="background:var(--gold); color:black; flex:1; font-size:0.8rem;"><i class="fas fa-star"></i> قيم هذا المكان</button>
         </div>
 
         <div style="display:flex; gap:10px;">
@@ -353,18 +367,18 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الفعال 🔴🔴🔴
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzWIJ7sUrx_kqrwL-DPwsaRZ7omtpgLGUoM3w95G8Ba00FauHM-bJbOYBlYydHSKYDH5A/exec';
+    // 🔴🔴🔴 رابط السكربت الجديد الخاص بك 🔴🔴🔴
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxRmJDUokXrpxyMnEU53rrSMphKmU1_LY8nceyRt2rPdGTrqoRR3oVQzTdvm9xZNYTKfg/exec';
+    
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
-    // ⚡ إضافة كود كسر الكاش لضمان تحديث البيانات فوراً
+    // ⚡ كسر الكاش لضمان تحديث البيانات فوراً
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     
-    // 🔴 اللوجو الافتراضي (يمكنك تغييره برابط صورتك)
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
     let favs = JSON.parse(localStorage.getItem('favs')) || [];
-    let appRating = 0, shopRating = 0, currentShopID = null, currentShopName = "";
+    let appRating = 0, shopRating = 0, currentShopID = null, currentShopName = "", currentShopDesc = "";
 
     function init() {
         document.getElementById('formModal').style.display = 'none';
@@ -384,7 +398,7 @@
     }
 
     function getImages(raw) {
-        if(!raw || raw.length < 5) return []; // إرجاع مصفوفة فارغة إذا لم توجد صور
+        if(!raw || raw.length < 5) return []; 
         return raw.split(',').map(u => {
             let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/);
             return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim();
@@ -397,9 +411,12 @@
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     function shareShop() {
-        const text = `شوف ${currentShopName} على تطبيق Hona:\n${document.getElementById('dDesc').innerText.substring(0, 50)}...\n\nحمل التطبيق واستفيد بالخدمات!`;
-        if (navigator.share) { navigator.share({ title: currentShopName, text: text, url: window.location.href }); } 
-        else { navigator.clipboard.writeText(text).then(() => alert("تم نسخ التفاصيل!")); }
+        const text = `شوف ${currentShopName} على تطبيق Hona:\n${currentShopDesc.substring(0, 50)}...\n\nحمل التطبيق واستفيد بالخدمات!`;
+        navigator.clipboard.writeText(text).then(() => alert("تم نسخ التفاصيل!"));
+    }
+    function shareShopViaWhatsapp() {
+        const text = `شوف ${currentShopName} على تطبيق Hona:\n${currentShopDesc.substring(0, 50)}...`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
@@ -418,7 +435,6 @@
     function filter(c, el) {
         curCat = c;
         if(el) { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active'); }
-        if(c !== 'all') document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
         document.getElementById('search').value = ''; 
         filteredDB = fullDB.filter(x => {
             if(curCat === 'fav') return favs.includes(x.id);
@@ -430,7 +446,7 @@
         page = 1; renderGrid(true);
     }
 
-    function resetApp(el) { document.getElementById('search').value=''; filter('all', document.querySelector('.cat-item')); document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); if(el) { document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active')); el.classList.add('active'); } }
+    function resetApp(el) { document.getElementById('search').value=''; filter('all', document.querySelector('.cat-item')); document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
     
     function openAppRate(e) { e.stopPropagation(); document.getElementById('rateAppModal').style.display='flex'; }
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
@@ -457,7 +473,6 @@
         const g = document.getElementById('grid');
         const btn = document.getElementById('loadMore');
         if(isNew) g.innerHTML = '';
-        if(filteredDB.length === 0) { g.innerHTML='<p style="text-align:center;width:100%;color:#999;grid-column:span 2">لا توجد نتائج</p>'; btn.style.display='none'; return; }
         const chunk = filteredDB.slice(0, page * limit);
         const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
         toRender.forEach(x => {
@@ -476,7 +491,6 @@
             const offerHTML = x.offer ? `<div class="card-offer-visible"><i class="fas fa-gift"></i> ${x.offer.substring(0, 30)}..</div>` : '';
             const starsHTML = x.cat !== 'news' ? getStarsHTML(x.rating) : ''; 
             
-            // 🔴 اللوجو كبديل للصورة
             const imgs = getImages(x.imgRaw);
             const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
 
@@ -498,9 +512,9 @@
 
     function openD(id) {
         const x = fullDB.find(i => i.id === id);
-        currentShopID = id; currentShopName = x.name;
+        currentShopID = id; currentShopName = x.name; currentShopDesc = x.desc || "";
         document.getElementById('dName').innerText = x.name;
-        document.getElementById('dSub').innerText = x.cat === 'news' ? x.sub : (x.sub + ' | ' + x.area);
+        document.getElementById('dSub').innerText = x.cat;
         document.getElementById('dDesc').innerText = x.desc;
         
         const imgs = getImages(x.imgRaw);
@@ -524,17 +538,20 @@
         }
 
         document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : '';
-        const srcBox = document.getElementById('dSrcBox'); if(x.cat === 'news' && x.newsSrc) { srcBox.style.display='block'; srcBox.innerText = "المصدر: " + x.newsSrc; } else srcBox.style.display='none';
-        const newsLink = document.getElementById('dNewsLink'); if(x.cat === 'news' && x.loc && x.loc.includes('http')) { newsLink.style.display='block'; newsLink.href=x.loc; } else newsLink.style.display='none';
-        const offBox = document.getElementById('dOfferBox'); if(x.offer) { offBox.style.display='block'; document.getElementById('dOfferTxt').innerText = x.offer; } else offBox.style.display='none';
+        const offBox = document.getElementById('dOfferBox'); 
+        if(x.offer) { offBox.style.display='block'; document.getElementById('dOfferTxt').innerText = "🔥 " + x.offer; } else offBox.style.display='none';
+        
         document.getElementById('dCall').href = `tel:${x.ph}`; document.getElementById('dWa').href = `https://wa.me/2${x.wa}`;
-        const loc = document.getElementById('dLoc'); if(x.cat !== 'news' && x.loc && x.loc.length > 5) { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
+        const loc = document.getElementById('dLoc'); if(x.loc && x.loc.length > 5) { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
         document.getElementById('detailsModal').style.display = 'flex';
     }
 
-    function toggleForm(val) { document.getElementById('reqType').value = val; document.getElementById('catDiv').style.display = (val === 'إعلان') ? 'none' : 'block'; }
-    function showForm(t) { document.getElementById('formModal').style.display = 'flex'; const s = document.getElementById('visibleTypeSelector'); if(t==='ad'){s.value='إعلان';toggleForm('إعلان')}else{s.value='نشاط';toggleForm('نشاط')} }
-    
+    function toggleFields(val) {
+        const show = (val === 'نشاط' || val === 'إعلان');
+        document.getElementById('catDiv').style.display = show ? 'block' : 'none';
+        document.getElementById('reqType').value = val; // 🔴 تصحيح مهم: تحديث نوع الطلب
+    }
+
     // ✅ مسح البيانات بعد الإرسال
     function sendData(e) { 
         e.preventDefault(); 
@@ -559,21 +576,22 @@
     function getCat(m,s){
         if(!m)return 'other';const t=(m+' '+s).toLowerCase();
         if(t.includes('أخبار'))return 'news';
-        if(t.includes('عقار'))return 'realestate';
-        if(t.includes('ديكور'))return 'decor';
-        if(t.includes('ملابس'))return 'fashion';
+        if(t.includes('مطعم')||t.includes('أكل')||t.includes('مشروب'))return 'food';
+        if(t.includes('ماركت')||t.includes('عطار')||t.includes('بقالة'))return 'market';
+        if(t.includes('أجهزة')||t.includes('منزلي')||t.includes('خدمات'))return 'home_fix';
+        if(t.includes('فني')||t.includes('سباك')||t.includes('نجار'))return 'techs';
+        if(t.includes('طبي')||t.includes('دكتور'))return 'medical';
+        if(t.includes('تعليم')||t.includes('مدرسة'))return 'school';
+        if(t.includes('مواصلات'))return 'transport';
         if(t.includes('سيارات'))return 'auto';
         if(t.includes('الكترون'))return 'tech';
-        if(t.includes('مطعم')||t.includes('أكل')||t.includes('مشروب'))return 'food';
-        if(t.includes('ماركت'))return 'market';
-        if(t.includes('طب'))return 'medical';
-        if(t.includes('أجهزة')||t.includes('منزلي'))return 'home_fix';
-        if(t.includes('مواصلات'))return 'transport';
-        if(t.includes('تعليم'))return 'school';
+        if(t.includes('ملابس'))return 'fashion';
+        if(t.includes('ديكور'))return 'decor';
+        if(t.includes('رياض'))return 'sport';
+        if(t.includes('عقار'))return 'realestate';
         if(t.includes('حكوم'))return 'gov';
         if(t.includes('عباد'))return 'worship';
-        if(t.includes('فني')||t.includes('سباك')||t.includes('نجار'))return 'techs';
-        if(t.includes('رياض'))return 'sport';
+        if(t.includes('أخبار'))return 'news';
         return 'other';
     }
     function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}

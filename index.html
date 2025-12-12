@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hona | مجتمع حدائق العاصمة</title> <meta name="theme-color" content="#27ae60">
+    <title>Hona | دليلك في جيبك</title>
+    <meta name="theme-color" content="#27ae60">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f8f9fa; --white: #ffffff; --red: #e74c3c; }
+        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f6f8; --white: #ffffff; --red: #e74c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; }
 
@@ -20,7 +21,6 @@
         .lbl-news { background: var(--red); color: white; } .lbl-ads { background: var(--gold); color: black; }
         .track { white-space: nowrap; flex: 1; overflow: hidden; }
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 15px; font-weight: 600; font-size: 0.85rem; cursor: pointer;}
-        .ticker-item { display: inline-block; margin-left: 30px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* الهيدر */
@@ -30,7 +30,6 @@
         .app-title h1 { margin: 0; font-size: 2.2rem; font-family: 'Reem Kufi'; }
         .header-icons { display: flex; gap: 8px; align-items: center; }
         .icon-btn { font-size: 1.3rem; color: white; cursor: pointer; transition: 0.2s; }
-        
         .shop-counter-box { background: rgba(0,0,0,0.25); padding: 2px 10px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.3); display: flex; flex-direction: column; min-width: 50px; }
         .shop-counter-num { font-size: 1.1rem; font-weight: 900; color: var(--gold); line-height: 1; }
         .shop-counter-lbl { font-size: 0.55rem; color: #fff; }
@@ -47,11 +46,11 @@
         .cat-icon { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: white; transition: 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
         .cat-name { font-size: 0.65rem; font-weight: 700; color: #555; text-align: center; line-height: 1.2; }
         .cat-item.active .cat-icon { transform: scale(1.1); border: 3px solid var(--gold); }
-        .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-other{background:#95a5a6}.bg-clean{background:#d81b60}
+        
+        .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
 
         /* الكروت */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        
         .card { 
             background: white; border-radius: 16px; padding: 8px; 
             display: flex; flex-direction: column; gap: 6px; 
@@ -59,11 +58,11 @@
             cursor: pointer; z-index: 1; transition: transform 0.1s;
         }
         .card:active { transform: scale(0.98); }
-
-        /* 🔴 الحل الجذري للنقر: جعل كل العناصر الداخلية لا تستقبل النقر، ليمر للكارت فقط */
-        .card * { pointer-events: none; }
-        /* 🔴 استثناء زر المفضلة */
-        .card-fav-btn { pointer-events: auto !important; }
+        
+        /* 🔴 الغطاء الشفاف: حل مشكلة النقر 100% */
+        .card-click-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; }
+        /* استثناء زر المفضلة */
+        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; pointer-events: auto; }
         
         .card.featured { border: 2px solid var(--gold); background: #fffcf5; }
         .card.news-card { grid-column: span 2; flex-direction: row; border-right: 4px solid var(--red); padding: 12px; }
@@ -72,29 +71,26 @@
         .c-body { flex: 1; display: flex; flex-direction: column; }
         .c-title { margin: 5px 0 2px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
         
-        /* 🔴 التصنيف */
-        .c-cats { font-size: 0.6rem; color: #7f8c8d; display: flex; flex-wrap: wrap; gap: 3px; font-weight: 500; margin-bottom: 2px; }
-        .c-cats span { background: #f0f0f0; padding: 2px 5px; border-radius: 4px; }
-
-        /* 🔴 ذيل الخبر */
+        .c-sub { font-size: 0.6rem; color: #7f8c8d; display: flex; flex-wrap: wrap; gap: 3px; font-weight: 500; }
+        .c-sub span { background: #f0f0f0; padding: 2px 5px; border-radius: 4px; display: flex; align-items: center; gap: 3px; }
+        
+        /* 🔴 ذيل الخبر: التاريخ والمصدر */
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 6px; border-top: 1px solid #f0f0f0; font-size: 0.55rem; color: #888; font-weight: bold; width: 100%; }
-        .news-footer-card div { display: flex; align-items: center; gap: 4px; }
         
         .card-rating { font-size: 0.65rem; color: #f1c40f; margin-top: 2px; }
-        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; }
         .card-fav-btn.active i { color: var(--red); } .card-fav-btn i { color: #ccc; }
         
         .card-offer-visible { background: #fff0f0; color: var(--red); font-size: 0.65rem; font-weight: bold; padding: 4px; border-radius: 6px; margin-top: 5px; border: 1px dashed var(--red); display: flex; flex-direction: column; gap: 2px; }
         .offer-date { font-size: 0.5rem; color: #777; font-weight: normal; }
 
-        .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.95); color: white; padding: 2px 7px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 5; }
-        .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 2px 8px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 5; }
-        .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 2px 7px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 5; animation: pulse 2s infinite; }
+        .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.95); color: white; padding: 2px 7px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
+        .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 2px 8px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
+        .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 2px 7px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; z-index: 4; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
         .load-more { display: block; margin: 20px auto; padding: 12px 35px; background: white; border: 1px solid #ddd; border-radius: 30px; color: var(--primary); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
 
-        /* القوائم */
+        /* القائمة السفلية */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; border-radius: 20px 20px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.7rem; cursor: pointer; transition: 0.2s; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-4px); }
@@ -102,17 +98,15 @@
         .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1100; cursor: pointer; }
 
         /* الإعلان العائم */
-        .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; box-shadow: 3px 3px 15px rgba(0,0,0,0.2); pointer-events: auto; }
+        .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.2); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
         .float-ad:hover .float-txt { display: block; }
-        @keyframes wig { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} }
 
         /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
         .modal-content { background: white; width: 92%; max-width: 450px; border-radius: 20px; padding: 25px; position: relative; max-height: 85vh; overflow-y: auto; animation: pop 0.3s; }
-        @keyframes pop { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
         
         .offer-box-modal { margin: 15px 0; padding: 15px; background: linear-gradient(135deg, #fff0f0 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 12px; text-align: center; }
         .offer-title { color: var(--red); font-weight: 800; font-size: 1rem; }
@@ -262,6 +256,7 @@
                 <option value="ديكورات">ديكورات</option>
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
+                <option value="عقارات">عقارات</option>
                 <option value="أخرى">أخرى</option>
             </select>
             <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
@@ -310,15 +305,13 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 رابط السكربت النهائي 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbx5BdxjOC2GM4Q0EY4NVtEq_J2VefmkPLM_UvvJ_Q9DRoVys8qcECXlv8DgBHM2JU-xWg/exec';
-    
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v88')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -355,7 +348,6 @@
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    // زر الإعلان المخصص
     function openAdForm() {
         document.getElementById('reqType').value = 'إعلان';
         toggleFields('إعلان');
@@ -440,7 +432,7 @@
             const div = document.createElement('div');
             div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
             // 🔴 1. فتح الكارت
-            div.onclick = function() { openD(x.id); };
+            div.setAttribute('onclick', `openD(${x.id})`);
             
             const isFav = favs.includes(x.id) ? 'active' : '';
             const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
@@ -458,6 +450,7 @@
 
             div.innerHTML = `
                 ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''}
+                <div class="card-click-overlay"></div>
                 <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
                 <div class="c-body">
                     <div class="c-title">${x.name}</div>
@@ -470,7 +463,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v88', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -506,9 +499,7 @@
         const offBox = document.getElementById('dOfferBox'); 
         if(x.offer) { offBox.style.display='block'; document.getElementById('dOfferTxt').innerText = "🔥 " + x.offer; } else offBox.style.display='none';
         
-        document.getElementById('dCall').href = `tel:${x.ph}`; 
-        document.getElementById('dWa').href = `https://wa.me/2${x.wa}`;
-        
+        document.getElementById('dCall').href = `tel:${x.ph}`; document.getElementById('dWa').href = `https://wa.me/2${x.wa}`;
         const loc = document.getElementById('dLoc'); if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
         document.getElementById('detailsModal').style.display = 'flex';
     }

@@ -13,7 +13,7 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; }
 
-        /* شريط الأخبار والعروض */
+        /* شريط الأخبار */
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; }
         .ads-bar { height: 32px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #ddd; }
@@ -21,7 +21,6 @@
         .lbl-news { background: var(--red); color: white; } .lbl-ads { background: var(--gold); color: black; }
         .track { white-space: nowrap; flex: 1; overflow: hidden; }
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 15px; font-weight: 600; font-size: 0.85rem; cursor: pointer;}
-        .ticker-item { display: inline-block; margin-left: 30px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* الهيدر */
@@ -51,14 +50,8 @@
 
         /* الكروت */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .card { 
-            background: white; border-radius: 16px; padding: 8px; 
-            display: flex; flex-direction: column; gap: 6px; 
-            box-shadow: 0 3px 8px rgba(0,0,0,0.04); position: relative; overflow: hidden; 
-            cursor: pointer; z-index: 1; transition: transform 0.1s;
-        }
+        .card { background: white; border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 3px 8px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; z-index: 1; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
-
         /* الغطاء الزجاجي */
         .click-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer; background: transparent; }
         .card > *:not(.card-fav-btn):not(.click-layer) { pointer-events: none; }
@@ -72,8 +65,7 @@
         .c-sub { font-size: 0.6rem; color: #7f8c8d; display: flex; flex-wrap: wrap; gap: 3px; font-weight: 500; }
         .c-sub span { background: #f0f0f0; padding: 2px 5px; border-radius: 4px; display: flex; align-items: center; gap: 3px; }
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 6px; border-top: 1px solid #f0f0f0; font-size: 0.55rem; color: #888; font-weight: bold; width: 100%; }
-        .news-footer-card div { display: flex; align-items: center; gap: 3px; }
-
+        
         .card-rating { font-size: 0.65rem; color: #f1c40f; margin-top: 2px; }
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; pointer-events: auto !important; }
         .card-fav-btn.active i { color: var(--red); } .card-fav-btn i { color: #ccc; }
@@ -87,14 +79,12 @@
 
         .load-more { display: block; margin: 20px auto; padding: 12px 35px; background: white; border: 1px solid #ddd; border-radius: 30px; color: var(--primary); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
 
-        /* القائمة السفلية */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; border-radius: 20px 20px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.7rem; cursor: pointer; transition: 0.2s; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-4px); }
         .btm-item i { font-size: 1.4rem; display: block; margin-bottom: 3px; }
         .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1100; cursor: pointer; }
 
-        /* الإعلان العائم */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.2); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -107,8 +97,6 @@
         
         .offer-box-modal { margin: 15px 0; padding: 15px; background: linear-gradient(135deg, #fff3e0 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; text-align: center; position: relative; overflow: hidden; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: 0; right: 0; background: var(--red); color: white; font-size: 0.6rem; padding: 2px 8px; border-bottom-left-radius: 10px; }
-        
-        /* تصميم العروض المتعددة داخل الكارت */
         .offer-item { display: block; padding: 8px; border-bottom: 1px dashed #e65100; color: #e65100; font-weight: 800; font-size: 0.95rem; line-height: 1.4; }
         .offer-item:last-child { border-bottom: none; }
 
@@ -122,7 +110,12 @@
         .call-em-btn { background: var(--red); color: white; padding: 5px 15px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; }
         .form-input, .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; }
         .btn-submit { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
+        
+        /* تصميم معلومات الكارت الأنيقة */
+        .info-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #444; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; }
+        .info-row i { color: var(--primary); width: 20px; text-align: center; }
+        .cat-capsule { display: inline-block; background: var(--dark); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-bottom: 5px; }
+        .cat-capsule.sub { background: #95a5a6; margin-right: 5px; }
     </style>
 </head>
 <body>
@@ -212,7 +205,7 @@
         </select>
         <input type="text" name="Name" class="form-input" placeholder="الاسم / العنوان" required>
         <div id="catDiv">
-            <select name="Category" class="form-select">
+            <select name="Category" class="form-select" onchange="checkSub(this.value)">
                 <option value="">اختر التصنيف...</option>
                 <option value="مطاعم ومشروبات">مطاعم ومشروبات</option>
                 <option value="ماركت وعطارة">ماركت وعطارة</option>
@@ -227,16 +220,19 @@
                 <option value="ديكورات">ديكورات</option>
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
-                <option value="عقارات">عقارات</option>
                 <option value="أخرى">أخرى</option>
             </select>
+            <input type="text" name="SubCategory" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار، نقاش...)" style="display:none;">
+            
             <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
             <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن">
             <input type="text" name="Image" class="form-input" placeholder="رابط صورة (أو ارسلها واتساب)">
-            <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:5px; border-radius:5px;">
-                💡 لبيع سلعة: املأ البيانات واضغط إرسال، ثم <a href="https://wa.me/201000000000" target="_blank" style="font-weight:bold;">اضغط هنا لإرسال الصورة واتساب</a>
+            
+            <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:8px; border-radius:5px; text-align:center;">
+                <i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a>
             </div>
-            <input type="text" name="Offer" class="form-input" placeholder="السعر / العرض">
+            
+            <input type="text" name="Offer" class="form-input" placeholder="هل يوجد عرض؟">
         </div>
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
         <textarea name="Description" class="form-input" placeholder="الوصف / التفاصيل" required></textarea>
@@ -250,14 +246,16 @@
         <span onclick="document.getElementById('detailsModal').style.display='none'" style="position:absolute; left:20px; top:20px; cursor:pointer; font-weight:bold; background:white; padding:5px 10px; border-radius:50%; z-index:10;">✕</span>
         <div id="imgSlider" class="img-slider"></div>
         <img id="dImg" src="" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:15px; display:none;">
-        <h2 id="dName" style="margin:0;"></h2>
         
-        <div style="font-size:0.75rem; color:#555; background:#f5f5f5; padding:5px; border-radius:5px; margin:5px 0;">
-            <span style="font-weight:bold;">النشاط:</span> <span id="dCatMain" style="color:var(--primary);"></span> | <span id="dCatSub"></span>
-            <div id="dSrcInfo" style="display:none; margin-top:4px; font-weight:bold; color:var(--dark);"></div>
+        <h2 id="dName" style="margin:10px 0 5px; font-size:1.4rem; color:var(--dark);"></h2>
+        
+        <div style="margin-bottom:10px;">
+            <div class="cat-capsule" id="dCatMain"></div>
+            <div class="cat-capsule sub" id="dCatSub" style="display:none;"></div>
         </div>
-        
-        <div style="font-size:0.8rem; color:#444; margin-top:5px;"><strong>📍 العنوان:</strong> <span id="dArea"></span></div>
+
+        <div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div>
+        <div id="dSrcInfo" class="info-row" style="display:none;"></div>
 
         <div id="dRating" style="color:#f1c40f;font-size:0.9rem;margin:5px 0;"></div>
         
@@ -265,7 +263,7 @@
             <div id="dOfferTxt"></div>
         </div>
 
-        <p id="dDesc" style="line-height:1.6; margin:15px 0; font-size:0.95rem; white-space: pre-wrap;"></p>
+        <p id="dDesc" style="line-height:1.6; margin:15px 0; font-size:0.95rem; white-space: pre-wrap; color:#555;"></p>
         
         <a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a>
 
@@ -285,7 +283,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الجديد الذي ارسلته 🔴🔴🔴
+    // 🔴🔴🔴 رابط السكربت الذكي (V98/100) الذي وضعناه 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7H3pZvfLEv0E2Ws3AQV4UuvbGlMWQObPsfQtvFLST4YMUaa4RRNtJZwmKgBpJPsLEA/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -293,7 +291,7 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v101')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v102')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -337,7 +335,7 @@
     }
 
     function shareShop() {
-        const text = `*${currentShopData.name}*\n${currentShopData.cat} - ${currentShopData.sub}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n📍 الموقع: ${currentShopData.loc}\n\n*حمل تطبيق Hona:* ${window.location.href}`;
+        const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*حمل تطبيق Hona:* ${window.location.href}`;
         navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!"));
     }
     function shareShopViaWhatsapp() {
@@ -388,7 +386,6 @@
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
         
-        // تنظيف العروض من كود التاريخ في الشريط المتحرك
         const ads = fullDB.filter(x => x.offer).map(x => {
             let cleanOffer = x.offer.replace(/{EXP:\d+}/g, '').replace(/\n/g, ' | ');
             return `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}</span>`;
@@ -431,12 +428,10 @@
             const subHTML = isNews ? '' : `<div class="c-sub"><span>${x.sub}</span> | <i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`;
             const dateStr = x.hours ? `<div class="news-footer-card"><div><i class="fas fa-bullhorn"></i> ${x.newsSrc||'مصدر'}</div> <div><i class="far fa-clock"></i> ${x.hours}</div></div>` : '';
             
-            // تنظيف العرض الخارجي من كود التاريخ
             let cleanOffer = x.offer ? x.offer.replace(/{EXP:\d+}/g, '').split('\n')[0] : '';
             const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${x.hours ? `<span class="offer-date">(${x.hours})</span>` : ''}</div>` : '';
             
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
-            
             const imgs = getImages(x.imgRaw);
             const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
 
@@ -454,7 +449,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v101', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v102', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -462,13 +457,22 @@
         currentShopData = x; 
         document.getElementById('dName').innerText = x.name;
         document.getElementById('dCatMain').innerText = x.cat;
-        document.getElementById('dCatSub').innerText = x.sub;
+        
+        // إظهار التصنيف الفرعي فقط إذا كان مختلفاً عن الرئيسي
+        const sub = (x.sub && x.sub !== x.cat) ? x.sub : "";
+        if(sub) {
+            document.getElementById('dCatSub').style.display = 'inline-block';
+            document.getElementById('dCatSub').innerText = sub;
+        } else {
+            document.getElementById('dCatSub').style.display = 'none';
+        }
+
         document.getElementById('dArea').innerText = x.area || "غير محدد"; 
         document.getElementById('dDesc').innerText = x.desc;
         
         if(x.cat === 'أخبار') {
-            document.getElementById('dSrcInfo').style.display = 'block';
-            document.getElementById('dSrcInfo').innerText = "المصدر: " + (x.newsSrc || "غير محدد") + " | " + (x.hours || "");
+            document.getElementById('dSrcInfo').style.display = 'flex';
+            document.getElementById('dSrcInfo').innerHTML = `<span><i class="fas fa-bullhorn"></i> ${x.newsSrc || "مصدر"}</span> <span><i class="far fa-clock"></i> ${x.hours || ""}</span>`;
             if(x.loc && x.loc.includes('http')) {
                 document.getElementById('dNewsLink').style.display = 'block';
                 document.getElementById('dNewsLink').href = x.loc;
@@ -490,14 +494,11 @@
         document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : '';
         const offBox = document.getElementById('dOfferBox'); 
         
-        // 🔴 3. معالجة العروض المتعددة (إخفاء كود التاريخ + تقسيم الأسطر)
         if(x.offer) { 
             offBox.style.display='block'; 
             let offersHTML = '';
-            // تقسيم العروض من السطر الجديد
             let lines = x.offer.split('\n');
             lines.forEach(line => {
-                // إزالة كود التاريخ
                 let cleanLine = line.replace(/{EXP:\d+}/g, '');
                 if(cleanLine.trim()) {
                     offersHTML += `<div class="offer-item">${cleanLine}</div>`;
@@ -520,9 +521,18 @@
         const isVio = (val === 'مخالفة');
         document.getElementById('catDiv').style.display = isShop ? 'block' : 'none';
         document.getElementById('imgLink').style.display = isVio ? 'block' : 'none';
-        // 🔴 إظهار مساعدة الواتساب فقط عند بيع السلعة
-        document.getElementById('waUploadHelp').style.display = (val === 'بيع سلعة / مستعمل') ? 'block' : 'none';
+        document.getElementById('waUploadHelp').style.display = (isShop) ? 'block' : 'none'; // مساعدة الصور لكل الأنشطة
         document.getElementById('reqType').value = val; 
+    }
+
+    // إظهار خانة التخصص عند اختيار الفنيين
+    function checkSub(val) {
+        const subInput = document.getElementById('subCatInput');
+        if(val === 'فنيين وحرف' || val === 'خدمات طبية' || val === 'تعليم وحضانات') {
+            subInput.style.display = 'block';
+        } else {
+            subInput.style.display = 'none';
+        }
     }
 
     function sendData(e) { 
@@ -531,6 +541,11 @@
         const form = document.getElementById('reqForm');
         const data={}; new FormData(form).forEach((v,k)=>data[k]=v); 
         
+        // دمج التخصص في الوصف لأن قاعدة البيانات لا تملك عموداً منفصلاً حالياً
+        if(data.SubCategory) {
+            data.Description = data.Description + " | التخصص: " + data.SubCategory;
+        }
+
         if(data.ImageLink && data.Type === 'مخالفة') {
             data.Description = data.Description + " | صورة: " + data.ImageLink;
         }
@@ -541,7 +556,6 @@
         .catch(()=>{ alert("خطأ اتصال"); btn.disabled=false; btn.innerText="إرسال 🚀"; }); 
     }
     
-    // 🔴 4. دالة التصنيفات (تلغي الترجمة وتأخذ الكلمة من الشيت مباشرة)
     function getCat(m,s){ return m; }
     
     function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}

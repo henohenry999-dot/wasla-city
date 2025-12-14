@@ -13,10 +13,9 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
 
-        /* 🔴 الحل الجذري لإخفاء الزر العائم */
-        /* عندما يكون الجسم في حالة "modal-open"، اخفِ الزر فوراً */
+        /* إخفاء الزر العائم عند فتح النوافذ */
         body.modal-open .fab { display: none !important; }
-        body.modal-open { overflow: hidden; } /* منع التمرير الخلفي */
+        body.modal-open { overflow: hidden; }
 
         /* شريط الأخبار */
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -55,6 +54,12 @@
         
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
 
+        /* 🔴 شريط التصنيفات الفرعية الجديد */
+        .sub-cat-nav { display: none; overflow-x: auto; gap: 8px; padding: 5px 2px 15px; margin-bottom: 10px; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+        .sub-cat-nav::-webkit-scrollbar { display: none; }
+        .sub-chip { background: white; border: 1px solid #ddd; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #555; cursor: pointer; transition: 0.2s; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .sub-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3); transform: translateY(-2px); }
+
         /* الكروت */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { 
@@ -91,7 +96,6 @@
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; }
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
         
-        /* المفضلة أسفل اليسار */
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
         .card-fav-btn.active i { color: var(--red); } 
 
@@ -107,7 +111,6 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
         
-        /* 🔴 الزر العائم */
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
 
@@ -206,6 +209,8 @@
         <div class="cat-item" onclick="filter('رياضة', this)"><div class="cat-icon bg-sport"><i class="fas fa-dumbbell"></i></div><div class="cat-name">رياضة</div></div>
         <div class="cat-item" onclick="filter('أخرى', this)"><div class="cat-icon bg-other"><i class="fas fa-ellipsis-h"></i></div><div class="cat-name">أخرى</div></div>
     </div>
+
+    <div id="subCatNav" class="sub-cat-nav"></div>
 
     <div class="grid" id="grid">
         <div class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br>جاري التحميل...</div>
@@ -322,7 +327,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // ⚠️⚠️⚠️ رابط السكربت V100 ⚠️⚠️⚠️
+    // ⚠️⚠️⚠️ رابط السكربت ⚠️⚠️⚠️
     const scriptURL = 'YOUR_SCRIPT_URL_HERE'; // 🔴 ضع الرابط هنا
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -330,7 +335,7 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v110')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v111')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -362,39 +367,29 @@
         });
     }
 
-    // 🔴 1. فتح المودال مع تفعيل كلاس الإخفاء
+    // 🔴 دوال المودال + الإخفاء الجذري
     function openModal(id) { 
         document.getElementById(id).style.display = 'flex'; 
-        document.body.classList.add('modal-open'); // هذا الكلاس هو المسؤول عن إخفاء الزر
+        document.body.classList.add('modal-open'); 
     }
-    
-    // 🔴 2. إغلاق المودال مع إزالة الكلاس
     function closeModal(id) { 
         document.getElementById(id).style.display = 'none'; 
-        document.body.classList.remove('modal-open'); // يعود الزر للظهور
+        document.body.classList.remove('modal-open'); 
     }
 
     function openEmergency(e) { e.stopPropagation(); openModal('emergencyModal'); }
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
 
-    // 🔴 فتح الفورم النظيف
     function openFormClean(type) {
         const form = document.getElementById('reqForm');
         form.reset(); 
-        
         document.getElementById('catDiv').style.display = 'none';
         document.getElementById('imgLink').style.display = 'none';
         document.getElementById('subCatInput').style.display = 'none';
         document.getElementById('waUploadHelp').style.display = 'none';
-
-        if(type) {
-            document.getElementById('reqType').value = type;
-            toggleFields(type);
-        } else {
-            document.getElementById('reqType').value = 'نشاط';
-            toggleFields('نشاط');
-        }
+        if(type) { document.getElementById('reqType').value = type; toggleFields(type); } 
+        else { document.getElementById('reqType').value = 'نشاط'; toggleFields('نشاط'); }
         openModal('formModal');
     }
 
@@ -410,7 +405,7 @@
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) {
         const s = normalizeText(val.toLowerCase());
-        if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; }
+        if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; }
         filteredDB = fullDB.filter(x => {
             const cleanName = normalizeText(x.name.toLowerCase());
             const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : "");
@@ -421,17 +416,80 @@
         if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
     }
 
+    // 🔴 3. دالة الفلترة (محدثة لدعم الأقسام الفرعية)
     function filter(c, el) {
         curCat = c;
-        if(el) { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active'); }
+        if(el) { 
+            document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); 
+            if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active'); 
+        }
         document.getElementById('search').value = ''; 
+        
+        // 🔴 توليد الأقسام الفرعية
+        generateSubCats(c);
+
         if (c === 'all') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة'); } 
         else if (c === 'fav') { filteredDB = fullDB.filter(x => favs.includes(x.id)); } 
         else if (c === 'offers') { filteredDB = fullDB.filter(x => x.offer); } 
         else { filteredDB = fullDB.filter(x => x.cat === c); }
+        
         filteredDB.sort((a,b) => (b.feat - a.feat));
         page = 1; renderGrid(true);
         setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+
+    // 🔴 4. دالة توليد الأزرار الفرعية
+    function generateSubCats(mainCat) {
+        const container = document.getElementById('subCatNav');
+        container.innerHTML = '';
+        
+        if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers') {
+            container.style.display = 'none';
+            return;
+        }
+
+        const items = fullDB.filter(x => x.cat === mainCat);
+        // استخراج التخصصات (sub) الفريدة وغير الفارغة والتي تختلف عن اسم القسم الرئيسي
+        const subs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))];
+
+        if (subs.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        container.style.display = 'flex';
+
+        // زر الكل
+        let allBtn = document.createElement('div');
+        allBtn.className = 'sub-chip active';
+        allBtn.innerText = 'الكل';
+        allBtn.onclick = function() { 
+            document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            filter(mainCat, null); // إعادة تحميل القسم الرئيسي
+        };
+        container.appendChild(allBtn);
+
+        // أزرار التخصصات
+        subs.forEach(s => {
+            let btn = document.createElement('div');
+            btn.className = 'sub-chip';
+            btn.innerText = s;
+            btn.onclick = function() {
+                document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterSub(mainCat, s);
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    // 🔴 5. دالة فلترة التخصص الفرعي
+    function filterSub(mainCat, subCat) {
+        filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat);
+        filteredDB.sort((a,b) => (b.feat - a.feat));
+        page = 1; renderGrid(true);
     }
 
     function resetApp(el) { document.getElementById('search').value=''; filter('all', document.querySelector('.cat-item')); document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
@@ -510,7 +568,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v110', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v111', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {

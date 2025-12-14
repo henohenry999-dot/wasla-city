@@ -54,7 +54,7 @@
         
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
 
-        /* 🔴 شريط التصنيفات الفرعية الجديد */
+        /* شريط التصنيفات الفرعية */
         .sub-cat-nav { display: none; overflow-x: auto; gap: 8px; padding: 5px 2px 15px; margin-bottom: 10px; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
         .sub-cat-nav::-webkit-scrollbar { display: none; }
         .sub-chip { background: white; border: 1px solid #ddd; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #555; cursor: pointer; transition: 0.2s; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
@@ -96,6 +96,7 @@
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; }
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
         
+        /* المفضلة أسفل اليسار */
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
         .card-fav-btn.active i { color: var(--red); } 
 
@@ -267,7 +268,11 @@
                 <option value="رياضة">رياضة</option>
                 <option value="أخرى">أخرى</option>
             </select>
-            <input type="text" name="SubCategory" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
+            <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;">
+                <option value="">اختر التخصص...</option>
+            </select>
+            <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
+            
             <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
             <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن">
             <input type="text" name="Image" class="form-input" placeholder="رابط صورة (أو ارسلها واتساب)">
@@ -327,15 +332,30 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // ⚠️⚠️⚠️ رابط السكربت ⚠️⚠️⚠️
     const scriptURL = 'YOUR_SCRIPT_URL_HERE'; // 🔴 ضع الرابط هنا
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
+    // 🔴 قاعدة بيانات التخصصات الذكية
+    const subCategories = {
+        "مطاعم ومشروبات": ["مطعم مشويات", "وجبات سريعة", "كافيه", "مخبز وحلواني", "أكل بيتي", "فول وطعمية", "بيتزا وكريب", "شاورما وسوري", "أسماك", "عصائر ومثلجات"],
+        "خدمات طبية": ["عيادة تخصصية", "صيدلية", "معمل تحاليل", "مركز أشعة", "مستلزمات طبية", "علاج طبيعي", "أسنان", "عيون", "باطنة وأطفال", "نساء وتوليد", "جلدية"],
+        "فنيين وحرف": ["سباك", "كهربائي", "نجار", "نقاش", "فني تكييف", "فني دش", "ألوميتال", "حداد", "سباك غاز", "فني فلاتر", "مراتب وتنجيد"],
+        "صيانة أجهزة منزلية": ["غسالات وثلاجات", "بوتاجازات وسخانات", "شاشات وكمبيوتر", "إلكترونيات دقيقة"],
+        "ماركت وعطارة": ["سوبر ماركت", "عطارة", "خضار وفاكهة", "جزارة", "طيور", "مجمدات", "سرجة", "محمصة"],
+        "سيارات ودراجات": ["ميكانيكي سيارات", "كهربائي سيارات", "غسيل سيارات", "إطارات وبطاريات", "قطع غيار", "سمكري ودوكو", "موتوسيكلات وعجل"],
+        "تعليم وحضانات": ["حضانة", "مدرسة خاصة", "سنتر تعليمي", "مدرس خاص", "تحفيظ قرآن", "مكتبة وأدوات"],
+        "ملابس وأحذية": ["ملابس رجالي", "ملابس حريمي", "ملابس أطفال", "أحذية وشنط", "خياط وترزي", "مكوجي ودراي كلين"],
+        "منظفات وتجميل": ["منظفات وورقيات", "مستحضرات تجميل", "كوافير حريمي", "حلاق رجالي"],
+        "ديكورات": ["تشطيبات متكاملة", "جبس بورد", "ورق حائط", "دهانات", "ستائر ومفروشات"],
+        "مواصلات": ["تاكسي وأوبر", "نقل عفش", "شحن وتوصيل", "أتوبيس خاص"],
+        "رياضة": ["جيم", "أكاديمية كرة", "سباحة", "ألعاب قتالية", "مكملات غذائية"]
+    };
+
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v111')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v112')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -367,7 +387,6 @@
         });
     }
 
-    // 🔴 دوال المودال + الإخفاء الجذري
     function openModal(id) { 
         document.getElementById(id).style.display = 'flex'; 
         document.body.classList.add('modal-open'); 
@@ -387,6 +406,7 @@
         document.getElementById('catDiv').style.display = 'none';
         document.getElementById('imgLink').style.display = 'none';
         document.getElementById('subCatInput').style.display = 'none';
+        document.getElementById('subCatSelect').style.display = 'none';
         document.getElementById('waUploadHelp').style.display = 'none';
         if(type) { document.getElementById('reqType').value = type; toggleFields(type); } 
         else { document.getElementById('reqType').value = 'نشاط'; toggleFields('نشاط'); }
@@ -416,7 +436,6 @@
         if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
     }
 
-    // 🔴 3. دالة الفلترة (محدثة لدعم الأقسام الفرعية)
     function filter(c, el) {
         curCat = c;
         if(el) { 
@@ -425,67 +444,38 @@
             if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active'); 
         }
         document.getElementById('search').value = ''; 
-        
-        // 🔴 توليد الأقسام الفرعية
         generateSubCats(c);
-
         if (c === 'all') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة'); } 
         else if (c === 'fav') { filteredDB = fullDB.filter(x => favs.includes(x.id)); } 
         else if (c === 'offers') { filteredDB = fullDB.filter(x => x.offer); } 
         else { filteredDB = fullDB.filter(x => x.cat === c); }
-        
         filteredDB.sort((a,b) => (b.feat - a.feat));
         page = 1; renderGrid(true);
         setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
 
-    // 🔴 4. دالة توليد الأزرار الفرعية
     function generateSubCats(mainCat) {
         const container = document.getElementById('subCatNav');
         container.innerHTML = '';
-        
-        if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers') {
-            container.style.display = 'none';
-            return;
-        }
-
+        if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers') { container.style.display = 'none'; return; }
         const items = fullDB.filter(x => x.cat === mainCat);
-        // استخراج التخصصات (sub) الفريدة وغير الفارغة والتي تختلف عن اسم القسم الرئيسي
         const subs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))];
-
-        if (subs.length === 0) {
-            container.style.display = 'none';
-            return;
-        }
-
+        if (subs.length === 0) { container.style.display = 'none'; return; }
         container.style.display = 'flex';
-
-        // زر الكل
         let allBtn = document.createElement('div');
         allBtn.className = 'sub-chip active';
         allBtn.innerText = 'الكل';
-        allBtn.onclick = function() { 
-            document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            filter(mainCat, null); // إعادة تحميل القسم الرئيسي
-        };
+        allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); };
         container.appendChild(allBtn);
-
-        // أزرار التخصصات
         subs.forEach(s => {
             let btn = document.createElement('div');
             btn.className = 'sub-chip';
             btn.innerText = s;
-            btn.onclick = function() {
-                document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                filterSub(mainCat, s);
-            };
+            btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); };
             container.appendChild(btn);
         });
     }
 
-    // 🔴 5. دالة فلترة التخصص الفرعي
     function filterSub(mainCat, subCat) {
         filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat);
         filteredDB.sort((a,b) => (b.feat - a.feat));
@@ -568,7 +558,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v111', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v112', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -629,9 +619,7 @@
         
         const container = document.getElementById('actionBtns');
         container.innerHTML = ''; 
-        
         let phones = x.ph.split(/[\/\-&]/); 
-        
         phones.forEach((num, idx) => {
             let cleanNum = num.trim().replace(/'/g, '');
             if(cleanNum) {
@@ -642,7 +630,6 @@
                 container.appendChild(btn);
             }
         });
-
         let waNum = phones[0].trim().replace(/'/g, ''); 
         if(waNum) {
             let btnWa = document.createElement('a');
@@ -666,22 +653,48 @@
         document.getElementById('reqType').value = val; 
     }
 
+    // 🔴 5. دالة الاختيار الذكي (تظهر القائمة أو النص)
     function checkSub(val) {
+        const subSelect = document.getElementById('subCatSelect');
         const subInput = document.getElementById('subCatInput');
-        if(val === 'فنيين وحرف' || val === 'خدمات طبية' || val === 'تعليم وحضانات') {
-            subInput.style.display = 'block';
-        } else {
+        const subs = subCategories[val]; // إحضار القائمة من قاعدة البيانات الداخلية
+
+        if (subs) {
+            // إذا وجدنا قائمة لهذا القسم
+            subSelect.innerHTML = '<option value="">اختر التخصص...</option>';
+            subs.forEach(s => {
+                subSelect.innerHTML += `<option value="${s}">${s}</option>`;
+            });
+            subSelect.style.display = 'block';
             subInput.style.display = 'none';
+        } else {
+            // إذا لم نجد قائمة (مثل قسم "أخرى")
+            subSelect.style.display = 'none';
+            // إظهار حقل الكتابة اليدوية فقط لبعض الأقسام إذا أردت، أو إخفاؤه تماماً
+            if (val === 'أخرى' || val === 'بيع سلعة / مستعمل') {
+                subInput.style.display = 'block';
+            } else {
+                subInput.style.display = 'none';
+            }
         }
     }
 
+    // 🔴 6. دالة الإرسال (محدثة لتأخذ القيمة الصحيحة)
     function sendData(e) { 
         e.preventDefault(); 
         const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.innerText="جاري..."; 
         const form = document.getElementById('reqForm');
         const data={}; new FormData(form).forEach((v,k)=>data[k]=v); 
         
-        if(data.SubCategory) { data.Description = data.Description + " | التخصص: " + data.SubCategory; }
+        // دمج التخصص (سواء من القائمة أو الكتابة)
+        let finalSub = "";
+        if(document.getElementById('subCatSelect').style.display !== 'none') {
+            finalSub = data.SubCategorySelect;
+        } else if (document.getElementById('subCatInput').style.display !== 'none') {
+            finalSub = data.SubCategoryInput;
+        }
+
+        if(finalSub) { data.Description = data.Description + " | التخصص: " + finalSub; }
         if(data.ImageLink && data.Type === 'مخالفة') { data.Description = data.Description + " | صورة: " + data.ImageLink; }
 
         fetch(scriptURL,{method:'POST',body:JSON.stringify(data)})

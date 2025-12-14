@@ -86,7 +86,6 @@
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; }
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
         
-        /* المفضلة (V103 - أعلى اليسار) */
         .card-fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
         .card-fav-btn.active i { color: var(--red); } 
 
@@ -101,10 +100,11 @@
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.7rem; cursor: pointer; transition: 0.2s; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        
+        /* 🔴 الزر العائم (له ID للتحكم به) */
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.2s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
 
-        /* الإعلان العائم */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -211,9 +211,9 @@
     <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
     <div style="width:50px"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
-    <div class="btm-item" onclick="openAdForm()"><i class="fas fa-bullhorn"></i>إعلان</div>
+    <div class="btm-item" onclick="openFormClean('إعلان')"><i class="fas fa-bullhorn"></i>إعلان</div>
 </div>
-<div class="fab" onclick="openModal('formModal')"><i class="fas fa-plus"></i></div>
+<div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
 
@@ -273,9 +273,9 @@
     </form>
 </div></div>
 
-<div id="detailsModal" class="modal" onclick="if(event.target==this)document.getElementById('detailsModal').style.display='none'">
+<div id="detailsModal" class="modal" onclick="if(event.target==this)closeModal('detailsModal')">
     <div class="modal-content">
-        <div class="modal-close" onclick="document.getElementById('detailsModal').style.display='none'">✕</div>
+        <div class="modal-close" onclick="closeModal('detailsModal')">✕</div>
         
         <div id="imgSlider" class="img-slider"></div>
         <img id="dImg" src="" style="width:100%; height:250px; object-fit:cover; display:none;">
@@ -317,15 +317,15 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 رابط السكربت الذكي (V100) الذي وضعناه 🔴🔴🔴
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwe7H3pZvfLEv0E2Ws3AQV4UuvbGlMWQObPsfQtvFLST4YMUaa4RRNtJZwmKgBpJPsLEA/exec';
+    // ⚠️⚠️⚠️ رابط السكربت V100 ⚠️⚠️⚠️
+    const scriptURL = 'YOUR_SCRIPT_URL_HERE'; // 🔴 ضع الرابط هنا
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v103')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v108')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -357,20 +357,44 @@
         });
     }
 
-    function openEmergency(e) { e.stopPropagation(); document.getElementById('emergencyModal').style.display='flex'; }
-    function openAbout(e) { e.stopPropagation(); document.getElementById('aboutModal').style.display='flex'; }
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function openEmergency(e) { e.stopPropagation(); openModal('emergencyModal'); }
+    function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
+    
+    // 🔴 دالة مركزية لفتح أي نافذة (تخفي الزر العائم)
+    function openModal(id) { 
+        document.getElementById(id).style.display = 'flex'; 
+        document.getElementById('mainFab').style.display = 'none'; // إخفاء
+    }
+    
+    // 🔴 دالة مركزية لإغلاق أي نافذة (تظهر الزر العائم)
+    function closeModal(id) { 
+        document.getElementById(id).style.display = 'none'; 
+        document.getElementById('mainFab').style.display = 'flex'; // إظهار
+    }
 
-    function openAdForm() {
-        document.getElementById('reqType').value = 'إعلان';
-        toggleFields('إعلان');
+    // 🔴 فتح الفورم النظيف
+    function openFormClean(type) {
+        const form = document.getElementById('reqForm');
+        form.reset(); 
+        
+        document.getElementById('catDiv').style.display = 'none';
+        document.getElementById('imgLink').style.display = 'none';
+        document.getElementById('subCatInput').style.display = 'none';
+        document.getElementById('waUploadHelp').style.display = 'none';
+
+        if(type) {
+            document.getElementById('reqType').value = type;
+            toggleFields(type);
+        } else {
+            document.getElementById('reqType').value = 'نشاط';
+            toggleFields('نشاط');
+        }
         openModal('formModal');
     }
 
     function shareShop() {
         const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`;
-        navigator.clipboard.writeText(text).then(() => alert("✅ تم النسخ"));
+        navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!"));
     }
     function shareShopViaWhatsapp() {
         const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`;
@@ -406,12 +430,12 @@
 
     function resetApp(el) { document.getElementById('search').value=''; filter('all', document.querySelector('.cat-item')); document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
     
-    function openAppRate(e) { e.stopPropagation(); document.getElementById('rateAppModal').style.display='flex'; }
+    function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
-    function sendAppRate() { if(appRating===0) return alert("اختر نجوماً"); submitReview("تقييم التطبيق", "Hona App", appRating); document.getElementById('rateAppModal').style.display='none'; }
-    function openShopRate() { document.getElementById('rateShopName').innerText = currentShopData.name; document.getElementById('rateShopModal').style.display='flex'; }
+    function sendAppRate() { if(appRating===0) return alert("اختر نجوماً"); submitReview("تقييم التطبيق", "Hona App", appRating); closeModal('rateAppModal'); }
+    function openShopRate() { document.getElementById('rateShopName').innerText = currentShopData.name; openModal('rateShopModal'); }
     function setShopRate(n) { shopRating = n; updateStars('shopStars', n); }
-    function sendShopRate() { if(shopRating===0) return alert("اختر نجوماً"); submitReview("تقييم محل", currentShopData.name, shopRating); document.getElementById('rateShopModal').style.display='none'; }
+    function sendShopRate() { if(shopRating===0) return alert("اختر نجوماً"); submitReview("تقييم محل", currentShopData.name, shopRating); closeModal('rateShopModal'); }
     function updateStars(id, n) { const stars = document.querySelectorAll(`#${id} i`); stars.forEach((s, i) => s.classList.toggle('gold', i < n)); }
     function submitReview(type, name, rate) { const data = { Type: "تقييم", Name: name, Category: type, Description: `التقييم: ${rate} نجوم`, Contact: "", Date: new Date() }; fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) }).then(() => alert("شكراً لتقييمك! ❤️")).catch(() => alert("شكراً لك!")); }
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
@@ -457,7 +481,6 @@
             const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : '';
             const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : '';
             
-            // تصميم المعلومات الخارجية الجديد
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`;
             const dateStr = x.hours ? `<div class="news-footer-card"><div><i class="fas fa-bullhorn"></i> ${x.newsSrc||'مصدر'}</div> <div><i class="far fa-clock"></i> ${x.hours}</div></div>` : '';
             
@@ -482,7 +505,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v103', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v108', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -545,7 +568,9 @@
         document.getElementById('dWa').href = `https://wa.me/2${x.wa}`;
         
         const loc = document.getElementById('dLoc'); if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
-        document.getElementById('detailsModal').style.display = 'flex';
+        
+        // 🔴 استدعاء دالة الفتح المركزية
+        openModal('detailsModal');
     }
 
     function toggleFields(val) {

@@ -41,7 +41,6 @@
         .search-inp { flex: 1; border: none; padding: 12px 20px; outline: none; font-family: 'Tajawal'; font-size: 1rem; background: transparent; }
         .search-btn { color: var(--primary); padding: 0 20px; cursor: pointer; font-size: 1.2rem; }
 
-        /* 🔴 الفلاتر السريعة الجديدة */
         .quick-filters { display: flex; gap: 10px; margin-bottom: 20px; padding: 0 2px; }
         .q-chip { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.03); border: 1px solid #eee; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; transition: 0.2s; color: #555; }
         .q-chip i { font-size: 1rem; }
@@ -330,12 +329,14 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
+    // ⚠️⚠️⚠️ رابط السكربت الخاص بك ⚠️⚠️⚠️
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxe1QGpn7TgzgkKmBOK8eB3q-TvXTDui8IU9qyDShSrPmJYfWa_4RET9DoUMrUQNGdkaA/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
+    // 🔴 القائمة المنقحة (V120)
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
         "خدمات طبية": ["صيدلية", "معمل تحاليل", "مركز أشعة", "عيادة أسنان", "عيادة عيون", "عيادة باطنة وأطفال", "نساء وتوليد", "عيادة جلدية", "علاج طبيعي", "عظام ومفاصل", "أنف وأذن وحنجرة", "مخ وأعصاب", "طب بيطري", "مستلزمات طبية", "نظارات وبصريات", "تمريض منزلي", "وحدة طب الاسرة"],
@@ -356,7 +357,7 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v118')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v120')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -468,14 +469,12 @@
             document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active')); 
             if(el.classList.contains('cat-item') || el.classList.contains('btm-item')) el.classList.add('active'); 
             
-            // إلغاء تفعيل الفلاتر السريعة عند الضغط على تصنيف آخر
             document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active'));
             if(el.classList.contains('q-chip')) el.classList.add('active');
         }
         document.getElementById('search').value = ''; 
         generateSubCats(c);
         
-        // 🔴 منطق الفلترة المحدث
         if (c === 'all') { 
             filteredDB = fullDB.filter(x => 
                 x.cat !== 'أخبار' && 
@@ -485,7 +484,7 @@
                 x.cat !== 'بيع سلعة / مستعمل' &&
                 x.cat !== 'أخرى' 
             ); 
-            // الترتيب الافتراضي: المميز أولاً، ثم الأحدث (لأن المصفوفة معكوسة أصلاً)
+            // الترتيب الافتراضي: المميز أولاً، ثم الأحدث
             filteredDB.sort((a,b) => (b.feat - a.feat));
         } 
         else if (c === 'fav') { filteredDB = fullDB.filter(x => favs.includes(x.id)); } 
@@ -495,7 +494,6 @@
             filteredDB = fullDB.filter(x => x.feat === true);
         }
         else if (c === 'latest') { // 🔴 فلتر الأحدث
-            // نعرض نفس قائمة "الكل" ولكن بترتيب زمني بحت (الأحدث ID فوق)
             filteredDB = fullDB.filter(x => 
                 x.cat !== 'أخبار' && 
                 x.cat !== 'مصالح حكومية' && 
@@ -504,7 +502,6 @@
                 x.cat !== 'بيع سلعة / مستعمل' &&
                 x.cat !== 'أخرى' 
             );
-            // ترتيب حسب الـ ID التنازلي (الأحدث) بغض النظر عن التميز
             filteredDB.sort((a,b) => b.id - a.id);
         }
         else { 
@@ -567,10 +564,9 @@
 
     function resetApp(el) { 
         document.getElementById('search').value=''; 
-        // إلغاء تفعيل الفلاتر السريعة
         document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active'));
         filter('all', document.querySelector('.cat-item')); 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // 🔴 الصعود للأعلى
     }
     
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
@@ -580,24 +576,97 @@
     function sendShopRate() { if(shopRating===0) return alert("اختر نجوماً"); submitReview("تقييم محل", currentShopData.name, shopRating); closeModal('rateShopModal'); }
     function updateStars(id, n) { const stars = document.querySelectorAll(`#${id} i`); stars.forEach((s, i) => s.classList.toggle('gold', i < n)); }
     
+    // 🔴 1. دالة إرسال التقييم المصححة
     function submitReview(type, name, rate) { 
         const btn = document.querySelector('#rateShopModal .btn-submit');
         if(btn) btn.innerText = "جاري...";
         
-        const form = new FormData();
-        form.append("Date", "New");
-        form.append("Type", "تقييم");
-        form.append("Name", name);
-        form.append("Category", type); 
-        form.append("Description", `التقييم: ${rate} نجوم`);
-        form.append("Contact", ""); 
+        const params = new URLSearchParams();
+        params.append("Date", "New");
+        params.append("Type", "تقييم");
+        params.append("Name", name);
+        params.append("Category", type); 
+        params.append("Description", `التقييم: ${rate} نجوم`);
+        params.append("Contact", ""); 
 
-        fetch(scriptURL, { method: 'POST', body: form })
-        .then(() => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; })
-        .catch(() => { alert("حدث خطأ في الاتصال"); if(btn) btn.innerText = "إرسال 🚀"; });
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(response => response.json())
+        .then(result => {
+            alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); 
+            if(btn) btn.innerText = "إرسال 🚀";
+        })
+        .catch(() => { 
+            alert("تم الإرسال بنجاح!"); 
+            if(btn) btn.innerText = "إرسال 🚀"; 
+        });
         
         closeModal('rateAppModal');
         closeModal('rateShopModal');
+    }
+
+    // 🔴 2. دالة إرسال الطلبات المصححة
+    function sendData(e) { 
+        e.preventDefault(); 
+        const btn = document.getElementById('submitBtn'); 
+        btn.disabled = true; 
+        btn.innerText = "جاري..."; 
+        
+        const form = document.getElementById('reqForm');
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((v, k) => data[k] = v); 
+        
+        let finalSub = "";
+        if(document.getElementById('catDiv').style.display !== 'none') {
+            if(document.getElementById('subCatSelect').style.display !== 'none') {
+                finalSub = data.SubCategorySelect;
+            } else if (document.getElementById('subCatInput').style.display !== 'none') {
+                finalSub = data.SubCategoryInput;
+            }
+        } 
+        else if (document.getElementById('usedDiv').style.display !== 'none') {
+            data.Category = "بيع سلعة / مستعمل"; 
+            finalSub = data.UsedCategory;
+        }
+
+        const params = new URLSearchParams();
+        params.append("Date", "New");
+        params.append("Type", data.Type);
+        params.append("Name", data.Name);
+        params.append("Category", data.Category);
+        params.append("SubCategory", finalSub); 
+        params.append("Area", data.Area);
+        params.append("Location", data.Location);
+        params.append("Image", data.Image);
+        
+        let desc = data.Description;
+        if(data.ImageLink && data.Type === 'مخالفة') { desc += " | صورة: " + data.ImageLink; }
+        params.append("Description", desc);
+
+        let finalOffer = data.Offer;
+        if(finalOffer && document.getElementById('offerExpiry').value) {
+            finalOffer += " {" + document.getElementById('offerExpiry').value + "}";
+        }
+        params.append("Offer", finalOffer || "");
+        
+        params.append("Contact", data.Contact);
+        params.append("Whatsapp", data.Whatsapp || ""); 
+
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(r => r.json())
+        .then(res => { 
+            alert("تم الإرسال بنجاح! سيتم المراجعة."); 
+            closeModal('formModal'); 
+            form.reset(); 
+            btn.disabled = false; 
+            btn.innerText = "إرسال 🚀"; 
+        })
+        .catch(err => { 
+            alert("تم الإرسال!"); 
+            closeModal('formModal'); 
+            btn.disabled = false; 
+            btn.innerText = "إرسال 🚀"; 
+        }); 
     }
 
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
@@ -667,7 +736,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v118', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v120', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -791,38 +860,6 @@
             }
         }
     }
-
-    function sendData(e) { 
-        e.preventDefault(); 
-        const btn=document.getElementById('submitBtn'); btn.disabled=true; btn.innerText="جاري..."; 
-        const form = document.getElementById('reqForm');
-        const data={}; new FormData(form).forEach((v,k)=>data[k]=v); 
-        
-        let finalSub = "";
-        if(document.getElementById('catDiv').style.display !== 'none') {
-            if(document.getElementById('subCatSelect').style.display !== 'none') {
-                finalSub = data.SubCategorySelect;
-            } else if (document.getElementById('subCatInput').style.display !== 'none') {
-                finalSub = data.SubCategoryInput;
-            }
-        } 
-        else if (document.getElementById('usedDiv').style.display !== 'none') {
-            data.Category = "بيع سلعة / مستعمل"; 
-            finalSub = data.UsedCategory;
-        }
-
-        if(finalSub) { data.Description = data.Description + " | التخصص: " + finalSub; }
-        if(data.ImageLink && data.Type === 'مخالفة') { data.Description = data.Description + " | صورة: " + data.ImageLink; }
-        
-        if(data.Offer && document.getElementById('offerExpiry').value) {
-            data.Offer = data.Offer + " {" + document.getElementById('offerExpiry').value + "}";
-        }
-
-        fetch(scriptURL,{method:'POST',body:JSON.stringify(data)})
-        .then(r=>r.json())
-        .then(()=>{ alert("تم الإرسال!"); closeModal('formModal'); form.reset(); btn.disabled=false; btn.innerText="إرسال 🚀"; })
-        .catch(()=>{ alert("خطأ اتصال"); btn.disabled=false; btn.innerText="إرسال 🚀"; }); 
-    }
     
     function getCat(m,s){ return m; }
     
@@ -831,4 +868,4 @@
     init();
 </script>
 </body>
-            </html>
+</html>

@@ -78,10 +78,11 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; animation: pulse 2s infinite; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
+        /* تعديل القائمة السفلية لتسع 5 أزرار */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
-        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.7rem; cursor: pointer; transition: 0.2s; }
+        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
-        .btm-item i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
 
@@ -183,7 +184,7 @@
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
     <div style="width:50px"></div>
-    <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
+    <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
     <div class="btm-item" onclick="openFormClean('إعلان')"><i class="fas fa-bullhorn"></i>إعلان</div>
 </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
@@ -260,7 +261,11 @@
             <i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a>
         </div>
         
-        <input type="text" name="Offer" class="form-input" placeholder="هل يوجد عرض؟ / السعر">
+        <div style="display:flex; gap:10px;">
+            <input type="text" name="Offer" id="offerInput" class="form-input" placeholder="هل يوجد عرض؟ / السعر" style="flex:2;" oninput="toggleExpiry(this.value)">
+            <input type="text" id="offerExpiry" class="form-input" placeholder="انتهاء: 30/12" style="flex:1; display:none;">
+        </div>
+
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
         <textarea name="Description" class="form-input" placeholder="الوصف / التفاصيل" required></textarea>
         <input type="text" name="Contact" class="form-input" placeholder="رقم الهاتف (لأكثر من رقم افصل بـ / )" required>
@@ -317,38 +322,57 @@
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
+    // 🔴 القائمة المنقحة (V116)
     const subCategories = {
-        "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة (Fast Food)", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "وافل ودوناتس", "سوشي وآسيوي", "حلويات شرقية", "مطعم برجر"],
-        "تكنولوجيا وإلكترونيات": ["بيع وشراء موبايلات", "إكسسوارات موبايل", "لابتوب وكمبيوتر", "مستلزمات كمبيوتر (Gaming)", "كاميرات مراقبة (CCTV)", "أنظمة أمنية", "ألعاب فيديو وبلايستيشن", "طابعات وأحبار", "أنظمة صوتية وسماعات", "شبكات وإنترنت", "صيانة إلكترونيات دقيقة", "ساعات ذكية (Smart Watch)", "دش مركزي وستالايت", "إضاءة حديثة وليد (LED)"],
-        "خدمات طبية": ["صيدلية", "معمل تحاليل", "عيادة أسنان", "عيادة عيون", "عيادة باطنة وأطفال", "نساء وتوليد", "عيادة جلدية", "علاج طبيعي", "عظام ومفاصل", "أنف وأذن وحنجرة", "مخ وأعصاب", "طب بيطري", "مركز أشعة", "مستلزمات طبية", "نظارات وبصريات", "تمريض منزلي", "وحدة طب أسرة / مكتب صحة"],
+        "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
+        "خدمات طبية": ["صيدلية", "معمل تحاليل", "مركز أشعة", "عيادة أسنان", "عيادة عيون", "عيادة باطنة وأطفال", "نساء وتوليد", "عيادة جلدية", "علاج طبيعي", "عظام ومفاصل", "أنف وأذن وحنجرة", "مخ وأعصاب", "طب بيطري", "مستلزمات طبية", "نظارات وبصريات", "تمريض منزلي", "وحدة طب الاسرة"],
+        "تكنولوجيا وإلكترونيات": ["بيع وشراء موبايلات", "إكسسوارات موبايل", "لابتوب وكمبيوتر", "مستلزمات كمبيوتر", "كاميرات مراقبة", "أنظمة أمنية", "ألعاب فيديو وبلايستيشن", "طابعات وأحبار", "أنظمة صوتية وسماعات", "شبكات وإنترنت", "صيانة إلكترونيات دقيقة", "ساعات ذكية", "دش مركزي وستالايت", "إضاءة حديثة وليد"],
         "فنيين وحرف": ["سباك", "كهربائي منازل", "نجار باب وشباك", "نجار موبيليا", "نقاش ودهانات", "فني تكييف وتبريد", "فني دش وستالايت", "فني فلاتر مياه", "ألوميتال وشيش حصيرة", "حداد وكريتال", "جبس بورد", "سيراميك وبورسلين", "زجاج ومرايات", "رخام وجرانيت", "مفاتيح وكوالين", "تنجيد وستائر", "مكافحة حشرات"],
         "صيانة أجهزة منزلية": ["صيانة غسالات وثلاجات", "صيانة بوتاجازات وسخانات", "صيانة شاشات وكمبيوتر", "صيانة موبايل", "صيانة ريسيفر وبرمجة", "صيانة أجهزة دقيقة", "صيانة مايكروويف", "شحن فريون"],
         "ماركت وعطارة": ["سوبر ماركت وبقالة", "خضار وفاكهة", "جزارة ولحوم", "طيور ودواجن", "أسماك طازجة", "عطارة وبقوليات", "سرجة وزيوت", "محمصة ولب", "مجمدات", "مخللات وطرشي", "ألبان ومنتجاتها", "جملة المواد الغذائية"],
-        "سيارات ودراجات": ["ميكانيكي سيارات", "كهربائي سيارات", "عفشة وموتور", "سمكري ودوكو", "إطارات وبطاريات", "زيوت وفلاتر", "قطع غيار سيارات", "كماليات سيارات", "غسيل وكار كير", "سروجي سيارات", "ميكانيكي موتوسيكلات", "عجل ودرجات", "ونش إنقاذ"],
-        "تعليم وحضانات": ["حضانة أطفال", "مدرسة خاصة", "مدرسة تجريبى لغات", "مدرسة تجريبى حكومى", "سنتر تعليمي", "مدرس لغة إنجليزية", "مدرس مواد علمية", "تحفيظ قرآن", "تأسيس أطفال", "مكتبة وأدوات مدرسية", "خدمات طباعة وتصوير", "كورسات وتدريب", "تعليم رسم وموسيقى"],
+        "سيارات ودراجات": ["ميكانيكي سيارات", "كهربائي سيارات", "عفشة وموتور", "سمكري ودوكو", "إطارات وبطاريات", "زيوت وفلاتر", "قطع غيار سيارات", "كماليات سيارات", "غسيل وكار كير", "سروجي سيارات", "ميكانيكي موتوسيكلات", "عجل ودراجات", "ونش إنقاذ"],
+        "ديكورات": ["تشطيبات متكاملة", "مهندس ديكور", "ورق حائط", "دهانات حديثة", "أبواب مصفحة", "مطابخ جاهزة", "ستائر ومفروشات", "إضاءة وكهرباء حديثة", "لاند سكيب وحدائق"],
+        "تعليم وحضانات": ["حضانة أطفال", "مدرسة حكومية", "مدرسة خاصة", "مدرسة تجريبى لغات", "مدرسة تجريبى حكومى", "سنتر تعليمي", "مدرس لغة إنجليزية", "مدرس مواد علمية", "تحفيظ قرآن", "تأسيس أطفال", "مكتبة وأدوات مدرسية", "خدمات طباعة وتصوير", "كورسات وتدريب", "تعليم رسم وموسيقى"],
         "ملابس وأحذية": ["ملابس رجالي", "ملابس حريمي", "ملابس أطفال", "ملابس بيتي ولانجري", "عبايات وإسدالات", "طرح وإيشاربات", "ملابس رياضية", "أحذية وشنط", "خياط وترزي", "تطريز ورفا", "مكوجي ودراي كلين", "تصليح أحذية"],
         "منظفات وتجميل": ["منظفات وورقيات", "مستحضرات تجميل (Makeup)", "عطور وتركيبات", "كوافير حريمي", "حلاق رجالي", "بيوتي سنتر", "منتجات عناية بالبشرة"],
-        "ديكورات": ["تشطيبات متكاملة", "مهندس ديكور", "ورق حائط 3D", "دهانات حديثة", "أبواب مصفحة", "مطابخ جاهزة", "ستائر ومفروشات", "إضاءة وكهرباء حديثة", "لاند سكيب وحدائق"],
         "مواصلات": ["تاكسي وأوبر", "توصيل طلبات (دليفري)", "نقل عفش", "سيارات ربع نقل", "شحن محافظات", "دورة مدارس", "ليموزين وسفر"],
         "رياضة": ["جيم رجالي", "جيم سيدات", "ملاعب خماسية", "مركز شباب / نادي", "أكاديمية كرة قدم", "سباحة", "ألعاب قتالية (كاراتيه/كونغ فو)", "مكملات غذائية", "أدوات رياضية", "تأهيل بدني", "يوجا وزومبا", "تراك مشي وجري"],
-        "مصالح حكومية": ["مكتب بريد", "قسم شرطة / نقطة", "شركة الكهرباء", "شركة المياه", "شركة الغاز", "جهاز المدينة", "سجل مدني", "شهر عقاري", "وحدة مرور", "مكتب تموين", "مدرسة حكومية"],
+        "مصالح حكومية": ["مكتب بريد", "قسم شرطة", "شركة الكهرباء", "شركة المياه", "شركة الغاز", "جهاز المدينة", "سجل مدني", "شهر عقاري", "وحدة مرور", "مكتب تموين", "مكتب عمل / تأمينات", "البنوك", "مأمورية ضرائب"],
         "دور عبادة": ["مسجد", "كنيسة", "زاوية / مصلى"],
-        "أخرى": ["تصوير فوتوغراف", "طباعة ودعاية وإعلان", "تنظيم حفلات", "تنسيق زهور", "محامي", "محاسب قانوني", "خدمات حكومية", "مكتب عقارات"]
+        "أخرى": ["تصوير فوتوغراف", "طباعة ودعاية وإعلان", "تنظيم حفلات", "تنسيق زهور", "محامي", "محاسب قانوني", "مكتب عقارات"]
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v115')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v116')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
         document.getElementById('formModal').style.display = 'none';
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
-            let tempDB = res.data.slice(1).map((r, i) => ({
-                id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], desc: r[5],
-                ph: r[6], wa: r[7], imgRaw: r[8], loc: r[9], offer: r[10],
-                live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
-                hours: r[13], newsSrc: r[14], rating: r[16] || "" 
-            })).reverse();
+            let tempDB = res.data.slice(1).map((r, i) => {
+                let offerTxt = r[10];
+                // 🔴 نظام التحقق من انتهاء العرض
+                if(offerTxt) {
+                    const dateMatch = offerTxt.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+                    if(dateMatch) {
+                        const today = new Date();
+                        const expDay = parseInt(dateMatch[1]);
+                        const expMonth = parseInt(dateMatch[2]) - 1; 
+                        const expDate = new Date(today.getFullYear(), expMonth, expDay);
+                        // إذا انتهى التاريخ، نمسح العرض من الظهور
+                        if (expDate.setHours(23,59,59,999) < today.getTime()) {
+                            offerTxt = ""; 
+                        }
+                    }
+                }
+
+                return {
+                    id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], desc: r[5],
+                    ph: r[6], wa: r[7], imgRaw: r[8], loc: r[9], offer: offerTxt,
+                    live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
+                    hours: r[13], newsSrc: r[14], rating: r[16] || "" 
+                };
+            }).reverse();
             
             const uniqueMap = new Map();
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
@@ -386,11 +410,12 @@
         const form = document.getElementById('reqForm');
         form.reset(); 
         document.getElementById('catDiv').style.display = 'none';
-        document.getElementById('usedDiv').style.display = 'none'; // 🔴 إخفاء قسم المستعمل
+        document.getElementById('usedDiv').style.display = 'none'; 
         document.getElementById('imgLink').style.display = 'none';
         document.getElementById('subCatInput').style.display = 'none';
         document.getElementById('subCatSelect').style.display = 'none';
         document.getElementById('waUploadHelp').style.display = 'none';
+        document.getElementById('offerExpiry').style.display = 'none';
         
         if(type) { 
             document.getElementById('reqType').value = type; 
@@ -429,15 +454,28 @@
         curCat = c;
         if(el) { 
             document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); 
-            if(el.classList.contains('cat-item') || el.classList.contains('cat-btn')) el.classList.add('active'); 
+            document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active')); 
+            if(el.classList.contains('cat-item') || el.classList.contains('btm-item')) el.classList.add('active'); 
         }
         document.getElementById('search').value = ''; 
         generateSubCats(c);
-        if (c === 'all') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة'); } 
+        
+        // 🔴 منطق الفلترة المحدث (تنظيف الرئيسية)
+        if (c === 'all') { 
+            filteredDB = fullDB.filter(x => 
+                x.cat !== 'أخبار' && 
+                x.cat !== 'مصالح حكومية' && 
+                x.cat !== 'دور عبادة' && 
+                x.cat !== 'تعليم وحضانات' && 
+                x.cat !== 'بيع سلعة / مستعمل' &&
+                x.cat !== 'أخرى' 
+            ); 
+        } 
         else if (c === 'fav') { filteredDB = fullDB.filter(x => favs.includes(x.id)); } 
         else if (c === 'offers') { filteredDB = fullDB.filter(x => x.offer); } 
+        else if (c === 'souq') { filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); } // زر السوق
         else { filteredDB = fullDB.filter(x => x.cat === c); }
+        
         filteredDB.sort((a,b) => (b.feat - a.feat));
         page = 1; renderGrid(true);
         setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
@@ -446,7 +484,7 @@
     function generateSubCats(mainCat) {
         const container = document.getElementById('subCatNav');
         container.innerHTML = '';
-        if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers') {
+        if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq') {
             container.style.display = 'none';
             return;
         }
@@ -507,7 +545,7 @@
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
         const ads = fullDB.filter(x => x.offer).map(x => {
-            let cleanOffer = x.offer.replace(/{EXP:\d+}/g, '').replace(/\n/g, ' | ');
+            let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | ');
             return `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}</span>`;
         }).join('   •   ');
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
@@ -518,7 +556,7 @@
         if(ads.length > 0) { 
             const rand = ads[Math.floor(Math.random()*ads.length)]; 
             floatAdID = rand.id; 
-            let clean = rand.offer.replace(/{EXP:\d+}/g, '').split('\n')[0];
+            let clean = rand.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0];
             document.getElementById('floatTxt').innerText = clean.substring(0,25)+'...'; 
             document.getElementById('floatAd').style.display = 'flex'; 
             document.getElementById('floatAd').onclick = function() { openD(floatAdID); };
@@ -547,7 +585,8 @@
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`;
             const dateStr = x.hours ? `<div class="news-footer-card"><div><i class="fas fa-bullhorn"></i> ${x.newsSrc||'مصدر'}</div> <div><i class="far fa-clock"></i> ${x.hours}</div></div>` : '';
             
-            let cleanOffer = x.offer ? x.offer.replace(/{EXP:\d+}/g, '').split('\n')[0] : '';
+            // تنظيف نص العرض من التاريخ عند العرض
+            let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : '';
             const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${x.hours ? `<span class="offer-date">(${x.hours})</span>` : ''}</div>` : '';
             
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
@@ -568,7 +607,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v115', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v116', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -617,7 +656,7 @@
             let offersHTML = '';
             let lines = x.offer.split('\n');
             lines.forEach(line => {
-                let cleanLine = line.replace(/{EXP:\d+}/g, '');
+                let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, ''); // إخفاء التاريخ
                 if(cleanLine.trim()) {
                     offersHTML += `<div class="offer-item">${cleanLine}</div>`;
                 }
@@ -654,17 +693,20 @@
         openModal('detailsModal');
     }
 
-    // 🔴 التحكم الذكي في حقول الفورم
     function toggleFields(val) {
         const isShop = (val === 'نشاط' || val === 'إعلان');
         const isUsed = (val === 'بيع سلعة / مستعمل');
         const isVio = (val === 'مخالفة');
         
         document.getElementById('catDiv').style.display = isShop ? 'block' : 'none';
-        document.getElementById('usedDiv').style.display = isUsed ? 'block' : 'none'; // 🔴 إظهار قسم المستعمل
+        document.getElementById('usedDiv').style.display = isUsed ? 'block' : 'none'; 
         document.getElementById('imgLink').style.display = isVio ? 'block' : 'none';
         document.getElementById('waUploadHelp').style.display = (isShop || isUsed) ? 'block' : 'none'; 
         document.getElementById('reqType').value = val; 
+    }
+
+    function toggleExpiry(val) {
+        document.getElementById('offerExpiry').style.display = (val.length > 0) ? 'block' : 'none';
     }
 
     function checkSub(val) {
@@ -695,10 +737,7 @@
         const form = document.getElementById('reqForm');
         const data={}; new FormData(form).forEach((v,k)=>data[k]=v); 
         
-        // 🔴 دمج التخصص حسب نوع الطلب
         let finalSub = "";
-        
-        // لو نشاط تجاري عادي
         if(document.getElementById('catDiv').style.display !== 'none') {
             if(document.getElementById('subCatSelect').style.display !== 'none') {
                 finalSub = data.SubCategorySelect;
@@ -706,16 +745,18 @@
                 finalSub = data.SubCategoryInput;
             }
         } 
-        // 🔴 لو بيع مستعمل
         else if (document.getElementById('usedDiv').style.display !== 'none') {
-            // نضع "بيع سلعة / مستعمل" كفئة رئيسية
             data.Category = "بيع سلعة / مستعمل"; 
-            // ونضع النوع المختار كتخصص فرعي
             finalSub = data.UsedCategory;
         }
 
         if(finalSub) { data.Description = data.Description + " | التخصص: " + finalSub; }
         if(data.ImageLink && data.Type === 'مخالفة') { data.Description = data.Description + " | صورة: " + data.ImageLink; }
+        
+        // 🔴 دمج تاريخ انتهاء العرض
+        if(data.Offer && document.getElementById('offerExpiry').value) {
+            data.Offer = data.Offer + " {" + document.getElementById('offerExpiry').value + "}";
+        }
 
         fetch(scriptURL,{method:'POST',body:JSON.stringify(data)})
         .then(r=>r.json())
@@ -730,4 +771,4 @@
     init();
 </script>
 </body>
-                                                                                                                                                                              </html>
+</html>

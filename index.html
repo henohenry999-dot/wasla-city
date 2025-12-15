@@ -78,7 +78,6 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; animation: pulse 2s infinite; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
-        /* تعديل القائمة السفلية لتسع 5 أزرار */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
@@ -268,7 +267,10 @@
 
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
         <textarea name="Description" class="form-input" placeholder="الوصف / التفاصيل" required></textarea>
-        <input type="text" name="Contact" class="form-input" placeholder="رقم الهاتف (لأكثر من رقم افصل بـ / )" required>
+        
+        <input type="text" name="Contact" class="form-input" placeholder="رقم الاتصال (مطلوب)" required>
+        <input type="text" name="Whatsapp" class="form-input" placeholder="رقم الواتساب (اختياري)">
+        
         <button type="submit" id="submitBtn" class="btn-submit">إرسال 🚀</button>
     </form>
 </div></div>
@@ -315,8 +317,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // ⚠️⚠️⚠️ رابط السكربت ⚠️⚠️⚠️
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyczRQSGbFtQiLyuzh-vamHRViL3C_HSd6sOF4HLXmcwvTeueQTPNJaKV1LSKPZ571Jnw/exec'; // 🔴 ضع الرابط هنا
+    // ⚠️⚠️⚠️ رابط السكربت الخاص بك ⚠️⚠️⚠️
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxe1QGpn7TgzgkKmBOK8eB3q-TvXTDui8IU9qyDShSrPmJYfWa_4RET9DoUMrUQNGdkaA/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
@@ -679,7 +681,9 @@
                 container.appendChild(btn);
             }
         });
-        let waNum = phones[0].trim().replace(/'/g, ''); 
+        
+        // 🔴 تعديل: استخدام رقم الواتساب الخاص لو وجد
+        let waNum = x.wa ? x.wa.trim().replace(/'/g, '') : phones[0].trim().replace(/'/g, ''); 
         if(waNum) {
             let btnWa = document.createElement('a');
             btnWa.href = `https://wa.me/2${waNum}`;
@@ -772,4 +776,3 @@
 </script>
 </body>
 </html>
-

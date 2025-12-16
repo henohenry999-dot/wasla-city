@@ -16,6 +16,13 @@
         body.modal-open .fab { display: none !important; }
         body.modal-open { overflow: hidden; }
 
+        /* 🚀 شاشة الصاروخ (Splash Screen) */
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.5s ease-in-out; }
+        .rocket-icon { font-size: 5rem; color: white; animation: launch 0.8s infinite alternate; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
+        .splash-text { color: white; margin-top: 20px; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; animation: pulse 1.5s infinite; }
+        @keyframes launch { 0% { transform: translateY(0); } 100% { transform: translateY(-20px); } }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
@@ -79,13 +86,9 @@
         .offer-expiry-tag { font-size: 0.6rem; color: #c0392b; font-weight: bold; display: flex; align-items: center; gap: 3px; margin-top: 3px; }
         
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
-        
-        /* 🔴 تصميم جديد لفوتر التاريخ */
         .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-        
-        /* 🔴 تصميم تاريخ الإضافة الواضح */
         .shop-added-date { display: flex; align-items: center; justify-content: flex-end; gap: 5px; font-size: 0.65rem; color: #555; font-weight: bold; padding: 4px 0; }
         .shop-added-date i { color: var(--primary); }
 
@@ -107,7 +110,6 @@
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
 
-        /* نفس تنسيقات المودال والعروض */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -146,6 +148,11 @@
     </style>
 </head>
 <body>
+
+<div id="splashScreen">
+    <div class="rocket-icon"><i class="fas fa-rocket"></i></div>
+    <div class="splash-text">Hona App</div>
+</div>
 
 <div class="ticker-container">
     <div class="news-bar" id="newsBar" style="display:none"><div class="ticker-lbl lbl-news">أخبار</div><div class="track" id="newsText"></div></div>
@@ -316,7 +323,20 @@
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
+        // 🚀 Caching: Load from storage immediately for rocket speed
+        const cached = localStorage.getItem('hona_cache_v128');
+        if(cached) {
+            try {
+                fullDB = JSON.parse(cached);
+                document.getElementById('shopCount').innerText = fullDB.length;
+                renderGrid(true);
+                setupTickers();
+                setTimeout(() => document.getElementById('splashScreen').style.transform = 'translateY(-100%)', 1500);
+            } catch(e) { console.log('Cache error'); }
+        }
+
         document.getElementById('formModal').style.display = 'none';
+        
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             let tempDB = res.data.slice(1).map((r, i) => {
                 let offerTxt = r[10] || "";
@@ -355,8 +375,15 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
+            // Save to cache
+            localStorage.setItem('hona_cache_v128', JSON.stringify(fullDB));
+            
             document.getElementById('shopCount').innerText = fullDB.length;
-            setupTickers(); setupFloatAd(); resetApp();
+            renderGrid(true); // Re-render with fresh data
+            setupTickers(); 
+            setupFloatAd();
+            
+            if(!cached) setTimeout(() => document.getElementById('splashScreen').style.transform = 'translateY(-100%)', 2000);
         }});
     }
     
@@ -377,7 +404,7 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v128'); window.location.reload(); }
     function getImages(raw) { if(!raw || raw.length < 5) return []; return raw.split(',').map(u => { let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); }); }
     function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.classList.add('modal-open'); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.classList.remove('modal-open'); }
@@ -385,7 +412,6 @@
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
-    // 🔴 التحكم في ظهور خانة العروض
     function openFormClean(type) {
         const form = document.getElementById('reqForm');
         form.reset(); 
@@ -395,7 +421,7 @@
         document.getElementById('subCatInput').style.display = 'none';
         document.getElementById('subCatSelect').style.display = 'none';
         document.getElementById('waUploadHelp').style.display = 'none';
-        document.getElementById('offerSection').style.display = 'none'; // إخفاء العروض افتراضياً
+        document.getElementById('offerSection').style.display = 'none'; 
         
         if(type) { document.getElementById('reqType').value = type; toggleFields(type); } 
         else { document.getElementById('reqType').value = 'نشاط'; toggleFields('نشاط'); }
@@ -494,11 +520,11 @@
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
         
-        // 🔴 شريط العروض المحدث
+        // 🔴 شريط العروض مع تاريخ الانتهاء
         const ads = fullDB.filter(x => x.offer).map(x => { 
             let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); 
             let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`;
-            if(x.expiry) txt += ` (ينتهي في: ${x.expiry})`; // إضافة تاريخ الانتهاء
+            if(x.expiry) txt += ` (ينتهي في: ${x.expiry})`; 
             txt += `</span>`;
             return txt;
         }).join('   •   ');
@@ -527,7 +553,7 @@
             if(isNews) {
                 footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`;
             } else {
-                // 🔴 تاريخ الإضافة الواضح
+                // 🔴 جملة تمت الإضافة واضحة
                 footerHTML = x.date ? `<div class="shop-added-date"><i class="far fa-calendar-alt"></i> تمت الإضافة: ${x.date}</div>` : '';
             }
 
@@ -573,7 +599,7 @@
         document.getElementById('imgLink').style.display = isVio ? 'block' : 'none';
         document.getElementById('waUploadHelp').style.display = (isShop || isUsed) ? 'block' : 'none'; 
         
-        // 🔴 التحكم في قسم العروض
+        // 🔴 التحكم في قسم العروض: يظهر فقط عند اختيار "إعلان"
         document.getElementById('offerSection').style.display = (val === 'إعلان') ? 'flex' : 'none';
         
         document.getElementById('reqType').value = val; 

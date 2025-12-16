@@ -17,7 +17,7 @@
         body.modal-open { overflow: hidden; }
 
         /* 🚀 شاشة الصاروخ */
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.5s ease-in-out; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
         .rocket-icon { font-size: 5rem; color: white; animation: launch 0.8s infinite alternate; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
         .splash-text { color: white; margin-top: 20px; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; animation: pulse 1.5s infinite; }
         @keyframes launch { 0% { transform: translateY(0); } 100% { transform: translateY(-20px); } }
@@ -236,9 +236,8 @@
     <form id="reqForm" onsubmit="sendData(event)">
         <input type="hidden" name="Date" id="finalDateParam" value="New"> 
         <select name="Type" id="reqType" class="form-select" onchange="toggleFields(this.value)">
-            <option value="نشاط">📝 إضافة نشاط تجاري / مصلحة</option>
+            <option value="نشاط">📝 إضافة نشاط تجاري</option>
             <option value="إعلان">📢 حجز إعلان مميز</option>
-            <option value="خبر">📢 إضافة خبر عاجل</option>
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
@@ -263,11 +262,10 @@
                 <option value="مصالح حكومية">مصالح حكومية</option>
                 <option value="دور عبادة">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
-                <option value="أخبار">أخبار (للأدمن)</option>
+                <option value="أخبار">أخبار</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
-            
             <div id="workHoursDiv" style="display:flex; gap:10px; margin-bottom:12px;">
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">مفتوح من 🕘</label><input type="time" id="openTime" class="form-input" style="margin-bottom:0;"></div>
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">إلى 🕚</label><input type="time" id="closeTime" class="form-input" style="margin-bottom:0;"></div>
@@ -277,7 +275,7 @@
             <select name="UsedCategory" id="usedCatSelect" class="form-select"><option value="">اختر نوع السلعة...</option><option value="موبايلات وإلكترونيات">📱 موبايلات وإلكترونيات</option><option value="أثاث ومنزل">🏠 أثاث ومنزل</option><option value="أجهزة كهربائية">🔌 أجهزة كهربائية</option><option value="سيارات وقطع غيار">🚗 سيارات وقطع غيار</option><option value="ملابس وإكسسوارات">👗 ملابس وإكسسوارات</option><option value="مستلزمات أطفال">👶 مستلزمات أطفال</option><option value="كتب وهوايات">📚 كتب وهوايات</option><option value="حيوانات وطيور">🐦 حيوانات وطيور</option><option value="أخرى">🔄 أخرى</option></select>
         </div>
         <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
-        <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن / رابط المصدر للخبر">
+        <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن">
         <input type="text" name="Image" class="form-input" placeholder="رابط صورة (أو ارسلها واتساب)">
         <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:10px; border-radius:8px; text-align:center;"><i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a></div>
         
@@ -319,26 +317,50 @@
         "رياضة": ["جيم رجالي", "جيم سيدات", "ملاعب خماسية", "مركز شباب / نادي", "أكاديمية كرة قدم", "سباحة", "ألعاب قتالية (كاراتيه/كونغ فو)", "مكملات غذائية", "أدوات رياضية", "تأهيل بدني", "يوجا وزومبا", "تراك مشي وجري"],
         "مصالح حكومية": ["مكتب بريد", "قسم شرطة", "شركة الكهرباء", "شركة المياه", "شركة الغاز", "جهاز المدينة", "سجل مدني", "شهر عقاري", "وحدة مرور", "مكتب تموين", "مكتب عمل / تأمينات", "البنوك", "مأمورية ضرائب"],
         "دور عبادة": ["مسجد", "كنيسة", "زاوية / مصلى"],
-        "أخرى": ["تصوير فوتوغراف", "طباعة ودعاية وإعلان", "تنظيم حفلات", "تنسيق زهور", "محامي", "محاسب قانوني", "مكتب عقارات"]
+        "أخرى": ["تصوير فوتوغراف", "طباعة ودعاية وإعلان", "تنظيم حفلات", "تنسيق زهور", "محامي", "محاسب قانوني", "مكتب عقارات"],
+        "أخبار": ["أخبار"]
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v131')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v132')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        const cached = localStorage.getItem('hona_cache_v131');
+        const cached = localStorage.getItem('hona_cache_v132');
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
                 document.getElementById('shopCount').innerText = fullDB.length;
                 renderGrid(true);
                 setupTickers();
-                setTimeout(() => document.getElementById('splashScreen').style.transform = 'translateY(-100%)', 1500);
+                setTimeout(() => document.getElementById('splashScreen').style.opacity = '0', 200);
+                setTimeout(() => document.getElementById('splashScreen').style.display = 'none', 600);
             } catch(e) { console.log('Cache error'); }
         }
 
         document.getElementById('formModal').style.display = 'none';
+        
+        // 🔴🔴 كود المدير (Admin) السري
+        // إذا كان الرابط يحتوي على ?admin=true ستظهر خانة "إضافة خبر"
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('admin') === 'true') {
+            // حذف خيار الخبر الموجود أصلاً (إن وجد) وإضافته بشكل صحيح
+            const select = document.getElementById('reqType');
+            let opt = document.createElement('option');
+            opt.value = 'خبر';
+            opt.innerHTML = '📢 إضافة خبر (Admin Only)';
+            select.add(opt);
+        } else {
+            // إخفاء خيار الخبر للمستخدم العادي (عن طريق إزالته من القائمة إذا كان موجوداً بالخطأ)
+            // في الـ HTML قمت بإخفائه، وهنا نؤكد عدم ظهوره
+            const options = document.getElementById('reqType').options;
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value === 'خبر') {
+                    document.getElementById('reqType').remove(i);
+                    break;
+                }
+            }
+        }
         
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             let tempDB = res.data.slice(1).map((r, i) => {
@@ -378,14 +400,17 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            localStorage.setItem('hona_cache_v131', JSON.stringify(fullDB));
+            localStorage.setItem('hona_cache_v132', JSON.stringify(fullDB));
             
             document.getElementById('shopCount').innerText = fullDB.length;
             renderGrid(true); 
             setupTickers(); 
             setupFloatAd();
             
-            if(!cached) setTimeout(() => document.getElementById('splashScreen').style.transform = 'translateY(-100%)', 2000);
+            if(!cached) {
+                setTimeout(() => document.getElementById('splashScreen').style.opacity = '0', 200);
+                setTimeout(() => document.getElementById('splashScreen').style.display = 'none', 600);
+            }
         }});
     }
     
@@ -406,7 +431,7 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v131'); window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v132'); window.location.reload(); }
     function getImages(raw) { if(!raw || raw.length < 5) return []; return raw.split(',').map(u => { let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); }); }
     function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.classList.add('modal-open'); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.classList.remove('modal-open'); }
@@ -561,7 +586,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v131', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v132', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -587,13 +612,15 @@
         const isVio = (val === 'مخالفة');
         
         document.getElementById('catDiv').style.display = isShop ? 'block' : 'none';
-        // 🔴🔴 التحكم في خانة الساعات: تظهر للنشاط، وتختفي للإعلان والخبر
+        
+        // 🔴 التحكم في خانة الساعات: تظهر للنشاط فقط
         document.getElementById('workHoursDiv').style.display = (val === 'نشاط') ? 'flex' : 'none';
+        
         document.getElementById('usedDiv').style.display = isUsed ? 'block' : 'none'; 
         document.getElementById('imgLink').style.display = isVio ? 'block' : 'none';
         document.getElementById('waUploadHelp').style.display = (isShop || isUsed) ? 'block' : 'none'; 
         
-        // 🔴🔴 التحكم في خانة العروض: تظهر للإعلان فقط
+        // 🔴 التحكم في قسم العروض: يظهر فقط عند اختيار "إعلان"
         document.getElementById('offerSection').style.display = (val === 'إعلان') ? 'flex' : 'none';
         
         document.getElementById('reqType').value = val; 

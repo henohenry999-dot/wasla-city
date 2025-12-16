@@ -16,7 +16,7 @@
         body.modal-open .fab { display: none !important; }
         body.modal-open { overflow: hidden; }
 
-        /* 🚀 شاشة الصاروخ (Splash Screen) */
+        /* 🚀 شاشة الصاروخ */
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.5s ease-in-out; }
         .rocket-icon { font-size: 5rem; color: white; animation: launch 0.8s infinite alternate; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
         .splash-text { color: white; margin-top: 20px; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; animation: pulse 1.5s infinite; }
@@ -89,7 +89,8 @@
         .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-        .shop-added-date { display: flex; align-items: center; justify-content: flex-end; gap: 5px; font-size: 0.65rem; color: #555; font-weight: bold; padding: 4px 0; }
+        
+        .shop-added-date { display: flex; align-items: center; justify-content: flex-end; gap: 5px; font-size: 0.7rem; color: #333; font-weight: 800; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; }
         .shop-added-date i { color: var(--primary); }
 
         .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
@@ -235,8 +236,9 @@
     <form id="reqForm" onsubmit="sendData(event)">
         <input type="hidden" name="Date" id="finalDateParam" value="New"> 
         <select name="Type" id="reqType" class="form-select" onchange="toggleFields(this.value)">
-            <option value="نشاط">📝 إضافة نشاط تجاري</option>
+            <option value="نشاط">📝 إضافة نشاط تجاري / مصلحة</option>
             <option value="إعلان">📢 حجز إعلان مميز</option>
+            <option value="خبر">📢 إضافة خبر عاجل</option>
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
@@ -261,9 +263,11 @@
                 <option value="مصالح حكومية">مصالح حكومية</option>
                 <option value="دور عبادة">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
+                <option value="أخبار">أخبار (للأدمن)</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
+            
             <div id="workHoursDiv" style="display:flex; gap:10px; margin-bottom:12px;">
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">مفتوح من 🕘</label><input type="time" id="openTime" class="form-input" style="margin-bottom:0;"></div>
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">إلى 🕚</label><input type="time" id="closeTime" class="form-input" style="margin-bottom:0;"></div>
@@ -273,7 +277,7 @@
             <select name="UsedCategory" id="usedCatSelect" class="form-select"><option value="">اختر نوع السلعة...</option><option value="موبايلات وإلكترونيات">📱 موبايلات وإلكترونيات</option><option value="أثاث ومنزل">🏠 أثاث ومنزل</option><option value="أجهزة كهربائية">🔌 أجهزة كهربائية</option><option value="سيارات وقطع غيار">🚗 سيارات وقطع غيار</option><option value="ملابس وإكسسوارات">👗 ملابس وإكسسوارات</option><option value="مستلزمات أطفال">👶 مستلزمات أطفال</option><option value="كتب وهوايات">📚 كتب وهوايات</option><option value="حيوانات وطيور">🐦 حيوانات وطيور</option><option value="أخرى">🔄 أخرى</option></select>
         </div>
         <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
-        <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن">
+        <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن / رابط المصدر للخبر">
         <input type="text" name="Image" class="form-input" placeholder="رابط صورة (أو ارسلها واتساب)">
         <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:10px; border-radius:8px; text-align:center;"><i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a></div>
         
@@ -319,12 +323,11 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v128')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v131')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        // 🚀 Caching: Load from storage immediately for rocket speed
-        const cached = localStorage.getItem('hona_cache_v128');
+        const cached = localStorage.getItem('hona_cache_v131');
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
@@ -375,11 +378,10 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            // Save to cache
-            localStorage.setItem('hona_cache_v128', JSON.stringify(fullDB));
+            localStorage.setItem('hona_cache_v131', JSON.stringify(fullDB));
             
             document.getElementById('shopCount').innerText = fullDB.length;
-            renderGrid(true); // Re-render with fresh data
+            renderGrid(true); 
             setupTickers(); 
             setupFloatAd();
             
@@ -404,7 +406,7 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v128'); window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v131'); window.location.reload(); }
     function getImages(raw) { if(!raw || raw.length < 5) return []; return raw.split(',').map(u => { let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); }); }
     function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.classList.add('modal-open'); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.classList.remove('modal-open'); }
@@ -519,15 +521,7 @@
     function setupTickers() {
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
-        
-        // 🔴 شريط العروض مع تاريخ الانتهاء
-        const ads = fullDB.filter(x => x.offer).map(x => { 
-            let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); 
-            let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`;
-            if(x.expiry) txt += ` (ينتهي في: ${x.expiry})`; 
-            txt += `</span>`;
-            return txt;
-        }).join('   •   ');
+        const ads = fullDB.filter(x => x.offer).map(x => { let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`; if(x.expiry) txt += ` (⏳ ينتهي في: ${x.expiry})`; txt += `</span>`; return txt; }).join('   •   ');
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
     }
 
@@ -553,7 +547,6 @@
             if(isNews) {
                 footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`;
             } else {
-                // 🔴 جملة تمت الإضافة واضحة
                 footerHTML = x.date ? `<div class="shop-added-date"><i class="far fa-calendar-alt"></i> تمت الإضافة: ${x.date}</div>` : '';
             }
 
@@ -568,7 +561,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v128', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v131', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -589,17 +582,18 @@
     }
 
     function toggleFields(val) {
-        const isShop = (val === 'نشاط' || val === 'إعلان');
+        const isShop = (val === 'نشاط' || val === 'إعلان' || val === 'خبر');
         const isUsed = (val === 'بيع سلعة / مستعمل');
         const isVio = (val === 'مخالفة');
         
         document.getElementById('catDiv').style.display = isShop ? 'block' : 'none';
-        document.getElementById('workHoursDiv').style.display = isShop ? 'flex' : 'none'; 
+        // 🔴🔴 التحكم في خانة الساعات: تظهر للنشاط، وتختفي للإعلان والخبر
+        document.getElementById('workHoursDiv').style.display = (val === 'نشاط') ? 'flex' : 'none';
         document.getElementById('usedDiv').style.display = isUsed ? 'block' : 'none'; 
         document.getElementById('imgLink').style.display = isVio ? 'block' : 'none';
         document.getElementById('waUploadHelp').style.display = (isShop || isUsed) ? 'block' : 'none'; 
         
-        // 🔴 التحكم في قسم العروض: يظهر فقط عند اختيار "إعلان"
+        // 🔴🔴 التحكم في خانة العروض: تظهر للإعلان فقط
         document.getElementById('offerSection').style.display = (val === 'إعلان') ? 'flex' : 'none';
         
         document.getElementById('reqType').value = val; 

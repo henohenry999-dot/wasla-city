@@ -74,9 +74,21 @@
         .c-title { margin: 0 0 5px; font-size: 0.95rem; font-weight: 800; color: var(--dark); line-height: 1.3; }
         .c-sub { font-size: 0.7rem; color: #7f8c8d; display: flex; align-items: center; gap: 5px; font-weight: 500; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.8rem; }
+        
+        /* 🔴 تصميم العروض */
         .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.7rem; font-weight: bold; padding: 6px 8px; border-radius: 8px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 1px solid #ffe0e0; }
-        .offer-date { font-size: 0.55rem; color: #999; font-weight: normal; }
-        .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; }
+        .offer-expiry-tag { font-size: 0.6rem; color: #c0392b; font-weight: bold; display: flex; align-items: center; gap: 3px; margin-top: 3px; }
+        
+        /* 🔴🔴 تصميم جديد لفوتر الأخبار */
+        .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
+        .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
+        .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .shop-date-row { display: flex; justify-content: flex-end; margin-top: 5px; font-size: 0.6rem; color: #999; }
+
+        /* 🔴🔴 تصميم جديد للهيدر داخل تفاصيل الخبر */
+        .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
+        .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
+        
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
         .card-fav-btn.active i { color: var(--red); } 
@@ -92,6 +104,7 @@
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
 
+        /* نفس تنسيقات المودال والعروض */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -201,11 +214,8 @@
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
-
 <div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><i class="fas fa-city" style="font-size:3rem; color:var(--primary); margin-bottom:15px;"></i><h3>تطبيق Hona</h3><p>تطبيق خدمي مجاني 100%.</p><p style="color:var(--primary); font-weight:bold;">نسألكم الدعاء ❤️</p><button class="btn-submit" onclick="openModal('rateAppModal')" style="background:var(--gold); color:black; margin-top:10px;">قيم التطبيق ⭐</button></div></div>
-
 <div id="rateAppModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('rateAppModal')">✕</div><h3 style="color:var(--primary)">قيم تجربتك معنا</h3><div class="rating-stars" id="appStars" style="margin:20px 0;"><i class="fas fa-star" onclick="setAppRate(1)"></i><i class="fas fa-star" onclick="setAppRate(2)"></i><i class="fas fa-star" onclick="setAppRate(3)"></i><i class="fas fa-star" onclick="setAppRate(4)"></i><i class="fas fa-star" onclick="setAppRate(5)"></i></div><button class="btn-submit" onclick="sendAppRate()">إرسال التقييم 📤</button></div></div>
-
 <div id="rateShopModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('rateShopModal')">✕</div><h3 style="color:var(--dark)">تقييم الخدمة</h3><p id="rateShopName" style="color:var(--primary); font-weight:bold;"></p><div class="rating-stars" id="shopStars" style="margin:20px 0;"><i class="fas fa-star" onclick="setShopRate(1)"></i><i class="fas fa-star" onclick="setShopRate(2)"></i><i class="fas fa-star" onclick="setShopRate(3)"></i><i class="fas fa-star" onclick="setShopRate(4)"></i><i class="fas fa-star" onclick="setShopRate(5)"></i></div><button class="btn-submit" onclick="sendShopRate()">إرسال 🚀</button></div></div>
 
 <div id="formModal" class="modal"><div class="modal-content" style="padding:20px;">
@@ -213,7 +223,7 @@
     <h3 style="text-align:center; color:var(--dark); margin-top:10px;" id="formTitle">إضافة طلب</h3>
     <div style="background:#e8f5e9; padding:10px; border-radius:10px; text-align:center; margin-bottom:15px; font-size:0.8rem; color:#2e7d32;">✨ الإضافة مجانية تماماً لوجه الله</div>
     <form id="reqForm" onsubmit="sendData(event)">
-        <input type="hidden" name="Date" value="New"> 
+        <input type="hidden" name="Date" id="finalDateParam" value="New"> 
         <select name="Type" id="reqType" class="form-select" onchange="toggleFields(this.value)">
             <option value="نشاط">📝 إضافة نشاط تجاري</option>
             <option value="إعلان">📢 حجز إعلان مميز</option>
@@ -222,7 +232,6 @@
             <option value="اقتراح">💡 اقتراح</option>
         </select>
         <input type="text" name="Name" class="form-input" placeholder="الاسم / العنوان" required>
-        
         <div id="catDiv">
             <select name="Category" class="form-select" onchange="checkSub(this.value)">
                 <option value="">اختر التصنيف...</option>
@@ -243,100 +252,38 @@
                 <option value="دور عبادة">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
             </select>
-            <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;">
-                <option value="">اختر التخصص...</option>
-            </select>
+            <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
+            <div id="workHoursDiv" style="display:flex; gap:10px; margin-bottom:12px;">
+                <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">مفتوح من 🕘</label><input type="time" id="openTime" class="form-input" style="margin-bottom:0;"></div>
+                <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">إلى 🕚</label><input type="time" id="closeTime" class="form-input" style="margin-bottom:0;"></div>
+            </div>
         </div>
-
         <div id="usedDiv" style="display:none;">
-            <select name="UsedCategory" id="usedCatSelect" class="form-select">
-                <option value="">اختر نوع السلعة...</option>
-                <option value="موبايلات وإلكترونيات">📱 موبايلات وإلكترونيات</option>
-                <option value="أثاث ومنزل">🏠 أثاث ومنزل</option>
-                <option value="أجهزة كهربائية">🔌 أجهزة كهربائية</option>
-                <option value="سيارات وقطع غيار">🚗 سيارات وقطع غيار</option>
-                <option value="ملابس وإكسسوارات">👗 ملابس وإكسسوارات</option>
-                <option value="مستلزمات أطفال">👶 مستلزمات أطفال</option>
-                <option value="كتب وهوايات">📚 كتب وهوايات</option>
-                <option value="حيوانات وطيور">🐦 حيوانات وطيور</option>
-                <option value="أخرى">🔄 أخرى</option>
-            </select>
+            <select name="UsedCategory" id="usedCatSelect" class="form-select"><option value="">اختر نوع السلعة...</option><option value="موبايلات وإلكترونيات">📱 موبايلات وإلكترونيات</option><option value="أثاث ومنزل">🏠 أثاث ومنزل</option><option value="أجهزة كهربائية">🔌 أجهزة كهربائية</option><option value="سيارات وقطع غيار">🚗 سيارات وقطع غيار</option><option value="ملابس وإكسسوارات">👗 ملابس وإكسسوارات</option><option value="مستلزمات أطفال">👶 مستلزمات أطفال</option><option value="كتب وهوايات">📚 كتب وهوايات</option><option value="حيوانات وطيور">🐦 حيوانات وطيور</option><option value="أخرى">🔄 أخرى</option></select>
         </div>
-
         <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
         <input type="text" name="Location" class="form-input" placeholder="رابط اللوكيشن">
         <input type="text" name="Image" class="form-input" placeholder="رابط صورة (أو ارسلها واتساب)">
-        
-        <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:10px; border-radius:8px; text-align:center;">
-            <i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a>
-        </div>
-        
-        <div style="display:flex; gap:10px;">
-            <input type="text" name="Offer" id="offerInput" class="form-input" placeholder="هل يوجد عرض؟ / السعر" style="flex:2;" oninput="toggleExpiry(this.value)">
-            <input type="text" id="offerExpiry" class="form-input" placeholder="انتهاء: 30/12" style="flex:1; display:none;">
-        </div>
-
+        <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:10px; border-radius:8px; text-align:center;"><i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a></div>
+        <div style="display:flex; gap:10px;"><input type="text" name="Offer" id="offerInput" class="form-input" placeholder="هل يوجد عرض؟ / السعر" style="flex:2;" oninput="toggleExpiry(this.value)"><input type="text" id="offerExpiry" class="form-input" placeholder="انتهاء: 30/12" style="flex:1; display:none;"></div>
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
         <textarea name="Description" class="form-input" placeholder="الوصف / التفاصيل" required></textarea>
-        
         <input type="text" name="Contact" class="form-input" placeholder="رقم الاتصال (مطلوب)" required>
         <input type="text" name="Whatsapp" class="form-input" placeholder="رقم الواتساب (اختياري)">
-        
         <button type="submit" id="submitBtn" class="btn-submit">إرسال 🚀</button>
     </form>
 </div></div>
 
-<div id="detailsModal" class="modal" onclick="if(event.target==this)closeModal('detailsModal')">
-    <div class="modal-content">
-        <div class="modal-close" onclick="closeModal('detailsModal')">✕</div>
-        
-        <div id="imgSlider" class="img-slider"></div>
-        <img id="dImg" src="" style="width:100%; height:250px; object-fit:cover; display:none;">
-        
-        <div class="d-body">
-            <h2 id="dName" class="d-title"></h2>
-            
-            <div>
-                <span class="cat-capsule" id="dCatMain"></span>
-                <span class="cat-capsule sub" id="dCatSub" style="display:none;"></span>
-            </div>
-
-            <div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div>
-            <div id="dSrcInfo" class="info-row" style="display:none;"></div>
-            <div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div>
-            
-            <div id="dOfferBox" class="offer-box-modal" style="display:none;">
-                <div id="dOfferTxt"></div>
-            </div>
-
-            <div class="d-desc" id="dDesc"></div>
-            
-            <a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a>
-
-            <div class="share-row">
-                <button class="btn-small" onclick="shareShopViaWhatsapp()"><i class="fab fa-whatsapp"></i> مشاركة</button>
-                <button class="btn-small" onclick="shareShop()"><i class="fas fa-copy"></i> نسخ</button>
-                <button class="btn-small" onclick="openShopRate()"><i class="fas fa-star" style="color:var(--gold)"></i> تقييم</button>
-            </div>
-
-            <div id="actionBtns" class="action-btns"></div>
-            
-            <a id="dLoc" href="#" target="_blank" class="btn-submit" style="text-align:center; background:#f39c12; margin-top:10px; display:block;">الموقع</a>
-        </div>
-    </div>
-</div>
+<div id="detailsModal" class="modal" onclick="if(event.target==this)closeModal('detailsModal')"><div class="modal-content"><div class="modal-close" onclick="closeModal('detailsModal')">✕</div><div id="imgSlider" class="img-slider"></div><img id="dImg" src="" style="width:100%; height:250px; object-fit:cover; display:none;"><div class="d-body"><h2 id="dName" class="d-title"></h2><div><span class="cat-capsule" id="dCatMain"></span><span class="cat-capsule sub" id="dCatSub" style="display:none;"></span></div><div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div><div id="dSrcInfo" class="info-row" style="display:none;"></div><div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div><div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div><div class="d-desc" id="dDesc"></div><a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a><div class="share-row"><button class="btn-small" onclick="shareShopViaWhatsapp()"><i class="fab fa-whatsapp"></i> مشاركة</button><button class="btn-small" onclick="shareShop()"><i class="fas fa-copy"></i> نسخ</button><button class="btn-small" onclick="openShopRate()"><i class="fas fa-star" style="color:var(--gold)"></i> تقييم</button></div><div id="actionBtns" class="action-btns"></div><a id="dLoc" href="#" target="_blank" class="btn-submit" style="text-align:center; background:#f39c12; margin-top:10px; display:block;">الموقع</a></div></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // ⚠️⚠️⚠️ رابط السكربت الخاص بك ⚠️⚠️⚠️
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxe1QGpn7TgzgkKmBOK8eB3q-TvXTDui8IU9qyDShSrPmJYfWa_4RET9DoUMrUQNGdkaA/exec';
-    
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
 
-    // 🔴 القائمة المنقحة (V120)
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
         "خدمات طبية": ["صيدلية", "معمل تحاليل", "مركز أشعة", "عيادة أسنان", "عيادة عيون", "عيادة باطنة وأطفال", "نساء وتوليد", "عيادة جلدية", "علاج طبيعي", "عظام ومفاصل", "أنف وأذن وحنجرة", "مخ وأعصاب", "طب بيطري", "مستلزمات طبية", "نظارات وبصريات", "تمريض منزلي", "وحدة طب الاسرة"],
@@ -357,32 +304,42 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v120')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v127')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
         document.getElementById('formModal').style.display = 'none';
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             let tempDB = res.data.slice(1).map((r, i) => {
-                let offerTxt = r[10];
-                if(offerTxt) {
-                    const dateMatch = offerTxt.match(/\{(\d{1,2})\/(\d{1,2})\}/);
-                    if(dateMatch) {
-                        const today = new Date();
-                        const expDay = parseInt(dateMatch[1]);
-                        const expMonth = parseInt(dateMatch[2]) - 1; 
-                        const expDate = new Date(today.getFullYear(), expMonth, expDay);
-                        if (expDate.setHours(23,59,59,999) < today.getTime()) {
-                            offerTxt = ""; 
-                        }
-                    }
+                let offerTxt = r[10] || "";
+                let expiryDateDisplay = ""; 
+
+                const dateMatch = offerTxt.match(/\{(\d{1,2}\/\d{1,2})\}/);
+                if(dateMatch) {
+                    const today = new Date();
+                    const parts = dateMatch[1].split('/');
+                    const expDay = parseInt(parts[0]);
+                    const expMonth = parseInt(parts[1]) - 1; 
+                    const expDate = new Date(today.getFullYear(), expMonth, expDay);
+                    if (expDate.setHours(23,59,59,999) < today.getTime()) { offerTxt = ""; } 
+                    else { expiryDateDisplay = dateMatch[1]; offerTxt = offerTxt.replace(dateMatch[0], "").trim(); }
                 }
+                
+                let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
+                const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
+                if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
+
+                let isActive = (r[11] && r[11].includes('TRUE')); 
+                if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
 
                 return {
-                    id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], desc: r[5],
-                    ph: r[6], wa: r[7], imgRaw: r[8], loc: r[9], offer: offerTxt,
-                    live: (r[11] && r[11].includes('TRUE')), feat: (r[12] && r[12].includes('TRUE')), 
-                    hours: r[13], newsSrc: r[14], rating: r[16] || "" 
+                    id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
+                    desc: cleanDesc, 
+                    ph: r[6], wa: r[7], imgRaw: r[8], loc: r[9], offer: offerTxt, expiry: expiryDateDisplay, 
+                    live: isActive, 
+                    feat: (r[12] && r[12].includes('TRUE')), 
+                    date: r[13], // تاريخ الإضافة أو الخبر
+                    newsSrc: r[14], rating: r[16] || "" 
                 };
             }).reverse();
             
@@ -394,30 +351,32 @@
             setupTickers(); setupFloatAd(); resetApp();
         }});
     }
+    
+    function checkIsOpen(timeStr) {
+        const now = new Date();
+        const currentMins = now.getHours() * 60 + now.getMinutes();
+        let parts = timeStr.split('-');
+        if(parts.length !== 2) return true; 
+        let start = parseTime(parts[0]);
+        let end = parseTime(parts[1]);
+        if(start === -1 || end === -1) return true;
+        if (end < start) { return (currentMins >= start || currentMins <= end); } else { return (currentMins >= start && currentMins <= end); }
+    }
+
+    function parseTime(t) {
+        let p = t.trim().split(':');
+        if(p.length < 2) return -1;
+        return parseInt(p[0]) * 60 + parseInt(p[1]);
+    }
 
     function forceUpdate() { window.location.reload(); }
-
-    function getImages(raw) {
-        if(!raw || raw.length < 5) return [];
-        return raw.split(',').map(u => {
-            let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/);
-            return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim();
-        });
-    }
-
-    function openModal(id) { 
-        document.getElementById(id).style.display = 'flex'; 
-        document.body.classList.add('modal-open'); 
-    }
-    function closeModal(id) { 
-        document.getElementById(id).style.display = 'none'; 
-        document.body.classList.remove('modal-open'); 
-    }
-
+    function getImages(raw) { if(!raw || raw.length < 5) return []; return raw.split(',').map(u => { let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); }); }
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.classList.add('modal-open'); }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.classList.remove('modal-open'); }
     function openEmergency(e) { e.stopPropagation(); openModal('emergencyModal'); }
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
-
+    
     function openFormClean(type) {
         const form = document.getElementById('reqForm');
         form.reset(); 
@@ -429,26 +388,15 @@
         document.getElementById('waUploadHelp').style.display = 'none';
         document.getElementById('offerExpiry').style.display = 'none';
         
-        if(type) { 
-            document.getElementById('reqType').value = type; 
-            toggleFields(type); 
-        } else { 
-            document.getElementById('reqType').value = 'نشاط'; 
-            toggleFields('نشاط'); 
-        }
+        if(type) { document.getElementById('reqType').value = type; toggleFields(type); } 
+        else { document.getElementById('reqType').value = 'نشاط'; toggleFields('نشاط'); }
         openModal('formModal');
     }
 
-    function shareShop() {
-        const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`;
-        navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!"));
-    }
-    function shareShopViaWhatsapp() {
-        const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
+    function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
+    function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
+    
     function doSearch(val) {
         const s = normalizeText(val.toLowerCase());
         if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; }
@@ -468,46 +416,19 @@
             document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
             document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active')); 
             if(el.classList.contains('cat-item') || el.classList.contains('btm-item')) el.classList.add('active'); 
-            
             document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active'));
             if(el.classList.contains('q-chip')) el.classList.add('active');
         }
         document.getElementById('search').value = ''; 
         generateSubCats(c);
         
-        if (c === 'all') { 
-            filteredDB = fullDB.filter(x => 
-                x.cat !== 'أخبار' && 
-                x.cat !== 'مصالح حكومية' && 
-                x.cat !== 'دور عبادة' && 
-                x.cat !== 'تعليم وحضانات' && 
-                x.cat !== 'بيع سلعة / مستعمل' &&
-                x.cat !== 'أخرى' 
-            ); 
-            // الترتيب الافتراضي: المميز أولاً، ثم الأحدث
-            filteredDB.sort((a,b) => (b.feat - a.feat));
-        } 
+        if (c === 'all') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); filteredDB.sort((a,b) => (b.feat - a.feat)); } 
         else if (c === 'fav') { filteredDB = fullDB.filter(x => favs.includes(x.id)); } 
         else if (c === 'offers') { filteredDB = fullDB.filter(x => x.offer); } 
         else if (c === 'souq') { filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); } 
-        else if (c === 'featured') { // 🔴 فلتر المميز
-            filteredDB = fullDB.filter(x => x.feat === true);
-        }
-        else if (c === 'latest') { // 🔴 فلتر الأحدث
-            filteredDB = fullDB.filter(x => 
-                x.cat !== 'أخبار' && 
-                x.cat !== 'مصالح حكومية' && 
-                x.cat !== 'دور عبادة' && 
-                x.cat !== 'تعليم وحضانات' && 
-                x.cat !== 'بيع سلعة / مستعمل' &&
-                x.cat !== 'أخرى' 
-            );
-            filteredDB.sort((a,b) => b.id - a.id);
-        }
-        else { 
-            filteredDB = fullDB.filter(x => x.cat === c); 
-            filteredDB.sort((a,b) => (b.feat - a.feat));
-        }
+        else if (c === 'featured') { filteredDB = fullDB.filter(x => x.feat === true); }
+        else if (c === 'latest') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); filteredDB.sort((a,b) => b.id - a.id); }
+        else { filteredDB = fullDB.filter(x => x.cat === c); filteredDB.sort((a,b) => (b.feat - a.feat)); }
         
         page = 1; renderGrid(true);
         setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
@@ -516,58 +437,22 @@
     function generateSubCats(mainCat) {
         const container = document.getElementById('subCatNav');
         container.innerHTML = '';
-        if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') {
-            container.style.display = 'none';
-            return;
-        }
-
+        if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; }
         let predefinedSubs = subCategories[mainCat] || [];
         const items = fullDB.filter(x => x.cat === mainCat);
         const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))];
         const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])];
-
-        if (finalSubs.length === 0) {
-            container.style.display = 'none';
-            return;
-        }
-
+        if (finalSubs.length === 0) { container.style.display = 'none'; return; }
         container.style.display = 'flex';
-
-        let allBtn = document.createElement('div');
-        allBtn.className = 'sub-chip active';
-        allBtn.innerText = 'الكل';
-        allBtn.onclick = function() { 
-            document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            filter(mainCat, null); 
-        };
+        let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل';
+        allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); };
         container.appendChild(allBtn);
-
-        finalSubs.forEach(s => {
-            let btn = document.createElement('div');
-            btn.className = 'sub-chip';
-            btn.innerText = s;
-            btn.onclick = function() {
-                document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                filterSub(mainCat, s);
-            };
-            container.appendChild(btn);
-        });
+        finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); });
     }
 
-    function filterSub(mainCat, subCat) {
-        filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat);
-        filteredDB.sort((a,b) => (b.feat - a.feat));
-        page = 1; renderGrid(true);
-    }
+    function filterSub(mainCat, subCat) { filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); }
 
-    function resetApp(el) { 
-        document.getElementById('search').value=''; 
-        document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active'));
-        filter('all', document.querySelector('.cat-item')); 
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // 🔴 الصعود للأعلى
-    }
+    function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
     function sendAppRate() { if(appRating===0) return alert("اختر نجوماً"); submitReview("تقييم التطبيق", "Hona App", appRating); closeModal('rateAppModal'); }
@@ -576,97 +461,22 @@
     function sendShopRate() { if(shopRating===0) return alert("اختر نجوماً"); submitReview("تقييم محل", currentShopData.name, shopRating); closeModal('rateShopModal'); }
     function updateStars(id, n) { const stars = document.querySelectorAll(`#${id} i`); stars.forEach((s, i) => s.classList.toggle('gold', i < n)); }
     
-    // 🔴 1. دالة إرسال التقييم المصححة
     function submitReview(type, name, rate) { 
-        const btn = document.querySelector('#rateShopModal .btn-submit');
-        if(btn) btn.innerText = "جاري...";
-        
-        const params = new URLSearchParams();
-        params.append("Date", "New");
-        params.append("Type", "تقييم");
-        params.append("Name", name);
-        params.append("Category", type); 
-        params.append("Description", `التقييم: ${rate} نجوم`);
-        params.append("Contact", ""); 
-
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(response => response.json())
-        .then(result => {
-            alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); 
-            if(btn) btn.innerText = "إرسال 🚀";
-        })
-        .catch(() => { 
-            alert("تم الإرسال بنجاح!"); 
-            if(btn) btn.innerText = "إرسال 🚀"; 
-        });
-        
-        closeModal('rateAppModal');
-        closeModal('rateShopModal');
+        const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري...";
+        const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); 
+        fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; });
+        closeModal('rateAppModal'); closeModal('rateShopModal');
     }
 
-    // 🔴 2. دالة إرسال الطلبات المصححة
     function sendData(e) { 
-        e.preventDefault(); 
-        const btn = document.getElementById('submitBtn'); 
-        btn.disabled = true; 
-        btn.innerText = "جاري..."; 
-        
-        const form = document.getElementById('reqForm');
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((v, k) => data[k] = v); 
-        
-        let finalSub = "";
-        if(document.getElementById('catDiv').style.display !== 'none') {
-            if(document.getElementById('subCatSelect').style.display !== 'none') {
-                finalSub = data.SubCategorySelect;
-            } else if (document.getElementById('subCatInput').style.display !== 'none') {
-                finalSub = data.SubCategoryInput;
-            }
-        } 
-        else if (document.getElementById('usedDiv').style.display !== 'none') {
-            data.Category = "بيع سلعة / مستعمل"; 
-            finalSub = data.UsedCategory;
-        }
-
-        const params = new URLSearchParams();
-        params.append("Date", "New");
-        params.append("Type", data.Type);
-        params.append("Name", data.Name);
-        params.append("Category", data.Category);
-        params.append("SubCategory", finalSub); 
-        params.append("Area", data.Area);
-        params.append("Location", data.Location);
-        params.append("Image", data.Image);
-        
-        let desc = data.Description;
-        if(data.ImageLink && data.Type === 'مخالفة') { desc += " | صورة: " + data.ImageLink; }
-        params.append("Description", desc);
-
-        let finalOffer = data.Offer;
-        if(finalOffer && document.getElementById('offerExpiry').value) {
-            finalOffer += " {" + document.getElementById('offerExpiry').value + "}";
-        }
-        params.append("Offer", finalOffer || "");
-        
-        params.append("Contact", data.Contact);
-        params.append("Whatsapp", data.Whatsapp || ""); 
-
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(r => r.json())
-        .then(res => { 
-            alert("تم الإرسال بنجاح! سيتم المراجعة."); 
-            closeModal('formModal'); 
-            form.reset(); 
-            btn.disabled = false; 
-            btn.innerText = "إرسال 🚀"; 
-        })
-        .catch(err => { 
-            alert("تم الإرسال!"); 
-            closeModal('formModal'); 
-            btn.disabled = false; 
-            btn.innerText = "إرسال 🚀"; 
-        }); 
+        e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "جاري..."; 
+        const form = document.getElementById('reqForm'); const openVal = document.getElementById('openTime').value; const closeVal = document.getElementById('closeTime').value; const typeVal = document.getElementById('reqType').value; let hoursTag = ""; if((typeVal === 'نشاط' || typeVal === 'إعلان') && openVal && closeVal) { hoursTag = ' | ⏰ ' + openVal + ' - ' + closeVal; }
+        const formData = new FormData(form); const data = {}; formData.forEach((v, k) => data[k] = v); 
+        let finalSub = ""; if(document.getElementById('catDiv').style.display !== 'none') { if(document.getElementById('subCatSelect').style.display !== 'none') { finalSub = data.SubCategorySelect; } else if (document.getElementById('subCatInput').style.display !== 'none') { finalSub = data.SubCategoryInput; } } else if (document.getElementById('usedDiv').style.display !== 'none') { data.Category = "بيع سلعة / مستعمل"; finalSub = data.UsedCategory; }
+        const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", data.Type); params.append("Name", data.Name); params.append("Category", data.Category); params.append("SubCategory", finalSub); params.append("Area", data.Area); params.append("Location", data.Location); params.append("Image", data.Image);
+        let desc = data.Description; if(data.ImageLink && data.Type === 'مخالفة') { desc += " | صورة: " + data.ImageLink; } desc += hoursTag; params.append("Description", desc);
+        let finalOffer = data.Offer; if(finalOffer && document.getElementById('offerExpiry').value) { finalOffer += " {" + document.getElementById('offerExpiry').value + "}"; } params.append("Offer", finalOffer || ""); params.append("Contact", data.Contact); params.append("Whatsapp", data.Whatsapp || ""); 
+        fetch(scriptURL, { method: 'POST', body: params }).then(r => r.json()).then(res => { alert("تم الإرسال بنجاح! سيتم المراجعة."); closeModal('formModal'); form.reset(); btn.disabled = false; btn.innerText = "إرسال 🚀"; }).catch(err => { alert("تم الإرسال!"); closeModal('formModal'); btn.disabled = false; btn.innerText = "إرسال 🚀"; }); 
     }
 
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
@@ -674,200 +484,105 @@
     function setupTickers() {
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
-        const ads = fullDB.filter(x => x.offer).map(x => {
-            let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | ');
-            return `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}</span>`;
-        }).join('   •   ');
+        const ads = fullDB.filter(x => x.offer).map(x => { let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); return `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}</span>`; }).join('   •   ');
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
     }
 
     function setupFloatAd() { 
         const ads = fullDB.filter(x => x.feat && x.offer); 
-        if(ads.length > 0) { 
-            const rand = ads[Math.floor(Math.random()*ads.length)]; 
-            floatAdID = rand.id; 
-            let clean = rand.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0];
-            document.getElementById('floatTxt').innerText = clean.substring(0,25)+'...'; 
-            document.getElementById('floatAd').style.display = 'flex'; 
-            document.getElementById('floatAd').onclick = function() { openD(floatAdID); };
-        } 
+        if(ads.length > 0) { const rand = ads[Math.floor(Math.random()*ads.length)]; floatAdID = rand.id; let clean = rand.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0]; document.getElementById('floatTxt').innerText = clean.substring(0,25)+'...'; document.getElementById('floatAd').style.display = 'flex'; document.getElementById('floatAd').onclick = function() { openD(floatAdID); }; } 
     }
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
 
     function renderGrid(isNew) {
-        const g = document.getElementById('grid');
-        const btn = document.getElementById('loadMore');
+        const g = document.getElementById('grid'); const btn = document.getElementById('loadMore');
         if(isNew) g.innerHTML = '';
-        const chunk = filteredDB.slice(0, page * limit);
-        const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
+        const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
         toRender.forEach(x => {
-            const isNews = x.cat === 'أخبار';
-            const div = document.createElement('div');
-            div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
+            const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
             const clickLayer = `<div class="click-layer" onclick="openD(${x.id})"></div>`; 
-            
-            const isFav = favs.includes(x.id) ? 'active' : '';
-            const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
-            const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : '';
-            const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : '';
-            const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : '';
-            
+            const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
+            const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : ''; 
+            const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : '';
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`;
-            const dateStr = x.hours ? `<div class="news-footer-card"><div><i class="fas fa-bullhorn"></i> ${x.newsSrc||'مصدر'}</div> <div><i class="far fa-clock"></i> ${x.hours}</div></div>` : '';
             
-            let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : '';
-            const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${x.hours ? `<span class="offer-date">(${x.hours})</span>` : ''}</div>` : '';
-            
-            const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
-            const imgs = getImages(x.imgRaw);
-            const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
+            // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+            // تصميم جديد لفوتر الخبر (Grid)
+            let footerHTML = '';
+            if(isNews) {
+                // الكبسولات الحمراء والرمادية
+                footerHTML = `
+                    <div class="news-meta-row">
+                        <span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> 
+                        <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span>
+                    </div>`;
+            } else {
+                footerHTML = x.date ? `<div class="shop-date-row"><i class="far fa-calendar-alt"></i> أضيف: ${x.date}</div>` : '';
+            }
+            // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 
-            div.innerHTML = `
-                ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''}
-                <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
-                <div class="c-body">
-                    <div class="c-title">${x.name}</div>
-                    <div style="margin-bottom:5px;">${starsHTML}</div>
-                    ${subHTML} ${offerHTML} ${isNews?dateStr:''}
-                </div>
-            `;
+            let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; 
+            const expiryHTML = x.expiry ? `<div class="offer-expiry-tag"><i class="fas fa-hourglass-half"></i> ينتهي: ${x.expiry}</div>` : '';
+            const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHTML}</div>` : '';
+            
+            const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
+            div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v120', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v127', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
-        const x = fullDB.find(i => i.id === id);
-        currentShopData = x; 
-        document.getElementById('dName').innerText = x.name;
-        document.getElementById('dCatMain').innerText = x.cat;
+        const x = fullDB.find(i => i.id === id); currentShopData = x; 
+        document.getElementById('dName').innerText = x.name; document.getElementById('dCatMain').innerText = x.cat;
+        const sub = (x.sub && x.sub !== x.cat) ? x.sub : ""; if(sub) { document.getElementById('dCatSub').style.display = 'inline-block'; document.getElementById('dCatSub').innerText = sub; } else { document.getElementById('dCatSub').style.display = 'none'; }
+        document.getElementById('dArea').innerText = x.area || "غير محدد"; document.getElementById('dDesc').innerText = x.desc;
         
-        const sub = (x.sub && x.sub !== x.cat) ? x.sub : "";
-        if(sub) {
-            document.getElementById('dCatSub').style.display = 'inline-block';
-            document.getElementById('dCatSub').innerText = sub;
-        } else {
-            document.getElementById('dCatSub').style.display = 'none';
+        // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+        // تصميم جديد لهيدر تفاصيل الخبر (Modal)
+        if(x.cat === 'أخبار') { 
+            document.getElementById('dSrcInfo').style.display = 'block';
+            document.getElementById('dSrcInfo').innerHTML = `
+                <div class="news-detail-header">
+                    <div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر"}</div>
+                    <div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div>
+                </div>
+            `;
+            if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } 
+        } else { 
+            document.getElementById('dSrcInfo').style.display = 'none'; document.getElementById('dNewsLink').style.display = 'none'; 
         }
+        // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 
-        document.getElementById('dArea').innerText = x.area || "غير محدد"; 
-        document.getElementById('dDesc').innerText = x.desc;
-        
-        if(x.cat === 'أخبار') {
-            document.getElementById('dSrcInfo').style.display = 'flex';
-            document.getElementById('dSrcInfo').innerHTML = `<span><i class="fas fa-bullhorn"></i> ${x.newsSrc || "مصدر"}</span> <span><i class="far fa-clock"></i> ${x.hours || ""}</span>`;
-            if(x.loc && x.loc.includes('http')) {
-                document.getElementById('dNewsLink').style.display = 'block';
-                document.getElementById('dNewsLink').href = x.loc;
-            } else { document.getElementById('dNewsLink').style.display = 'none'; }
-        } else {
-            document.getElementById('dSrcInfo').style.display = 'none';
-            document.getElementById('dNewsLink').style.display = 'none';
-        }
-
-        const imgs = getImages(x.imgRaw);
-        const slider = document.getElementById('imgSlider');
-        const dImg = document.getElementById('dImg');
-        slider.innerHTML = '';
-        if (imgs.length > 0) {
-            slider.style.display = 'flex'; dImg.style.display = 'none';
-            imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); });
-        } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; }
-
+        const imgs = getImages(x.imgRaw); const slider = document.getElementById('imgSlider'); const dImg = document.getElementById('dImg'); slider.innerHTML = '';
+        if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; }
         document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : '';
         const offBox = document.getElementById('dOfferBox'); 
-        
         if(x.offer) { 
             offBox.style.display='block'; 
-            let offersHTML = '';
-            let lines = x.offer.split('\n');
-            lines.forEach(line => {
-                let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, ''); 
-                if(cleanLine.trim()) {
-                    offersHTML += `<div class="offer-item">${cleanLine}</div>`;
-                }
-            });
+            let offersHTML = ''; 
+            let lines = x.offer.split('\n'); 
+            lines.forEach(line => { let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, ''); if(cleanLine.trim()) { offersHTML += `<div class="offer-item">${cleanLine}</div>`; } }); 
+            if(x.expiry) { offersHTML += `<div class="offer-expiry-tag" style="justify-content:center; margin-top:10px; font-size:0.8rem;"><i class="fas fa-clock"></i> ينتهي هذا العرض يوم: ${x.expiry}</div>`; }
             document.getElementById('dOfferTxt').innerHTML = offersHTML; 
-        } else { 
-            offBox.style.display='none'; 
-        }
+        } else { offBox.style.display='none'; }
         
-        const container = document.getElementById('actionBtns');
-        container.innerHTML = ''; 
-        let phones = x.ph.split(/[\/\-&]/); 
-        phones.forEach((num, idx) => {
-            let cleanNum = num.trim().replace(/'/g, '');
-            if(cleanNum) {
-                let btn = document.createElement('a');
-                btn.href = `tel:${cleanNum}`;
-                btn.className = 'btn-act btn-call';
-                btn.innerHTML = `<i class="fas fa-phone-alt"></i> اتصال ${phones.length > 1 ? idx+1 : ''}`;
-                container.appendChild(btn);
-            }
-        });
-        
-        let waNum = x.wa ? x.wa.trim().replace(/'/g, '') : phones[0].trim().replace(/'/g, ''); 
-        if(waNum) {
-            let btnWa = document.createElement('a');
-            btnWa.href = `https://wa.me/2${waNum}`;
-            btnWa.className = 'btn-act btn-wa';
-            btnWa.innerHTML = `<i class="fab fa-whatsapp"></i> واتساب`;
-            container.appendChild(btnWa);
-        }
-        
+        const container = document.getElementById('actionBtns'); container.innerHTML = ''; let phones = x.ph.split(/[\/\-&]/); phones.forEach((num, idx) => { let cleanNum = num.trim().replace(/'/g, ''); if(cleanNum) { let btn = document.createElement('a'); btn.href = `tel:${cleanNum}`; btn.className = 'btn-act btn-call'; btn.innerHTML = `<i class="fas fa-phone-alt"></i> اتصال ${phones.length > 1 ? idx+1 : ''}`; container.appendChild(btn); } });
+        let waNum = x.wa ? x.wa.trim().replace(/'/g, '') : phones[0].trim().replace(/'/g, ''); if(waNum) { let btnWa = document.createElement('a'); btnWa.href = `https://wa.me/2${waNum}`; btnWa.className = 'btn-act btn-wa'; btnWa.innerHTML = `<i class="fab fa-whatsapp"></i> واتساب`; container.appendChild(btnWa); }
         const loc = document.getElementById('dLoc'); if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
-        
         openModal('detailsModal');
     }
 
-    function toggleFields(val) {
-        const isShop = (val === 'نشاط' || val === 'إعلان');
-        const isUsed = (val === 'بيع سلعة / مستعمل');
-        const isVio = (val === 'مخالفة');
-        
-        document.getElementById('catDiv').style.display = isShop ? 'block' : 'none';
-        document.getElementById('usedDiv').style.display = isUsed ? 'block' : 'none'; 
-        document.getElementById('imgLink').style.display = isVio ? 'block' : 'none';
-        document.getElementById('waUploadHelp').style.display = (isShop || isUsed) ? 'block' : 'none'; 
-        document.getElementById('reqType').value = val; 
-    }
-
-    function toggleExpiry(val) {
-        document.getElementById('offerExpiry').style.display = (val.length > 0) ? 'block' : 'none';
-    }
-
-    function checkSub(val) {
-        const subSelect = document.getElementById('subCatSelect');
-        const subInput = document.getElementById('subCatInput');
-        const subs = subCategories[val]; 
-
-        if (subs) {
-            subSelect.innerHTML = '<option value="">اختر التخصص...</option>';
-            subs.forEach(s => {
-                subSelect.innerHTML += `<option value="${s}">${s}</option>`;
-            });
-            subSelect.style.display = 'block';
-            subInput.style.display = 'none';
-        } else {
-            subSelect.style.display = 'none';
-            if (val === 'أخرى') {
-                subInput.style.display = 'block';
-            } else {
-                subInput.style.display = 'none';
-            }
-        }
-    }
-    
+    function toggleFields(val) { const isShop = (val === 'نشاط' || val === 'إعلان'); const isUsed = (val === 'بيع سلعة / مستعمل'); const isVio = (val === 'مخالفة'); document.getElementById('catDiv').style.display = isShop ? 'block' : 'none'; document.getElementById('workHoursDiv').style.display = isShop ? 'flex' : 'none'; document.getElementById('usedDiv').style.display = isUsed ? 'block' : 'none'; document.getElementById('imgLink').style.display = isVio ? 'block' : 'none'; document.getElementById('waUploadHelp').style.display = (isShop || isUsed) ? 'block' : 'none'; document.getElementById('reqType').value = val; }
+    function toggleExpiry(val) { document.getElementById('offerExpiry').style.display = (val.length > 0) ? 'block' : 'none'; }
+    function checkSub(val) { const subSelect = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput'); const subs = subCategories[val]; if (subs) { subSelect.innerHTML = '<option value="">اختر التخصص...</option>'; subs.forEach(s => { subSelect.innerHTML += `<option value="${s}">${s}</option>`; }); subSelect.style.display = 'block'; subInput.style.display = 'none'; } else { subSelect.style.display = 'none'; if (val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; } } }
     function getCat(m,s){ return m; }
-    
     function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
 
     init();
 </script>
 </body>
 </html>
-
-

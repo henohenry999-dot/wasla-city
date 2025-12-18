@@ -16,11 +16,10 @@
         body.modal-open .fab { display: none !important; }
         body.modal-open { overflow: hidden; }
 
-        /* شاشة الصاروخ */
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
-        .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 2s infinite; }
+        /* شاشة الصاروخ - ستختفي فوراً */
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; }
+        .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         header { margin-top: 0; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
@@ -98,6 +97,12 @@
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
 
+        .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
+        .float-ad:hover { width: 200px; padding: 10px; left: 0; }
+        .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
+        .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
+        .float-ad:hover .float-txt { display: block; }
+
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 95%; max-width: 450px; border-radius: 25px; padding: 0; position: relative; max-height: 90vh; overflow-y: auto; animation: pop 0.3s; padding-bottom: 20px; }
         .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
@@ -131,7 +136,7 @@
 </head>
 <body>
 
-<div id="splashScreen" onclick="removeSplash()">
+<div id="splashScreen">
     <div class="rocket-icon"><i class="fas fa-rocket"></i></div>
     <div class="splash-text">Hona App</div>
 </div>
@@ -243,7 +248,6 @@
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
-            
             <div id="workHoursDiv" style="display:flex; gap:10px; margin-bottom:12px;">
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">مفتوح من 🕘</label><input type="time" id="openTime" class="form-input" style="margin-bottom:0;"></div>
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">إلى 🕚</label><input type="time" id="closeTime" class="form-input" style="margin-bottom:0;"></div>
@@ -298,16 +302,19 @@
 
 <div id="detailsModal" class="modal" onclick="if(event.target==this)closeModal('detailsModal')"><div class="modal-content"><div class="modal-close" onclick="closeModal('detailsModal')">✕</div><div id="imgSlider" class="img-slider"></div><img id="dImg" src="" style="width:100%; height:250px; object-fit:cover; display:none;"><div class="d-body"><h2 id="dName" class="d-title"></h2><div><span class="cat-capsule" id="dCatMain"></span><span class="cat-capsule sub" id="dCatSub" style="display:none;"></span></div><div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div><div id="dSrcInfo" class="info-row" style="display:none;"></div><div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div><div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div><div class="d-desc" id="dDesc"></div><a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a><div class="share-row"><button class="btn-small" onclick="shareShopViaWhatsapp()"><i class="fab fa-whatsapp"></i> مشاركة</button><button class="btn-small" onclick="shareShop()"><i class="fas fa-copy"></i> نسخ</button><button class="btn-small" onclick="openShopRate()"><i class="fas fa-star" style="color:var(--gold)"></i> تقييم</button></div><div id="actionBtns" class="action-btns"></div><a id="dLoc" href="#" target="_blank" class="btn-submit" style="text-align:center; background:#f39c12; margin-top:10px; display:block;">الموقع</a></div></div></div>
 
+<div id="floatAd" style="display:none"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyPOGfcFegZ7ip4ce_JoYlffDKxMPxf2rYmN0JJiS6q1hCU1l5Uyr4BtNKWsj358ZRRwQ/exec';
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
+    // 🔴🔴 استخدام وكيل أسرع وأفضل لضمان التحميل
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // تغيير مفتاح الكاش لضمان التحديث
-    const CACHE_KEY = 'hona_v146_rescue'; 
+    // مفتاح كاش جديد تماماً
+    const CACHE_KEY = 'hona_v147_fast'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -330,12 +337,12 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v146')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v147')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        // مؤقت أمان لإخفاء شاشة التحميل بعد 4 ثواني حتى لو النت بطيء
-        setTimeout(removeSplash, 4000);
+        // 🚀 الأهم: إخفاء شاشة التحميل بعد 1 ثانية بالضبط
+        setTimeout(removeSplash, 1000);
 
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -343,7 +350,6 @@
                 fullDB = JSON.parse(cached);
                 document.getElementById('shopCount').innerText = fullDB.length;
                 renderGrid(true);
-                removeSplash();
             } catch(e) { console.log('Cache error'); }
         }
 
@@ -414,11 +420,11 @@
             
             document.getElementById('shopCount').innerText = fullDB.length;
             renderGrid(true); 
-            setupFloatAd();
-            removeSplash();
+            // setupFloatAd(); // موقوف مؤقتاً
         }, error: (err) => {
             console.log("Error loading data:", err);
-            removeSplash(); // فتح التطبيق حتى لو فشل التحميل
+            // في حالة الخطأ، نفتح التطبيق فارغاً بدلاً من تعليقه
+            document.getElementById('grid').innerHTML = '<div class="loading" style="color:red">فشل تحميل البيانات. تأكد من الإنترنت.</div>';
         }});
     }
 

@@ -58,6 +58,12 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; }
         .card:active { transform: scale(0.98); }
+        /* 🔴 مفتاح الحل: طبقة شفافة للنقر */
+        .card-click-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
+        /* العناصر الأخرى لا تعترض النقر */
+        .card > * { pointer-events: none; }
+        .card .card-fav-btn { pointer-events: auto; z-index: 10; }
+
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
@@ -76,14 +82,15 @@
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         
-        .shop-added-date { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; }
+        /* 🔴 تعديل: محاذاة التاريخ لليمين */
+        .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
 
         .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
         .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
         
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
-        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; color: #bdc3c7; pointer-events: auto !important;}
+        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; color: #bdc3c7; pointer-events: auto !important; }
         .card-fav-btn.active i { color: var(--red); } 
         .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.9); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; backdrop-filter: blur(2px); }
         .badge-sold { position: absolute; top: 10px; right: 10px; background: var(--dark); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
@@ -215,9 +222,9 @@
 <div class="btm-nav">
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
+    <div style="width: 60px;"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
-    <div class="btm-item" onclick="openFormClean('إعلان')"><i class="fas fa-bullhorn"></i>إعلان</div>
 </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
@@ -240,11 +247,9 @@
             <option value="اقتراح">💡 اقتراح</option>
         </select>
         
-        <div id="nameDiv">
-            <label id="lbl_Name" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الاسم / العنوان</label>
-            <input type="text" name="Name" id="inp_Name" class="form-input" placeholder="الاسم / العنوان" required>
-        </div>
-
+        <label id="lbl_Name" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الاسم / العنوان</label>
+        <input type="text" name="Name" id="inp_Name" class="form-input" placeholder="الاسم / العنوان" required>
+        
         <div id="catDiv">
             <select name="Category" id="inp_Category" class="form-select" onchange="checkSub(this.value)">
                 <option value="">اختر التصنيف...</option>
@@ -321,8 +326,6 @@
     </form>
 </div></div>
 
-<div id="detailsModal" class="modal" onclick="if(event.target==this)closeModal('detailsModal')"><div class="modal-content"><div class="modal-close" onclick="closeModal('detailsModal')">✕</div><div id="imgSlider" class="img-slider"></div><img id="dImg" src="" style="width:100%; height:250px; object-fit:cover; display:none;"><div class="d-body"><h2 id="dName" class="d-title"></h2><div><span class="cat-capsule" id="dCatMain"></span><span class="cat-capsule sub" id="dCatSub" style="display:none;"></span></div><div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div><div id="dSrcInfo" class="info-row" style="display:none;"></div><div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div><div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div><div class="d-desc" id="dDesc"></div><a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a><div class="share-row"><button class="btn-small" onclick="shareShopViaWhatsapp()"><i class="fab fa-whatsapp"></i> مشاركة</button><button class="btn-small" onclick="shareShop()"><i class="fas fa-copy"></i> نسخ</button><button class="btn-small" onclick="openShopRate()"><i class="fas fa-star" style="color:var(--gold)"></i> تقييم</button></div><div id="actionBtns" class="action-btns"></div><a id="dLoc" href="#" target="_blank" class="btn-submit" style="text-align:center; background:#f39c12; margin-top:10px; display:block;">الموقع</a></div></div></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyPOGfcFegZ7ip4ce_JoYlffDKxMPxf2rYmN0JJiS6q1hCU1l5Uyr4BtNKWsj358ZRRwQ/exec';
@@ -330,6 +333,9 @@
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
+
+    // مفتاح كاش جديد لتطبيق التعديلات
+    const CACHE_KEY = 'hona_v149_final'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -352,18 +358,17 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v148')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v149')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
         // مؤقت أمان لإخفاء شاشة التحميل بعد 1 ثانية
         setTimeout(removeSplash, 1000);
 
-        const cached = localStorage.getItem('hona_cache_v148');
+        const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
-                // 3. عداد الخدمات (استثناء الأخبار)
                 const count = fullDB.filter(x => x.cat !== 'أخبار').length;
                 document.getElementById('shopCount').innerText = count;
                 renderGrid(true);
@@ -396,8 +401,6 @@
                 let offerTxt = r[10] || "";
                 let expiryDateDisplay = ""; 
 
-                // منطق العرض المتعدد وتاريخ الانتهاء يعالج لاحقا في openD
-                
                 let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                 const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                 if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
@@ -409,13 +412,14 @@
                 if (!source || source.trim() === "") source = "Hona App"; 
 
                 return {
-                    id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
+                    id: i, name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
                     desc: cleanDesc, 
-                    ph: r[6], wa: r[7], imgRaw: r[8], loc: r[9], offer: offerTxt, expiry: expiryDateDisplay, 
+                    ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
+                    offer: String(offerTxt || ""), expiry: expiryDateDisplay, 
                     live: isActive, 
                     feat: (r[12] && r[12].includes('TRUE')), 
                     date: r[13], 
-                    newsSrc: source, 
+                    newsSrc: String(source), 
                     rating: r[16] || "" 
                 };
             }).reverse();
@@ -424,9 +428,8 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            localStorage.setItem('hona_cache_v148', JSON.stringify(fullDB));
+            localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
             
-            // 3. عداد الخدمات بدون الأخبار
             const count = fullDB.filter(x => x.cat !== 'أخبار').length;
             document.getElementById('shopCount').innerText = count;
             
@@ -462,7 +465,7 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v148'); window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem(CACHE_KEY); window.location.reload(); }
     
     function getImages(raw, isNews) { 
         if(!raw || raw.length < 5) {
@@ -509,7 +512,7 @@
         let showContact = true;
         let showArea = true;
         
-        // 2. إخفاء تصنيفات معينة للمستخدم العادي
+        // إخفاء خيارات محددة للمستخدم العادي
         const isAdmin = document.getElementById('reqType').querySelector('option[value="خبر"]');
         if (!isAdmin) {
             document.getElementById('opt_gov').style.display = 'none';
@@ -533,7 +536,7 @@
             showCat = true;
             showOffer = true;
         } else if (val === 'خبر') {
-            // 1. فورم الخبر للأدمن (حقول محددة فقط)
+            // فورم الخبر للأدمن (حقول محددة فقط)
             document.getElementById('lbl_Name').innerText = "عنوان الخبر";
             document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي";
             
@@ -571,7 +574,7 @@
         document.getElementById('reqType').value = val; 
     }
 
-    // ... shareShop, normalizeText, doSearch, filter, generateSubCats ... (نفس الدوال السابقة)
+    // ... shareShop, normalizeText, doSearch, filter, generateSubCats ... (نفس الدوال)
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
@@ -665,10 +668,37 @@
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
 
     function setupTickers() {
-        // 4. عرض الخبر: المصدر - العنوان (التاريخ)
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
-        const ads = fullDB.filter(x => x.offer).map(x => { let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`; if(x.expiry) txt += ` (⏳ ينتهي في: ${x.expiry})`; txt += `</span>`; return txt; }).join('   •   ');
+        
+        // 4. عرض العروض غير المنتهية فقط
+        const ads = fullDB.filter(x => {
+            if (!x.offer) return false;
+            // فحص انتهاء الصلاحية
+            let lines = x.offer.split('\n');
+            let hasActiveOffer = false;
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            
+            lines.forEach(line => {
+                let match = line.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+                if (match) {
+                    const d = parseInt(match[1]);
+                    const m = parseInt(match[2]) - 1;
+                    const exp = new Date(today.getFullYear(), m, d);
+                    if (exp >= today) hasActiveOffer = true;
+                } else {
+                    hasActiveOffer = true; // عرض بدون تاريخ يعتبر ساري
+                }
+            });
+            return hasActiveOffer;
+        }).map(x => { 
+            let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); 
+            let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`; 
+            txt += `</span>`; 
+            return txt; 
+        }).join('   •   ');
+
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
     }
 
@@ -684,10 +714,11 @@
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
         toRender.forEach(x => {
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
-            const clickLayer = `<div class="click-layer" onclick="openD(${x.id})"></div>`; 
+            // 🔴 طبقة شفافة للنقر تضمن الفتح
+            div.innerHTML = `<div class="card-click-overlay" onclick="openD(${x.id})"></div>`;
+            
             const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
             
-            // 5. حالة السوق: تم البيع إذا كان غير متاح
             let liveBadge = '';
             if (x.cat === 'بيع سلعة / مستعمل' && !x.live) {
                 liveBadge = `<div class="badge-sold">❌ تم البيع</div>`;
@@ -702,24 +733,35 @@
             if(isNews) {
                 footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`;
             } else {
-                // 6. تاريخ الإضافة: سطرين
                 footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : '';
             }
 
             let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; 
-            const expiryHTML = x.expiry ? `<div class="offer-expiry-tag"><i class="fas fa-hourglass-half"></i> ينتهي: ${x.expiry}</div>` : '';
-            const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHTML}</div>` : '';
+            
+            // التحقق من صلاحية العرض للكارت
+            let isOfferExpired = false;
+            if(x.offer) {
+                let dateMatch = x.offer.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+                if(dateMatch) {
+                    const d = parseInt(dateMatch[1]);
+                    const m = parseInt(dateMatch[2]) - 1;
+                    const exp = new Date(new Date().getFullYear(), m, d);
+                    if(exp < new Date().setHours(0,0,0,0)) isOfferExpired = true;
+                }
+            }
+
+            const offerHTML = (cleanOffer && !isOfferExpired) ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span></div>` : '';
             
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
             const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
             
-            div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
+            div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v135', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v149', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -736,7 +778,6 @@
         document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : '';
         const offBox = document.getElementById('dOfferBox'); 
         
-        // 7. عرض متعدد مع تواريخ مستقلة
         if(x.offer) { 
             offBox.style.display='block'; 
             let offersHTML = ''; 
@@ -745,7 +786,6 @@
             today.setHours(0,0,0,0);
 
             lines.forEach(line => { 
-                // استخراج التاريخ من كل سطر
                 let lineDateMatch = line.match(/\{(\d{1,2})\/(\d{1,2})\}/);
                 let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim();
                 let expiryTag = "";
@@ -755,8 +795,6 @@
                     const dPart = parseInt(lineDateMatch[1]);
                     const mPart = parseInt(lineDateMatch[2]) - 1;
                     const expDate = new Date(today.getFullYear(), mPart, dPart);
-                    
-                    // إذا انتهى العرض
                     if (expDate < today) {
                         isExpired = true; 
                     } else {
@@ -764,18 +802,12 @@
                     }
                 }
 
-                // عرض السطر فقط إذا لم ينتهِ
                 if(!isExpired && cleanLine) { 
                     offersHTML += `<div class="offer-item">${cleanLine} ${expiryTag}</div>`; 
                 } 
             }); 
             
-            // إذا لم يتبق عروض صالحة
-            if (offersHTML === '') {
-                offBox.style.display='none';
-            } else {
-                document.getElementById('dOfferTxt').innerHTML = offersHTML; 
-            }
+            if (offersHTML === '') { offBox.style.display='none'; } else { document.getElementById('dOfferTxt').innerHTML = offersHTML; }
         } else { 
             offBox.style.display='none'; 
         }

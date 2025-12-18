@@ -70,7 +70,10 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; z-index: 1; transition: transform 0.1s; border: 1px solid #f0f0f0; }
         .card:active { transform: scale(0.98); }
-        .card > *:not(.card-fav-btn) { pointer-events: none; }
+        /* 🔴 مفتاح الإصلاح: جعل طبقة النقر فوق كل شيء */
+        .click-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer; background: transparent; }
+        /* جعل العناصر الأخرى تحت طبقة النقر لا تعيقها */
+        .card > *:not(.card-fav-btn):not(.click-layer) { pointer-events: none; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
@@ -350,11 +353,11 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v139')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v140')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        const cached = localStorage.getItem('hona_cache_v139');
+        const cached = localStorage.getItem('hona_cache_v140');
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
@@ -427,7 +430,7 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            localStorage.setItem('hona_cache_v139', JSON.stringify(fullDB));
+            localStorage.setItem('hona_cache_v140', JSON.stringify(fullDB));
             
             document.getElementById('shopCount').innerText = fullDB.length;
             renderGrid(true); 
@@ -458,13 +461,13 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v139'); window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v140'); window.location.reload(); }
     
-    // 🔴🔴 دالة ذكية لإصلاح الصور التالفة
-    function handleImgError(image, isNews) {
-        image.onerror = null; // لمنع التكرار اللانهائي
+    // 🔴🔴 إصلاح الصور (دالة منفصلة لضمان الأمان)
+    window.handleImgError = function(image, isNews) {
+        image.onerror = null; 
         image.src = isNews ? NEWS_PLACEHOLDER : DEFAULT_IMG;
-    }
+    };
 
     function getImages(raw) { 
         if(!raw || raw.length < 5) return []; 
@@ -672,7 +675,7 @@
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
         toRender.forEach(x => {
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
-            div.onclick = function() { openD(x.id); }; div.style.cursor = 'pointer'; 
+            // 🔴 هام جداً: وضعنا طبقة النقر فوق كل شيء لضمان فتح الكارت
             
             const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
             const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : ''; 
@@ -691,16 +694,24 @@
             const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHTML}</div>` : '';
             
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
-            const imgs = getImages(x.imgRaw); 
+            const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
             const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
             
-            div.innerHTML = ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="handleImgError(this, ${isNews})"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
+            div.innerHTML = `
+                <div class="click-layer" onclick="openD(${x.id})"></div>
+                ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} 
+                <img src="${mainImg}" class="c-img" loading="lazy" onerror="handleImgError(this, ${x.cat === 'أخبار'})"> 
+                <div class="c-body"> 
+                    <div class="c-title">${x.name}</div> 
+                    <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} 
+                </div> 
+            `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v139', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v140', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -710,7 +721,7 @@
         document.getElementById('dArea').innerText = x.area || "غير محدد"; document.getElementById('dDesc').innerText = x.desc;
         if(x.cat === 'أخبار') { document.getElementById('dSrcInfo').style.display = 'block'; document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر عام"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } } else { document.getElementById('dSrcInfo').style.display = 'none'; document.getElementById('dNewsLink').style.display = 'none'; }
         
-        const imgs = getImages(x.imgRaw); 
+        const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
         const slider = document.getElementById('imgSlider'); const dImg = document.getElementById('dImg'); slider.innerHTML = '';
         if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){handleImgError(this, x.cat === 'أخبار')}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = x.cat === 'أخبار' ? NEWS_PLACEHOLDER : DEFAULT_IMG; }
         

@@ -70,8 +70,7 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; z-index: 1; transition: transform 0.1s; border: 1px solid #f0f0f0; }
         .card:active { transform: scale(0.98); }
-        .click-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer; background: transparent; }
-        .card > *:not(.card-fav-btn):not(.click-layer) { pointer-events: none; }
+        .card > *:not(.card-fav-btn) { pointer-events: none; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
@@ -351,11 +350,11 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v138')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v139')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        const cached = localStorage.getItem('hona_cache_v138');
+        const cached = localStorage.getItem('hona_cache_v139');
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
@@ -428,7 +427,7 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            localStorage.setItem('hona_cache_v138', JSON.stringify(fullDB));
+            localStorage.setItem('hona_cache_v139', JSON.stringify(fullDB));
             
             document.getElementById('shopCount').innerText = fullDB.length;
             renderGrid(true); 
@@ -459,12 +458,16 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v138'); window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v139'); window.location.reload(); }
     
-    function getImages(raw, isNews) { 
-        if(!raw || raw.length < 5) {
-            return isNews ? [NEWS_PLACEHOLDER] : []; 
-        }
+    // 🔴🔴 دالة ذكية لإصلاح الصور التالفة
+    function handleImgError(image, isNews) {
+        image.onerror = null; // لمنع التكرار اللانهائي
+        image.src = isNews ? NEWS_PLACEHOLDER : DEFAULT_IMG;
+    }
+
+    function getImages(raw) { 
+        if(!raw || raw.length < 5) return []; 
         return raw.split(',').map(u => { 
             let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); 
             return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); 
@@ -506,7 +509,6 @@
         let showContact = true;
         let showArea = true;
         
-        // إعادة تعيين صفة "مطلوب" (Required)
         document.querySelector('input[name="Contact"]').required = true;
         document.querySelector('input[name="Area"]').required = false; 
 
@@ -539,7 +541,6 @@
             showContact = false; 
             showArea = false; 
             
-            // إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر
             document.querySelector('input[name="Contact"]').required = false;
             
             document.getElementById('inp_Category').value = 'أخبار';
@@ -671,7 +672,8 @@
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
         toRender.forEach(x => {
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
-            const clickLayer = `<div class="click-layer" onclick="openD(${x.id})"></div>`; 
+            div.onclick = function() { openD(x.id); }; div.style.cursor = 'pointer'; 
+            
             const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
             const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : ''; 
             const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : '';
@@ -679,7 +681,7 @@
             
             let footerHTML = '';
             if(isNews) {
-                footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`;
+                footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'مصدر عام'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`;
             } else {
                 footerHTML = x.date ? `<div class="shop-added-date"><i class="far fa-calendar-alt"></i> تمت الإضافة: ${x.date}</div>` : '';
             }
@@ -688,19 +690,17 @@
             const expiryHTML = x.expiry ? `<div class="offer-expiry-tag"><i class="fas fa-hourglass-half"></i> ينتهي: ${x.expiry}</div>` : '';
             const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHTML}</div>` : '';
             
-            // 🔴 استخدام الدالة الجديدة للصور وتصحيح الخطأ السابق
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
-            const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
+            const imgs = getImages(x.imgRaw); 
             const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
             
-            // تم إصلاح الخطأ: مسحنا التكرار وأضفنا كود الحماية من الصور التالفة
-            div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.onerror=null;this.src='${isNews ? NEWS_PLACEHOLDER : DEFAULT_IMG}';"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
+            div.innerHTML = ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="handleImgError(this, ${isNews})"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v138', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v139', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -708,11 +708,11 @@
         document.getElementById('dName').innerText = x.name; document.getElementById('dCatMain').innerText = x.cat;
         const sub = (x.sub && x.sub !== x.cat) ? x.sub : ""; if(sub) { document.getElementById('dCatSub').style.display = 'inline-block'; document.getElementById('dCatSub').innerText = sub; } else { document.getElementById('dCatSub').style.display = 'none'; }
         document.getElementById('dArea').innerText = x.area || "غير محدد"; document.getElementById('dDesc').innerText = x.desc;
-        if(x.cat === 'أخبار') { document.getElementById('dSrcInfo').style.display = 'block'; document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } } else { document.getElementById('dSrcInfo').style.display = 'none'; document.getElementById('dNewsLink').style.display = 'none'; }
+        if(x.cat === 'أخبار') { document.getElementById('dSrcInfo').style.display = 'block'; document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر عام"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } } else { document.getElementById('dSrcInfo').style.display = 'none'; document.getElementById('dNewsLink').style.display = 'none'; }
         
-        const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
+        const imgs = getImages(x.imgRaw); 
         const slider = document.getElementById('imgSlider'); const dImg = document.getElementById('dImg'); slider.innerHTML = '';
-        if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; }
+        if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){handleImgError(this, x.cat === 'أخبار')}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = x.cat === 'أخبار' ? NEWS_PLACEHOLDER : DEFAULT_IMG; }
         
         document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : '';
         const offBox = document.getElementById('dOfferBox'); 
@@ -733,7 +733,6 @@
         let showContact = true;
         let showArea = true;
         
-        // إعادة تعيين صفة "مطلوب" (Required)
         document.querySelector('input[name="Contact"]').required = true;
         document.querySelector('input[name="Area"]').required = false; 
 
@@ -766,7 +765,6 @@
             showContact = false; 
             showArea = false; 
             
-            // إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر
             document.querySelector('input[name="Contact"]').required = false;
             
             document.getElementById('inp_Category').value = 'أخبار';

@@ -16,7 +16,7 @@
         body.modal-open .fab { display: none !important; }
         body.modal-open { overflow: hidden; }
 
-        /* شاشة الصاروخ */
+        /* شاشة التحميل */
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
@@ -56,13 +56,13 @@
         .sub-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3); transform: translateY(-2px); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; }
+        
+        /* 🔴🔴 إصلاح النقر: إزالة أي تعقيد */
+        .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
-        /* 🔴 مفتاح الحل: طبقة شفافة للنقر */
-        .card-click-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
-        /* العناصر الأخرى لا تعترض النقر */
-        .card > * { pointer-events: none; }
-        .card .card-fav-btn { pointer-events: auto; z-index: 10; }
+        /* السماح بالنقر على الأطفال ماعدا الزر */
+        .card > * { pointer-events: none; } 
+        .card .card-fav-btn { pointer-events: auto; } 
 
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
@@ -82,7 +82,7 @@
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         
-        /* 🔴 تعديل: محاذاة التاريخ لليمين */
+        /* 🔴 التاريخ يمين */
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
 
@@ -222,9 +222,10 @@
 <div class="btm-nav">
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
-    <div style="width: 60px;"></div>
+    <div style="width:50px"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
+    <div class="btm-item" onclick="openFormClean('إعلان')"><i class="fas fa-bullhorn"></i>إعلان</div>
 </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
@@ -334,8 +335,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // مفتاح كاش جديد لتطبيق التعديلات
-    const CACHE_KEY = 'hona_v149_final'; 
+    // تغيير مفتاح الكاش لضمان التحديث
+    const CACHE_KEY = 'hona_v150_fixed'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -358,11 +359,10 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v149')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v150')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        // مؤقت أمان لإخفاء شاشة التحميل بعد 1 ثانية
         setTimeout(removeSplash, 1000);
 
         const cached = localStorage.getItem(CACHE_KEY);
@@ -512,7 +512,7 @@
         let showContact = true;
         let showArea = true;
         
-        // إخفاء خيارات محددة للمستخدم العادي
+        // 🔴🔴 إخفاء خيارات محددة للمستخدم العادي
         const isAdmin = document.getElementById('reqType').querySelector('option[value="خبر"]');
         if (!isAdmin) {
             document.getElementById('opt_gov').style.display = 'none';
@@ -529,6 +529,10 @@
         document.getElementById('lbl_Image').innerText = "الصورة";
         document.getElementById('inp_Image').placeholder = "رابط صورة (أو ارسلها واتساب)";
 
+        // 🔴🔴 إعادة تعيين "مطلوب" افتراضياً
+        document.querySelector('input[name="Contact"]').required = true;
+        document.querySelector('input[name="Area"]').required = false;
+
         if (val === 'نشاط') {
             showCat = true;
             showHours = true;
@@ -536,7 +540,7 @@
             showCat = true;
             showOffer = true;
         } else if (val === 'خبر') {
-            // فورم الخبر للأدمن (حقول محددة فقط)
+            // 🔴🔴 فورم الخبر للأدمن (منظف تماماً)
             document.getElementById('lbl_Name').innerText = "عنوان الخبر";
             document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي";
             
@@ -552,6 +556,9 @@
             showNewsSrc = true;
             showContact = false; 
             showArea = false; 
+            
+            // 🔴 إلغاء شرط "مطلوب" من خانة الهاتف
+            document.querySelector('input[name="Contact"]').required = false;
             
             document.getElementById('inp_Category').value = 'أخبار';
         } else if (val === 'بيع سلعة / مستعمل') {
@@ -714,8 +721,8 @@
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
         toRender.forEach(x => {
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
-            // 🔴 طبقة شفافة للنقر تضمن الفتح
-            div.innerHTML = `<div class="card-click-overlay" onclick="openD(${x.id})"></div>`;
+            // 🔴🔴 النقر المباشر (Direct Click)
+            div.onclick = function() { openD(x.id); }; 
             
             const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
             
@@ -755,13 +762,13 @@
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
             const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
             
-            div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
+            div.innerHTML = ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v149', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v150', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {

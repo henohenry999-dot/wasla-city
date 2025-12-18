@@ -327,9 +327,8 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyPOGfcFegZ7ip4ce_JoYlffDKxMPxf2rYmN0JJiS6q1hCU1l5Uyr4BtNKWsj358ZRRwQ/exec';
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
-    // 🔴🔴 صورة الأخبار الافتراضية الذكية (تظهر في حالة عدم وجود صورة أو تلف الرابط)
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
-    const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; // أيقونة أخبار جميلة
+    const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -352,11 +351,11 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v137')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v138')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        const cached = localStorage.getItem('hona_cache_v137');
+        const cached = localStorage.getItem('hona_cache_v138');
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
@@ -410,9 +409,8 @@
                 let isActive = (r[11] && r[11].includes('TRUE')); 
                 if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
 
-                // 🔴🔴 تصحيح قراءة مصدر الخبر من العمود 14 (O) في الشيت
                 let source = r[14]; 
-                if (!source || source.trim() === "") source = "Hona App"; // القيمة الافتراضية إذا كان فارغاً
+                if (!source || source.trim() === "") source = "مصدر عام"; 
 
                 return {
                     id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
@@ -421,7 +419,7 @@
                     live: isActive, 
                     feat: (r[12] && r[12].includes('TRUE')), 
                     date: r[13], 
-                    newsSrc: source, // استخدام المصدر الصحيح
+                    newsSrc: source, 
                     rating: r[16] || "" 
                 };
             }).reverse();
@@ -430,7 +428,7 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            localStorage.setItem('hona_cache_v137', JSON.stringify(fullDB));
+            localStorage.setItem('hona_cache_v138', JSON.stringify(fullDB));
             
             document.getElementById('shopCount').innerText = fullDB.length;
             renderGrid(true); 
@@ -461,9 +459,8 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v137'); window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v138'); window.location.reload(); }
     
-    // 🔴🔴 دالة ذكية للصور: إذا كانت "خبر" وليس لها صورة، نضع صورة أخبار افتراضية
     function getImages(raw, isNews) { 
         if(!raw || raw.length < 5) {
             return isNews ? [NEWS_PLACEHOLDER] : []; 
@@ -499,7 +496,6 @@
         openModal('formModal');
     }
 
-    // 🔴🔴 دالة التحكم الشاملة في الحقول (تنظيف كامل + إصلاح زر الإرسال)
     function toggleFields(val) {
         let showCat = false;
         let showHours = false;
@@ -512,7 +508,7 @@
         
         // إعادة تعيين صفة "مطلوب" (Required)
         document.querySelector('input[name="Contact"]').required = true;
-        document.querySelector('input[name="Area"]').required = false; // المنطقة ليست مطلوبة دائماً
+        document.querySelector('input[name="Area"]').required = false; 
 
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان";
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان";
@@ -543,7 +539,7 @@
             showContact = false; 
             showArea = false; 
             
-            // 🔴🔴 إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر (الحل الجذري)
+            // إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر
             document.querySelector('input[name="Contact"]').required = false;
             
             document.getElementById('inp_Category').value = 'أخبار';
@@ -692,18 +688,19 @@
             const expiryHTML = x.expiry ? `<div class="offer-expiry-tag"><i class="fas fa-hourglass-half"></i> ينتهي: ${x.expiry}</div>` : '';
             const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHTML}</div>` : '';
             
-            // 🔴 استخدام الدالة الجديدة للصور
+            // 🔴 استخدام الدالة الجديدة للصور وتصحيح الخطأ السابق
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
-            const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); // تمرير flag لمعرفة إذا كان خبر
+            const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
             const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
             
-            div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
+            // تم إصلاح الخطأ: مسحنا التكرار وأضفنا كود الحماية من الصور التالفة
+            div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.onerror=null;this.src='${isNews ? NEWS_PLACEHOLDER : DEFAULT_IMG}';"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v137', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v138', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -713,7 +710,6 @@
         document.getElementById('dArea').innerText = x.area || "غير محدد"; document.getElementById('dDesc').innerText = x.desc;
         if(x.cat === 'أخبار') { document.getElementById('dSrcInfo').style.display = 'block'; document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } } else { document.getElementById('dSrcInfo').style.display = 'none'; document.getElementById('dNewsLink').style.display = 'none'; }
         
-        // 🔴 استخدام الدالة الجديدة للصور في التفاصيل
         const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
         const slider = document.getElementById('imgSlider'); const dImg = document.getElementById('dImg'); slider.innerHTML = '';
         if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; }
@@ -739,7 +735,7 @@
         
         // إعادة تعيين صفة "مطلوب" (Required)
         document.querySelector('input[name="Contact"]').required = true;
-        document.querySelector('input[name="Area"]').required = false; // المنطقة ليست مطلوبة دائماً
+        document.querySelector('input[name="Area"]').required = false; 
 
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان";
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان";
@@ -770,7 +766,7 @@
             showContact = false; 
             showArea = false; 
             
-            // 🔴🔴 إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر (الحل الجذري)
+            // إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر
             document.querySelector('input[name="Contact"]').required = false;
             
             document.getElementById('inp_Category').value = 'أخبار';
@@ -801,4 +797,4 @@
     init();
 </script>
 </body>
-                                                               </html>
+</html>

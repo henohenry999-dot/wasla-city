@@ -352,11 +352,11 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v136')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v137')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        const cached = localStorage.getItem('hona_cache_v136');
+        const cached = localStorage.getItem('hona_cache_v137');
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
@@ -430,7 +430,7 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            localStorage.setItem('hona_cache_v136', JSON.stringify(fullDB));
+            localStorage.setItem('hona_cache_v137', JSON.stringify(fullDB));
             
             document.getElementById('shopCount').innerText = fullDB.length;
             renderGrid(true); 
@@ -461,7 +461,7 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v136'); window.location.reload(); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v137'); window.location.reload(); }
     
     // 🔴🔴 دالة ذكية للصور: إذا كانت "خبر" وليس لها صورة، نضع صورة أخبار افتراضية
     function getImages(raw, isNews) { 
@@ -499,7 +499,7 @@
         openModal('formModal');
     }
 
-    // 🔴🔴 دالة التحكم الشاملة في الحقول (تنظيف كامل)
+    // 🔴🔴 دالة التحكم الشاملة في الحقول (تنظيف كامل + إصلاح زر الإرسال)
     function toggleFields(val) {
         let showCat = false;
         let showHours = false;
@@ -510,6 +510,10 @@
         let showContact = true;
         let showArea = true;
         
+        // إعادة تعيين صفة "مطلوب" (Required)
+        document.querySelector('input[name="Contact"]').required = true;
+        document.querySelector('input[name="Area"]').required = false; // المنطقة ليست مطلوبة دائماً
+
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان";
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان";
         document.getElementById('lbl_Desc').innerText = "الوصف";
@@ -538,6 +542,10 @@
             showNewsSrc = true;
             showContact = false; 
             showArea = false; 
+            
+            // 🔴🔴 إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر (الحل الجذري)
+            document.querySelector('input[name="Contact"]').required = false;
+            
             document.getElementById('inp_Category').value = 'أخبار';
         } else if (val === 'بيع سلعة / مستعمل') {
             showUsed = true;
@@ -689,13 +697,13 @@
             const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); // تمرير flag لمعرفة إذا كان خبر
             const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
             
-            div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
+            div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
             g.appendChild(div);
         });
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none';
     }
 
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v136', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v137', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
 
     function openD(id) {
@@ -729,6 +737,10 @@
         let showContact = true;
         let showArea = true;
         
+        // إعادة تعيين صفة "مطلوب" (Required)
+        document.querySelector('input[name="Contact"]').required = true;
+        document.querySelector('input[name="Area"]').required = false; // المنطقة ليست مطلوبة دائماً
+
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان";
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان";
         document.getElementById('lbl_Desc').innerText = "الوصف";
@@ -757,6 +769,10 @@
             showNewsSrc = true;
             showContact = false; 
             showArea = false; 
+            
+            // 🔴🔴 إلغاء شرط "مطلوب" من خانة الهاتف عند اختيار خبر (الحل الجذري)
+            document.querySelector('input[name="Contact"]').required = false;
+            
             document.getElementById('inp_Category').value = 'أخبار';
         } else if (val === 'بيع سلعة / مستعمل') {
             showUsed = true;
@@ -785,4 +801,4 @@
     init();
 </script>
 </body>
-</html>
+                                                               </html>

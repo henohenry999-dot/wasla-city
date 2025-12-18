@@ -16,24 +16,12 @@
         body.modal-open .fab { display: none !important; }
         body.modal-open { overflow: hidden; }
 
-        /* 🚀 شاشة الصاروخ */
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
-        .rocket-icon { font-size: 5rem; color: white; animation: launch 0.8s infinite alternate; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
-        .splash-text { color: white; margin-top: 20px; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; animation: pulse 1.5s infinite; }
-        @keyframes launch { 0% { transform: translateY(0); } 100% { transform: translateY(-20px); } }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+        /* شاشة الصاروخ */
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
+        .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; }
+        .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
 
-        .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
-        .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
-        .ticker-lbl { padding: 0 15px; font-weight: 800; display: flex; align-items: center; height: 100%; z-index: 2; font-size: 0.7rem; white-space: nowrap; }
-        .lbl-news { background: var(--red); color: white; } .lbl-ads { background: var(--gold); color: black; }
-        .track { white-space: nowrap; flex: 1; overflow: hidden; }
-        .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
-        .ticker-item { display: inline-block; margin-left: 40px; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
+        header { margin-top: 0; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .geo-logo { width: 48px; height: 48px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: var(--primary); font-size: 1.6rem; }
         .app-title h1 { margin: 0; font-size: 2rem; font-family: 'Reem Kufi'; letter-spacing: 1px; }
@@ -68,10 +56,8 @@
         .sub-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3); transform: translateY(-2px); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; z-index: 1; transition: transform 0.1s; border: 1px solid #f0f0f0; }
+        .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; }
         .card:active { transform: scale(0.98); }
-        .click-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer; background: transparent; }
-        .card > *:not(.card-fav-btn):not(.click-layer) { pointer-events: none; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
@@ -90,18 +76,19 @@
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         
-        .shop-added-date { display: flex; align-items: center; justify-content: flex-end; gap: 5px; font-size: 0.7rem; color: #333; font-weight: 800; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; }
-        .shop-added-date i { color: var(--primary); }
+        .shop-added-date { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; }
+        .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
 
         .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
         .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
         
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
-        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
+        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; color: #bdc3c7; pointer-events: auto !important;}
         .card-fav-btn.active i { color: var(--red); } 
         .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.9); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; backdrop-filter: blur(2px); }
+        .badge-sold { position: absolute; top: 10px; right: 10px; background: var(--dark); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 4px 10px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
-        .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; animation: pulse 2s infinite; }
+        .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
@@ -110,6 +97,16 @@
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
+
+        .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
+        .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
+        .ticker-lbl { padding: 0 15px; font-weight: 800; display: flex; align-items: center; height: 100%; z-index: 2; font-size: 0.7rem; white-space: nowrap; }
+        .lbl-news { background: var(--red); color: white; } .lbl-ads { background: var(--gold); color: black; }
+        .track { white-space: nowrap; flex: 1; overflow: hidden; }
+        .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
+        .ticker-item { display: inline-block; margin-left: 40px; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
@@ -150,7 +147,7 @@
 </head>
 <body>
 
-<div id="splashScreen">
+<div id="splashScreen" onclick="removeSplash()">
     <div class="rocket-icon"><i class="fas fa-rocket"></i></div>
     <div class="splash-text">Hona App</div>
 </div>
@@ -218,7 +215,7 @@
 <div class="btm-nav">
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
-    <div style="width:50px"></div>
+    <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
     <div class="btm-item" onclick="openFormClean('إعلان')"><i class="fas fa-bullhorn"></i>إعلان</div>
 </div>
@@ -264,10 +261,10 @@
                 <option value="ديكورات">ديكورات</option>
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
-                <option value="مصالح حكومية">مصالح حكومية</option>
-                <option value="دور عبادة">دور عبادة</option>
+                <option value="مصالح حكومية" id="opt_gov">مصالح حكومية</option>
+                <option value="دور عبادة" id="opt_worship">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
-                <option value="أخبار">أخبار (System)</option>
+                <option value="أخبار" id="opt_news">أخبار (System)</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
@@ -283,8 +280,8 @@
         </div>
 
         <div id="areaDiv">
-            <label style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">المنطقة</label>
-            <input type="text" name="Area" class="form-input" placeholder="المنطقة / الحي">
+            <label id="lbl_Area" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">المنطقة</label>
+            <input type="text" name="Area" id="inp_Area" class="form-input" placeholder="المنطقة / الحي">
         </div>
 
         <div id="newsSourceDiv" style="display:none;">
@@ -330,8 +327,9 @@
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyPOGfcFegZ7ip4ce_JoYlffDKxMPxf2rYmN0JJiS6q1hCU1l5Uyr4BtNKWsj358ZRRwQ/exec';
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
+    const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -354,25 +352,28 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v135')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v148')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
-        const cached = localStorage.getItem('hona_cache_v135');
+        // مؤقت أمان لإخفاء شاشة التحميل بعد 1 ثانية
+        setTimeout(removeSplash, 1000);
+
+        const cached = localStorage.getItem('hona_cache_v148');
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
-                document.getElementById('shopCount').innerText = fullDB.length;
+                // 3. عداد الخدمات (استثناء الأخبار)
+                const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+                document.getElementById('shopCount').innerText = count;
                 renderGrid(true);
                 setupTickers();
-                setTimeout(() => document.getElementById('splashScreen').style.opacity = '0', 200);
-                setTimeout(() => document.getElementById('splashScreen').style.display = 'none', 600);
+                removeSplash();
             } catch(e) { console.log('Cache error'); }
         }
 
         document.getElementById('formModal').style.display = 'none';
         
-        // 🔴🔴 كود المدير (Admin)
         const urlParams = new URLSearchParams(window.location.search);
         if(urlParams.get('admin') === 'true') {
             const select = document.getElementById('reqType');
@@ -395,16 +396,7 @@
                 let offerTxt = r[10] || "";
                 let expiryDateDisplay = ""; 
 
-                const dateMatch = offerTxt.match(/\{(\d{1,2}\/\d{1,2})\}/);
-                if(dateMatch) {
-                    const today = new Date();
-                    const parts = dateMatch[1].split('/');
-                    const expDay = parseInt(parts[0]);
-                    const expMonth = parseInt(parts[1]) - 1; 
-                    const expDate = new Date(today.getFullYear(), expMonth, expDay);
-                    if (expDate.setHours(23,59,59,999) < today.getTime()) { offerTxt = ""; } 
-                    else { expiryDateDisplay = dateMatch[1]; offerTxt = offerTxt.replace(dateMatch[0], "").trim(); }
-                }
+                // منطق العرض المتعدد وتاريخ الانتهاء يعالج لاحقا في openD
                 
                 let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                 const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
@@ -413,6 +405,9 @@
                 let isActive = (r[11] && r[11].includes('TRUE')); 
                 if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
 
+                let source = r[14]; 
+                if (!source || source.trim() === "") source = "Hona App"; 
+
                 return {
                     id: i, name: r[1], cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
                     desc: cleanDesc, 
@@ -420,7 +415,8 @@
                     live: isActive, 
                     feat: (r[12] && r[12].includes('TRUE')), 
                     date: r[13], 
-                    newsSrc: r[14], rating: r[16] || "" 
+                    newsSrc: source, 
+                    rating: r[16] || "" 
                 };
             }).reverse();
             
@@ -428,18 +424,25 @@
             tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
             fullDB = Array.from(uniqueMap.values());
             
-            localStorage.setItem('hona_cache_v135', JSON.stringify(fullDB));
+            localStorage.setItem('hona_cache_v148', JSON.stringify(fullDB));
             
-            document.getElementById('shopCount').innerText = fullDB.length;
+            // 3. عداد الخدمات بدون الأخبار
+            const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+            document.getElementById('shopCount').innerText = count;
+            
             renderGrid(true); 
             setupTickers(); 
             setupFloatAd();
-            
-            if(!cached) {
-                setTimeout(() => document.getElementById('splashScreen').style.opacity = '0', 200);
-                setTimeout(() => document.getElementById('splashScreen').style.display = 'none', 600);
-            }
+            removeSplash();
+        }, error: (err) => {
+            console.log("Error loading data:", err);
+            removeSplash();
         }});
+    }
+
+    function removeSplash() {
+        const s = document.getElementById('splashScreen');
+        if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); }
     }
     
     function checkIsOpen(timeStr) {
@@ -459,20 +462,28 @@
         return parseInt(p[0]) * 60 + parseInt(p[1]);
     }
 
-    function forceUpdate() { localStorage.removeItem('hona_cache_v135'); window.location.reload(); }
-    function getImages(raw) { if(!raw || raw.length < 5) return []; return raw.split(',').map(u => { let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); }); }
+    function forceUpdate() { localStorage.removeItem('hona_cache_v148'); window.location.reload(); }
+    
+    function getImages(raw, isNews) { 
+        if(!raw || raw.length < 5) {
+            return isNews ? [NEWS_PLACEHOLDER] : []; 
+        }
+        return raw.split(',').map(u => { 
+            let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); 
+            return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); 
+        }); 
+    }
+
     function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.classList.add('modal-open'); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.classList.remove('modal-open'); }
     function openEmergency(e) { e.stopPropagation(); openModal('emergencyModal'); }
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
-    // 🔴🔴 وظيفة التحكم في الحقول حسب النوع
     function openFormClean(type) {
         const form = document.getElementById('reqForm');
         form.reset(); 
         
-        // إخفاء كل الأقسام أولاً
         document.getElementById('catDiv').style.display = 'none';
         document.getElementById('usedDiv').style.display = 'none'; 
         document.getElementById('imgLink').style.display = 'none';
@@ -481,7 +492,7 @@
         document.getElementById('waUploadHelp').style.display = 'none';
         document.getElementById('offerSection').style.display = 'none'; 
         document.getElementById('newsSourceDiv').style.display = 'none';
-        document.getElementById('contactDiv').style.display = 'block'; // افتراضي يظهر
+        document.getElementById('contactDiv').style.display = 'block'; 
         
         if(type) { document.getElementById('reqType').value = type; toggleFields(type); } 
         else { document.getElementById('reqType').value = 'نشاط'; toggleFields('نشاط'); }
@@ -489,7 +500,6 @@
     }
 
     function toggleFields(val) {
-        // إعدادات العرض الافتراضية
         let showCat = false;
         let showHours = false;
         let showUsed = false;
@@ -499,7 +509,14 @@
         let showContact = true;
         let showArea = true;
         
-        // النصوص الافتراضية
+        // 2. إخفاء تصنيفات معينة للمستخدم العادي
+        const isAdmin = document.getElementById('reqType').querySelector('option[value="خبر"]');
+        if (!isAdmin) {
+            document.getElementById('opt_gov').style.display = 'none';
+            document.getElementById('opt_worship').style.display = 'none';
+            document.getElementById('opt_news').style.display = 'none';
+        }
+
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان";
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان";
         document.getElementById('lbl_Desc').innerText = "الوصف";
@@ -516,7 +533,7 @@
             showCat = true;
             showOffer = true;
         } else if (val === 'خبر') {
-            // 🔴 تخصيص فورم الخبر
+            // 1. فورم الخبر للأدمن (حقول محددة فقط)
             document.getElementById('lbl_Name').innerText = "عنوان الخبر";
             document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي";
             
@@ -530,10 +547,9 @@
             document.getElementById('inp_Image').placeholder = "رابط صورة الخبر";
 
             showNewsSrc = true;
-            showContact = false; // لا نحتاج تليفون في الخبر
-            showArea = false; // لا نحتاج منطقة في الخبر
+            showContact = false; 
+            showArea = false; 
             
-            // ضبط التصنيف تلقائياً على أخبار
             document.getElementById('inp_Category').value = 'أخبار';
         } else if (val === 'بيع سلعة / مستعمل') {
             showUsed = true;
@@ -541,7 +557,6 @@
             showImgLink = true;
         }
 
-        // تطبيق العرض والإخفاء
         document.getElementById('catDiv').style.display = showCat ? 'block' : 'none';
         document.getElementById('workHoursDiv').style.display = showHours ? 'flex' : 'none';
         document.getElementById('usedDiv').style.display = showUsed ? 'block' : 'none';
@@ -550,20 +565,13 @@
         document.getElementById('newsSourceDiv').style.display = showNewsSrc ? 'block' : 'none';
         document.getElementById('contactDiv').style.display = showContact ? 'block' : 'none';
         
-        // إظهار/إخفاء الليبل والحقل للمنطقة
         document.getElementById('lbl_Area').style.display = showArea ? 'block' : 'none';
         document.getElementById('inp_Area').style.display = showArea ? 'block' : 'none';
-
-        // إظهار الليبلز الجديدة
-        document.getElementById('lbl_Name').style.display = 'block';
-        document.getElementById('lbl_Desc').style.display = 'block';
-        document.getElementById('lbl_Location').style.display = 'block';
-        document.getElementById('lbl_Image').style.display = 'block';
 
         document.getElementById('reqType').value = val; 
     }
 
-    // ... باقي الدوال (shareShop, doSearch, filter, ...) كما هي ...
+    // ... shareShop, normalizeText, doSearch, filter, generateSubCats ... (نفس الدوال السابقة)
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
@@ -648,7 +656,6 @@
         let desc = data.Description; if(data.ImageLink && data.Type === 'مخالفة') { desc += " | صورة: " + data.ImageLink; } desc += hoursTag; params.append("Description", desc);
         let finalOffer = data.Offer; if(finalOffer && document.getElementById('offerExpiry').value) { finalOffer += " {" + document.getElementById('offerExpiry').value + "}"; } params.append("Offer", finalOffer || ""); params.append("Contact", data.Contact || ""); 
         
-        // 🔴 تمرير المصدر إذا كان موجوداً
         if(data.NewsSource) params.append("NewsSource", data.NewsSource);
         
         params.append("Whatsapp", data.Whatsapp || ""); 
@@ -658,7 +665,8 @@
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
 
     function setupTickers() {
-        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.name}</span>`).join('   ');
+        // 4. عرض الخبر: المصدر - العنوان (التاريخ)
+        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   ');
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; }
         const ads = fullDB.filter(x => x.offer).map(x => { let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`; if(x.expiry) txt += ` (⏳ ينتهي في: ${x.expiry})`; txt += `</span>`; return txt; }).join('   •   ');
         if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; }
@@ -678,7 +686,15 @@
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
             const clickLayer = `<div class="click-layer" onclick="openD(${x.id})"></div>`; 
             const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`;
-            const liveBadge = x.live ? `<div class="badge-live"><div class="dot"></div> متاح</div>` : ''; 
+            
+            // 5. حالة السوق: تم البيع إذا كان غير متاح
+            let liveBadge = '';
+            if (x.cat === 'بيع سلعة / مستعمل' && !x.live) {
+                liveBadge = `<div class="badge-sold">❌ تم البيع</div>`;
+            } else if (x.live) {
+                liveBadge = `<div class="badge-live"><div class="dot"></div> متاح</div>`;
+            }
+
             const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : '';
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`;
             
@@ -686,14 +702,17 @@
             if(isNews) {
                 footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`;
             } else {
-                footerHTML = x.date ? `<div class="shop-added-date"><i class="far fa-calendar-alt"></i> تمت الإضافة: ${x.date}</div>` : '';
+                // 6. تاريخ الإضافة: سطرين
+                footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : '';
             }
 
             let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; 
             const expiryHTML = x.expiry ? `<div class="offer-expiry-tag"><i class="fas fa-hourglass-half"></i> ينتهي: ${x.expiry}</div>` : '';
             const offerHTML = cleanOffer ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHTML}</div>` : '';
             
-            const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
+            const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; 
+            const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
+            
             div.innerHTML = ` ${clickLayer} ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `;
             g.appendChild(div);
         });
@@ -709,11 +728,58 @@
         const sub = (x.sub && x.sub !== x.cat) ? x.sub : ""; if(sub) { document.getElementById('dCatSub').style.display = 'inline-block'; document.getElementById('dCatSub').innerText = sub; } else { document.getElementById('dCatSub').style.display = 'none'; }
         document.getElementById('dArea').innerText = x.area || "غير محدد"; document.getElementById('dDesc').innerText = x.desc;
         if(x.cat === 'أخبار') { document.getElementById('dSrcInfo').style.display = 'block'; document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } } else { document.getElementById('dSrcInfo').style.display = 'none'; document.getElementById('dNewsLink').style.display = 'none'; }
-        const imgs = getImages(x.imgRaw); const slider = document.getElementById('imgSlider'); const dImg = document.getElementById('dImg'); slider.innerHTML = '';
+        
+        const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
+        const slider = document.getElementById('imgSlider'); const dImg = document.getElementById('dImg'); slider.innerHTML = '';
         if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; }
+        
         document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : '';
         const offBox = document.getElementById('dOfferBox'); 
-        if(x.offer) { offBox.style.display='block'; let offersHTML = ''; let lines = x.offer.split('\n'); lines.forEach(line => { let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, ''); if(cleanLine.trim()) { offersHTML += `<div class="offer-item">${cleanLine}</div>`; } }); if(x.expiry) { offersHTML += `<div class="offer-expiry-tag" style="justify-content:center; margin-top:10px; font-size:0.8rem;"><i class="fas fa-clock"></i> ينتهي هذا العرض يوم: ${x.expiry}</div>`; } document.getElementById('dOfferTxt').innerHTML = offersHTML; } else { offBox.style.display='none'; }
+        
+        // 7. عرض متعدد مع تواريخ مستقلة
+        if(x.offer) { 
+            offBox.style.display='block'; 
+            let offersHTML = ''; 
+            let lines = x.offer.split('\n'); 
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            lines.forEach(line => { 
+                // استخراج التاريخ من كل سطر
+                let lineDateMatch = line.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+                let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim();
+                let expiryTag = "";
+                let isExpired = false;
+
+                if(lineDateMatch) {
+                    const dPart = parseInt(lineDateMatch[1]);
+                    const mPart = parseInt(lineDateMatch[2]) - 1;
+                    const expDate = new Date(today.getFullYear(), mPart, dPart);
+                    
+                    // إذا انتهى العرض
+                    if (expDate < today) {
+                        isExpired = true; 
+                    } else {
+                        expiryTag = `<span class="offer-expiry-tag" style="display:inline-flex; margin-right:5px; font-size:0.6rem;">(ينتهي: ${lineDateMatch[1]}/${lineDateMatch[2]})</span>`;
+                    }
+                }
+
+                // عرض السطر فقط إذا لم ينتهِ
+                if(!isExpired && cleanLine) { 
+                    offersHTML += `<div class="offer-item">${cleanLine} ${expiryTag}</div>`; 
+                } 
+            }); 
+            
+            // إذا لم يتبق عروض صالحة
+            if (offersHTML === '') {
+                offBox.style.display='none';
+            } else {
+                document.getElementById('dOfferTxt').innerHTML = offersHTML; 
+            }
+        } else { 
+            offBox.style.display='none'; 
+        }
+
         const container = document.getElementById('actionBtns'); container.innerHTML = ''; let phones = x.ph.split(/[\/\-&]/); phones.forEach((num, idx) => { let cleanNum = num.trim().replace(/'/g, ''); if(cleanNum) { let btn = document.createElement('a'); btn.href = `tel:${cleanNum}`; btn.className = 'btn-act btn-call'; btn.innerHTML = `<i class="fas fa-phone-alt"></i> اتصال ${phones.length > 1 ? idx+1 : ''}`; container.appendChild(btn); } });
         let waNum = x.wa ? x.wa.trim().replace(/'/g, '') : phones[0].trim().replace(/'/g, ''); if(waNum) { let btnWa = document.createElement('a'); btnWa.href = `https://wa.me/2${waNum}`; btnWa.className = 'btn-act btn-wa'; btnWa.innerHTML = `<i class="fab fa-whatsapp"></i> واتساب`; container.appendChild(btnWa); }
         const loc = document.getElementById('dLoc'); if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none';
@@ -726,15 +792,10 @@
         const isVio = (val === 'مخالفة');
         
         document.getElementById('catDiv').style.display = isShop ? 'block' : 'none';
-        
-        // 🔴 التحكم في خانة الساعات: تظهر للنشاط فقط
         document.getElementById('workHoursDiv').style.display = (val === 'نشاط') ? 'flex' : 'none';
-        
         document.getElementById('usedDiv').style.display = isUsed ? 'block' : 'none'; 
         document.getElementById('imgLink').style.display = isVio ? 'block' : 'none';
         document.getElementById('waUploadHelp').style.display = (isShop || isUsed) ? 'block' : 'none'; 
-        
-        // 🔴 التحكم في قسم العروض: يظهر فقط عند اختيار "إعلان"
         document.getElementById('offerSection').style.display = (val === 'إعلان') ? 'flex' : 'none';
         
         document.getElementById('reqType').value = val; 
@@ -749,4 +810,3 @@
 </script>
 </body>
 </html>
-

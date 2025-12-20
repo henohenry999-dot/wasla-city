@@ -9,6 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
+        /* --- نفس التنسيقات السابقة تماماً (V172 Style) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -45,46 +46,12 @@
         .cat-item.active .cat-icon { transform: scale(1.1) translateY(-3px); border: 2px solid var(--gold); }
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
         
-        /* 🔴🔴🔴 تصميم الكبسولات الأنيق والمبهر (Capsule Design) 🔴🔴🔴 */
-        .sub-cat-nav { 
-            display: none; 
-            overflow-x: auto; 
-            gap: 12px; /* تباعد ممتاز */
-            padding: 10px 5px 20px; /* مساحة للظل */
-            margin-bottom: 5px; 
-            scrollbar-width: none; 
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch; /* تمرير ناعم جداً على الموبايل */
-        }
+        /* تصميم الكبسولات */
+        .sub-cat-nav { display: none; overflow-x: auto; gap: 12px; padding: 10px 5px 20px; margin-bottom: 5px; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
         .sub-cat-nav::-webkit-scrollbar { display: none; }
-        
-        .sub-chip { 
-            background: white; 
-            border: 1px solid #f0f0f0; 
-            padding: 10px 24px; /* حجم كبير مريح للضغط */
-            border-radius: 50px; /* تدوير كامل (شكل كبسولة) */
-            font-size: 0.9rem; 
-            font-weight: 700; /* خط عريض */
-            color: #555; 
-            cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* حركة ناعمة */
-            display: inline-flex; 
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.04); /* ظل هادئ */
-            min-width: max-content;
-        }
-        
-        .sub-chip:active { transform: scale(0.95); } /* تأثير ضغطة الزر */
-
-        .sub-chip.active { 
-            background: linear-gradient(135deg, var(--primary), #2ecc71); /* تدرج لوني فخم */
-            color: white; 
-            border-color: transparent; 
-            box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3); /* ظل ملون متوهج */
-            transform: translateY(-3px); /* ارتفاع للأعلى */
-        }
-        /* 🔴🔴🔴 نهاية التعديل 🔴🔴🔴 */
+        .sub-chip { background: white; border: 1px solid #f0f0f0; padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; color: #555; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.04); min-width: max-content; }
+        .sub-chip:active { transform: scale(0.95); }
+        .sub-chip.active { background: linear-gradient(135deg, var(--primary), #2ecc71); color: white; border-color: transparent; box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3); transform: translateY(-3px); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
@@ -368,7 +335,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 رابط النشر الجديد 🔴🔴🔴
+    // 🔴🔴🔴 رابط النشر 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyhTaW55KXrDb1xBfnn2nJa2AR1kcgKxqQVjR9lqNF84_t50xhIZMPBcsOx6Zi5OqDg7g/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -376,8 +343,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد لتحديث التصميم (V172)
-    const CACHE_KEY = 'hona_v172_capsules'; 
+    // ✅ مفتاح الكاش الجديد (V173) لضمان تفعيل ميزة إخفاء العروض
+    const CACHE_KEY = 'hona_v173_offers_logic'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -400,7 +367,7 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v172')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v173')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -487,6 +454,23 @@
         }});
     }
 
+    // 💡 دالة جديدة: التحقق من صلاحية العرض
+    function isOfferValid(offerStr) {
+        if (!offerStr) return false;
+        let dateMatch = offerStr.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+        if (!dateMatch) return true; // لو مفيش تاريخ، يعتبر ساري دائماً
+        
+        const d = parseInt(dateMatch[1]);
+        const m = parseInt(dateMatch[2]) - 1; 
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const exp = new Date(today.getFullYear(), m, d);
+        
+        // لو التاريخ فات -> غير صالح
+        if (exp < today) return false;
+        return true;
+    }
+
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
     function checkIsOpen(timeStr) { const now = new Date(); const currentMins = now.getHours() * 60 + now.getMinutes(); let parts = timeStr.split('-'); if(parts.length !== 2) return true; let start = parseTime(parts[0]); let end = parseTime(parts[1]); if(start === -1 || end === -1) return true; if (end < start) { return (currentMins >= start || currentMins <= end); } else { return (currentMins >= start && currentMins <= end); } }
     function parseTime(t) { let p = t.trim().split(':'); if(p.length < 2) return -1; return parseInt(p[0]) * 60 + parseInt(p[1]); }
@@ -503,7 +487,47 @@
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => { const cleanName = normalizeText(x.name.toLowerCase()); const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : ""); return cleanName.includes(s) || cleanDesc.includes(s); }); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); }
-    function filter(c, el) { curCat = c; if(el) { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active')); if(el.classList.contains('cat-item') || el.classList.contains('btm-item')) el.classList.add('active'); document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); if(el.classList.contains('q-chip')) el.classList.add('active'); } document.getElementById('search').value = ''; generateSubCats(c); if (c === 'all') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); filteredDB.sort((a,b) => (b.feat - a.feat)); } else if (c === 'fav') { filteredDB = fullDB.filter(x => favs.includes(x.id)); } else if (c === 'offers') { filteredDB = fullDB.filter(x => x.offer); } else if (c === 'souq') { filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); } else if (c === 'featured') { filteredDB = fullDB.filter(x => x.feat === true); } else if (c === 'latest') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); filteredDB.sort((a,b) => b.id - a.id); } else { filteredDB = fullDB.filter(x => x.cat === c); filteredDB.sort((a,b) => (b.feat - a.feat)); } page = 1; renderGrid(true); setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100); }
+    
+    // 💡 تحديث الفلتر ليشمل استثناء السوق والتحقق من الصلاحية
+    function filter(c, el) { 
+        curCat = c; 
+        if(el) { 
+            document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
+            document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active')); 
+            if(el.classList.contains('cat-item') || el.classList.contains('btm-item')) el.classList.add('active'); 
+            document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); 
+            if(el.classList.contains('q-chip')) el.classList.add('active'); 
+        } 
+        document.getElementById('search').value = ''; 
+        generateSubCats(c); 
+        
+        if (c === 'all') { 
+            filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
+            filteredDB.sort((a,b) => (b.feat - a.feat)); 
+        } else if (c === 'fav') { 
+            filteredDB = fullDB.filter(x => favs.includes(x.id)); 
+        } else if (c === 'offers') { 
+            // 🔴 التعديل هنا: استثناء السوق + التأكد من صلاحية العرض
+            filteredDB = fullDB.filter(x => {
+                if (x.cat === 'بيع سلعة / مستعمل') return false; // إخفاء السوق
+                return isOfferValid(x.offer); // إظهار العرض الساري فقط
+            }); 
+        } else if (c === 'souq') { 
+            filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 
+        } else if (c === 'featured') { 
+            filteredDB = fullDB.filter(x => x.feat === true); 
+        } else if (c === 'latest') { 
+            filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
+            filteredDB.sort((a,b) => b.id - a.id); 
+        } else { 
+            filteredDB = fullDB.filter(x => x.cat === c); 
+            filteredDB.sort((a,b) => (b.feat - a.feat)); 
+        } 
+        page = 1; 
+        renderGrid(true); 
+        setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100); 
+    }
+
     function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }
     function filterSub(mainCat, subCat) { filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); }
     function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -516,11 +540,53 @@
     function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
     function sendData(e) { e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "جاري..."; const form = document.getElementById('reqForm'); const openVal = document.getElementById('openTime').value; const closeVal = document.getElementById('closeTime').value; const typeVal = document.getElementById('reqType').value; let hoursTag = ""; if((typeVal === 'نشاط' || typeVal === 'إعلان') && openVal && closeVal) { hoursTag = ' | ⏰ ' + openVal + ' - ' + closeVal; } const formData = new FormData(form); const data = {}; formData.forEach((v, k) => data[k] = v); let finalSub = ""; if(document.getElementById('catDiv').style.display !== 'none') { if(document.getElementById('subCatSelect').style.display !== 'none') { finalSub = data.SubCategorySelect; } else if (document.getElementById('subCatInput').style.display !== 'none') { finalSub = data.SubCategoryInput; } } else if (document.getElementById('usedDiv').style.display !== 'none') { data.Category = "بيع سلعة / مستعمل"; finalSub = data.UsedCategory; } const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", data.Type); params.append("Name", data.Name); params.append("Category", data.Category); params.append("SubCategory", finalSub); params.append("Area", data.Area); params.append("Location", data.Location); params.append("Image", data.Image); let desc = data.Description; if(data.ImageLink && data.Type === 'مخالفة') { desc += " | صورة: " + data.ImageLink; } desc += hoursTag; params.append("Description", desc); let finalOffer = data.Offer; if(finalOffer && document.getElementById('offerExpiry').value) { finalOffer += " {" + document.getElementById('offerExpiry').value + "}"; } params.append("Offer", finalOffer || ""); params.append("Contact", data.Contact || ""); if(data.NewsSource) params.append("NewsSource", data.NewsSource); params.append("Whatsapp", data.Whatsapp || ""); fetch(scriptURL, { method: 'POST', body: params }).then(r => r.json()).then(res => { alert("تم الإرسال بنجاح! سيتم المراجعة."); closeModal('formModal'); form.reset(); btn.disabled = false; btn.innerText = "إرسال 🚀"; }).catch(err => { alert("تم الإرسال!"); closeModal('formModal'); btn.disabled = false; btn.innerText = "إرسال 🚀"; }); }
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
-    function setupTickers() { const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } const ads = fullDB.filter(x => { if (!x.offer) return false; let lines = x.offer.split('\n'); let hasActiveOffer = false; const today = new Date(); today.setHours(0,0,0,0); lines.forEach(line => { let match = line.match(/\{(\d{1,2})\/(\d{1,2})\}/); if (match) { const d = parseInt(match[1]); const m = parseInt(match[2]) - 1; const exp = new Date(today.getFullYear(), m, d); if (exp >= today) hasActiveOffer = true; } else { hasActiveOffer = true; } }); return hasActiveOffer; }).map(x => { let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`; txt += `</span>`; return txt; }).join('   •   '); if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; } }
-    function setupFloatAd() { const ads = fullDB.filter(x => x.feat && x.offer); if(ads.length > 0) { const rand = ads[Math.floor(Math.random()*ads.length)]; floatAdID = rand.id; let clean = rand.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0]; document.getElementById('floatTxt').innerText = clean.substring(0,25)+'...'; document.getElementById('floatAd').style.display = 'flex'; document.getElementById('floatAd').onclick = function() { openD(floatAdID); }; } }
+    
+    // 💡 تحديث شريط العروض ليخفي المنتهي أيضاً
+    function setupTickers() { 
+        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
+        if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } 
+        
+        const ads = fullDB.filter(x => { 
+            // استخدام نفس دالة الفحص
+            return x.offer && isOfferValid(x.offer);
+        }).map(x => { 
+            let cleanOffer = x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').replace(/\n/g, ' | '); 
+            let txt = `<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${cleanOffer}`; txt += `</span>`; 
+            return txt; 
+        }).join('   •   '); 
+        
+        if(ads) { document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${ads}</span>`; } 
+    }
+
+    // 💡 تحديث الإعلان العائم ليخفي المنتهي
+    function setupFloatAd() { 
+        const ads = fullDB.filter(x => x.feat && x.offer && isOfferValid(x.offer)); 
+        if(ads.length > 0) { const rand = ads[Math.floor(Math.random()*ads.length)]; floatAdID = rand.id; let clean = rand.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0]; document.getElementById('floatTxt').innerText = clean.substring(0,25)+'...'; document.getElementById('floatAd').style.display = 'flex'; document.getElementById('floatAd').onclick = function() { openD(floatAdID); }; } 
+    }
+    
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
-    function renderGrid(isNew) { const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); toRender.forEach(x => { const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; div.onclick = function() { openD(x.id); }; const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`; let liveBadge = ''; if (x.cat === 'بيع سلعة / مستعمل' && !x.live) { liveBadge = `<div class="badge-sold">❌ تم البيع</div>`; } else if (x.live) { liveBadge = `<div class="badge-live"><div class="dot"></div> متاح</div>`; } const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : ''; const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; let footerHTML = ''; if(isNews) { footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`; } else { footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; } let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; let isOfferExpired = false; if(x.offer) { let dateMatch = x.offer.match(/\{(\d{1,2})\/(\d{1,2})\}/); if(dateMatch) { const d = parseInt(dateMatch[1]); const m = parseInt(dateMatch[2]) - 1; const exp = new Date(new Date().getFullYear(), m, d); if(exp < new Date().setHours(0,0,0,0)) isOfferExpired = true; } } const offerHTML = (cleanOffer && !isOfferExpired) ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span></div>` : ''; const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG; div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `; g.appendChild(div); }); btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; }
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v172', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    
+    function renderGrid(isNew) { 
+        const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); 
+        toRender.forEach(x => { 
+            const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; div.onclick = function() { openD(x.id); }; 
+            const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`; 
+            let liveBadge = ''; if (x.cat === 'بيع سلعة / مستعمل' && !x.live) { liveBadge = `<div class="badge-sold">❌ تم البيع</div>`; } else if (x.live) { liveBadge = `<div class="badge-live"><div class="dot"></div> متاح</div>`; } 
+            const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : ''; 
+            const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; 
+            let footerHTML = ''; if(isNews) { footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`; } else { footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; } 
+            
+            // 💡 إخفاء نص العرض من الكارت إذا كان منتهياً
+            let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; 
+            const offerHTML = (cleanOffer && isOfferValid(x.offer)) ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span></div>` : ''; 
+            
+            const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG; 
+            div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `; g.appendChild(div); 
+        }); 
+        btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
+    }
+    
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v173', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
     function openD(id) { 
         try {
@@ -554,17 +620,9 @@
                 let lines = x.offer.split('\n'); 
                 const today = new Date(); today.setHours(0,0,0,0); 
                 lines.forEach(line => { 
-                    let lineDateMatch = line.match(/\{(\d{1,2})\/(\d{1,2})\}/); 
+                    // 💡 هنا أيضاً نخفي السطر لو منتهي
                     let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim(); 
-                    let expiryTag = ""; 
-                    let isExpired = false; 
-                    if(lineDateMatch) { 
-                        const dPart = parseInt(lineDateMatch[1]); 
-                        const mPart = parseInt(lineDateMatch[2]) - 1; 
-                        const expDate = new Date(today.getFullYear(), mPart, dPart); 
-                        if (expDate < today) { isExpired = true; } else { expiryTag = `<span class="offer-expiry-tag" style="display:inline-flex; margin-right:5px; font-size:0.6rem;">(ينتهي: ${lineDateMatch[1]}/${lineDateMatch[2]})</span>`; } 
-                    } 
-                    if(!isExpired && cleanLine) { offersHTML += `<div class="offer-item">${cleanLine} ${expiryTag}</div>`; } 
+                    if(isOfferValid(line) && cleanLine) { offersHTML += `<div class="offer-item">${cleanLine}</div>`; } 
                 }); 
                 if (offersHTML === '') { offBox.style.display='none'; } else { document.getElementById('dOfferTxt').innerHTML = offersHTML; } 
             } else { offBox.style.display='none'; } 

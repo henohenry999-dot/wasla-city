@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- V185 Styles (Fixing Interaction Issues) --- */
+        /* --- V186 Styles (Final Stable) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -55,11 +55,10 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
-        
-        /* 🛑 Fix Heart Button Issue: Make children pointer-events none so the button gets the click */
         .card * { pointer-events: none; } 
+        /* 🛑 Fix Heart Button Clicking Issue */
         .card .card-fav-btn { pointer-events: auto; cursor: pointer; z-index: 10; }
-        .card .card-fav-btn i { pointer-events: none; } /* Crucial Fix */
+        .card .card-fav-btn i { pointer-events: none; } 
 
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
@@ -71,7 +70,6 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 6px 8px; border-radius: 8px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 1px solid #ffe0e0; }
-        
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
         .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
@@ -361,7 +359,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الصحيح (الذي أرسلته لي) 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الصحيح 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwpRqPNkw7PPT92C6S3qWAKuyGRS3iuRqMUYbFGiRMr743X1HD2qEIutbD6ZQmx3wWerw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -369,9 +367,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ اسم ثابت للمفضلة (لن يتغير أبداً)
-    const FAV_KEY = 'hona_favs_v185_fixed';
-    const CACHE_KEY = 'hona_v185_fixed'; 
+    const FAV_KEY = 'hona_favs_v186_fix';
+    const CACHE_KEY = 'hona_v186_final'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -428,7 +425,7 @@
                 let featRaw = String(r[12]).toUpperCase();
                 let isFeatured = featRaw.includes('TRUE');
                 return {
-                    id: String(r[0] || i), // 🔴 Ensure ID is String
+                    id: String(r[0] || i), 
                     name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
                     desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
                     offer: String(offerTxt || ""), expiry: expiryDateDisplay, live: isActive, feat: isFeatured, 
@@ -445,50 +442,12 @@
         }, error: (err) => { console.log("Error loading data:", err); removeSplash(); }});
     }
 
-    // 🛑 Admin Logic - Scope Fixed
     function triggerAdmin() {
         adminClicks++;
         if (adminClicks === 5) { adminClicks = 0; openModal('adminModal'); }
     }
 
-    // 🔴🔴🔴 Make functions global 🔴🔴🔴
-    window.approveItem = function(idx) {
-        if(!confirm("تأكيد الموافقة؟")) return;
-        const pass = document.getElementById('adminPass').value;
-        alert("⏳ جاري الإرسال... برجاء الانتظار");
-        const params = new URLSearchParams();
-        params.append('action', 'approve');
-        params.append('row', idx);
-        params.append('pass', pass);
-        
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(response => response.json())
-        .then(res => {
-            if(res.result === 'success') {
-                document.getElementById(`row-${idx}`).remove();
-                alert("✅ تم النقل بنجاح!");
-            } else {
-                alert("❌ خطأ: " + res.error);
-            }
-        })
-        .catch(err => { alert("❌ خطأ اتصال: " + err); });
-    }
-
-    window.rejectItem = function(idx) {
-        if(!confirm("تأكيد الحذف؟")) return;
-        const pass = document.getElementById('adminPass').value;
-        const params = new URLSearchParams();
-        params.append('action', 'reject');
-        params.append('row', idx);
-        params.append('pass', pass);
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(r => r.json())
-        .then(res => { 
-            if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } 
-            else { alert("Error: " + res.error); } 
-        });
-    }
-
+    // 🔴🔴🔴 Global Functions Fix (V186) 🔴🔴🔴
     window.loadPending = function() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');
@@ -524,33 +483,70 @@
         });
     }
 
-    // 💡 Fix: Type Coercion for Favorites
+    window.approveItem = function(idx) {
+        if(!confirm("تأكيد الموافقة؟")) return;
+        const pass = document.getElementById('adminPass').value;
+        alert("⏳ جاري الإرسال... انتظر رسالة النجاح");
+        
+        const params = new URLSearchParams();
+        params.append('action', 'approve');
+        params.append('row', idx);
+        params.append('pass', pass);
+        
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(response => response.json())
+        .then(res => {
+            if(res.result === 'success') {
+                document.getElementById(`row-${idx}`).remove();
+                alert("✅ تم النقل بنجاح!");
+            } else {
+                alert("❌ خطأ: " + res.error);
+            }
+        })
+        .catch(err => { alert("❌ خطأ اتصال: " + err); });
+    }
+
+    window.rejectItem = function(idx) {
+        if(!confirm("تأكيد الحذف؟")) return;
+        const pass = document.getElementById('adminPass').value;
+        const params = new URLSearchParams();
+        params.append('action', 'reject');
+        params.append('row', idx);
+        params.append('pass', pass);
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(r => r.json())
+        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); } });
+    }
+
+    // 💡 Toggle Fav Fix
     window.toggleFav = function(e, id) { 
-        e.stopPropagation(); // 🔴 Vital Fix
-        const strID = String(id);
+        e.stopPropagation(); 
         const btn = e.currentTarget; 
-        if(favs.includes(strID)) { 
-            favs = favs.filter(i => i !== strID); 
+        const strId = String(id);
+        if(favs.includes(strId)) { 
+            favs = favs.filter(i => i !== strId); 
             btn.classList.remove('active'); 
         } else { 
-            favs.push(strID); 
+            favs.push(strId); 
             btn.classList.add('active'); 
         } 
         localStorage.setItem(FAV_KEY, JSON.stringify(favs)); 
         if(curCat === 'fav') filter('fav', null); 
     }
 
+    // 💡 Date Logic Fix (End of day)
     function isOfferValid(offerStr) {
         if (!offerStr) return false;
-        let dateMatch = offerStr.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+        // Regex allows space or - or /
+        let dateMatch = offerStr.match(/\{\s*(\d{1,2})[\/\-](\d{1,2})\s*\}/);
         if (!dateMatch) return true; 
+        
         const d = parseInt(dateMatch[1]);
         const m = parseInt(dateMatch[2]) - 1; 
         const year = new Date().getFullYear();
-        const exp = new Date(year, m, d);
+        const expDate = new Date(year, m, d, 23, 59, 59); // End of that day
         const now = new Date();
-        now.setHours(0,0,0,0);
-        return exp >= now; // 🔴 Fix: allow today
+        return expDate >= now;
     }
 
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
@@ -579,7 +575,6 @@
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => { const cleanName = normalizeText(x.name.toLowerCase()); const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : ""); return cleanName.includes(s) || cleanDesc.includes(s); }); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); }
     
-    // 💡 Fix: Type Coercion for Favorites
     function filter(c, el) { 
         curCat = c; 
         if(el) { 
@@ -596,7 +591,6 @@
             filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
             filteredDB.sort((a,b) => (b.feat - a.feat)); 
         } else if (c === 'fav') { 
-            // 💡 تحويل الكل لنصوص لضمان المطابقة
             filteredDB = fullDB.filter(x => favs.map(String).includes(String(x.id))); 
         } else if (c === 'offers') { 
             filteredDB = fullDB.filter(x => { if (x.cat === 'بيع سلعة / مستعمل') return false; return isOfferValid(x.offer); }); 
@@ -628,175 +622,6 @@
     function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
     function sendData(e) { e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "جاري..."; const form = document.getElementById('reqForm'); const openVal = document.getElementById('openTime').value; const closeVal = document.getElementById('closeTime').value; const typeVal = document.getElementById('reqType').value; let hoursTag = ""; if((typeVal === 'نشاط' || typeVal === 'إعلان') && openVal && closeVal) { hoursTag = ' | ⏰ ' + openVal + ' - ' + closeVal; } const formData = new FormData(form); const data = {}; formData.forEach((v, k) => data[k] = v); let finalSub = ""; if(document.getElementById('catDiv').style.display !== 'none') { if(document.getElementById('subCatSelect').style.display !== 'none') { finalSub = data.SubCategorySelect; } else if (document.getElementById('subCatInput').style.display !== 'none') { finalSub = data.SubCategoryInput; } } else if (document.getElementById('usedDiv').style.display !== 'none') { data.Category = "بيع سلعة / مستعمل"; finalSub = data.UsedCategory; } const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", data.Type); params.append("Name", data.Name); params.append("Category", data.Category); params.append("SubCategory", finalSub); params.append("Area", data.Area); params.append("Location", data.Location); params.append("Image", data.Image); let desc = data.Description; if(data.ImageLink && data.Type === 'مخالفة') { desc += " | صورة: " + data.ImageLink; } desc += hoursTag; params.append("Description", desc); let finalOffer = data.Offer; if(finalOffer && document.getElementById('offerExpiry').value) { finalOffer += " {" + document.getElementById('offerExpiry').value + "}"; } params.append("Offer", finalOffer || ""); params.append("Contact", data.Contact || ""); if(data.NewsSource) params.append("NewsSource", data.NewsSource); params.append("Whatsapp", data.Whatsapp || ""); fetch(scriptURL, { method: 'POST', body: params }).then(r => r.json()).then(res => { alert("تم الإرسال بنجاح! سيتم المراجعة."); closeModal('formModal'); form.reset(); btn.disabled = false; btn.innerText = "إرسال 🚀"; }).catch(err => { alert("تم الإرسال!"); closeModal('formModal'); btn.disabled = false; btn.innerText = "إرسال 🚀"; }); }
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
-    
-    function setupTickers() { 
-        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
-        if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } 
-        
-        let offersArray = [];
-        fullDB.forEach(x => {
-            if (x.offer && x.cat !== 'بيع سلعة / مستعمل') {
-                let lines = x.offer.split('\n');
-                lines.forEach(line => {
-                    let clean = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim();
-                    let dateMatch = line.match(/\{(\d{1,2})\/(\d{1,2})\}/);
-                    
-                    if (isOfferValid(line) && clean) {
-                        let expiryTxt = dateMatch ? ` (حتى ${dateMatch[1]}/${dateMatch[2]})` : '';
-                        offersArray.push(`<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
-                    }
-                });
-            }
-        });
-
-        let adsHTML = "";
-        if (offersArray.length > 0) {
-            adsHTML = offersArray.join('   •   ');
-        } else {
-            adsHTML = '<span class="ticker-item">📢 لا تتوفر عروض حالياً.. انتظروا أقوى العروض قريباً!</span>';
-        }
-        document.getElementById('adsBar').style.display='flex'; 
-        document.getElementById('adsText').innerHTML = `<span class="scrolling">${adsHTML}</span>`;
-    }
-
-    function setupFloatAd() { 
-        let validAds = [];
-        fullDB.forEach(x => {
-            if (x.feat && x.offer && x.cat !== 'بيع سلعة / مستعمل') {
-                let lines = x.offer.split('\n');
-                lines.forEach(line => {
-                    if (isOfferValid(line)) {
-                        let clean = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim();
-                        if (clean) {
-                            validAds.push({ id: x.id, text: clean });
-                        }
-                    }
-                });
-            }
-        });
-
-        if (validAds.length > 0) {
-            const randAd = validAds[Math.floor(Math.random() * validAds.length)];
-            floatAdID = randAd.id;
-            document.getElementById('floatTxt').innerText = randAd.text.substring(0, 25) + '...';
-            document.getElementById('floatAd').style.display = 'flex';
-            document.getElementById('floatAd').onclick = function() { openD(floatAdID); };
-        } else {
-            document.getElementById('floatAd').style.display = 'none';
-        }
-    }
-    
-    function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
-    
-    function renderGrid(isNew) { 
-        const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; 
-        
-        if (filteredDB.length === 0) {
-            let msg = '';
-            if(curCat === 'offers') msg = 'لا تتوفر عروض حالياً 🎁<br><span style="font-size:0.9rem;font-weight:normal;color:#777">تابعنا قريباً لأقوى الخصومات</span>';
-            else if(curCat === 'fav') msg = 'قائمة المفضلة فارغة ❤️<br><span style="font-size:0.9rem;font-weight:normal;color:#777">اضغط على القلب لحفظ ما تحب</span>';
-            
-            if(msg) {
-                g.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon"><i class="${curCat==='fav'?'fas fa-heart':'fas fa-gift'}"></i></div>
-                        <div class="empty-text">${msg}</div>
-                    </div>`;
-                btn.style.display = 'none';
-                return;
-            }
-        }
-
-        const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); 
-        toRender.forEach(x => { 
-            const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; div.onclick = function() { openD(x.id); }; 
-            
-            // 🔴 Force String for favorites check
-            const isFav = favs.includes(String(x.id)) ? 'active' : ''; 
-            const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, '${x.id}')"><i class="fas fa-heart"></i></div>`; 
-            
-            let liveBadge = ''; if (x.cat === 'بيع سلعة / مستعمل' && !x.live) { liveBadge = `<div class="badge-sold">❌ تم البيع</div>`; } else if (x.live) { liveBadge = `<div class="badge-live"><div class="dot"></div> متاح</div>`; } 
-            const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : ''; 
-            const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; 
-            let footerHTML = ''; if(isNews) { footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`; } else { footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; } 
-            
-            let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; 
-            let offerHTML = '';
-            
-            if (cleanOffer && isOfferValid(x.offer)) {
-                let expiryTag = '';
-                let dateMatch = x.offer.match(/\{(\d{1,2})\/(\d{1,2})\}/);
-                if (dateMatch) {
-                    const d = parseInt(dateMatch[1]);
-                    const m = parseInt(dateMatch[2]) - 1; 
-                    const today = new Date();
-                    if (today.getDate() === d && today.getMonth() === m && today.getFullYear() === new Date().getFullYear()) {
-                        expiryTag = ' (ينتهي اليوم ⏳)';
-                    }
-                }
-                offerHTML = `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..${expiryTag}</span></div>`;
-            }
-            
-            const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG; 
-            div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `; g.appendChild(div); 
-        }); 
-        btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
-    }
-    
-    function openD(id) { 
-        try {
-            const x = fullDB.find(i => String(i.id) === String(id)); 
-            if(!x) { console.error("Item not found", id); return; }
-            currentShopData = x; 
-            document.getElementById('dName').innerText = x.name; 
-            document.getElementById('dCatMain').innerText = x.cat; 
-            const sub = (x.sub && x.sub !== x.cat) ? x.sub : ""; 
-            if(sub) { document.getElementById('dCatSub').style.display = 'inline-block'; document.getElementById('dCatSub').innerText = sub; } else { document.getElementById('dCatSub').style.display = 'none'; } 
-            document.getElementById('dArea').innerText = x.area || "غير محدد"; 
-            document.getElementById('dDesc').innerText = x.desc; 
-            if(x.cat === 'أخبار') { 
-                document.getElementById('dSrcInfo').style.display = 'block'; 
-                document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; 
-                if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } 
-            } else { 
-                document.getElementById('dSrcInfo').style.display = 'none'; 
-                document.getElementById('dNewsLink').style.display = 'none'; 
-            } 
-            const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
-            const slider = document.getElementById('imgSlider'); 
-            const dImg = document.getElementById('dImg'); 
-            slider.innerHTML = ''; 
-            if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; } 
-            document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : ''; 
-            const offBox = document.getElementById('dOfferBox'); 
-            if(x.offer) { 
-                offBox.style.display='block'; 
-                let offersHTML = ''; 
-                let lines = x.offer.split('\n'); 
-                const today = new Date(); today.setHours(0,0,0,0); 
-                lines.forEach(line => { 
-                    let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim(); 
-                    if(isOfferValid(line) && cleanLine) { offersHTML += `<div class="offer-item">${cleanLine}</div>`; } 
-                }); 
-                if (offersHTML === '') { offBox.style.display='none'; } else { document.getElementById('dOfferTxt').innerHTML = offersHTML; } 
-            } else { offBox.style.display='none'; } 
-            const container = document.getElementById('actionBtns'); 
-            container.innerHTML = ''; 
-            if (x.ph) {
-                let phones = x.ph.split(/[\/\-&]/); 
-                phones.forEach((num, idx) => { let cleanNum = num.trim().replace(/'/g, ''); if(cleanNum) { let btn = document.createElement('a'); btn.href = `tel:${cleanNum}`; btn.className = 'btn-act btn-call'; btn.innerHTML = `<i class="fas fa-phone-alt"></i> اتصال ${phones.length > 1 ? idx+1 : ''}`; container.appendChild(btn); } }); 
-            }
-            if (x.wa) {
-                let waNum = x.wa.trim().replace(/'/g, ''); if(waNum) { let btnWa = document.createElement('a'); btnWa.href = `https://wa.me/2${waNum}`; btnWa.className = 'btn-act btn-wa'; btnWa.innerHTML = `<i class="fab fa-whatsapp"></i> واتساب`; container.appendChild(btnWa); } 
-            }
-            const loc = document.getElementById('dLoc'); 
-            if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none'; 
-            openModal('detailsModal'); 
-        } catch(e) { console.error(e); alert("خطأ في فتح الكارت: " + e.message); }
-    }
-    function checkSub(val) { const subSelect = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput'); const subs = subCategories[val]; if (subs) { subSelect.innerHTML = '<option value="">اختر التخصص...</option>'; subs.forEach(s => { subSelect.innerHTML += `<option value="${s}">${s}</option>`; }); subSelect.style.display = 'block'; subInput.style.display = 'none'; } else { subSelect.style.display = 'none'; if (val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; } } }
-    function getCat(m,s){ return m; }
-    function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
     
     init();
 </script>

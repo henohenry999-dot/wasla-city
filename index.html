@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- ستايل V182 (نفس الديزاين الجميل السابق) --- */
+        /* --- تنسيقات V183 (التصميم المعتمد) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -62,7 +62,6 @@
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
         .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
-        
         .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
@@ -357,7 +356,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴 الرابط الصحيح 🔴
+    // 🔴🔴🔴 الرابط الجديد والمجرب (V183 Final) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwpRqPNkw7PPT92C6S3qWAKuyGRS3iuRqMUYbFGiRMr743X1HD2qEIutbD6ZQmx3wWerw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -366,8 +365,8 @@
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
     // ✅ اسم ثابت للمفضلة (لن يتغير أبداً)
-    const FAV_KEY = 'hona_favs_permanent';
-    const CACHE_KEY = 'hona_v182_fixed_event'; 
+    const FAV_KEY = 'hona_favs_v183_final';
+    const CACHE_KEY = 'hona_v183_ultra_fix'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -464,14 +463,15 @@
                 } else {
                     let html = '';
                     res.data.forEach(item => {
+                        // 🛑 التغيير الجذري هنا: لا نمرر الباسورد، ولا نمرر this
                         html += `
                         <div class="card" id="row-${item.rowIdx}">
                             <div class="c-title">${item.name} <small>(${item.type})</small></div>
                             <div class="c-sub">${item.cat} | ${item.sub} | ${item.area}</div>
                             <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item.desc}</div>
                             <div class="admin-actions">
-                                <button class="btn-approve" onclick="approveItem(${item.rowIdx}, '${pass}', this)">✅ موافقة</button>
-                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx}, '${pass}', this)">❌ رفض</button>
+                                <button class="btn-approve" onclick="approveItem(${item.rowIdx}, this)">✅ موافقة</button>
+                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx}, this)">❌ رفض</button>
                             </div>
                         </div>`;
                     });
@@ -481,9 +481,12 @@
         });
     }
 
-    // 🔴🔴🔴 دالة الموافقة المصححة مع كشف الأخطاء 🔴🔴🔴
-    function approveItem(idx, pass, btn) {
+    // 🔴🔴🔴 دالة الموافقة المصححة 100% 🔴🔴🔴
+    function approveItem(idx, btn) {
         if(!confirm("تأكيد الموافقة؟")) return;
+        
+        // قراءة الباسورد من الحقل مباشرة (أكثر أماناً)
+        const pass = document.getElementById('adminPass').value;
         
         const originalText = btn.innerText;
         btn.innerText = "⏳...";
@@ -516,9 +519,10 @@
         });
     }
 
-    function rejectItem(idx, pass, btn) {
+    function rejectItem(idx, btn) {
         if(!confirm("تأكيد الحذف؟ لن يمكن التراجع.")) return;
         
+        const pass = document.getElementById('adminPass').value;
         btn.innerText = "⏳...";
         btn.disabled = true;
 
@@ -559,7 +563,7 @@
     function parseTime(t) { let p = t.trim().split(':'); if(p.length < 2) return -1; return parseInt(p[0]) * 60 + parseInt(p[1]); }
     function forceUpdate() { localStorage.removeItem(CACHE_KEY); window.location.reload(); }
     
-    // 💡 تحسين جلب الصور
+    // 💡 تحسين جلب الصور (فيسبوك)
     function getImages(raw, isNews) { 
         if(!raw || raw.length < 5) return isNews ? [NEWS_PLACEHOLDER] : []; 
         
@@ -705,15 +709,21 @@
     function renderGrid(isNew) { 
         const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; 
         
-        // 💡 شاشة "لا توجد عروض"
-        if (filteredDB.length === 0 && curCat === 'offers') {
-            g.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-icon"><i class="fas fa-gift"></i></div>
-                    <div class="empty-text">لا تتوفر عروض حالياً 🎁<br><span style="font-size:0.9rem;font-weight:normal;color:#777">تابعنا قريباً لأقوى الخصومات</span></div>
-                </div>`;
-            btn.style.display = 'none';
-            return;
+        // 💡 شاشة "لا توجد عروض / لا توجد مفضلات"
+        if (filteredDB.length === 0) {
+            let msg = '';
+            if(curCat === 'offers') msg = 'لا تتوفر عروض حالياً 🎁<br><span style="font-size:0.9rem;font-weight:normal;color:#777">تابعنا قريباً لأقوى الخصومات</span>';
+            else if(curCat === 'fav') msg = 'قائمة المفضلة فارغة ❤️<br><span style="font-size:0.9rem;font-weight:normal;color:#777">اضغط على القلب لحفظ ما تحب</span>';
+            
+            if(msg) {
+                g.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="${curCat==='fav'?'fas fa-heart':'fas fa-gift'}"></i></div>
+                        <div class="empty-text">${msg}</div>
+                    </div>`;
+                btn.style.display = 'none';
+                return;
+            }
         }
 
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); 

@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- نفس التنسيقات السابقة (V175 Style) --- */
+        /* --- تنسيقات V178 النهائية --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -46,6 +46,7 @@
         .cat-item.active .cat-icon { transform: scale(1.1) translateY(-3px); border: 2px solid var(--gold); }
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
         
+        /* الكبسولات */
         .sub-cat-nav { display: none; overflow-x: auto; gap: 12px; padding: 10px 5px 20px; margin-bottom: 5px; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
         .sub-cat-nav::-webkit-scrollbar { display: none; }
         .sub-chip { background: white; border: 1px solid #f0f0f0; padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; color: #555; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.04); min-width: max-content; }
@@ -358,7 +359,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط كما هو (تأكد من تحديثه في Apps Script إذا لزم الأمر) 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الصحيح (الجديد) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwpRqPNkw7PPT92C6S3qWAKuyGRS3iuRqMUYbFGiRMr743X1HD2qEIutbD6ZQmx3wWerw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -366,8 +367,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V176) لتحديث الأيقونة العائمة الذكية
-    const CACHE_KEY = 'hona_v176_smart_float'; 
+    // ✅ مفتاح كاش نهائي (V178)
+    const CACHE_KEY = 'hona_v178_final_fix'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -390,7 +391,7 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v176')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v178')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
     let adminClicks = 0; 
 
@@ -607,37 +608,7 @@
         document.getElementById('adsText').innerHTML = `<span class="scrolling">${adsHTML}</span>`;
     }
 
-    // 💡 الأيقونة العائمة الذكية (V176 Fixed Logic)
-    function setupFloatAd() { 
-        // 1. تجميع كل السطور السارية من المحلات المميزة
-        let validAds = [];
-        
-        fullDB.forEach(x => {
-            if (x.feat && x.offer && x.cat !== 'بيع سلعة / مستعمل') {
-                let lines = x.offer.split('\n');
-                lines.forEach(line => {
-                    if (isOfferValid(line)) {
-                        let clean = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim();
-                        if (clean) {
-                            validAds.push({ id: x.id, text: clean });
-                        }
-                    }
-                });
-            }
-        });
-
-        // 2. اختيار واحد عشوائي
-        if (validAds.length > 0) {
-            const randAd = validAds[Math.floor(Math.random() * validAds.length)];
-            floatAdID = randAd.id;
-            document.getElementById('floatTxt').innerText = randAd.text.substring(0, 25) + '...';
-            document.getElementById('floatAd').style.display = 'flex';
-            document.getElementById('floatAd').onclick = function() { openD(floatAdID); };
-        } else {
-            document.getElementById('floatAd').style.display = 'none';
-        }
-    }
-    
+    function setupFloatAd() { const ads = fullDB.filter(x => x.feat && x.offer && isOfferValid(x.offer)); if(ads.length > 0) { const rand = ads[Math.floor(Math.random()*ads.length)]; floatAdID = rand.id; let clean = rand.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0]; document.getElementById('floatTxt').innerText = clean.substring(0,25)+'...'; document.getElementById('floatAd').style.display = 'flex'; document.getElementById('floatAd').onclick = function() { openD(floatAdID); }; } }
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
     
     function renderGrid(isNew) { 
@@ -673,7 +644,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
     }
     
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v176', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v178', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
     function openD(id) { 
         try {
@@ -707,7 +678,6 @@
                 let lines = x.offer.split('\n'); 
                 const today = new Date(); today.setHours(0,0,0,0); 
                 lines.forEach(line => { 
-                    // 💡 هنا أيضاً نخفي السطر لو منتهي
                     let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim(); 
                     if(isOfferValid(line) && cleanLine) { offersHTML += `<div class="offer-item">${cleanLine}</div>`; } 
                 }); 
@@ -735,6 +705,3 @@
 </script>
 </body>
 </html>
-
-
-

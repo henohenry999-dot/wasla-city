@@ -9,13 +9,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --gray: #95a5a6; --blue: #3498db; }
+        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
         body.modal-open { overflow: hidden; } body.modal-open .fab { display: none !important; }
+        
+        /* شاشة التحميل */
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
-        .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; }
+        .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        /* الهيدر */
         header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .geo-logo { width: 48px; height: 48px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: var(--primary); font-size: 1.6rem; }
@@ -25,22 +30,60 @@
         .shop-counter-box { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); display: flex; flex-direction: column; min-width: 55px; }
         .shop-counter-num { font-size: 1.1rem; font-weight: 800; color: var(--gold); line-height: 1; }
         .shop-counter-lbl { font-size: 0.6rem; color: #fff; opacity: 0.9; }
+        
         #mainView { padding: 0 15px; margin-top: -35px; position: relative; z-index: 10; }
         .search-wrap { background: white; padding: 5px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
         .search-inp { flex: 1; border: none; padding: 12px 20px; outline: none; font-family: 'Tajawal'; font-size: 1rem; background: transparent; }
         .search-btn { color: var(--primary); padding: 0 20px; cursor: pointer; font-size: 1.2rem; }
+        
         .quick-filters { display: flex; gap: 10px; margin-bottom: 20px; padding: 0 2px; }
         .q-chip { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.03); border: 1px solid #eee; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; transition: 0.2s; color: #555; }
         .q-chip.active { background: var(--dark); color: white; border-color: var(--dark); } .q-chip.active i { color: var(--gold); }
+        
         .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 10px; background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; }
         .cat-icon { width: 50px; height: 50px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white; transition: 0.2s; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
         .cat-name { font-size: 0.7rem; font-weight: 600; color: #555; text-align: center; line-height: 1.2; }
         .cat-item.active .cat-icon { transform: scale(1.1) translateY(-3px); border: 2px solid var(--gold); }
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
-        .sub-cat-nav { display: none; overflow-x: auto; gap: 8px; padding: 5px 2px 15px; margin-bottom: 10px; scrollbar-width: none; }
-        .sub-chip { background: white; border: 1px solid #ddd; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #555; cursor: pointer; transition: 0.2s; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-        .sub-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(39, 174, 96, 0.3); transform: translateY(-2px); }
+        
+        /* 🔴🔴🔴 إعادة التصميم الكلاسيكي للتصنيفات الفرعية 🔴🔴🔴 */
+        .sub-cat-nav { 
+            display: none; 
+            overflow-x: auto; 
+            gap: 10px; /* تباعد مريح */
+            padding: 5px 5px 15px; 
+            margin-bottom: 15px; 
+            scrollbar-width: none; /* إخفاء شريط التمرير */
+            white-space: nowrap;
+        }
+        .sub-cat-nav::-webkit-scrollbar { display: none; }
+        
+        .sub-chip { 
+            background: white; 
+            border: 1px solid #eee; 
+            padding: 10px 20px; /* تكبير الحجم للضغط */
+            border-radius: 25px; /* تدوير الحواف بالكامل */
+            font-size: 0.9rem; 
+            font-weight: bold; 
+            color: #555; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            display: inline-block; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* ظل ناعم */
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .sub-chip.active { 
+            background: var(--primary); 
+            color: white; 
+            border-color: var(--primary); 
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4); /* ظل أقوى عند التفعيل */
+            transform: translateY(-3px); /* حركة للأعلى */
+        }
+        /* 🔴🔴🔴 نهاية التعديل الكلاسيكي 🔴🔴🔴 */
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
@@ -323,7 +366,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴 تم إضافة رابطك الجديد هنا ✅
+    // 🔴🔴🔴 هام: الرابط الجديد الذي قمنا بتحديثه 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyhTaW55KXrDb1xBfnn2nJa2AR1kcgKxqQVjR9lqNF84_t50xhIZMPBcsOx6Zi5OqDg7g/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -331,8 +374,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح الكاش الجديد لضمان ظهور التعديلات
-    const CACHE_KEY = 'hona_v169_admin_fix'; 
+    // ✅ مفتاح كاش جديد لتحديث التصميم على كل الأجهزة
+    const CACHE_KEY = 'hona_v171_classic_design'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -355,7 +398,7 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v169')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v171')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
 
     function init() {
@@ -389,7 +432,7 @@
         }
         
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
-            // Mapping for Live_Data
+            // MAPPING for Live_Data Columns (V169 Update)
             let tempDB = res.data.slice(1).map((r, i) => {
                 let offerTxt = r[10] || "";
                 let expiryDateDisplay = ""; 
@@ -442,7 +485,6 @@
         }});
     }
 
-    // باقي الدوال كما هي...
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
     function checkIsOpen(timeStr) { const now = new Date(); const currentMins = now.getHours() * 60 + now.getMinutes(); let parts = timeStr.split('-'); if(parts.length !== 2) return true; let start = parseTime(parts[0]); let end = parseTime(parts[1]); if(start === -1 || end === -1) return true; if (end < start) { return (currentMins >= start || currentMins <= end); } else { return (currentMins >= start && currentMins <= end); } }
     function parseTime(t) { let p = t.trim().split(':'); if(p.length < 2) return -1; return parseInt(p[0]) * 60 + parseInt(p[1]); }
@@ -476,7 +518,7 @@
     function setupFloatAd() { const ads = fullDB.filter(x => x.feat && x.offer); if(ads.length > 0) { const rand = ads[Math.floor(Math.random()*ads.length)]; floatAdID = rand.id; let clean = rand.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0]; document.getElementById('floatTxt').innerText = clean.substring(0,25)+'...'; document.getElementById('floatAd').style.display = 'flex'; document.getElementById('floatAd').onclick = function() { openD(floatAdID); }; } }
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
     function renderGrid(isNew) { const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); toRender.forEach(x => { const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; div.onclick = function() { openD(x.id); }; const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`; let liveBadge = ''; if (x.cat === 'بيع سلعة / مستعمل' && !x.live) { liveBadge = `<div class="badge-sold">❌ تم البيع</div>`; } else if (x.live) { liveBadge = `<div class="badge-live"><div class="dot"></div> متاح</div>`; } const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : ''; const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; let footerHTML = ''; if(isNews) { footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`; } else { footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; } let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; let isOfferExpired = false; if(x.offer) { let dateMatch = x.offer.match(/\{(\d{1,2})\/(\d{1,2})\}/); if(dateMatch) { const d = parseInt(dateMatch[1]); const m = parseInt(dateMatch[2]) - 1; const exp = new Date(new Date().getFullYear(), m, d); if(exp < new Date().setHours(0,0,0,0)) isOfferExpired = true; } } const offerHTML = (cleanOffer && !isOfferExpired) ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span></div>` : ''; const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG; div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `; g.appendChild(div); }); btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; }
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v169', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v171', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
     function openD(id) { 
         try {
@@ -541,6 +583,7 @@
     function checkSub(val) { const subSelect = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput'); const subs = subCategories[val]; if (subs) { subSelect.innerHTML = '<option value="">اختر التخصص...</option>'; subs.forEach(s => { subSelect.innerHTML += `<option value="${s}">${s}</option>`; }); subSelect.style.display = 'block'; subInput.style.display = 'none'; } else { subSelect.style.display = 'none'; if (val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; } } }
     function getCat(m,s){ return m; }
     function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
+    
     init();
 </script>
 </body>

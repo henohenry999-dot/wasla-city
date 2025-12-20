@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- نفس الستايل السابق --- */
+        /* --- ستايل V182 (نفس الديزاين الجميل السابق) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -59,12 +59,10 @@
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
-        
-        /* 💡 تحسين عرض الصور */
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
         .card.news-card .c-img { border-radius: 12px; border:none; }
-        
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
+        
         .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
@@ -359,7 +357,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط كما هو 🔴🔴🔴
+    // 🔴 الرابط الصحيح 🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwpRqPNkw7PPT92C6S3qWAKuyGRS3iuRqMUYbFGiRMr743X1HD2qEIutbD6ZQmx3wWerw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -369,7 +367,7 @@
 
     // ✅ اسم ثابت للمفضلة (لن يتغير أبداً)
     const FAV_KEY = 'hona_favs_permanent';
-    const CACHE_KEY = 'hona_v181_fixes'; 
+    const CACHE_KEY = 'hona_v182_fixed_event'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -472,8 +470,8 @@
                             <div class="c-sub">${item.cat} | ${item.sub} | ${item.area}</div>
                             <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item.desc}</div>
                             <div class="admin-actions">
-                                <button class="btn-approve" onclick="approveItem(${item.rowIdx}, '${pass}')">✅ موافقة</button>
-                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx}, '${pass}')">❌ رفض</button>
+                                <button class="btn-approve" onclick="approveItem(${item.rowIdx}, '${pass}', this)">✅ موافقة</button>
+                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx}, '${pass}', this)">❌ رفض</button>
                             </div>
                         </div>`;
                     });
@@ -483,37 +481,64 @@
         });
     }
 
-    function approveItem(idx, pass) {
+    // 🔴🔴🔴 دالة الموافقة المصححة مع كشف الأخطاء 🔴🔴🔴
+    function approveItem(idx, pass, btn) {
         if(!confirm("تأكيد الموافقة؟")) return;
-        const btn = event.target;
+        
         const originalText = btn.innerText;
         btn.innerText = "⏳...";
         btn.disabled = true;
+
         const params = new URLSearchParams();
         params.append('action', 'approve');
         params.append('row', idx);
         params.append('pass', pass);
-        fetch(scriptURL, { method: 'POST', body: params })
+        
+        fetch(scriptURL, { 
+            method: 'POST', 
+            body: params
+        })
         .then(response => response.json())
         .then(res => {
-            if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم النقل بنجاح! 🎉"); } 
-            else { alert("خطأ من السيرفر: " + res.error); btn.innerText = originalText; btn.disabled = false; }
+            if(res.result === 'success') {
+                document.getElementById(`row-${idx}`).remove();
+                alert("تم النقل بنجاح! 🎉");
+            } else {
+                alert("خطأ من السيرفر: " + res.error);
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
         })
-        .catch(err => { alert("خطأ في الاتصال: " + err); btn.innerText = originalText; btn.disabled = false; });
+        .catch(err => {
+            alert("خطأ في الاتصال: " + err);
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
     }
 
-    function rejectItem(idx, pass) {
+    function rejectItem(idx, pass, btn) {
         if(!confirm("تأكيد الحذف؟ لن يمكن التراجع.")) return;
-        const btn = event.target;
+        
         btn.innerText = "⏳...";
         btn.disabled = true;
+
         const params = new URLSearchParams();
         params.append('action', 'reject');
         params.append('row', idx);
         params.append('pass', pass);
+        
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
-        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); btn.innerText = "❌ رفض"; btn.disabled = false; } });
+        .then(res => { 
+            if(res.result === 'success') { 
+                document.getElementById(`row-${idx}`).remove(); 
+                alert("تم الحذف."); 
+            } else { 
+                alert("Error: " + res.error); 
+                btn.innerText = "❌ رفض";
+                btn.disabled = false;
+            } 
+        });
     }
 
     // 💡 تعديل جوهري: العرض ساري حتى آخر ثانية في اليوم
@@ -712,7 +737,7 @@
                     const m = parseInt(dateMatch[2]) - 1; 
                     const today = new Date();
                     // فحص إذا كان اليوم هو يوم الانتهاء
-                    if (today.getDate() === d && today.getMonth() === m) {
+                    if (today.getDate() === d && today.getMonth() === m && today.getFullYear() === new Date().getFullYear()) {
                         expiryTag = ' (ينتهي اليوم ⏳)';
                     }
                 }

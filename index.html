@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- تنسيقات V183 (التصميم المعتمد) --- */
+        /* --- V184 Styles --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -66,7 +66,6 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 6px 8px; border-radius: 8px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 1px solid #ffe0e0; }
-        
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
         .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
@@ -356,7 +355,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الجديد والمجرب (V183 Final) 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الصحيح (الذي أرسلته لي) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwpRqPNkw7PPT92C6S3qWAKuyGRS3iuRqMUYbFGiRMr743X1HD2qEIutbD6ZQmx3wWerw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -364,9 +363,9 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ اسم ثابت للمفضلة (لن يتغير أبداً)
-    const FAV_KEY = 'hona_favs_v183_final';
-    const CACHE_KEY = 'hona_v183_ultra_fix'; 
+    // ✅ مفتاح ثابت للمفضلة (لن تضيع أبداً)
+    const FAV_KEY = 'hona_favs_v184_final';
+    const CACHE_KEY = 'hona_v184_final'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -411,7 +410,6 @@
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             let tempDB = res.data.slice(1).map((r, i) => {
                 let offerTxt = r[10] || "";
-                let expiryDateDisplay = ""; 
                 let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                 const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                 if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
@@ -423,9 +421,10 @@
                 let featRaw = String(r[12]).toUpperCase();
                 let isFeatured = featRaw.includes('TRUE');
                 return {
-                    id: r[0] || i, name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
+                    id: String(r[0] || i), 
+                    name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
                     desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
-                    offer: String(offerTxt || ""), expiry: expiryDateDisplay, live: isActive, feat: isFeatured, 
+                    offer: String(offerTxt || ""), live: isActive, feat: isFeatured, 
                     date: r[13], newsSrc: String(source), rating: r[16] || "" 
                 };
             }).reverse();
@@ -463,15 +462,15 @@
                 } else {
                     let html = '';
                     res.data.forEach(item => {
-                        // 🛑 التغيير الجذري هنا: لا نمرر الباسورد، ولا نمرر this
+                        // 🛑 التغيير الجذري: إزالة (this) وتمرير الرقم فقط
                         html += `
                         <div class="card" id="row-${item.rowIdx}">
                             <div class="c-title">${item.name} <small>(${item.type})</small></div>
                             <div class="c-sub">${item.cat} | ${item.sub} | ${item.area}</div>
                             <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item.desc}</div>
                             <div class="admin-actions">
-                                <button class="btn-approve" onclick="approveItem(${item.rowIdx}, this)">✅ موافقة</button>
-                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx}, this)">❌ رفض</button>
+                                <button class="btn-approve" onclick="approveItem(${item.rowIdx})">✅ موافقة</button>
+                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx})">❌ رفض</button>
                             </div>
                         </div>`;
                     });
@@ -481,51 +480,41 @@
         });
     }
 
-    // 🔴🔴🔴 دالة الموافقة المصححة 100% 🔴🔴🔴
-    function approveItem(idx, btn) {
+    // 🔴🔴🔴 الحل النهائي لزر الموافقة 🔴🔴🔴
+    function approveItem(idx) {
         if(!confirm("تأكيد الموافقة؟")) return;
         
-        // قراءة الباسورد من الحقل مباشرة (أكثر أماناً)
+        // قراءة الباسورد من الحقل مباشرة
         const pass = document.getElementById('adminPass').value;
         
-        const originalText = btn.innerText;
-        btn.innerText = "⏳...";
-        btn.disabled = true;
+        // إظهار تنبيه فوري
+        alert("جاري الإرسال... اضغط OK وانتظر لحظة ⏳");
 
         const params = new URLSearchParams();
         params.append('action', 'approve');
         params.append('row', idx);
         params.append('pass', pass);
         
-        fetch(scriptURL, { 
-            method: 'POST', 
-            body: params
-        })
+        fetch(scriptURL, { method: 'POST', body: params })
         .then(response => response.json())
         .then(res => {
             if(res.result === 'success') {
                 document.getElementById(`row-${idx}`).remove();
                 alert("تم النقل بنجاح! 🎉");
             } else {
-                alert("خطأ من السيرفر: " + res.error);
-                btn.innerText = originalText;
-                btn.disabled = false;
+                alert("خطأ: " + res.error);
             }
         })
         .catch(err => {
             alert("خطأ في الاتصال: " + err);
-            btn.innerText = originalText;
-            btn.disabled = false;
         });
     }
 
-    function rejectItem(idx, btn) {
+    function rejectItem(idx) {
         if(!confirm("تأكيد الحذف؟ لن يمكن التراجع.")) return;
         
         const pass = document.getElementById('adminPass').value;
-        btn.innerText = "⏳...";
-        btn.disabled = true;
-
+        
         const params = new URLSearchParams();
         params.append('action', 'reject');
         params.append('row', idx);
@@ -539,23 +528,27 @@
                 alert("تم الحذف."); 
             } else { 
                 alert("Error: " + res.error); 
-                btn.innerText = "❌ رفض";
-                btn.disabled = false;
             } 
         });
     }
 
-    // 💡 تعديل جوهري: العرض ساري حتى آخر ثانية في اليوم
+    // 💡 حل مشكلة العروض (اليوم = ساري)
     function isOfferValid(offerStr) {
         if (!offerStr) return false;
         let dateMatch = offerStr.match(/\{(\d{1,2})\/(\d{1,2})\}/);
-        if (!dateMatch) return true; 
+        if (!dateMatch) return true; // لو مفيش تاريخ = ساري
+        
         const d = parseInt(dateMatch[1]);
         const m = parseInt(dateMatch[2]) - 1; 
         const year = new Date().getFullYear();
-        const exp = new Date(year, m, d, 23, 59, 59);
-        const now = new Date();
-        return now <= exp;
+        
+        // نقارن فقط "اليوم والشهر" (تجاهل الوقت)
+        const expDate = new Date(year, m, d);
+        const today = new Date();
+        today.setHours(0,0,0,0); // تصفير وقت اليوم الحالي
+        
+        // طالما تاريخ الانتهاء أكبر من أو يساوي تاريخ اليوم (00:00)، فهو ساري
+        return expDate >= today;
     }
 
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
@@ -563,15 +556,9 @@
     function parseTime(t) { let p = t.trim().split(':'); if(p.length < 2) return -1; return parseInt(p[0]) * 60 + parseInt(p[1]); }
     function forceUpdate() { localStorage.removeItem(CACHE_KEY); window.location.reload(); }
     
-    // 💡 تحسين جلب الصور (فيسبوك)
     function getImages(raw, isNews) { 
         if(!raw || raw.length < 5) return isNews ? [NEWS_PLACEHOLDER] : []; 
-        
-        // إذا كان رابط فيسبوك بوست وليس صورة مباشرة، نستخدم صورة افتراضية أنيقة
-        if (raw.includes('facebook.com') && !raw.includes('fbcdn')) {
-            return [DEFAULT_IMG]; 
-        }
-
+        if (raw.includes('facebook.com') && !raw.includes('fbcdn')) { return [DEFAULT_IMG]; }
         return raw.split(',').map(u => { 
             let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); 
             return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); 
@@ -590,7 +577,7 @@
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => { const cleanName = normalizeText(x.name.toLowerCase()); const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : ""); return cleanName.includes(s) || cleanDesc.includes(s); }); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); }
     
-    // 💡 فلتر العروض الذكي + شاشة "لا توجد عروض"
+    // 💡 إصلاح المفضلة (Type Mismatch Fix)
     function filter(c, el) { 
         curCat = c; 
         if(el) { 
@@ -607,9 +594,9 @@
             filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
             filteredDB.sort((a,b) => (b.feat - a.feat)); 
         } else if (c === 'fav') { 
-            filteredDB = fullDB.filter(x => favs.includes(x.id)); 
+            // 💡 تحويل الكل لنصوص لضمان المطابقة
+            filteredDB = fullDB.filter(x => favs.map(String).includes(String(x.id))); 
         } else if (c === 'offers') { 
-            // 💡 استثناء السوق + التأكد من الصلاحية
             filteredDB = fullDB.filter(x => { if (x.cat === 'بيع سلعة / مستعمل') return false; return isOfferValid(x.offer); }); 
         } else if (c === 'souq') { 
             filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 

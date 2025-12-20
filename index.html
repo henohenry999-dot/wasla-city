@@ -9,19 +9,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- V187: Light & Fast Styles --- */
+        /* --- V185 Styles (Fixing Interaction Issues) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
-        body.modal-open { overflow: hidden; } 
+        body.modal-open { overflow: hidden; } body.modal-open .fab { display: none !important; }
         
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* تعديل الهيدر ليتناسب مع شريط الأخبار */
-        header { margin-top: 60px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; transition: margin-top 0.3s; }
+        header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .geo-logo { width: 48px; height: 48px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: var(--primary); font-size: 1.6rem; }
         .app-title h1 { margin: 0; font-size: 2rem; font-family: 'Reem Kufi'; letter-spacing: 1px; }
@@ -56,9 +55,11 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
+        
+        /* 🛑 Fix Heart Button Issue: Make children pointer-events none so the button gets the click */
         .card * { pointer-events: none; } 
         .card .card-fav-btn { pointer-events: auto; cursor: pointer; z-index: 10; }
-        .card .card-fav-btn i { pointer-events: none; } 
+        .card .card-fav-btn i { pointer-events: none; } /* Crucial Fix */
 
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
@@ -93,8 +94,6 @@
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
-        
-        /* شريط الأخبار: ثابت في الأعلى */
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
@@ -104,7 +103,6 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -363,7 +361,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 The Correct Script URL 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الصحيح (الذي أرسلته لي) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwpRqPNkw7PPT92C6S3qWAKuyGRS3iuRqMUYbFGiRMr743X1HD2qEIutbD6ZQmx3wWerw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -371,9 +369,9 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ Key for V187
-    const FAV_KEY = 'hona_favs_v187_stable';
-    const CACHE_KEY = 'hona_v187_stable'; 
+    // ✅ اسم ثابت للمفضلة (لن يتغير أبداً)
+    const FAV_KEY = 'hona_favs_v185_fixed';
+    const CACHE_KEY = 'hona_v185_fixed'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -401,6 +399,7 @@
     let adminClicks = 0; 
 
     function init() {
+        setTimeout(removeSplash, 1000);
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
@@ -417,6 +416,7 @@
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             let tempDB = res.data.slice(1).map((r, i) => {
                 let offerTxt = r[10] || "";
+                let expiryDateDisplay = ""; 
                 let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                 const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                 if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
@@ -428,10 +428,10 @@
                 let featRaw = String(r[12]).toUpperCase();
                 let isFeatured = featRaw.includes('TRUE');
                 return {
-                    id: String(r[0] || i), 
+                    id: String(r[0] || i), // 🔴 Ensure ID is String
                     name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
                     desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
-                    offer: String(offerTxt || ""), live: isActive, feat: isFeatured, 
+                    offer: String(offerTxt || ""), expiry: expiryDateDisplay, live: isActive, feat: isFeatured, 
                     date: r[13], newsSrc: String(source), rating: r[16] || "" 
                 };
             }).reverse();
@@ -441,10 +441,7 @@
             localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
             const count = fullDB.filter(x => x.cat !== 'أخبار').length;
             document.getElementById('shopCount').innerText = count;
-            renderGrid(true); 
-            setupTickers(); 
-            setupFloatAd(); 
-            removeSplash();
+            renderGrid(true); setupTickers(); setupFloatAd(); removeSplash();
         }, error: (err) => { console.log("Error loading data:", err); removeSplash(); }});
     }
 
@@ -454,6 +451,7 @@
         if (adminClicks === 5) { adminClicks = 0; openModal('adminModal'); }
     }
 
+    // 🔴🔴🔴 Make functions global 🔴🔴🔴
     window.approveItem = function(idx) {
         if(!confirm("تأكيد الموافقة؟")) return;
         const pass = document.getElementById('adminPass').value;
@@ -467,39 +465,13 @@
         .then(response => response.json())
         .then(res => {
             if(res.result === 'success') {
-                document.getElementById(`row-${item.rowIdx}`).remove(); // Error might be here if item not defined
-                // Refetch pending list instead to be safe
-                loadPending();
+                document.getElementById(`row-${idx}`).remove();
                 alert("✅ تم النقل بنجاح!");
             } else {
                 alert("❌ خطأ: " + res.error);
             }
         })
         .catch(err => { alert("❌ خطأ اتصال: " + err); });
-    }
-    
-    // Fix: Redefine `approveItem` to properly remove row
-    window.approveItem = function(idx) {
-        if(!confirm("تأكيد الموافقة؟")) return;
-        const pass = document.getElementById('adminPass').value;
-        alert("⏳ جاري الإرسال...");
-        const params = new URLSearchParams();
-        params.append('action', 'approve');
-        params.append('row', idx);
-        params.append('pass', pass);
-        
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(r => r.json())
-        .then(res => {
-            if(res.result === 'success') {
-                // Find element by ID and remove it
-                const el = document.getElementById(`row-${idx}`);
-                if(el) el.remove();
-                alert("✅ تم!");
-            } else {
-                alert("❌ " + res.error);
-            }
-        });
     }
 
     window.rejectItem = function(idx) {
@@ -512,11 +484,7 @@
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
         .then(res => { 
-            if(res.result === 'success') { 
-                const el = document.getElementById(`row-${idx}`);
-                if(el) el.remove();
-                alert("تم الحذف."); 
-            } 
+            if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } 
             else { alert("Error: " + res.error); } 
         });
     }
@@ -556,15 +524,16 @@
         });
     }
 
+    // 💡 Fix: Type Coercion for Favorites
     window.toggleFav = function(e, id) { 
-        e.stopPropagation(); 
+        e.stopPropagation(); // 🔴 Vital Fix
+        const strID = String(id);
         const btn = e.currentTarget; 
-        const strId = String(id);
-        if(favs.includes(strId)) { 
-            favs = favs.filter(i => i !== strId); 
+        if(favs.includes(strID)) { 
+            favs = favs.filter(i => i !== strID); 
             btn.classList.remove('active'); 
         } else { 
-            favs.push(strId); 
+            favs.push(strID); 
             btn.classList.add('active'); 
         } 
         localStorage.setItem(FAV_KEY, JSON.stringify(favs)); 
@@ -578,10 +547,10 @@
         const d = parseInt(dateMatch[1]);
         const m = parseInt(dateMatch[2]) - 1; 
         const year = new Date().getFullYear();
-        const expDate = new Date(year, m, d);
+        const exp = new Date(year, m, d);
         const now = new Date();
         now.setHours(0,0,0,0);
-        return expDate >= now; // Allow today
+        return exp >= now; // 🔴 Fix: allow today
     }
 
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
@@ -610,6 +579,7 @@
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => { const cleanName = normalizeText(x.name.toLowerCase()); const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : ""); return cleanName.includes(s) || cleanDesc.includes(s); }); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); }
     
+    // 💡 Fix: Type Coercion for Favorites
     function filter(c, el) { 
         curCat = c; 
         if(el) { 
@@ -626,6 +596,7 @@
             filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
             filteredDB.sort((a,b) => (b.feat - a.feat)); 
         } else if (c === 'fav') { 
+            // 💡 تحويل الكل لنصوص لضمان المطابقة
             filteredDB = fullDB.filter(x => favs.map(String).includes(String(x.id))); 
         } else if (c === 'offers') { 
             filteredDB = fullDB.filter(x => { if (x.cat === 'بيع سلعة / مستعمل') return false; return isOfferValid(x.offer); }); 
@@ -740,6 +711,7 @@
         toRender.forEach(x => { 
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; div.onclick = function() { openD(x.id); }; 
             
+            // 🔴 Force String for favorites check
             const isFav = favs.includes(String(x.id)) ? 'active' : ''; 
             const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, '${x.id}')"><i class="fas fa-heart"></i></div>`; 
             

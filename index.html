@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- نفس التنسيقات السابقة (V178 Style) --- */
+        /* --- نفس الستايل السابق (V179 Style) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -358,7 +358,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الصحيح (الجديد) 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الصحيح (V180 Fixed) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwpRqPNkw7PPT92C6S3qWAKuyGRS3iuRqMUYbFGiRMr743X1HD2qEIutbD6ZQmx3wWerw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -366,8 +366,7 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V179) لتحديث الكود
-    const CACHE_KEY = 'hona_v179_time_fixed'; 
+    const CACHE_KEY = 'hona_v180_fixed'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -390,13 +389,12 @@
     };
 
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
-    let favs = JSON.parse(localStorage.getItem('favs_v178')) || [];
+    let favs = JSON.parse(localStorage.getItem('favs_v180')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
     let adminClicks = 0; 
 
     function init() {
         setTimeout(removeSplash, 1000);
-
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
@@ -408,7 +406,6 @@
                 removeSplash();
             } catch(e) { console.log('Cache error'); }
         }
-
         document.getElementById('formModal').style.display = 'none';
         
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
@@ -483,45 +480,78 @@
         });
     }
 
+    // 🔴🔴🔴 دالة الموافقة المصححة مع كشف الأخطاء 🔴🔴🔴
     function approveItem(idx, pass) {
         if(!confirm("تأكيد الموافقة؟")) return;
+        
+        // تغيير شكل الزر ليعرف المستخدم أن شيئاً يحدث
+        const btn = event.target;
+        const originalText = btn.innerText;
+        btn.innerText = "⏳...";
+        btn.disabled = true;
+
         const params = new URLSearchParams();
         params.append('action', 'approve');
         params.append('row', idx);
         params.append('pass', pass);
-        document.getElementById(`row-${idx}`).style.opacity = '0.5';
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(r => r.json())
-        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تمت الموافقة والنقل بنجاح! 🚀"); } else { alert("Error: " + res.error); } });
+        
+        fetch(scriptURL, { 
+            method: 'POST', 
+            body: params
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.result === 'success') {
+                document.getElementById(`row-${idx}`).remove();
+                alert("تم النقل بنجاح! 🎉");
+            } else {
+                alert("خطأ من السيرفر: " + res.error);
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        })
+        .catch(err => {
+            alert("خطأ في الاتصال: " + err);
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
     }
 
     function rejectItem(idx, pass) {
         if(!confirm("تأكيد الحذف؟ لن يمكن التراجع.")) return;
+        
+        const btn = event.target;
+        btn.innerText = "⏳...";
+        btn.disabled = true;
+
         const params = new URLSearchParams();
         params.append('action', 'reject');
         params.append('row', idx);
         params.append('pass', pass);
-        document.getElementById(`row-${idx}`).style.opacity = '0.5';
+        
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
-        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); } });
+        .then(res => { 
+            if(res.result === 'success') { 
+                document.getElementById(`row-${idx}`).remove(); 
+                alert("تم الحذف."); 
+            } else { 
+                alert("Error: " + res.error); 
+                btn.innerText = "❌ رفض";
+                btn.disabled = false;
+            } 
+        });
     }
 
-    // 💡 تعديل جوهري: العرض ساري حتى آخر ثانية في اليوم
     function isOfferValid(offerStr) {
         if (!offerStr) return false;
         let dateMatch = offerStr.match(/\{(\d{1,2})\/(\d{1,2})\}/);
-        if (!dateMatch) return true; // لو مفيش تاريخ، يعتبر ساري دائماً
-        
+        if (!dateMatch) return true; 
         const d = parseInt(dateMatch[1]);
         const m = parseInt(dateMatch[2]) - 1; 
         const year = new Date().getFullYear();
-        
-        // نهاية يوم الانتهاء (الساعة 23:59:59)
         const exp = new Date(year, m, d, 23, 59, 59);
         const now = new Date();
-        
-        // لو الوقت الحالي عدى نهاية يوم الانتهاء
         if (now > exp) return false;
         return true;
     }
@@ -692,7 +722,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
     }
     
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v179', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v180', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
     function openD(id) { 
         try {

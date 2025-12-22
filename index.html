@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- النسخة المستقرة (Old Data) --- */
+        /* --- V189 Restore: Original Design & Stability --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 80px; user-select: none; overflow-x: hidden; color: #333; }
@@ -19,6 +19,7 @@
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
+        /* شريط الأخبار الأصلي */
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
@@ -66,7 +67,6 @@
         .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.04); border: 1px solid #f0f0f0; position: relative; cursor: pointer; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
         .card * { pointer-events: none; } 
-        
         .card-fav-btn { position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5; color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; pointer-events: auto !important; }
         .card-fav-btn.active { color: var(--red); }
         .card-fav-btn i { pointer-events: none; }
@@ -91,7 +91,7 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-content { background: white; width: 90%; max-width: 400px; border-radius: 20px; overflow: hidden; animation: pop 0.3s; max-height: 90vh; overflow-y: auto; position: relative; }
         .modal-close { position: absolute; top: 15px; left: 15px; width: 30px; height: 30px; background: rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
-        @keyframes pop { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
         .d-body { padding: 20px; }
         .d-title { margin: 0 0 10px; font-weight: 800; color: var(--dark); font-size: 1.4rem; }
@@ -114,7 +114,7 @@
 </head>
 <body>
 
-<div id="splashScreen">
+<div id="splashScreen" onclick="this.style.display='none'">
     <div class="rocket-icon"><i class="fas fa-rocket"></i></div>
     <div class="splash-text">Hona App</div>
 </div>
@@ -188,7 +188,7 @@
 </div>
 <div class="fab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
-<div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul style="list-style:none; padding:0; line-height:2.5;"><li>🚓 النجدة: <a href="tel:122">122</a></li><li>🚑 الإسعاف: <a href="tel:123">123</a></li><li>🚒 المطافئ: <a href="tel:180">180</a></li><li>⚡ الكهرباء: <a href="tel:121">121</a></li><li>🚰 المياه: <a href="tel:125">125</a></li><li>🔥 الغاز: <a href="tel:129">129</a></li></ul></div></div>
+<div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 الطوارئ</h3><ul style="list-style:none; padding:0; line-height:2.5;"><li>🚓 النجدة: <a href="tel:122">122</a></li><li>🚑 الإسعاف: <a href="tel:123">123</a></li><li>🚒 المطافئ: <a href="tel:180">180</a></li><li>⚡ الكهرباء: <a href="tel:121">121</a></li><li>🚰 المياه: <a href="tel:125">125</a></li><li>🔥 الغاز: <a href="tel:129">129</a></li></ul></div></div>
 
 <div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><h3>عن التطبيق</h3><p>دليلك الخدمي الأول في حدائق العاصمة.</p><p style="color:var(--primary);">نسألكم الدعاء ❤️</p></div></div>
 
@@ -275,10 +275,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
     // 🔴🔴🔴 ضع الرابط الجديد هنا 🔴🔴🔴
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw-yLqGQHNb4zUoqXbAbRKqB5xCyvMGYy9kSdJK7MJE6jyNAB2rI1C8H3YXnfDcsad9rQ/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyFZlmO7vAbLXIcW2fhUKYfOTQlkoyyCKcg60WID1NiVeN162hxifWUZvNN9Jc8nTbDwQ/exec';
     
     // إعدادات الشيت القديم (بياناتك الأصلية)
-    const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
+    const sheet = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/gviz/tq?tqx=out:csv&sheet=Live_Data";
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     
@@ -308,7 +308,7 @@
         }});
     }
 
-    // 🟢 Global Functions
+    // 🟢 دوال عامة (Global Functions)
     window.toggleFav = function(e, id) {
         e.stopPropagation(); // 🛑 منع فتح الكارت
         const strId = String(id);
@@ -368,7 +368,7 @@
             div.innerHTML = res.data.map(item => `
                 <div class="card" id="row-${item.rowIdx}" style="padding:10px; margin-bottom:10px; cursor:default;">
                     <div><b>${item.name}</b> (${item.type})</div>
-                    <div style="font-size:0.8rem">${item.cat} | ${item.desc}</div>
+                    <div style="font-size:0.8rem">${item.desc}</div>
                     <div class="admin-actions">
                         <button class="btn-approve" onclick="approveItem(${item.rowIdx})">موافقة</button>
                         <button class="btn-reject" onclick="rejectItem(${item.rowIdx})">رفض</button>
@@ -399,7 +399,6 @@
             const img = (item.img && item.img.length>5 && !item.img.includes('facebook')) ? item.img : DEFAULT_IMG;
             
             let offerHTML = '';
-            // 🛑 منطق التاريخ المرن (يقبل / أو - ويقارن حتى نهاية اليوم)
             if(item.offer && isOfferValid(item.offer)) {
                 let txt = item.offer.replace(/\{.*?\}/, ''); 
                 offerHTML = `<div class="card-offer-visible">🔥 ${txt}</div>`;
@@ -428,17 +427,16 @@
         if (newSearch && chunk.length > 0) page++;
     }
 
-    // 💡 منطق التاريخ المرن (يقبل 20/12 أو 20-12)
     function isOfferValid(txt) {
         if(!txt) return false;
-        let match = txt.match(/\{\s*(\d{1,2})[\/\-](\d{1,2})\s*\}/);
+        let match = txt.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/); 
         if(!match) return true; 
         
         const d = parseInt(match[1]);
         const m = parseInt(match[2]) - 1;
         const year = new Date().getFullYear();
         
-        const exp = new Date(year, m, d, 23, 59, 59); // نهاية اليوم
+        const exp = new Date(year, m, d, 23, 59, 59);
         const now = new Date();
         
         return now <= exp;

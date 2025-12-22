@@ -7,100 +7,101 @@
     <meta name="theme-color" content="#27ae60">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
     <style>
-        /* --- التصميم الأصلي الخفيف --- */
+        /* --- V190: Stable, Fast, Correct Config --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 80px; user-select: none; color: #333; }
+        body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 80px; user-select: none; overflow-x: hidden; color: #333; }
         
-        /* شاشة التحميل */
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
-        .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* شريط الأخبار */
-        .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .news-bar { height: 30px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
+        .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
-        .ticker-lbl { padding: 0 10px; font-weight: bold; height: 100%; display: flex; align-items: center; z-index: 2; white-space: nowrap; }
-        .lbl-news { background: var(--red); color: white; }
+        .ticker-lbl { padding: 0 15px; font-weight: 800; display: flex; align-items: center; height: 100%; z-index: 2; font-size: 0.7rem; white-space: nowrap; }
+        .lbl-news { background: var(--red); color: white; } 
         .lbl-ads { background: var(--gold); color: black; }
-        .track { flex: 1; overflow: hidden; white-space: nowrap; }
-        .scrolling { display: inline-block; animation: scroll 40s linear infinite; padding-right: 100%; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .track { white-space: nowrap; flex: 1; overflow: hidden; }
+        .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer; }
+        .ticker-item { display: inline-block; margin-left: 40px; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* الهيدر */
-        header { margin-top: 60px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 15px 20px 40px; border-radius: 0 0 30px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .logo-area { display: flex; align-items: center; gap: 10px; }
+        header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 15px 20px 35px; border-radius: 0 0 30px 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .geo-logo { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; }
-        .app-title h1 { margin: 0; font-size: 1.5rem; font-family: 'Reem Kufi'; }
-        .header-icons { display: flex; gap: 15px; }
-        .header-icons i { font-size: 1.4rem; cursor: pointer; }
+        .app-title h1 { margin: 0; font-size: 1.8rem; font-family: 'Reem Kufi'; }
+        .header-icons { display: flex; gap: 12px; align-items: center; }
+        .icon-btn { font-size: 1.3rem; color: white; cursor: pointer; }
+        .shop-counter-box { background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.3); }
+        .shop-counter-num { font-size: 1rem; font-weight: 800; color: var(--gold); display: block; }
+        .shop-counter-lbl { font-size: 0.6rem; color: #fff; }
 
-        /* المحتوى */
         #mainView { padding: 0 15px; margin-top: -30px; position: relative; z-index: 10; }
-        .search-wrap { background: white; padding: 5px; border-radius: 50px; display: flex; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
-        .search-inp { flex: 1; border: none; padding: 12px 20px; font-family: 'Tajawal'; font-size: 1rem; outline: none; border-radius: 50px; }
-        .search-btn { padding: 0 20px; color: var(--primary); font-size: 1.2rem; }
+        .search-wrap { background: white; padding: 5px; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
+        .search-inp { flex: 1; border: none; padding: 12px 20px; outline: none; font-family: 'Tajawal'; font-size: 1rem; background: transparent; }
+        .search-btn { color: var(--primary); padding: 0 20px; cursor: pointer; font-size: 1.2rem; }
 
-        .quick-filters { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .q-chip { background: white; padding: 8px 15px; border-radius: 20px; font-size: 0.8rem; border: 1px solid #eee; white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        .q-chip.active { background: var(--dark); color: white; border-color: var(--dark); } .q-chip.active i { color: var(--gold); }
+        .quick-filters { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .q-chip { background: white; padding: 8px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; white-space: nowrap; color: #555; }
+        .q-chip.active { background: var(--dark); color: white; border-color: var(--dark); } 
+        .q-chip.active i { color: var(--gold); }
 
-        .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background: white; padding: 15px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.02); }
+        .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 10px; background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-        .cat-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: white; transition: 0.2s; }
-        .cat-name { font-size: 0.65rem; font-weight: bold; text-align: center; color: #555; }
+        .cat-icon { width: 45px; height: 45px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: white; transition: 0.2s; }
+        .cat-name { font-size: 0.65rem; font-weight: 600; color: #555; text-align: center; }
         .cat-item.active .cat-icon { transform: scale(1.1); border: 2px solid var(--gold); }
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.05); position: relative; cursor: pointer; border: 1px solid #f9f9f9; }
-        .card.featured { border: 2px solid var(--gold); background: #fffcf0; }
-        .card.news-card { grid-column: span 2; display: flex; align-items: center; padding: 10px; border-right: 4px solid var(--red); }
-        .card.news-card .c-img { width: 80px; height: 80px; margin: 0 0 0 10px; border-radius: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.04); border: 1px solid #f0f0f0; position: relative; cursor: pointer; transition: transform 0.1s; }
+        .card:active { transform: scale(0.98); }
+        .card * { pointer-events: none; } 
         
+        .card-fav-btn { position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5; color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; pointer-events: auto !important; }
+        .card-fav-btn.active { color: var(--red); }
+        .card-fav-btn i { pointer-events: none; }
+
+        .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
+        .card.news-card { grid-column: span 2; display: flex; padding: 10px; border-right: 4px solid var(--red); }
+        .card.news-card .c-img { width: 90px; height: 90px; border-radius: 10px; margin-left: 10px; }
         .c-img { width: 100%; height: 110px; object-fit: cover; background: #eee; display: block; }
         .c-body { padding: 10px; }
-        .c-title { margin: 0 0 5px; font-weight: 800; font-size: 0.9rem; color: #333; }
-        .c-sub { font-size: 0.7rem; color: #666; display: flex; align-items: center; gap: 4px; margin-bottom: 3px; }
-        .c-sub i { color: var(--primary); font-size: 0.8rem; }
-        .offer-tag { background: #fff0f0; color: var(--red); font-size: 0.65rem; font-weight: bold; padding: 4px; border-radius: 5px; display: inline-block; margin-top: 5px; border: 1px dashed var(--red); }
-
-        /* زر القلب - التصحيح */
-        .card-fav-btn { position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; background: rgba(255,255,255,0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5; color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card-fav-btn.active { color: var(--red); }
-        /* منع اختراق النقرة */
-        .card-fav-btn:active { transform: scale(0.9); }
-
-        /* شريط التنقل */
-        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 20px; display: flex; justify-content: space-around; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; }
-        .btm-item { text-align: center; font-size: 0.7rem; color: #ccc; cursor: pointer; }
+        .c-title { margin: 0 0 5px; font-size: 0.95rem; font-weight: 800; color: var(--text-bold); }
+        .c-sub { font-size: 0.7rem; color: #555; display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
+        .c-sub i { color: var(--primary); }
+        .card-offer-visible { background: #fff0f0; color: var(--red); font-size: 0.7rem; font-weight: bold; padding: 5px; border-radius: 5px; margin-top: 5px; display: inline-block; }
+        .badge-feat { position: absolute; top: 0; right: 0; background: var(--gold); color: black; padding: 3px 8px; font-size: 0.6rem; font-weight: bold; border-radius: 0 0 0 10px; z-index: 4; }
+        
+        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 20px 20px 0 0; }
+        .btm-item { text-align: center; color: #ccc; font-size: 0.7rem; cursor: pointer; min-width: 50px; }
         .btm-item.active { color: var(--primary); font-weight: bold; }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 3px; }
-        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; }
+        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; }
 
-        /* المودال */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-content { background: white; width: 90%; max-width: 400px; border-radius: 20px; overflow: hidden; animation: pop 0.3s; max-height: 90vh; overflow-y: auto; position: relative; }
-        .modal-close { position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; background: rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; z-index: 10; }
+        .modal-close { position: absolute; top: 15px; left: 15px; width: 30px; height: 30px; background: rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
         @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
+        
         .d-body { padding: 20px; }
-        .d-title { margin: 0 0 10px; font-weight: 800; color: var(--dark); }
+        .d-title { margin: 0 0 10px; font-weight: 800; color: var(--dark); font-size: 1.4rem; }
         .d-desc { background: #f9f9f9; padding: 15px; border-radius: 10px; color: #555; line-height: 1.6; margin: 15px 0; font-size: 0.9rem; }
         .action-btns { display: flex; gap: 10px; margin-top: 15px; }
-        .btn-act { flex: 1; padding: 12px; border-radius: 10px; text-align: center; color: white; font-weight: bold; text-decoration: none; }
+        .btn-act { flex: 1; padding: 12px; border-radius: 10px; text-align: center; color: white; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-call { background: #3498db; } .btn-wa { background: #25D366; }
 
         .form-input, .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; font-family: 'Tajawal'; background: #f9f9f9; }
-        .btn-submit { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-submit { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
         
         .admin-list .card { margin-bottom: 10px; cursor: default; }
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-approve { flex: 1; background: var(--primary); color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; }
-        .btn-reject { flex: 1; background: var(--red); color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; }
+        .btn-reject { flex: 1; background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 5px; cursor: pointer; }
 
         .float-ad { position: fixed; top: 160px; left: 0; background: white; padding: 8px 15px 8px 10px; border-radius: 0 20px 20px 0; border: 2px solid var(--gold); border-left: none; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); z-index: 2500; display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: bold; font-size: 0.8rem; transition: 0.3s; }
         .float-ad:active { transform: scale(0.95); }
@@ -108,14 +109,14 @@
 </head>
 <body>
 
-<div id="splashScreen">
+<div id="splashScreen" onclick="this.style.display='none'">
     <div class="rocket-icon"><i class="fas fa-rocket"></i></div>
     <div class="splash-text">Hona App</div>
 </div>
 
 <div class="ticker-container">
     <div class="news-bar" id="newsBar" style="display:none"><div class="ticker-lbl lbl-news">أخبار</div><div class="track" id="newsText"></div></div>
-    <div class="ads-bar" id="adsBar"><div class="ticker-lbl lbl-ads">عروض</div><div class="track" id="adsText"></div></div>
+    <div class="ads-bar" id="adsBar"><div class="ticker-lbl lbl-ads">🔥 عروض</div><div class="track" id="adsText"></div></div>
 </div>
 
 <div class="float-ad" id="floatAd" style="display:none" onclick="openAd()">
@@ -125,7 +126,7 @@
 <header>
     <div class="logo-area" onclick="triggerAdmin()">
         <div class="geo-logo"><i class="fas fa-city"></i></div>
-        <div class="app-title"><h1>Hona</h1><p>حدائق العاصمة</p></div>
+        <div class="app-title"><h1>Hona</h1><p>مجتمع حدائق العاصمة</p></div>
     </div>
     <div class="header-icons">
         <div class="shop-counter-box"><span class="shop-counter-num" id="shopCount">0</span><span class="shop-counter-lbl">خدمة</span></div>
@@ -268,15 +269,15 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // ⚠️ استبدل هذا الرابط برابط السكربت الجديد ⚠️
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbx-f0NE3BNSRHkDo2Q4BFGz_2AQ6a_mbFHNetfrJ4yffMRXb1612gqz35qVuIs-0NiZaw/exec';
+    // 🔴🔴🔴 تم دمج رابطك الجديد هنا 🔴🔴🔴
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzwujbcya9sVmMuaHAisxTdQE9YsTjiEXypULobaphfu_a4qy7e4lcvBhwUR-SB4tLOcA/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     
-    // إعدادات ثابتة
-    const FAV_KEY = 'hona_favs_v188_final';
+    // ✅ مفتاح تخزين ثابت للمفضلة (V190)
+    const FAV_KEY = 'hona_favs_v190';
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, favs = JSON.parse(localStorage.getItem(FAV_KEY)) || [], adminClicks = 0, floatAdID = null;
 
     const subCategories = {"مطاعم ومشروبات":["مشويات","وجبات سريعة","كشري","سوري","بيتزا","سمك","مخبز","كافيه"],"خدمات طبية":["صيدلية","معمل","عيادة","مستشفى"],"فنيين وحرف":["سباك","كهربائي","نجار","نقاش","تكييف","ألوميتال"],"ماركت وعطارة":["سوبر ماركت","خضار","جزارة","عطارة"],"صيانة أجهزة منزلية":["غسالات","ثلاجات","تكييفات"],"تعليم وحضانات":["حضانة","مدرسة","سنتر","مكتبة"],"أخرى":[]};
@@ -284,7 +285,7 @@
     function init() {
         Papa.parse(proxy, { download: true, header: false, skipEmptyLines: true, complete: (res) => {
             fullDB = res.data.slice(1).map((r, i) => ({
-                id: String(r[0] || i), // 🛑 ID is String
+                id: String(r[0] || i), // تحويل الـ ID لنص
                 name: r[1], cat: r[2], sub: r[3], area: r[4], desc: r[5],
                 ph: r[6], wa: r[7], img: r[8], loc: r[9], offer: r[10],
                 live: String(r[11]) === 'TRUE', feat: String(r[12]) === 'TRUE',
@@ -299,13 +300,14 @@
         }});
     }
 
-    // 🟢 Global Functions (Essential for Admin & Favs)
+    // 🟢 Global Functions
     window.toggleFav = function(e, id) {
-        e.stopPropagation(); // 🛑 Stop card from opening
+        e.stopPropagation(); // 🔴 منع فتح الكارت
         const strId = String(id);
         if(favs.includes(strId)) favs = favs.filter(x => x !== strId);
         else favs.push(strId);
         localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+        
         if(e.currentTarget) e.currentTarget.classList.toggle('active');
         if(curCat === 'fav') filter('fav', null);
     }
@@ -313,27 +315,33 @@
     window.approveItem = function(idx) {
         if(!confirm("موافقة؟")) return;
         const pass = document.getElementById('adminPass').value;
-        alert("⏳ جاري النقل...");
+        const btn = event.target;
+        btn.innerText = "⏳";
+        
         fetch(scriptURL, {
             method: 'POST',
             body: new URLSearchParams({ action:'approve', row:idx, pass:pass })
         }).then(r=>r.json()).then(res=>{
             if(res.result==='success') {
                 document.getElementById('row-'+idx).remove();
-                alert("تم! 🎉");
-            } else { alert("خطأ: "+res.error); }
+                alert("تم النقل! 🎉");
+            } else { alert("خطأ: "+res.error); btn.innerText="موافقة"; }
         });
     }
 
     window.rejectItem = function(idx) {
         if(!confirm("حذف؟")) return;
         const pass = document.getElementById('adminPass').value;
+        const btn = event.target;
+        btn.innerText = "⏳";
+        
         fetch(scriptURL, {
             method: 'POST',
             body: new URLSearchParams({ action:'reject', row:idx, pass:pass })
         }).then(r=>r.json()).then(res=>{
-            if(res.result==='success') document.getElementById('row-'+idx).remove();
-            else alert(res.error);
+            if(res.result==='success') {
+                document.getElementById('row-'+idx).remove();
+            } else { alert(res.error); btn.innerText="رفض"; }
         });
     }
 
@@ -341,16 +349,18 @@
         const pass = document.getElementById('adminPass').value;
         const div = document.getElementById('pendingList');
         div.innerHTML = 'جاري التحميل...';
+        
         fetch(scriptURL, {
             method: 'POST',
             body: new URLSearchParams({ action:'getPending', pass:pass })
         }).then(r=>r.json()).then(res=>{
             if(res.result==='error') { div.innerHTML = res.error; return; }
             if(res.data.length===0) { div.innerHTML = 'لا يوجد طلبات'; return; }
+            
             div.innerHTML = res.data.map(item => `
-                <div class="card" id="row-${item.rowIdx}" style="padding:10px; cursor:default;">
+                <div class="card" id="row-${item.rowIdx}" style="padding:10px; margin-bottom:10px; cursor:default;">
                     <div><b>${item.name}</b> (${item.type})</div>
-                    <div style="font-size:0.8rem">${item.desc}</div>
+                    <div style="font-size:0.8rem">${item.cat} | ${item.desc}</div>
                     <div class="admin-actions">
                         <button class="btn-approve" onclick="approveItem(${item.rowIdx})">موافقة</button>
                         <button class="btn-reject" onclick="rejectItem(${item.rowIdx})">رفض</button>
@@ -360,10 +370,8 @@
         });
     }
 
-    // 🟢 Grid Logic
     function renderGrid(newSearch) {
         const grid = document.getElementById('grid');
-        const loadBtn = document.getElementById('loadMore');
         if(newSearch) { grid.innerHTML = ''; page=1; }
         
         const start = (page-1)*limit;
@@ -372,7 +380,6 @@
         
         if(chunk.length === 0 && page === 1) {
             grid.innerHTML = '<div class="empty-state"><i class="fas fa-search" style="font-size:3rem; color:#eee;"></i><p>لا توجد نتائج</p></div>';
-            loadBtn.style.display = 'none';
             return;
         }
 
@@ -381,8 +388,8 @@
             const isFav = favs.includes(item.id) ? 'active' : '';
             const img = (item.img && item.img.length>5 && !item.img.includes('facebook')) ? item.img : DEFAULT_IMG;
             
+            // حساب العرض وتاريخه
             let offerHTML = '';
-            // 🛑 Fix Date Logic: Check if offer valid until End of Day
             if(item.offer && isOfferValid(item.offer)) {
                 let txt = item.offer.replace(/\{.*?\}/, ''); 
                 offerHTML = `<div class="card-offer-visible">🔥 ${txt}</div>`;
@@ -407,32 +414,27 @@
             grid.appendChild(card);
         });
         
-        if (end < filteredDB.length) {
-            loadBtn.style.display = 'block';
-            page++; 
-        } else {
-            loadBtn.style.display = 'none';
-        }
+        document.getElementById('loadMore').style.display = (end < filteredDB.length) ? 'block' : 'none';
     }
 
-    // 🟢 Helper Functions
+    // 💡 منطق التاريخ (ساري حتى آخر دقيقة في اليوم)
     function isOfferValid(txt) {
         if(!txt) return false;
-        let match = txt.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/); // Matches {20/12} or {20-12}
+        let match = txt.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
         if(!match) return true; 
         
         const d = parseInt(match[1]);
         const m = parseInt(match[2]) - 1;
         const year = new Date().getFullYear();
         
-        const exp = new Date(year, m, d, 23, 59, 59); // End of day
+        const exp = new Date(year, m, d, 23, 59, 59); // نهاية اليوم
         const now = new Date();
         
         return now <= exp;
     }
 
     function setupTickers() {
-        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0,5).map(x => `<span class="ticker-item">📰 ${x.name}</span>`).join('');
+        const news = fullDB.filter(x => x.cat === 'أخبار').map(x => `<span class="ticker-item">📰 ${x.name}</span>`).join('');
         if(news) {
             document.getElementById('newsBar').style.display = 'flex';
             document.getElementById('newsText').innerHTML = `<div class="scrolling">${news}</div>`;
@@ -446,9 +448,9 @@
         const ads = fullDB.filter(x => x.feat && x.offer && isOfferValid(x.offer));
         if(ads.length > 0) {
             const rand = ads[Math.floor(Math.random()*ads.length)];
-            floatAdID = rand.id;
             document.getElementById('floatTxt').innerText = rand.name;
             document.getElementById('floatAd').style.display = 'flex';
+            document.getElementById('floatAd').onclick = () => openD(rand.id);
         }
     }
     function openAd() { if(floatAdID) openD(floatAdID); }
@@ -497,7 +499,6 @@
         document.getElementById('detailsModal').style.display = 'flex';
     }
 
-    // Modal & Form Handling
     function openFormClean() { document.getElementById('formModal').style.display='flex'; }
     function closeModal(id) { document.getElementById(id).style.display='none'; }
     function triggerAdmin() { adminClicks++; if(adminClicks===5) { adminClicks=0; openModal('adminModal'); } }
@@ -538,8 +539,10 @@
         const subList = subCategories[val];
         const subSel = document.getElementById('subCatSelect');
         const subInp = document.getElementById('subCatInput');
+        
         if(subList && subList.length > 0) {
-            subSel.style.display = 'block'; subInp.style.display = 'none';
+            subSel.style.display = 'block';
+            subInp.style.display = 'none';
             subSel.innerHTML = subList.map(s => `<option value="${s}">${s}</option>`).join('');
         } else {
             subSel.style.display = 'none';

@@ -9,31 +9,29 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- V189 Restore: Original Design & Stability --- */
+        /* --- التصميم المتميز الأصلي --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 80px; user-select: none; overflow-x: hidden; color: #333; }
         
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* شريط الأخبار الأصلي */
-        .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.1); background: white; }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
         .ticker-lbl { padding: 0 15px; font-weight: 800; display: flex; align-items: center; height: 100%; z-index: 2; font-size: 0.7rem; white-space: nowrap; }
-        .lbl-news { background: var(--red); color: white; } 
-        .lbl-ads { background: var(--gold); color: black; }
-        .track { white-space: nowrap; flex: 1; overflow: hidden; }
+        .lbl-news { background: var(--red); color: white; } .lbl-ads { background: var(--gold); color: black; }
+        .track { flex: 1; overflow: hidden; white-space: nowrap; }
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer; }
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 15px 20px 35px; border-radius: 0 0 30px 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
+        header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 15px 20px 35px; border-radius: 0 0 30px 30px; box-shadow: 0 8px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .geo-logo { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; }
+        .geo-logo { width: 45px; height: 45px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.6rem; }
         .app-title h1 { margin: 0; font-size: 1.8rem; font-family: 'Reem Kufi'; }
         .header-icons { display: flex; gap: 12px; align-items: center; }
         .icon-btn { font-size: 1.3rem; color: white; cursor: pointer; }
@@ -57,11 +55,6 @@
         .cat-name { font-size: 0.65rem; font-weight: 600; color: #555; text-align: center; }
         .cat-item.active .cat-icon { transform: scale(1.1); border: 2px solid var(--gold); }
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
-
-        .sub-cat-nav { display: none; overflow-x: auto; gap: 12px; padding: 10px 5px 20px; margin-bottom: 5px; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-        .sub-cat-nav::-webkit-scrollbar { display: none; }
-        .sub-chip { background: white; border: 1px solid #f0f0f0; padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; color: #555; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.04); min-width: max-content; }
-        .sub-chip.active { background: linear-gradient(135deg, var(--primary), #2ecc71); color: white; border-color: transparent; box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3); transform: translateY(-3px); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.04); border: 1px solid #f0f0f0; position: relative; cursor: pointer; transition: transform 0.1s; }
@@ -114,7 +107,7 @@
 </head>
 <body>
 
-<div id="splashScreen" onclick="this.style.display='none'">
+<div id="splashScreen">
     <div class="rocket-icon"><i class="fas fa-rocket"></i></div>
     <div class="splash-text">Hona App</div>
 </div>
@@ -188,7 +181,7 @@
 </div>
 <div class="fab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
-<div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 الطوارئ</h3><ul style="list-style:none; padding:0; line-height:2.5;"><li>🚓 النجدة: <a href="tel:122">122</a></li><li>🚑 الإسعاف: <a href="tel:123">123</a></li><li>🚒 المطافئ: <a href="tel:180">180</a></li><li>⚡ الكهرباء: <a href="tel:121">121</a></li><li>🚰 المياه: <a href="tel:125">125</a></li><li>🔥 الغاز: <a href="tel:129">129</a></li></ul></div></div>
+<div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul style="list-style:none; padding:0; line-height:2.5;"><li>🚓 النجدة: <a href="tel:122">122</a></li><li>🚑 الإسعاف: <a href="tel:123">123</a></li><li>🚒 المطافئ: <a href="tel:180">180</a></li><li>⚡ الكهرباء: <a href="tel:121">121</a></li><li>🚰 المياه: <a href="tel:125">125</a></li><li>🔥 الغاز: <a href="tel:129">129</a></li></ul></div></div>
 
 <div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><h3>عن التطبيق</h3><p>دليلك الخدمي الأول في حدائق العاصمة.</p><p style="color:var(--primary);">نسألكم الدعاء ❤️</p></div></div>
 
@@ -222,9 +215,9 @@
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
                 <option value="أخرى">أخرى</option>
-                <option value="مصالح حكومية" style="color:red;">مصالح حكومية (أدمن)</option>
-                <option value="دور عبادة" style="color:red;">دور عبادة (أدمن)</option>
-                <option value="أخبار" style="color:red;">أخبار (أدمن)</option>
+                <option value="مصالح حكومية" style="color:red; font-weight:bold;">مصالح حكومية (أدمن)</option>
+                <option value="دور عبادة" style="color:red; font-weight:bold;">دور عبادة (أدمن)</option>
+                <option value="أخبار" style="color:red; font-weight:bold;">أخبار (أدمن)</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص..." style="display:none;">
@@ -275,16 +268,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
     // 🔴🔴🔴 ضع الرابط الجديد هنا 🔴🔴🔴
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyFZlmO7vAbLXIcW2fhUKYfOTQlkoyyCKcg60WID1NiVeN162hxifWUZvNN9Jc8nTbDwQ/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwPASddrIEGN1YpSYpHUyS4bkKWd2KJK3lLRkdYq0mUEjJ0yzrTMOjSq7UNg9FVtXyvrg/exec';
     
     // إعدادات الشيت القديم (بياناتك الأصلية)
     const sheet = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/gviz/tq?tqx=out:csv&sheet=Live_Data";
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     
-    // ✅ مفتاح تخزين للنسخة المستقرة
-    const FAV_KEY = 'hona_favs_v_restore';
-    const CACHE_KEY = 'hona_v_restore'; 
+    // ✅ مفتاح تخزين للنسخة المتميزة
+    const FAV_KEY = 'hona_favs_diamond';
+    const CACHE_KEY = 'hona_diamond'; 
 
     const subCategories = {"مطاعم ومشروبات":["مشويات","وجبات سريعة","كشري","سوري","بيتزا","سمك","مخبز","كافيه"],"خدمات طبية":["صيدلية","معمل","عيادة","مستشفى"],"فنيين وحرف":["سباك","كهربائي","نجار","نقاش","تكييف","ألوميتال"],"ماركت وعطارة":["سوبر ماركت","خضار","جزارة","عطارة"],"صيانة أجهزة منزلية":["غسالات","ثلاجات","تكييفات"],"تعليم وحضانات":["حضانة","مدرسة","سنتر","مكتبة"],"أخرى":[]};
 
@@ -368,7 +361,7 @@
             div.innerHTML = res.data.map(item => `
                 <div class="card" id="row-${item.rowIdx}" style="padding:10px; margin-bottom:10px; cursor:default;">
                     <div><b>${item.name}</b> (${item.type})</div>
-                    <div style="font-size:0.8rem">${item.desc}</div>
+                    <div style="font-size:0.8rem">${item.cat} | ${item.desc}</div>
                     <div class="admin-actions">
                         <button class="btn-approve" onclick="approveItem(${item.rowIdx})">موافقة</button>
                         <button class="btn-reject" onclick="rejectItem(${item.rowIdx})">رفض</button>
@@ -399,6 +392,7 @@
             const img = (item.img && item.img.length>5 && !item.img.includes('facebook')) ? item.img : DEFAULT_IMG;
             
             let offerHTML = '';
+            // 🛑 منطق التاريخ المرن (يقبل / أو - ويقارن حتى نهاية اليوم)
             if(item.offer && isOfferValid(item.offer)) {
                 let txt = item.offer.replace(/\{.*?\}/, ''); 
                 offerHTML = `<div class="card-offer-visible">🔥 ${txt}</div>`;
@@ -427,16 +421,17 @@
         if (newSearch && chunk.length > 0) page++;
     }
 
+    // 💡 منطق التاريخ المرن
     function isOfferValid(txt) {
         if(!txt) return false;
-        let match = txt.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/); 
+        let match = txt.match(/\{\s*(\d{1,2})[\/\-](\d{1,2})\s*\}/);
         if(!match) return true; 
         
         const d = parseInt(match[1]);
         const m = parseInt(match[2]) - 1;
         const year = new Date().getFullYear();
         
-        const exp = new Date(year, m, d, 23, 59, 59);
+        const exp = new Date(year, m, d, 23, 59, 59); // نهاية اليوم
         const now = new Date();
         
         return now <= exp;

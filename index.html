@@ -9,11 +9,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- V178 ORIGINAL ROYAL DESIGN --- */
+        /* --- V178 ULTIMATE: Full Features & Design --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
-        body.modal-open { overflow: hidden; } 
+        body.modal-open { overflow: hidden; } body.modal-open .fab { display: none !important; }
         
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
@@ -35,8 +35,8 @@
         .search-inp { flex: 1; border: none; padding: 12px 20px; outline: none; font-family: 'Tajawal'; font-size: 1rem; background: transparent; }
         .search-btn { color: var(--primary); padding: 0 20px; cursor: pointer; font-size: 1.2rem; }
         
-        .quick-filters { display: flex; gap: 10px; margin-bottom: 20px; padding: 0 2px; overflow-x: auto; scrollbar-width: none; }
-        .q-chip { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.03); border: 1px solid #eee; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; transition: 0.2s; color: #555; white-space: nowrap; }
+        .quick-filters { display: flex; gap: 10px; margin-bottom: 20px; padding: 0 2px; }
+        .q-chip { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.03); border: 1px solid #eee; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; transition: 0.2s; color: #555; }
         .q-chip.active { background: var(--dark); color: white; border-color: var(--dark); } .q-chip.active i { color: var(--gold); }
         
         .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 10px; background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
@@ -58,7 +58,7 @@
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
-        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; }
+        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
         
@@ -68,10 +68,17 @@
         
         .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 6px 8px; border-radius: 8px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 1px solid #ffe0e0; }
         
-        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
-        .card-fav-btn.active { color: var(--red); }
+        /* شارات الحالة */
+        .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.9); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; backdrop-filter: blur(2px); }
+        .badge-sold { position: absolute; top: 10px; right: 10px; background: var(--dark); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 4px 10px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
+        
+        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
+        .card-fav-btn.active { color: var(--red); }
+        .card-fav-btn.active i { color: var(--red); } /* تأكيد اللون */
+
+        .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
@@ -107,10 +114,19 @@
         .cat-capsule { display: inline-block; background: var(--dark); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
         .cat-capsule.sub { background: #bdc3c7; color: #333; margin-right: 5px; }
         .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #555; font-size: 0.95rem; }
-        .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
+        .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        
+        .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
+        .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
+        .offer-item { padding: 8px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); color: #c0392b; font-weight: 800; font-size: 1rem; }
+        
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
         .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; }
+        .btn-act:active { transform: scale(0.98); }
         .btn-call { background: #3498db; } .btn-wa { background: #25D366; }
+        .share-row { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+        .btn-small { background: #f0f0f0; color: #555; padding: 8px 15px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: none; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
@@ -119,8 +135,11 @@
         .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .btn-reject { background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         
-        /* تأثير التحميل في الأدمن */
-        .loading-state { text-align:center; padding:20px; color:#555; }
+        /* النجوم */
+        .rating-stars { display: flex; gap: 5px; justify-content: center; direction: ltr; }
+        .rating-stars i { font-size: 1.5rem; color: #ddd; cursor: pointer; }
+        .rating-stars i.gold { color: #f1c40f; }
+        .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
     </style>
 </head>
 <body>
@@ -145,14 +164,14 @@
     <div class="header-icons">
         <div class="shop-counter-box"><span class="shop-counter-num" id="shopCount">0</span><span class="shop-counter-lbl">خدمة</span></div>
         <i class="fas fa-sync-alt icon-btn" onclick="forceUpdate()" title="تحديث"></i>
-        <i class="fas fa-info-circle icon-btn" onclick="openModal('aboutModal')"></i>
-        <i class="fas fa-ambulance icon-btn" onclick="openModal('emergencyModal')" style="color:#ff6b6b"></i>
+        <i class="fas fa-info-circle icon-btn" onclick="openAbout(event)"></i>
+        <i class="fas fa-ambulance icon-btn" onclick="openEmergency(event)" style="color:#ff6b6b"></i>
     </div>
 </header>
 
 <div id="mainView">
     <div class="search-wrap">
-        <input type="text" id="search" class="search-inp" placeholder="ابحث عن..." oninput="doSearch(this.value)">
+        <input type="text" id="search" class="search-inp" placeholder="ابحث عن (مطعم، سباك، دكتور)..." oninput="doSearch(this.value)">
         <i class="fas fa-search search-btn" onclick="doSearch(document.getElementById('search').value)"></i>
     </div>
 
@@ -167,16 +186,16 @@
         <div class="cat-item" onclick="filter('مصالح حكومية', this)"><div class="cat-icon bg-gov"><i class="fas fa-landmark"></i></div><div class="cat-name">مصالح<br>حكومية</div></div>
         <div class="cat-item" onclick="filter('دور عبادة', this)"><div class="cat-icon bg-worship"><i class="fas fa-mosque"></i></div><div class="cat-name">دور<br>عبادة</div></div>
         <div class="cat-item" onclick="filter('تعليم وحضانات', this)"><div class="cat-icon bg-school"><i class="fas fa-graduation-cap"></i></div><div class="cat-name">تعليم</div></div>
-        <div class="cat-item" onclick="filter('مطاعم ومشروبات', this)"><div class="cat-icon bg-food"><i class="fas fa-utensils"></i></div><div class="cat-name">مطاعم</div></div>
-        <div class="cat-item" onclick="filter('ماركت وعطارة', this)"><div class="cat-icon bg-market"><i class="fas fa-shopping-basket"></i></div><div class="cat-name">ماركت</div></div>
-        <div class="cat-item" onclick="filter('صيانة أجهزة منزلية', this)"><div class="cat-icon bg-home"><i class="fas fa-plug"></i></div><div class="cat-name">صيانة</div></div>
-        <div class="cat-item" onclick="filter('فنيين وحرف', this)"><div class="cat-icon bg-techs"><i class="fas fa-hammer"></i></div><div class="cat-name">حرف</div></div>
-        <div class="cat-item" onclick="filter('خدمات طبية', this)"><div class="cat-icon bg-med"><i class="fas fa-user-md"></i></div><div class="cat-name">طبية</div></div>
+        <div class="cat-item" onclick="filter('مطاعم ومشروبات', this)"><div class="cat-icon bg-food"><i class="fas fa-utensils"></i></div><div class="cat-name">مطاعم<br>ومشروبات</div></div>
+        <div class="cat-item" onclick="filter('ماركت وعطارة', this)"><div class="cat-icon bg-market"><i class="fas fa-shopping-basket"></i></div><div class="cat-name">ماركت<br>وعطارة</div></div>
+        <div class="cat-item" onclick="filter('صيانة أجهزة منزلية', this)"><div class="cat-icon bg-home"><i class="fas fa-plug"></i></div><div class="cat-name">صيانة<br>أجهزة</div></div>
+        <div class="cat-item" onclick="filter('فنيين وحرف', this)"><div class="cat-icon bg-techs"><i class="fas fa-hammer"></i></div><div class="cat-name">فنيين<br>وحرف</div></div>
+        <div class="cat-item" onclick="filter('خدمات طبية', this)"><div class="cat-icon bg-med"><i class="fas fa-user-md"></i></div><div class="cat-name">خدمات<br>طبية</div></div>
         <div class="cat-item" onclick="filter('مواصلات', this)"><div class="cat-icon bg-transport"><i class="fas fa-bus"></i></div><div class="cat-name">مواصلات</div></div>
-        <div class="cat-item" onclick="filter('تكنولوجيا وإلكترونيات', this)"><div class="cat-icon bg-tech"><i class="fas fa-mobile-alt"></i></div><div class="cat-name">تكنولوجيا</div></div>
-        <div class="cat-item" onclick="filter('سيارات ودراجات', this)"><div class="cat-icon bg-auto"><i class="fas fa-car"></i></div><div class="cat-name">سيارات</div></div>
-        <div class="cat-item" onclick="filter('ملابس وأحذية', this)"><div class="cat-icon bg-fashion"><i class="fas fa-tshirt"></i></div><div class="cat-name">ملابس</div></div>
-        <div class="cat-item" onclick="filter('منظفات وتجميل', this)"><div class="cat-icon bg-clean"><i class="fas fa-spray-can"></i></div><div class="cat-name">تجميل</div></div>
+        <div class="cat-item" onclick="filter('تكنولوجيا وإلكترونيات', this)"><div class="cat-icon bg-tech"><i class="fas fa-mobile-alt"></i></div><div class="cat-name">تكنولوجيا<br>إلكترونيات</div></div>
+        <div class="cat-item" onclick="filter('سيارات ودراجات', this)"><div class="cat-icon bg-auto"><i class="fas fa-car"></i></div><div class="cat-name">سيارات<br>دراجات</div></div>
+        <div class="cat-item" onclick="filter('ملابس وأحذية', this)"><div class="cat-icon bg-fashion"><i class="fas fa-tshirt"></i></div><div class="cat-name">ملابس<br>أحذية</div></div>
+        <div class="cat-item" onclick="filter('منظفات وتجميل', this)"><div class="cat-icon bg-clean"><i class="fas fa-spray-can"></i></div><div class="cat-name">منظفات<br>وتجميل</div></div>
         <div class="cat-item" onclick="filter('ديكورات', this)"><div class="cat-icon bg-decor"><i class="fas fa-paint-roller"></i></div><div class="cat-name">ديكورات</div></div>
         <div class="cat-item" onclick="filter('رياضة', this)"><div class="cat-icon bg-sport"><i class="fas fa-dumbbell"></i></div><div class="cat-name">رياضة</div></div>
         <div class="cat-item" onclick="filter('أخرى', this)"><div class="cat-icon bg-other"><i class="fas fa-ellipsis-h"></i></div><div class="cat-name">أخرى</div></div>
@@ -199,8 +218,10 @@
 </div>
 <div class="fab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
-<div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 الطوارئ</h3><ul style="list-style:none; padding:0; line-height:2.5;"><li>🚓 النجدة: <a href="tel:122">122</a></li><li>🚑 الإسعاف: <a href="tel:123">123</a></li><li>🚒 المطافئ: <a href="tel:180">180</a></li><li>⚡ الكهرباء: <a href="tel:121">121</a></li><li>🚰 المياه: <a href="tel:125">125</a></li><li>🔥 الغاز: <a href="tel:129">129</a></li></ul></div></div>
-<div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><h3>عن التطبيق</h3><p>دليلك الخدمي الأول في حدائق العاصمة.</p><p style="color:var(--primary);">نسألكم الدعاء ❤️</p></div></div>
+<div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul style="list-style:none; padding:0; line-height:2.5;"><li>🚓 النجدة: <a href="tel:122">122</a></li><li>🚑 الإسعاف: <a href="tel:123">123</a></li><li>🚒 المطافئ: <a href="tel:180">180</a></li><li>⚡ الكهرباء: <a href="tel:121">121</a></li><li>🚰 المياه: <a href="tel:125">125</a></li><li>🔥 الغاز: <a href="tel:129">129</a></li></ul></div></div>
+<div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><h3>عن التطبيق</h3><p>دليلك الخدمي الأول في حدائق العاصمة.</p><p style="color:var(--primary);">نسألكم الدعاء ❤️</p><button class="btn-submit" onclick="openAppRate()" style="margin-top:10px;background:var(--gold);color:#000;">قيم التطبيق ⭐</button></div></div>
+<div id="rateAppModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('rateAppModal')">✕</div><h3 style="color:var(--primary)">قيم تجربتك</h3><div class="rating-stars" id="appStars"><i class="fas fa-star" onclick="setAppRate(1)"></i><i class="fas fa-star" onclick="setAppRate(2)"></i><i class="fas fa-star" onclick="setAppRate(3)"></i><i class="fas fa-star" onclick="setAppRate(4)"></i><i class="fas fa-star" onclick="setAppRate(5)"></i></div><button class="btn-submit" onclick="sendAppRate()" style="margin-top:20px;">إرسال</button></div></div>
+<div id="rateShopModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('rateShopModal')">✕</div><h3>تقييم الخدمة</h3><p id="rateShopName"></p><div class="rating-stars" id="shopStars"><i class="fas fa-star" onclick="setShopRate(1)"></i><i class="fas fa-star" onclick="setShopRate(2)"></i><i class="fas fa-star" onclick="setShopRate(3)"></i><i class="fas fa-star" onclick="setShopRate(4)"></i><i class="fas fa-star" onclick="setShopRate(5)"></i></div><button class="btn-submit" onclick="sendShopRate()" style="margin-top:20px;">إرسال</button></div></div>
 
 <div id="formModal" class="modal"><div class="modal-content" style="padding:20px;">
     <div class="modal-close" onclick="closeModal('formModal')">✕</div>
@@ -238,6 +259,10 @@
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص..." style="display:none;">
+            <div id="workHoursDiv" style="display:flex; gap:10px; margin-bottom:10px;">
+                <div style="flex:1"><label style="font-size:0.7rem;">مفتوح من</label><input type="time" id="openTime" class="form-input"></div>
+                <div style="flex:1"><label style="font-size:0.7rem;">إلى</label><input type="time" id="closeTime" class="form-input"></div>
+            </div>
         </div>
 
         <div id="usedDiv" style="display:none;">
@@ -265,11 +290,20 @@
         <div id="imgSlider" class="img-slider"></div>
         <div class="d-body">
             <h2 id="dName" class="d-title"></h2>
-            <div><span class="cat-capsule" id="dCat"></span></div>
-            <div id="dArea" style="color:#777; margin:5px 0;"></div>
-            <div id="dOfferBox" class="card-offer-visible" style="display:none;"></div>
+            <div><span class="cat-capsule" id="dCatMain"></span><span class="cat-capsule sub" id="dCatSub" style="display:none"></span></div>
+            <div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div>
+            <div id="dRating" style="margin-bottom:10px;"></div>
+            <div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div>
             <div id="dDesc" class="d-desc"></div>
+            
+            <div class="share-row">
+                <button class="btn-small" onclick="shareShopViaWhatsapp()"><i class="fab fa-whatsapp"></i> مشاركة</button>
+                <button class="btn-small" onclick="shareShop()"><i class="fas fa-copy"></i> نسخ</button>
+                <button class="btn-small" onclick="openShopRate()"><i class="fas fa-star" style="color:var(--gold)"></i> تقييم</button>
+            </div>
+
             <div class="action-btns" id="actionBtns"></div>
+            <a id="dLoc" href="#" target="_blank" class="btn-submit" style="text-align:center; background:#f39c12; margin-top:10px; display:block;">الموقع</a>
         </div>
     </div>
 </div>
@@ -286,119 +320,91 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 ضع الرابط الجديد هنا 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الجديد 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbysVrdnoo4HhqfrJyquwc0kb2H-kHBbVxuB-Ji8TGG5z-fpC5wrKmdAks9fXLPav6D58A/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     
-    // ✅ مفتاح تخزين للنسخة V178
-    const FAV_KEY = 'hona_favs_v178_royal';
+    const FAV_KEY = 'hona_favs_v178_ultimate';
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, favs = JSON.parse(localStorage.getItem(FAV_KEY)) || [], adminClicks = 0, floatAdID = null;
+    let currentShopData = {}, appRating = 0, shopRating = 0;
 
     const subCategories = {"مطاعم ومشروبات":["مشويات","وجبات سريعة","كشري","سوري","بيتزا","سمك","مخبز","كافيه"],"خدمات طبية":["صيدلية","معمل","عيادة","مستشفى"],"فنيين وحرف":["سباك","كهربائي","نجار","نقاش","تكييف","ألوميتال"],"ماركت وعطارة":["سوبر ماركت","خضار","جزارة","عطارة"],"صيانة أجهزة منزلية":["غسالات","ثلاجات","تكييفات"],"تعليم وحضانات":["حضانة","مدرسة","سنتر","مكتبة"],"أخرى":[]};
 
     function init() {
         setTimeout(removeSplash, 1000);
         Papa.parse(proxy, { download: true, header: false, skipEmptyLines: true, complete: (res) => {
-            fullDB = res.data.slice(1).map((r, i) => ({
-                id: String(r[0] || i), 
-                name: r[1], cat: r[2], sub: r[3], area: r[4], desc: r[5],
-                ph: r[6], wa: r[7], img: r[8], loc: r[9], offer: r[10],
-                live: String(r[11]) === 'TRUE', feat: String(r[12]) === 'TRUE',
-                date: r[13], src: r[14], rating: r[16]
-            })).reverse();
+            fullDB = res.data.slice(1).map((r, i) => {
+                let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
+                const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
+                if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
+                let activeRaw = String(r[11]).toUpperCase().includes('TRUE');
+                if(activeRaw && hoursStr) activeRaw = checkIsOpen(hoursStr);
+                
+                return {
+                    id: String(r[0] || i), name: r[1], cat: r[2], sub: r[3], area: r[4], 
+                    desc: cleanDesc, ph: r[6], wa: r[7], imgRaw: r[8], loc: r[9], offer: r[10],
+                    live: activeRaw, feat: String(r[12]).toUpperCase().includes('TRUE'),
+                    date: r[13], newsSrc: r[14], rating: r[16]
+                };
+            }).reverse();
             
-            setupTickers();
-            setupFloatAd();
-            renderGrid(true);
+            const uniqueMap = new Map(); fullDB.forEach(i => { if(!uniqueMap.has(i.name)) uniqueMap.set(i.name, i); });
+            fullDB = Array.from(uniqueMap.values());
+            
+            setupTickers(); setupFloatAd(); renderGrid(true);
             document.getElementById('shopCount').innerText = fullDB.filter(x=>x.cat!=='أخبار').length;
             removeSplash();
         }});
     }
 
-    // 🟢 دوال لوحة التحكم (مع الإصلاح والتحميل)
+    // 🟢 دوال الأدمن (المصححة)
     window.loadPending = function() {
         const pass = document.getElementById('adminPass').value;
         const btn = document.querySelector('#adminContent .btn-submit');
         const list = document.getElementById('pendingList');
-        
         if(!pass) { alert("أدخل كلمة المرور"); return; }
         if(btn) btn.innerText = "جاري التحميل...";
-        list.innerHTML = '<div class="loading-state"><i class="fas fa-spinner fa-spin"></i> جاري جلب البيانات...</div>';
+        list.innerHTML = '<div style="text-align:center; padding:20px; color:#555;"><i class="fas fa-spinner fa-spin"></i> جاري الاتصال...</div>';
         
-        const params = new URLSearchParams();
-        params.append('action', 'getPending');
-        params.append('pass', pass);
-
-        fetch(scriptURL, { method: 'POST', body: params })
+        fetch(scriptURL, { method: 'POST', body: new URLSearchParams({ action: 'getPending', pass: pass }) })
         .then(r => r.json())
         .then(res => {
             if(btn) btn.innerText = "دخول";
-            if(res.result === 'error') {
-                list.innerHTML = `<p style="color:red; text-align:center;">❌ ${res.error}</p>`;
-            } else {
-                if(res.data.length === 0) {
-                    list.innerHTML = '<p style="text-align:center; padding:20px;">لا توجد طلبات جديدة ✅</p>';
-                } else {
-                    let html = '';
-                    res.data.forEach(item => {
-                        html += `
-                        <div class="card" id="row-${item.row}" style="margin-bottom:10px; padding:10px; border-right:4px solid var(--gold);">
-                            <div class="c-title">${item.name} <small style="font-weight:normal; font-size:0.7rem;">(${item.type})</small></div>
-                            <div class="c-sub">${item.cat}</div>
-                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item.desc}</div>
-                            <div class="admin-actions">
-                                <button class="btn-approve" onclick="doAction('approve', ${item.row}, this)">✅ موافقة</button>
-                                <button class="btn-reject" onclick="doAction('reject', ${item.row}, this)">❌ رفض</button>
-                            </div>
-                        </div>`;
-                    });
-                    list.innerHTML = html;
-                }
+            if(res.result === 'error') { list.innerHTML = `<p style="color:red;text-align:center;">${res.error}</p>`; }
+            else if(res.data.length === 0) { list.innerHTML = '<p style="text-align:center;">لا توجد طلبات</p>'; }
+            else {
+                list.innerHTML = res.data.map(item => `
+                    <div class="card" id="row-${item.row}" style="padding:10px; margin-bottom:10px;">
+                        <div><b>${item.name}</b> (${item.type})</div>
+                        <div style="font-size:0.8rem;color:#666;">${item.cat} | ${item.desc}</div>
+                        <div class="admin-actions">
+                            <button class="btn-approve" onclick="doAction('approve', ${item.row}, this)">✅</button>
+                            <button class="btn-reject" onclick="doAction('reject', ${item.row}, this)">❌</button>
+                        </div>
+                    </div>`).join('');
             }
-        })
-        .catch(err => {
-            if(btn) btn.innerText = "دخول";
-            list.innerHTML = '<p style="color:red; text-align:center;">خطأ في الاتصال بالسيرفر</p>';
-        });
+        }).catch(err => { if(btn) btn.innerText = "دخول"; list.innerHTML = '<p>خطأ اتصال</p>'; });
     }
 
-    window.doAction = function(actionType, rowIdx, btnElem) {
-        if(!confirm(actionType === 'approve' ? "تأكيد الموافقة؟" : "تأكيد الحذف؟")) return;
+    window.doAction = function(act, row, btn) {
+        if(!confirm(act==='approve'?"موافقة؟":"حذف؟")) return;
         const pass = document.getElementById('adminPass').value;
-        const originalText = btnElem.innerText;
-        btnElem.innerText = "⏳..."; 
-        btnElem.disabled = true;
-        const cardRow = document.getElementById(`row-${rowIdx}`);
-        if(cardRow) cardRow.style.opacity = '0.5';
-
-        const params = new URLSearchParams();
-        params.append('action', actionType);
-        params.append('row', rowIdx);
-        params.append('pass', pass);
+        const txt = btn.innerText; btn.innerText = "⏳"; btn.disabled = true;
+        const rowDiv = document.getElementById(`row-${row}`);
+        if(rowDiv) rowDiv.style.opacity = '0.5';
         
-        fetch(scriptURL, { method: 'POST', body: params })
+        fetch(scriptURL, { method: 'POST', body: new URLSearchParams({ action: act, row: row, pass: pass }) })
         .then(r => r.json())
         .then(res => {
-            if(res.result === 'success') {
-                if(cardRow) { cardRow.style.display = 'none'; cardRow.remove(); }
-            } else {
-                alert("خطأ: " + res.error);
-                btnElem.innerText = originalText;
-                btnElem.disabled = false;
-                if(cardRow) cardRow.style.opacity = '1';
-            }
-        })
-        .catch(err => {
-            alert("حدث خطأ في الاتصال");
-            btnElem.innerText = originalText;
-            btnElem.disabled = false;
-            if(cardRow) cardRow.style.opacity = '1';
-        });
+            if(res.result === 'success') { if(rowDiv) rowDiv.remove(); }
+            else { alert(res.error); btn.innerText = txt; btn.disabled = false; if(rowDiv) rowDiv.style.opacity='1'; }
+        }).catch(() => { alert("Error"); btn.innerText = txt; btn.disabled = false; });
     }
 
+    // 🟢 باقي الدوال (المميزات الكاملة)
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity='0'; setTimeout(()=>s.style.display='none',500); } }
     function openFormClean() { document.getElementById('formModal').style.display='flex'; }
     function closeModal(id) { document.getElementById(id).style.display='none'; }
@@ -406,48 +412,43 @@
     function triggerAdmin() { adminClicks++; if(adminClicks===5) { adminClicks=0; openModal('adminModal'); } }
     function forceUpdate() { localStorage.removeItem(FAV_KEY); window.location.reload(); }
     function resetApp() { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function checkIsOpen(timeStr) { const now = new Date(); const currentMins = now.getHours() * 60 + now.getMinutes(); let parts = timeStr.split('-'); if(parts.length !== 2) return true; let start = parseTime(parts[0]); let end = parseTime(parts[1]); if(start === -1 || end === -1) return true; if (end < start) return (currentMins >= start || currentMins <= end); return (currentMins >= start && currentMins <= end); }
+    function parseTime(t) { let p = t.trim().split(':'); if(p.length < 2) return -1; return parseInt(p[0]) * 60 + parseInt(p[1]); }
+    function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
+    function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
+    function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم النسخ!")); }
+    function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
+    function openAppRate() { openModal('rateAppModal'); }
+    function setAppRate(n) { appRating = n; updateStars('appStars', n); }
+    function sendAppRate() { if(appRating===0) return alert("اختر نجوماً"); submitReview("تقييم التطبيق", "Hona App", appRating); }
+    function openShopRate() { document.getElementById('rateShopName').innerText = currentShopData.name; openModal('rateShopModal'); }
+    function setShopRate(n) { shopRating = n; updateStars('shopStars', n); }
+    function sendShopRate() { if(shopRating===0) return alert("اختر نجوماً"); submitReview("تقييم محل", currentShopData.name, shopRating); }
+    function updateStars(id, n) { document.querySelectorAll(`#${id} i`).forEach((s, i) => s.classList.toggle('gold', i < n)); }
+    function submitReview(type, name, rate) { const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); fetch(scriptURL, { method: 'POST', body: params }).then(()=>{ alert("شكراً!"); closeModal('rateAppModal'); closeModal('rateShopModal'); }); }
 
     function sendData(e) {
         e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "جاري الإرسال...";
-        btn.disabled = true;
-        
+        const btn = document.getElementById('submitBtn'); btn.innerText = "جاري..."; btn.disabled = true;
         const form = document.getElementById('reqForm');
         const formData = new FormData(form);
-        const data = {};
-        formData.forEach((v,k) => data[k] = v);
+        const data = {}; formData.forEach((v,k) => data[k] = v);
         
-        if(data.Offer && document.getElementById('offerExpiry').value) {
-            data.Offer += ` {${document.getElementById('offerExpiry').value}}`;
-        }
+        let hoursTag = ""; if((data.Type==='نشاط' || data.Type==='إعلان') && document.getElementById('openTime').value) { hoursTag = ` | ⏰ ${document.getElementById('openTime').value} - ${document.getElementById('closeTime').value}`; }
+        if(data.Offer && document.getElementById('offerExpiry').value) data.Offer += ` {${document.getElementById('offerExpiry').value}}`;
         let finalSub = data.SubCategorySelect || data.SubCategoryInput || "";
         if (document.getElementById('usedDiv').style.display !== 'none') { data.Category = "بيع سلعة / مستعمل"; finalSub = data.UsedCategory; }
 
         const params = new URLSearchParams();
-        params.append("Date", "New");
-        params.append("Type", data.Type);
-        params.append("Name", data.Name);
-        params.append("Category", data.Category);
-        params.append("SubCategory", finalSub);
-        params.append("Area", data.Area);
-        params.append("Description", data.Description);
-        params.append("Contact", data.Contact);
-        params.append("Whatsapp", data.Whatsapp);
-        params.append("Image", data.Image);
-        params.append("Location", data.Location);
-        params.append("Offer", data.Offer || "");
+        params.append("Date", "New"); params.append("Type", data.Type); params.append("Name", data.Name);
+        params.append("Category", data.Category); params.append("SubCategory", finalSub);
+        params.append("Area", data.Area); params.append("Description", data.Description + hoursTag);
+        params.append("Contact", data.Contact); params.append("Whatsapp", data.Whatsapp);
+        params.append("Image", data.Image); params.append("Location", data.Location); params.append("Offer", data.Offer || "");
         
-        fetch(scriptURL, { method:'POST', body:params })
-        .then(r => r.json())
-        .then(res => {
-            alert("تم الإرسال بنجاح!");
-            closeModal('formModal');
-            btn.innerText = "إرسال 🚀";
-            btn.disabled = false;
-            form.reset();
-        })
-        .catch(err => { alert("تم الإرسال!"); closeModal('formModal'); btn.innerText = "إرسال 🚀"; btn.disabled = false; });
+        fetch(scriptURL, { method:'POST', body:params }).then(r => r.json()).then(res => {
+            alert("تم الإرسال!"); closeModal('formModal'); btn.innerText = "إرسال 🚀"; btn.disabled = false; form.reset();
+        }).catch(err => { alert("تم الإرسال!"); closeModal('formModal'); btn.innerText = "إرسال 🚀"; btn.disabled = false; });
     }
 
     function renderGrid(newSearch) {
@@ -455,26 +456,22 @@
         const loadBtn = document.getElementById('loadMore');
         if(newSearch) { grid.innerHTML = ''; page=1; }
         
-        const start = (page-1)*limit;
-        const end = page*limit;
+        const start = (page-1)*limit; const end = page*limit;
         const chunk = filteredDB.slice(start, end);
         
-        if(chunk.length === 0 && page === 1) {
-            grid.innerHTML = '<div style="text-align:center; padding:40px; color:#999; grid-column:span 2;"><i class="fas fa-search" style="font-size:3rem; margin-bottom:10px;"></i><br>لا توجد نتائج</div>';
-            loadBtn.style.display = 'none';
-            return;
-        }
+        if(chunk.length === 0 && page === 1) { grid.innerHTML = '<div style="text-align:center; padding:40px; color:#999; grid-column:span 2;"><i class="fas fa-search" style="font-size:3rem; margin-bottom:10px;"></i><br>لا توجد نتائج</div>'; loadBtn.style.display = 'none'; return; }
 
         chunk.forEach(item => {
             const isNews = item.cat === 'أخبار';
             const isFav = favs.includes(item.id) ? 'active' : '';
-            const img = (item.img && item.img.length>5) ? item.img : DEFAULT_IMG;
+            const imgs = (item.imgRaw && item.imgRaw.length>5) ? item.imgRaw.split(',') : [DEFAULT_IMG];
             
             let offerHTML = '';
             if(item.offer && isOfferValid(item.offer)) {
                 let txt = item.offer.replace(/\{.*?\}/, ''); 
                 offerHTML = `<div class="card-offer-visible">🔥 ${txt}</div>`;
             }
+            let liveBadge = ''; if (item.cat === 'بيع سلعة / مستعمل' && !item.live) { liveBadge = `<div class="badge-sold">❌ بيع</div>`; } else if (item.live) { liveBadge = `<div class="badge-live">متاح</div>`; }
 
             const card = document.createElement('div');
             card.className = `card ${item.feat?'featured':''} ${isNews?'news-card':''}`;
@@ -482,19 +479,18 @@
             
             card.innerHTML = `
                 <div class="card-fav-btn ${isFav}" onclick="toggleFav(event, '${item.id}')"><i class="fas fa-heart"></i></div>
-                ${item.feat ? '<div class="badge-feat">مميز</div>' : ''}
-                <img src="${img}" class="c-img" loading="lazy">
+                ${!isNews?liveBadge:''} ${item.feat ? '<div class="badge-feat">مميز</div>' : ''} ${isNews ? '<div class="badge-news">خبر</div>' : ''}
+                <img src="${imgs[0]}" class="c-img" loading="lazy">
                 <div class="c-body">
                     <div class="c-title">${item.name}</div>
-                    ${!isNews ? `<div class="c-sub"><i class="fas fa-tag"></i> ${item.cat}</div>` : ''}
-                    ${!isNews ? `<div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${item.area||''}</div>` : ''}
+                    ${!isNews ? `<div class="c-sub"><i class="fas fa-tag"></i> ${item.sub || item.cat}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${item.area||''}</div>` : ''}
                     ${offerHTML}
+                    ${item.cat !== 'أخبار' ? getStarsHTML(item.rating) : ''}
                     ${item.date ? `<div style="font-size:0.6rem; color:#999; margin-top:5px; border-top:1px dashed #eee; padding-top:5px;">${item.date}</div>` : ''}
                 </div>
             `;
             grid.appendChild(card);
         });
-        
         loadBtn.style.display = (end < filteredDB.length) ? 'block' : 'none';
         if (newSearch && chunk.length > 0) page++;
     }
@@ -503,19 +499,27 @@
     function isOfferValid(txt) { if(!txt) return false; let match = txt.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/); if(!match) return true; const d = parseInt(match[1]), m = parseInt(match[2]) - 1, year = new Date().getFullYear(); return new Date() <= new Date(year, m, d, 23, 59, 59); }
     function renderMore() { renderGrid(false); }
     function checkSub(val) { const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInp = document.getElementById('subCatInput'); if(subList && subList.length > 0) { subSel.style.display = 'block'; subInp.style.display = 'none'; subSel.innerHTML = subList.map(s => `<option value="${s}">${s}</option>`).join(''); } else { subSel.style.display = 'none'; subInp.style.display = (val==='أخرى') ? 'block' : 'none'; } }
-    function toggleFields(val) { const cat = document.getElementById('catDiv'); const used = document.getElementById('usedDiv'); const offer = document.getElementById('offerSection'); cat.style.display = (val === 'نشاط' || val === 'إعلان') ? 'block' : 'none'; used.style.display = (val === 'بيع سلعة / مستعمل') ? 'block' : 'none'; offer.style.display = (val === 'إعلان') ? 'flex' : 'none'; 
-        // Admin Options Toggle
-        const isAdmin = val === 'خبر'; // Logic placeholder
-        document.getElementById('opt_gov').style.display = 'none';
-        document.getElementById('opt_worship').style.display = 'none'; 
-        document.getElementById('opt_news').style.display = 'none';
+    function toggleFields(val) { const cat = document.getElementById('catDiv'); const used = document.getElementById('usedDiv'); const offer = document.getElementById('offerSection'); cat.style.display = (val === 'نشاط' || val === 'إعلان') ? 'block' : 'none'; used.style.display = (val === 'بيع سلعة / مستعمل') ? 'block' : 'none'; offer.style.display = (val === 'إعلان') ? 'flex' : 'none'; document.getElementById('workHoursDiv').style.display = (val === 'نشاط' || val === 'إعلان') ? 'flex' : 'none';
+        document.getElementById('opt_gov').style.display = 'none'; document.getElementById('opt_worship').style.display = 'none'; document.getElementById('opt_news').style.display = 'none';
     }
-    function filter(type, el) { curCat = type; document.querySelectorAll('.cat-item, .btm-item, .q-chip').forEach(x => x.classList.remove('active')); if(el) el.classList.add('active'); if(type === 'all') filteredDB = fullDB.filter(x => x.cat !== 'أخبار'); else if(type === 'fav') filteredDB = fullDB.filter(x => favs.includes(x.id)); else if(type === 'offers') filteredDB = fullDB.filter(x => x.offer && isOfferValid(x.offer)); else if(type === 'featured') filteredDB = fullDB.filter(x => x.feat); else if(type === 'latest') filteredDB = [...fullDB.filter(x=>x.cat!=='أخبار')].sort((a,b)=>b.id-a.id); else if(type === 'souq') filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); else filteredDB = fullDB.filter(x => x.cat === type); renderGrid(true); }
-    function doSearch(val) { if(!val) { filter('all', document.querySelector('.cat-item')); return; } filteredDB = fullDB.filter(x => x.name.includes(val) || x.desc.includes(val)); renderGrid(true); }
-    function setupTickers() { const news = fullDB.filter(x => x.cat === 'أخبار').slice(0,5).map(x => `<span class="ticker-item">📰 ${x.name}</span>`).join(''); if(news) { document.getElementById('newsBar').style.display = 'flex'; document.getElementById('newsText').innerHTML = `<div class="scrolling">${news}</div>`; } const ads = fullDB.filter(x => x.offer && isOfferValid(x.offer)).map(x => `<span class="ticker-item">🔥 ${x.name}: ${x.offer.replace(/\{.*?\}/,'')}</span>`).join(''); if(ads) document.getElementById('adsText').innerHTML = `<div class="scrolling">${ads}</div>`; }
+    function filter(type, el) { curCat = type; document.querySelectorAll('.cat-item, .btm-item, .q-chip').forEach(x => x.classList.remove('active')); if(el) el.classList.add('active'); 
+        if(type==='all') filteredDB = fullDB.filter(x => !['أخبار','مصالح حكومية','دور عبادة','تعليم وحضانات','بيع سلعة / مستعمل','أخرى'].includes(x.cat)); 
+        else if(type==='fav') filteredDB = fullDB.filter(x => favs.includes(x.id)); 
+        else if(type==='offers') filteredDB = fullDB.filter(x => x.offer && isOfferValid(x.offer)); 
+        else if(type==='featured') filteredDB = fullDB.filter(x => x.feat); 
+        else if(type==='latest') filteredDB = [...fullDB.filter(x=>x.cat!=='أخبار')].sort((a,b)=>b.id-a.id); 
+        else if(type==='souq') filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 
+        else filteredDB = fullDB.filter(x => x.cat === type); 
+        
+        generateSubCats(type); renderGrid(true); 
+    }
+    function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(['all','fav','offers','souq','featured','latest'].includes(mainCat)) { container.style.display = 'none'; return; } let predefined = subCategories[mainCat] || []; const existing = [...new Set(fullDB.filter(x => x.cat === mainCat).map(i => i.sub).filter(s => s))]; const final = [...new Set([...predefined, ...existing])]; if (final.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); final.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === s); renderGrid(true); }; container.appendChild(btn); }); }
+
+    function doSearch(val) { const s = normalizeText(val.toLowerCase()); if(!val) { filter('all', document.querySelector('.cat-item')); return; } filteredDB = fullDB.filter(x => normalizeText(x.name.toLowerCase()).includes(s) || normalizeText(x.desc.toLowerCase()).includes(s)); renderGrid(true); }
+    function setupTickers() { const news = fullDB.filter(x => x.cat === 'أخبار').slice(0,5).map(x => `<span class="ticker-item">📢 ${x.name}</span>`).join(''); if(news) { document.getElementById('newsBar').style.display = 'flex'; document.getElementById('newsText').innerHTML = `<div class="scrolling">${news}</div>`; } const ads = fullDB.filter(x => x.offer && isOfferValid(x.offer)).map(x => `<span class="ticker-item">🔥 ${x.name}: ${x.offer.replace(/\{.*?\}/,'')}</span>`).join(''); if(ads) document.getElementById('adsText').innerHTML = `<div class="scrolling">${ads}</div>`; }
     function setupFloatAd() { const ads = fullDB.filter(x => x.feat && x.offer && isOfferValid(x.offer)); if(ads.length > 0) { const rand = ads[Math.floor(Math.random()*ads.length)]; floatAdID = rand.id; document.getElementById('floatTxt').innerText = rand.name; document.getElementById('floatAd').style.display = 'flex'; } }
     function openFloatAd() { if(floatAdID) openD(floatAdID); }
-    function openD(id) { const item = fullDB.find(x => x.id === String(id)); if(!item) return; document.getElementById('dName').innerText = item.name; document.getElementById('dCat').innerText = item.cat; document.getElementById('dDesc').innerText = item.desc; document.getElementById('dArea').innerText = item.area || ""; const slider = document.getElementById('imgSlider'); const imgUrl = (item.img && item.img.length>5) ? item.img : DEFAULT_IMG; slider.innerHTML = `<img src="${imgUrl}" style="width:100%; height:100%; object-fit:cover;">`; const btns = document.getElementById('actionBtns'); btns.innerHTML = ''; if(item.ph) btns.innerHTML += `<a href="tel:${item.ph}" class="btn-act btn-call">اتصال</a>`; if(item.wa) btns.innerHTML += `<a href="https://wa.me/2${item.wa}" class="btn-act btn-wa">واتساب</a>`; if(item.loc) btns.innerHTML += `<a href="${item.loc}" class="btn-act" style="background:#f39c12;color:black;">الموقع</a>`; document.getElementById('detailsModal').style.display = 'flex'; }
+    function openD(id) { const item = fullDB.find(x => x.id === String(id)); if(!item) return; currentShopData=item; document.getElementById('dName').innerText = item.name; document.getElementById('dCatMain').innerText = item.cat; if(item.sub){document.getElementById('dCatSub').innerText=item.sub;document.getElementById('dCatSub').style.display='inline-block'}else{document.getElementById('dCatSub').style.display='none'} document.getElementById('dDesc').innerText = item.desc; document.getElementById('dArea').innerText = item.area || ""; document.getElementById('dRating').innerHTML = item.rating?getStarsHTML(item.rating):''; const slider = document.getElementById('imgSlider'); const imgs = (item.imgRaw && item.imgRaw.length>5)?item.imgRaw.split(','):[DEFAULT_IMG]; slider.innerHTML=''; imgs.forEach(u=>{let im=document.createElement('img');im.src=u;slider.appendChild(im)}); const btns = document.getElementById('actionBtns'); btns.innerHTML = ''; if(item.ph) btns.innerHTML += `<a href="tel:${item.ph}" class="btn-act btn-call">اتصال</a>`; if(item.wa) btns.innerHTML += `<a href="https://wa.me/2${item.wa}" class="btn-act btn-wa">واتساب</a>`; if(item.loc) btns.innerHTML += `<a href="${item.loc}" class="btn-act" style="background:#f39c12;color:black;">الموقع</a>`; document.getElementById('detailsModal').style.display = 'flex'; }
 
     init();
 </script>

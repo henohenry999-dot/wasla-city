@@ -9,69 +9,76 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- V178: Final Layout --- */
-        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; }
+        /* --- V178 ORIGINAL DESIGN --- */
+        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
-        body.modal-open { overflow: hidden; } 
+        body.modal-open { overflow: hidden; } body.modal-open .fab { display: none !important; }
         
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-radius: 0 0 30px 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
+        header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .geo-logo { width: 48px; height: 48px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.6rem; }
-        .app-title h1 { margin: 0; font-size: 2rem; font-family: 'Reem Kufi'; }
+        .geo-logo { width: 48px; height: 48px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: var(--primary); font-size: 1.6rem; }
+        .app-title h1 { margin: 0; font-size: 2rem; font-family: 'Reem Kufi'; letter-spacing: 1px; }
         .header-icons { display: flex; gap: 12px; align-items: center; }
-        .icon-btn { font-size: 1.4rem; color: white; cursor: pointer; }
-        .shop-counter-box { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.3); }
-        .shop-counter-num { font-size: 1.1rem; font-weight: 800; color: var(--gold); display: block; }
-        .shop-counter-lbl { font-size: 0.6rem; color: #fff; }
+        .icon-btn { font-size: 1.4rem; color: white; cursor: pointer; opacity: 0.9; transition: 0.2s; }
+        .shop-counter-box { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); display: flex; flex-direction: column; min-width: 55px; }
+        .shop-counter-num { font-size: 1.1rem; font-weight: 800; color: var(--gold); line-height: 1; }
+        .shop-counter-lbl { font-size: 0.6rem; color: #fff; opacity: 0.9; }
         
         #mainView { padding: 0 15px; margin-top: -35px; position: relative; z-index: 10; }
         .search-wrap { background: white; padding: 5px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
         .search-inp { flex: 1; border: none; padding: 12px 20px; outline: none; font-family: 'Tajawal'; font-size: 1rem; background: transparent; }
         .search-btn { color: var(--primary); padding: 0 20px; cursor: pointer; font-size: 1.2rem; }
         
-        .quick-filters { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-        .q-chip { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; white-space: nowrap; color: #555; }
+        .quick-filters { display: flex; gap: 10px; margin-bottom: 20px; padding: 0 2px; overflow-x: auto; scrollbar-width: none; }
+        .q-chip { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.03); border: 1px solid #eee; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; transition: 0.2s; color: #555; white-space: nowrap; }
         .q-chip.active { background: var(--dark); color: white; border-color: var(--dark); } .q-chip.active i { color: var(--gold); }
         
         .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 10px; background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; }
-        .cat-icon { width: 50px; height: 50px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white; transition: 0.2s; }
-        .cat-name { font-size: 0.7rem; font-weight: 600; color: #555; text-align: center; }
-        .cat-item.active .cat-icon { transform: scale(1.1); border: 2px solid var(--gold); }
+        .cat-icon { width: 50px; height: 50px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white; transition: 0.2s; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+        .cat-name { font-size: 0.7rem; font-weight: 600; color: #555; text-align: center; line-height: 1.2; }
+        .cat-item.active .cat-icon { transform: scale(1.1) translateY(-3px); border: 2px solid var(--gold); }
         .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
         
-        .sub-cat-nav { display: none; overflow-x: auto; gap: 12px; padding: 10px 5px 20px; margin-bottom: 5px; scrollbar-width: none; }
-        .sub-chip { background: white; border: 1px solid #f0f0f0; padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; color: #555; cursor: pointer; transition: 0.3s; white-space: nowrap; }
-        .sub-chip.active { background: linear-gradient(135deg, var(--primary), #2ecc71); color: white; transform: translateY(-3px); }
+        .sub-cat-nav { display: none; overflow-x: auto; gap: 12px; padding: 10px 5px 20px; margin-bottom: 5px; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+        .sub-cat-nav::-webkit-scrollbar { display: none; }
+        .sub-chip { background: white; border: 1px solid #f0f0f0; padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; color: #555; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.04); min-width: max-content; }
+        .sub-chip:active { transform: scale(0.95); }
+        .sub-chip.active { background: linear-gradient(135deg, var(--primary), #2ecc71); color: white; border-color: transparent; box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3); transform: translateY(-3px); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
+        .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
-        .card.news-card { grid-column: span 2; display: flex; padding: 10px; border-right: 4px solid var(--red); }
-        .card.news-card .c-img { width: 100px; height: 100px; margin-left: 10px; border-radius: 12px; }
-        .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; }
-        .c-body { padding: 10px; flex: 1; }
-        .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); }
+        .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
+        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; }
+        .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
+        .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
+        
+        .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
-        .c-sub i { color: var(--primary); }
-        .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 6px 8px; border-radius: 8px; display: inline-block; margin-top: 5px; border: 1px dashed #ffe0e0; }
-        .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 4px 10px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
-        .card-fav-btn { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; color: #bdc3c7; }
+        .c-sub i { color: var(--primary); font-size: 0.85rem; }
+        
+        .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 6px 8px; border-radius: 8px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 1px solid #ffe0e0; }
+        
+        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
         .card-fav-btn.active { color: var(--red); }
+        .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 4px 10px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
+        .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
 
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
-        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; min-width: 55px; }
+        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
-        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; }
+        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
+        .fab:active { transform: translateX(-50%) scale(0.9); }
 
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
@@ -83,7 +90,7 @@
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); }
+        .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
@@ -96,15 +103,16 @@
         @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .d-body { padding: 20px; }
-        .d-title { margin: 0 0 10px; font-size: 1.5rem; font-weight: 900; color: var(--dark); }
-        .cat-capsule { display: inline-block; background: var(--dark); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; }
+        .d-title { margin: 0 0 10px; font-size: 1.5rem; font-weight: 900; color: var(--dark); line-height: 1.2; }
+        .cat-capsule { display: inline-block; background: var(--dark); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+        .cat-capsule.sub { background: #bdc3c7; color: #333; margin-right: 5px; }
         .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #555; font-size: 0.95rem; }
-        .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; }
         .btn-call { background: #3498db; } .btn-wa { background: #25D366; }
         
-        .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; background: #f9f9f9; font-size: 0.95rem; }
+        .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
@@ -114,7 +122,7 @@
 </head>
 <body>
 
-<div id="splashScreen" onclick="this.style.display='none'">
+<div id="splashScreen" onclick="removeSplash()">
     <div class="rocket-icon"><i class="fas fa-rocket"></i></div>
     <div class="splash-text">Hona App</div>
 </div>
@@ -133,7 +141,7 @@
     </div>
     <div class="header-icons">
         <div class="shop-counter-box"><span class="shop-counter-num" id="shopCount">0</span><span class="shop-counter-lbl">خدمة</span></div>
-        <i class="fas fa-sync-alt icon-btn" onclick="forceUpdate()"></i>
+        <i class="fas fa-sync-alt icon-btn" onclick="forceUpdate()" title="تحديث"></i>
         <i class="fas fa-info-circle icon-btn" onclick="openModal('aboutModal')"></i>
         <i class="fas fa-ambulance icon-btn" onclick="openModal('emergencyModal')" style="color:#ff6b6b"></i>
     </div>
@@ -142,7 +150,7 @@
 <div id="mainView">
     <div class="search-wrap">
         <input type="text" id="search" class="search-inp" placeholder="ابحث عن..." oninput="doSearch(this.value)">
-        <i class="fas fa-search search-btn"></i>
+        <i class="fas fa-search search-btn" onclick="doSearch(document.getElementById('search').value)"></i>
     </div>
 
     <div class="quick-filters">
@@ -173,21 +181,22 @@
 
     <div id="subCatNav" class="sub-cat-nav"></div>
 
-    <div class="grid" id="grid"></div>
+    <div class="grid" id="grid">
+        <div style="text-align:center; padding:50px; grid-column:span 2; color:#ccc;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</div>
+    </div>
     <div id="loadMore" style="text-align:center; padding:20px; display:none;"><button class="btn-submit" style="width:auto; background:#eee; color:#333;" onclick="renderMore()">عرض المزيد 👇</button></div>
 </div>
 
 <div class="btm-nav">
-    <div class="btm-item active" onclick="filter('all', this)"><i class="fas fa-home"></i>الرئيسية</div>
-    <div class="btm-item" onclick="filter('offers', this)"><i class="fas fa-tags"></i>العروض</div>
+    <div class="btm-item active" onclick="resetApp()"><i class="fas fa-home"></i>الرئيسية</div>
+    <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
     <div style="width:50px"></div>
-    <div class="btm-item" onclick="filter('fav', this)"><i class="fas fa-heart"></i>المفضلة</div>
-    <div class="btm-item" onclick="filter('souq', this)"><i class="fas fa-handshake"></i>السوق</div>
+    <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
+    <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
 <div class="fab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 الطوارئ</h3><ul style="list-style:none; padding:0; line-height:2.5;"><li>🚓 النجدة: <a href="tel:122">122</a></li><li>🚑 الإسعاف: <a href="tel:123">123</a></li><li>🚒 المطافئ: <a href="tel:180">180</a></li><li>⚡ الكهرباء: <a href="tel:121">121</a></li><li>🚰 المياه: <a href="tel:125">125</a></li><li>🔥 الغاز: <a href="tel:129">129</a></li></ul></div></div>
-
 <div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><h3>عن التطبيق</h3><p>دليلك الخدمي الأول في حدائق العاصمة.</p><p style="color:var(--primary);">نسألكم الدعاء ❤️</p></div></div>
 
 <div id="formModal" class="modal"><div class="modal-content" style="padding:20px;">
@@ -220,9 +229,9 @@
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
                 <option value="أخرى">أخرى</option>
-                <option value="مصالح حكومية" style="color:red; font-weight:bold;">مصالح حكومية (أدمن)</option>
-                <option value="دور عبادة" style="color:red; font-weight:bold;">دور عبادة (أدمن)</option>
-                <option value="أخبار" style="color:red; font-weight:bold;">أخبار (أدمن)</option>
+                <option value="مصالح حكومية" style="color:red; font-weight:bold; display:none;" id="opt_gov">مصالح حكومية</option>
+                <option value="دور عبادة" style="color:red; font-weight:bold; display:none;" id="opt_worship">دور عبادة</option>
+                <option value="أخبار" style="color:red; font-weight:bold; display:none;" id="opt_news">أخبار</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص..." style="display:none;">
@@ -289,6 +298,7 @@
     const subCategories = {"مطاعم ومشروبات":["مشويات","وجبات سريعة","كشري","سوري","بيتزا","سمك","مخبز","كافيه"],"خدمات طبية":["صيدلية","معمل","عيادة","مستشفى"],"فنيين وحرف":["سباك","كهربائي","نجار","نقاش","تكييف","ألوميتال"],"ماركت وعطارة":["سوبر ماركت","خضار","جزارة","عطارة"],"صيانة أجهزة منزلية":["غسالات","ثلاجات","تكييفات"],"تعليم وحضانات":["حضانة","مدرسة","سنتر","مكتبة"],"أخرى":[]};
 
     function init() {
+        setTimeout(removeSplash, 1000);
         Papa.parse(proxy, { download: true, header: false, skipEmptyLines: true, complete: (res) => {
             fullDB = res.data.slice(1).map((r, i) => ({
                 id: String(r[0] || i), 
@@ -302,18 +312,17 @@
             setupFloatAd();
             renderGrid(true);
             document.getElementById('shopCount').innerText = fullDB.filter(x=>x.cat!=='أخبار').length;
-            document.getElementById('splashScreen').style.display='none';
+            removeSplash();
         }});
     }
 
-    // 🟢 دوال لوحة التحكم (محدثة)
+    // 🟢 دوال لوحة التحكم (محدثة مع تأثير التحميل)
     window.loadPending = function() {
         const pass = document.getElementById('adminPass').value;
         const btn = document.querySelector('#adminContent .btn-submit');
         const list = document.getElementById('pendingList');
         
         if(!pass) { alert("أدخل كلمة المرور"); return; }
-        
         if(btn) btn.innerText = "جاري التحميل...";
         list.innerHTML = '<div style="text-align:center; padding:20px; color:#555;"><i class="fas fa-spinner fa-spin"></i> جاري جلب البيانات...</div>';
         
@@ -324,17 +333,14 @@
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
         .then(res => {
-            if(btn) btn.innerText = "Login";
-            
+            if(btn) btn.innerText = "دخول";
             if(res.result === 'error') {
                 list.innerHTML = `<p style="color:red; text-align:center;">❌ ${res.error}</p>`;
             } else {
                 if(res.data.length === 0) {
                     list.innerHTML = '<p style="text-align:center; padding:20px;">لا توجد طلبات جديدة ✅</p>';
                 } else {
-                    let html = '';
-                    res.data.forEach(item => {
-                        html += `
+                    list.innerHTML = res.data.map(item => `
                         <div class="card" id="row-${item.row}" style="margin-bottom:10px; padding:10px; border-right:4px solid var(--gold);">
                             <div class="c-title">${item.name} <small style="font-weight:normal; font-size:0.7rem;">(${item.type})</small></div>
                             <div class="c-sub">${item.cat}</div>
@@ -343,28 +349,22 @@
                                 <button class="btn-approve" onclick="doAction('approve', ${item.row}, this)">✅ موافقة</button>
                                 <button class="btn-reject" onclick="doAction('reject', ${item.row}, this)">❌ رفض</button>
                             </div>
-                        </div>`;
-                    });
-                    list.innerHTML = html;
+                        </div>`).join('');
                 }
             }
         })
         .catch(err => {
-            if(btn) btn.innerText = "Login";
+            if(btn) btn.innerText = "دخول";
             list.innerHTML = '<p style="color:red; text-align:center;">خطأ في الاتصال بالسيرفر</p>';
         });
     }
 
-    // دالة موحدة للموافقة والرفض مع تأثير التحميل
     window.doAction = function(actionType, rowIdx, btnElem) {
         if(!confirm(actionType === 'approve' ? "تأكيد الموافقة؟" : "تأكيد الحذف؟")) return;
-        
         const pass = document.getElementById('adminPass').value;
         const originalText = btnElem.innerText;
-        
         btnElem.innerText = "⏳..."; 
         btnElem.disabled = true;
-        
         const cardRow = document.getElementById(`row-${rowIdx}`);
         if(cardRow) cardRow.style.opacity = '0.5';
 
@@ -377,10 +377,7 @@
         .then(r => r.json())
         .then(res => {
             if(res.result === 'success') {
-                if(cardRow) {
-                    cardRow.style.display = 'none';
-                    cardRow.remove();
-                }
+                if(cardRow) { cardRow.style.display = 'none'; cardRow.remove(); }
             } else {
                 alert("خطأ: " + res.error);
                 btnElem.innerText = originalText;
@@ -396,12 +393,13 @@
         });
     }
 
-    // --- باقي دوال التطبيق ---
+    function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity='0'; setTimeout(()=>s.style.display='none',500); } }
     function openFormClean() { document.getElementById('formModal').style.display='flex'; }
     function closeModal(id) { document.getElementById(id).style.display='none'; }
     function openModal(id) { document.getElementById(id).style.display='flex'; }
     function triggerAdmin() { adminClicks++; if(adminClicks===5) { adminClicks=0; openModal('adminModal'); } }
     function forceUpdate() { localStorage.removeItem(FAV_KEY); window.location.reload(); }
+    function resetApp() { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
     function sendData(e) {
         e.preventDefault();
@@ -417,9 +415,22 @@
         if(data.Offer && document.getElementById('offerExpiry').value) {
             data.Offer += ` {${document.getElementById('offerExpiry').value}}`;
         }
+        let finalSub = data.SubCategorySelect || data.SubCategoryInput || "";
+        if (document.getElementById('usedDiv').style.display !== 'none') { data.Category = "بيع سلعة / مستعمل"; finalSub = data.UsedCategory; }
 
-        const params = new URLSearchParams(data);
+        const params = new URLSearchParams();
         params.append("Date", "New");
+        params.append("Type", data.Type);
+        params.append("Name", data.Name);
+        params.append("Category", data.Category);
+        params.append("SubCategory", finalSub);
+        params.append("Area", data.Area);
+        params.append("Description", data.Description);
+        params.append("Contact", data.Contact);
+        params.append("Whatsapp", data.Whatsapp);
+        params.append("Image", data.Image);
+        params.append("Location", data.Location);
+        params.append("Offer", data.Offer || "");
         
         fetch(scriptURL, { method:'POST', body:params })
         .then(r => r.json())
@@ -433,7 +444,6 @@
         .catch(err => { alert("تم الإرسال!"); closeModal('formModal'); btn.innerText = "إرسال 🚀"; btn.disabled = false; });
     }
 
-    // دوال العرض والفلتر (نفس V178)
     function renderGrid(newSearch) {
         const grid = document.getElementById('grid');
         const loadBtn = document.getElementById('loadMore');
@@ -487,7 +497,13 @@
     function isOfferValid(txt) { if(!txt) return false; let match = txt.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/); if(!match) return true; const d = parseInt(match[1]), m = parseInt(match[2]) - 1, year = new Date().getFullYear(); return new Date() <= new Date(year, m, d, 23, 59, 59); }
     function renderMore() { renderGrid(false); }
     function checkSub(val) { const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInp = document.getElementById('subCatInput'); if(subList && subList.length > 0) { subSel.style.display = 'block'; subInp.style.display = 'none'; subSel.innerHTML = subList.map(s => `<option value="${s}">${s}</option>`).join(''); } else { subSel.style.display = 'none'; subInp.style.display = (val==='أخرى') ? 'block' : 'none'; } }
-    function toggleFields(val) { const cat = document.getElementById('catDiv'); const used = document.getElementById('usedDiv'); const offer = document.getElementById('offerSection'); cat.style.display = (val === 'نشاط' || val === 'إعلان') ? 'block' : 'none'; used.style.display = (val === 'بيع سلعة / مستعمل') ? 'block' : 'none'; offer.style.display = (val === 'إعلان') ? 'flex' : 'none'; }
+    function toggleFields(val) { const cat = document.getElementById('catDiv'); const used = document.getElementById('usedDiv'); const offer = document.getElementById('offerSection'); cat.style.display = (val === 'نشاط' || val === 'إعلان') ? 'block' : 'none'; used.style.display = (val === 'بيع سلعة / مستعمل') ? 'block' : 'none'; offer.style.display = (val === 'إعلان') ? 'flex' : 'none'; 
+        // Admin Options Toggle
+        const isAdmin = val === 'خبر'; // Logic placeholder
+        document.getElementById('opt_gov').style.display = 'none';
+        document.getElementById('opt_worship').style.display = 'none'; 
+        document.getElementById('opt_news').style.display = 'none';
+    }
     function filter(type, el) { curCat = type; document.querySelectorAll('.cat-item, .btm-item, .q-chip').forEach(x => x.classList.remove('active')); if(el) el.classList.add('active'); if(type === 'all') filteredDB = fullDB.filter(x => x.cat !== 'أخبار'); else if(type === 'fav') filteredDB = fullDB.filter(x => favs.includes(x.id)); else if(type === 'offers') filteredDB = fullDB.filter(x => x.offer && isOfferValid(x.offer)); else if(type === 'featured') filteredDB = fullDB.filter(x => x.feat); else if(type === 'latest') filteredDB = [...fullDB.filter(x=>x.cat!=='أخبار')].sort((a,b)=>b.id-a.id); else if(type === 'souq') filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); else filteredDB = fullDB.filter(x => x.cat === type); renderGrid(true); }
     function doSearch(val) { if(!val) { filter('all', document.querySelector('.cat-item')); return; } filteredDB = fullDB.filter(x => x.name.includes(val) || x.desc.includes(val)); renderGrid(true); }
     function setupTickers() { const news = fullDB.filter(x => x.cat === 'أخبار').slice(0,5).map(x => `<span class="ticker-item">📰 ${x.name}</span>`).join(''); if(news) { document.getElementById('newsBar').style.display = 'flex'; document.getElementById('newsText').innerHTML = `<div class="scrolling">${news}</div>`; } const ads = fullDB.filter(x => x.offer && isOfferValid(x.offer)).map(x => `<span class="ticker-item">🔥 ${x.name}: ${x.offer.replace(/\{.*?\}/,'')}</span>`).join(''); if(ads) document.getElementById('adsText').innerHTML = `<div class="scrolling">${ads}</div>`; }

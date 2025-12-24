@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- V178 PLATINUM: Full Design & Features --- */
+        /* --- V179: PERFECTION EDITION --- */
         :root { 
             --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; 
             --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; 
@@ -73,12 +73,26 @@
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 15px; border-right: 6px solid var(--red); align-items: center; }
         .card.news-card .c-img { width: 95px; height: 95px; margin-left: 15px; border-radius: 15px; }
         .c-img { width: 100%; height: 135px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
-        .c-body { padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .c-body { padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; } /* تعديل لتوزيع المحتوى */
         .c-title { margin: 0 0 8px; font-size: 1.05rem; font-weight: 900; color: var(--text-main); line-height: 1.4; }
         .c-sub { font-size: 0.8rem; color: #666; display: flex; align-items: center; gap: 6px; font-weight: 600; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.95rem; }
-        .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.8rem; font-weight: 800; padding: 6px 10px; border-radius: 8px; margin-top: auto; display: inline-block; border: 1px dashed #feb2b2; width: fit-content; }
         
+        /* 🎁 تنسيق العرض داخل الكارت */
+        .card-offer-visible {
+            background: #fff0f0; color: var(--red); font-size: 0.75rem; font-weight: 800;
+            padding: 8px; border-radius: 10px; margin-top: 8px; margin-bottom: 8px;
+            border: 1px dashed #e74c3c; line-height: 1.4;
+        }
+        .offer-expiry { display: block; font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; }
+
+        /* 📅 تنسيق تاريخ الإضافة */
+        .added-date {
+            font-size: 0.65rem; color: #95a5a6; font-weight: 700;
+            padding-top: 8px; border-top: 1px solid #f0f0f0; margin-top: auto;
+            display: flex; align-items: center; gap: 4px;
+        }
+
         /* الشارات */
         .badge-live, .badge-closed, .badge-sold { position: absolute; top: 12px; right: 12px; padding: 5px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; z-index: 4; box-shadow: 0 3px 8px rgba(0,0,0,0.2); backdrop-filter: blur(4px); }
         .badge-live { background: rgba(39, 174, 96, 0.95); color: white; }
@@ -291,6 +305,7 @@
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص..." style="display:none;">
+            
             <div id="workHoursDiv" style="display:flex; gap:10px; margin-bottom:10px;">
                 <div style="flex:1"><label style="font-size:0.7rem;">مفتوح من 🕘</label><input type="time" id="openTime" class="form-input"></div>
                 <div style="flex:1"><label style="font-size:0.7rem;">إلى 🕚</label><input type="time" id="closeTime" class="form-input"></div>
@@ -353,7 +368,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 ضع الرابط الجديد هنا 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الجديد الذي نسخته من السكربت 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbysVrdnoo4HhqfrJyquwc0kb2H-kHBbVxuB-Ji8TGG5z-fpC5wrKmdAks9fXLPav6D58A/exec';
     
     // إعدادات الشيت القديم (بياناتك الأصلية)
@@ -361,7 +376,7 @@
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     
-    const FAV_KEY = 'hona_favs_v178_titanium';
+    const FAV_KEY = 'hona_favs_v179_platinum';
     let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, favs = JSON.parse(localStorage.getItem(FAV_KEY)) || [], adminClicks = 0, floatAdID = null;
     let currentShopData = {}, appRating = 0, shopRating = 0;
 
@@ -445,7 +460,13 @@
     function openModal(id) { document.getElementById(id).style.display='flex'; }
     function triggerAdmin() { adminClicks++; if(adminClicks===5) { adminClicks=0; openModal('adminModal'); } }
     function forceUpdate() { localStorage.removeItem(FAV_KEY); window.location.reload(); }
-    function resetApp() { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function resetApp() { 
+        document.getElementById('search').value=''; 
+        document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); 
+        filter('all', document.querySelector('.cat-item')); 
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+    }
+    
     function checkIsOpen(timeStr) { const now = new Date(); const currentMins = now.getHours() * 60 + now.getMinutes(); let parts = timeStr.split('-'); if(parts.length !== 2) return true; let start = parseTime(parts[0]); let end = parseTime(parts[1]); if(start === -1 || end === -1) return true; if (end < start) return (currentMins >= start || currentMins <= end); return (currentMins >= start && currentMins <= end); }
     function parseTime(t) { let p = t.trim().split(':'); if(p.length < 2) return -1; return parseInt(p[0]) * 60 + parseInt(p[1]); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
@@ -453,7 +474,7 @@
     
     function shareShop() { 
         const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; 
-        navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ التفاصيل!")).catch(()=>alert("فشل النسخ")); 
+        navigator.clipboard.writeText(text).then(() => alert("✅ تم النسخ!")).catch(()=>alert("فشل النسخ")); 
     }
     function shareShopViaWhatsapp() { 
         const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; 
@@ -498,6 +519,11 @@
         const loadBtn = document.getElementById('loadMore');
         if(newSearch) { grid.innerHTML = ''; page=1; }
         
+        // الانتقال لأعلى الشبكة عند الفلترة
+        if(newSearch && document.getElementById('grid')) {
+             document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
         const start = (page-1)*limit; const end = page*limit;
         const chunk = filteredDB.slice(start, end);
         
@@ -509,11 +535,19 @@
             const imgs = (item.imgRaw && item.imgRaw.length>5) ? item.imgRaw.split(',') : [DEFAULT_IMG];
             
             let offerHTML = '';
+            let expiryHtml = '';
             if(item.offer && isOfferValid(item.offer)) {
                 let txt = item.offer.replace(/\{.*?\}/, ''); 
-                offerHTML = `<div class="card-offer-visible">🔥 ${txt}</div>`;
+                let dateMatch = item.offer.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+                if(dateMatch) expiryHtml = `<span class="offer-expiry">⏳ ينتهي في: ${dateMatch[1]}/${dateMatch[2]}</span>`;
+                
+                offerHTML = `<div class="card-offer-visible">🔥 ${txt} ${expiryHtml}</div>`;
             }
-            let liveBadge = ''; if (item.cat === 'بيع سلعة / مستعمل' && !item.live) { liveBadge = `<div class="badge-sold">❌ تم البيع</div>`; } else if (item.live === true) { liveBadge = `<div class="badge-live">متاح الآن</div>`; } else if (item.live === false) { liveBadge = `<div class="badge-closed">مغلق</div>`; }
+            
+            let liveBadge = ''; 
+            if (item.cat === 'بيع سلعة / مستعمل' && !item.live) { liveBadge = `<div class="badge-sold">❌ تم البيع</div>`; } 
+            else if (item.live === true) { liveBadge = `<div class="badge-live">متاح الآن</div>`; } 
+            else if (item.live === false) { liveBadge = `<div class="badge-closed">مغلق</div>`; }
 
             const card = document.createElement('div');
             card.className = `card ${item.feat?'featured':''} ${isNews?'news-card':''}`;
@@ -528,7 +562,7 @@
                     ${!isNews ? `<div class="c-sub"><i class="fas fa-tag"></i> ${item.sub || item.cat}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${item.area||''}</div>` : ''}
                     ${offerHTML}
                     ${item.cat !== 'أخبار' ? getStarsHTML(item.rating) : ''}
-                    ${item.date ? `<div style="font-size:0.6rem; color:#999; margin-top:5px; border-top:1px dashed #eee; padding-top:5px;">${item.date}</div>` : ''}
+                    ${item.date ? `<div class="added-date">📅 تم الإضافة: ${item.date}</div>` : ''}
                 </div>
             `;
             grid.appendChild(card);
@@ -559,7 +593,15 @@
     function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(['all','fav','offers','souq','featured','latest'].includes(mainCat)) { container.style.display = 'none'; return; } let predefined = subCategories[mainCat] || []; const existing = [...new Set(fullDB.filter(x => x.cat === mainCat).map(i => i.sub).filter(s => s))]; const final = [...new Set([...predefined, ...existing])]; if (final.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); final.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === s); renderGrid(true); }; container.appendChild(btn); }); }
 
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if(!val) { filter('all', document.querySelector('.cat-item')); return; } filteredDB = fullDB.filter(x => normalizeText(x.name.toLowerCase()).includes(s) || normalizeText(x.desc.toLowerCase()).includes(s)); renderGrid(true); }
-    function setupTickers() { const news = fullDB.filter(x => x.cat === 'أخبار').slice(0,5).map(x => `<span class="ticker-item">📢 ${x.name}</span>`).join(''); if(news) { document.getElementById('newsBar').style.display = 'flex'; document.getElementById('newsText').innerHTML = `<div class="scrolling">${news}</div>`; } const ads = fullDB.filter(x => x.offer && isOfferValid(x.offer)).map(x => `<span class="ticker-item">🔥 ${x.name}: ${x.offer.replace(/\{.*?\}/,'')}</span>`).join(''); if(ads) document.getElementById('adsText').innerHTML = `<div class="scrolling">${ads}</div>`; }
+    
+    // شريط الأخبار القابل للضغط
+    function setupTickers() { 
+        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0,5).map(x => `<span class="ticker-item" onclick="openD('${x.id}')">📢 ${x.name}</span>`).join(''); 
+        if(news) { document.getElementById('newsBar').style.display = 'flex'; document.getElementById('newsText').innerHTML = `<div class="scrolling">${news}</div>`; } 
+        const ads = fullDB.filter(x => x.offer && isOfferValid(x.offer)).map(x => `<span class="ticker-item" onclick="openD('${x.id}')">🔥 ${x.name}: ${x.offer.replace(/\{.*?\}/,'')}</span>`).join(''); 
+        if(ads) document.getElementById('adsText').innerHTML = `<div class="scrolling">${ads}</div>`; 
+    }
+    
     function setupFloatAd() { const ads = fullDB.filter(x => x.feat && x.offer && isOfferValid(x.offer)); if(ads.length > 0) { const rand = ads[Math.floor(Math.random()*ads.length)]; floatAdID = rand.id; document.getElementById('floatTxt').innerText = rand.name; document.getElementById('floatAd').style.display = 'flex'; } }
     function openFloatAd() { if(floatAdID) openD(floatAdID); }
     function openD(id) { const item = fullDB.find(x => x.id === String(id)); if(!item) return; currentShopData=item; document.getElementById('dName').innerText = item.name; document.getElementById('dCatMain').innerText = item.cat; if(item.sub){document.getElementById('dCatSub').innerText=item.sub;document.getElementById('dCatSub').style.display='inline-block'}else{document.getElementById('dCatSub').style.display='none'} document.getElementById('dDesc').innerText = item.desc; document.getElementById('dArea').innerText = item.area || ""; document.getElementById('dRating').innerHTML = item.rating?getStarsHTML(item.rating):''; const slider = document.getElementById('imgSlider'); const imgs = (item.imgRaw && item.imgRaw.length>5)?item.imgRaw.split(','):[DEFAULT_IMG]; slider.innerHTML=''; imgs.forEach(u=>{let im=document.createElement('img');im.src=u;slider.appendChild(im)}); const btns = document.getElementById('actionBtns'); btns.innerHTML = ''; if(item.ph) btns.innerHTML += `<a href="tel:${item.ph}" class="btn-act btn-call">اتصال</a>`; if(item.wa) btns.innerHTML += `<a href="https://wa.me/2${item.wa}" class="btn-act btn-wa">واتساب</a>`; if(item.loc) btns.innerHTML += `<a href="${item.loc}" class="btn-act" style="background:#f39c12;color:black;">📍 الموقع</a>`; document.getElementById('detailsModal').style.display = 'flex'; }

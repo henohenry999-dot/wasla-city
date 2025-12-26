@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- نفس التنسيقات السابقة (V178 Style) --- */
+        /* --- V3.0: FIREBASE INTEGRATED (Pro Edition) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -67,7 +67,22 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 6px 8px; border-radius: 8px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 1px solid #ffe0e0; }
+        /* 🎁 تصميم العروض */
+        .card-offer-visible { 
+            background: #fff5f5; 
+            color: var(--red); 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            padding: 8px; 
+            border-radius: 10px; 
+            margin-top: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2px; 
+            border: 2px dashed #e74c3c; 
+            text-align: center;
+        }
+        .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
         .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
@@ -85,6 +100,7 @@
         .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 4px 10px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
@@ -134,11 +150,6 @@
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
-        
-        #adminModal .card { margin-bottom: 10px; padding: 10px; border-right: 4px solid var(--gold); }
-        .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .btn-reject { background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         
         .empty-state { grid-column: span 2; text-align: center; padding: 60px 20px; }
         .empty-icon { font-size: 4rem; color: #ddd; margin-bottom: 20px; }
@@ -218,8 +229,7 @@
     <div style="width:50px"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
-    <div class="btm-item" onclick="openFormClean('إعلان')"><i class="fas fa-bullhorn"></i>إعلان</div>
-</div>
+    </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
@@ -510,19 +520,32 @@
     // 💡 تعديل جوهري: العرض ساري حتى آخر ثانية في اليوم
     function isOfferValid(offerStr) {
         if (!offerStr) return false;
-        let dateMatch = offerStr.match(/\{(\d{1,2})\/(\d{1,2})\}/);
-        if (!dateMatch) return true; // لو مفيش تاريخ، يعتبر ساري دائماً
+        // 🛠️ الإصلاح هنا: استخدام التعبير النمطي (Regex) الصحيح والآمن للبحث عن التاريخ
+        // 1. نبحث عن قوسين {}
+        // 2. بداخلهما رقم أو رقمين (اليوم)
+        // 3. ثم علامة / أو - أو مسافة
+        // 4. ثم رقم أو رقمين (الشهر)
+        let dateMatch = offerStr.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
+        
+        // 🔴 إذا لم يجد تاريخًا، نعتبر العرض ساريًا دائمًا (بدون تاريخ انتهاء)
+        if (!dateMatch) return true; 
         
         const d = parseInt(dateMatch[1]);
-        const m = parseInt(dateMatch[2]) - 1; 
-        const year = new Date().getFullYear();
+        const m = parseInt(dateMatch[2]) - 1; // الشهور تبدأ من 0 في جافاسكريبت
+        let year = new Date().getFullYear();
+        const now = new Date();
+        
+        // ذكاء اصطناعي بسيط: لو إحنا في شهر 12 والعرض في شهر 1، يبقى أكيد السنة الجاية
+        if (now.getMonth() === 11 && m === 0) {
+            year += 1;
+        }
         
         // نهاية يوم الانتهاء (الساعة 23:59:59)
         const exp = new Date(year, m, d, 23, 59, 59);
-        const now = new Date();
         
         // لو الوقت الحالي عدى نهاية يوم الانتهاء
         if (now > exp) return false;
+        
         return true;
     }
 
@@ -562,8 +585,11 @@
         } else if (c === 'fav') { 
             filteredDB = fullDB.filter(x => favs.includes(x.id)); 
         } else if (c === 'offers') { 
-            // 💡 استثناء السوق + التأكد من الصلاحية
-            filteredDB = fullDB.filter(x => { if (x.cat === 'بيع سلعة / مستعمل') return false; return isOfferValid(x.offer); }); 
+            // 💡 إصلاح: إظهار العروض السارية فقط + التأكد من عدم إخفاء العروض الدائمة (بدون تاريخ)
+            filteredDB = fullDB.filter(x => { 
+                if (x.cat === 'بيع سلعة / مستعمل') return false; 
+                return isOfferValid(x.offer) && x.offer.trim().length > 0; // إضافة شرط أن العرض ليس فارغاً
+            }); 
         } else if (c === 'souq') { 
             filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 
         } else if (c === 'featured') { 
@@ -595,7 +621,7 @@
     
     // 💡 شريط العروض الذكي (يعرض كل عرض على حدة)
     function setupTickers() { 
-        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
+        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD('${x.id}')">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } 
         
         let offersArray = [];
@@ -603,13 +629,13 @@
             if (x.offer && x.cat !== 'بيع سلعة / مستعمل') {
                 let lines = x.offer.split('\n');
                 lines.forEach(line => {
-                    let clean = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim();
-                    let dateMatch = line.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+                    let clean = line.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').trim();
+                    let dateMatch = line.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
                     
                     // إذا كان العرض ساري
                     if (isOfferValid(line) && clean) {
                         let expiryTxt = dateMatch ? ` (حتى ${dateMatch[1]}/${dateMatch[2]})` : '';
-                        offersArray.push(`<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
+                        offersArray.push(`<span class="ticker-item" onclick="openD('${x.id}')" style="cursor:pointer">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
                     }
                 });
             }
@@ -617,7 +643,7 @@
 
         let adsHTML = "";
         if (offersArray.length > 0) {
-            adsHTML = offersArray.join('   •   ');
+            adsHTML = offersArray.join('   •   ');
         } else {
             adsHTML = '<span class="ticker-item">📢 لا تتوفر عروض حالياً.. انتظروا أقوى العروض قريباً!</span>';
         }
@@ -636,7 +662,7 @@
                 let lines = x.offer.split('\n');
                 lines.forEach(line => {
                     if (isOfferValid(line)) {
-                        let clean = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim();
+                        let clean = line.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').trim();
                         if (clean) {
                             validAds.push({ id: x.id, text: clean });
                         }
@@ -683,8 +709,15 @@
             let footerHTML = ''; if(isNews) { footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`; } else { footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; } 
             
             // إخفاء العرض المنتهي من الكارت
-            let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; 
-            const offerHTML = (cleanOffer && isOfferValid(x.offer)) ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span></div>` : ''; 
+            let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').split('\n')[0] : ''; 
+            
+            // 🎁 تصميم العرض داخل الكارت (منقط ومميز) مع تاريخ الانتهاء
+            let offerHTML = '';
+            if (cleanOffer && isOfferValid(x.offer)) {
+                let dateMatch = x.offer.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
+                let expiryHtml = dateMatch ? `<div class="offer-date-line">⏳ ينتهي: ${dateMatch[1]}/${dateMatch[2]}</div>` : '';
+                offerHTML = `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHtml}</div>`;
+            }
             
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG; 
             div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `; g.appendChild(div); 
@@ -694,9 +727,10 @@
     
     function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v179', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
     function renderMore() { page++; renderGrid(false); }
+    // ✅ تصحيح دالة فتح الكارت للتأكد من ID
     function openD(id) { 
         try {
-            const x = fullDB.find(i => i.id == id); 
+            const x = fullDB.find(i => String(i.id) === String(id)); // تحويل لمقارنة نصية
             if(!x) { console.error("Item not found", id); return; }
             currentShopData = x; 
             document.getElementById('dName').innerText = x.name; 
@@ -727,7 +761,7 @@
                 const today = new Date(); today.setHours(0,0,0,0); 
                 lines.forEach(line => { 
                     // 💡 هنا أيضاً نخفي السطر لو منتهي
-                    let cleanLine = line.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').trim(); 
+                    let cleanLine = line.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').trim(); 
                     if(isOfferValid(line) && cleanLine) { offersHTML += `<div class="offer-item">${cleanLine}</div>`; } 
                 }); 
                 if (offersHTML === '') { offBox.style.display='none'; } else { document.getElementById('dOfferTxt').innerHTML = offersHTML; } 
@@ -754,6 +788,3 @@
 </script>
 </body>
 </html>
-
-
-

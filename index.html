@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- نفس التنسيقات السابقة (V178 Style) --- */
+        /* --- V240: YOUR DESIGN + REQUESTED FIXES --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -67,7 +67,21 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 6px 8px; border-radius: 8px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 1px solid #ffe0e0; }
+        /* 🎁 تعديل: صندوق الهدايا يظهر بشكل مميز داخل الكارت */
+        .card-offer-visible { 
+            background: #fff5f5; 
+            color: var(--red); 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            padding: 8px; 
+            border-radius: 10px; 
+            margin-top: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2px; 
+            border: 2px dashed #e74c3c; /* إطار منقط */
+            text-align: center;
+        }
         
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
         .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
@@ -85,6 +99,7 @@
         .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 4px 10px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
@@ -218,8 +233,7 @@
     <div style="width:50px"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
-    <div class="btm-item" onclick="openFormClean('إعلان')"><i class="fas fa-bullhorn"></i>إعلان</div>
-</div>
+    </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
@@ -358,7 +372,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الصحيح (الجديد) 🔴🔴🔴
+    // 🔴🔴🔴 الرابط الجديد (الخاص بك) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
@@ -366,8 +380,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V179) لتحديث الكود
-    const CACHE_KEY = 'hona_v179_time_fixed'; 
+    // ✅ مفتاح كاش جديد
+    const CACHE_KEY = 'hona_v240_final'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -582,7 +596,7 @@
 
     function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }
     function filterSub(mainCat, subCat) { filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); }
-    function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); document.getElementById('searchArea').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
     function sendAppRate() { if(appRating===0) return alert("اختر نجوماً"); submitReview("تقييم التطبيق", "Hona App", appRating); closeModal('rateAppModal'); }
     function openShopRate() { document.getElementById('rateShopName').innerText = currentShopData.name; openModal('rateShopModal'); }
@@ -595,7 +609,7 @@
     
     // 💡 شريط العروض الذكي (يعرض كل عرض على حدة)
     function setupTickers() { 
-        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
+        const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD(${x.id})">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } 
         
         let offersArray = [];
@@ -609,7 +623,7 @@
                     // إذا كان العرض ساري
                     if (isOfferValid(line) && clean) {
                         let expiryTxt = dateMatch ? ` (حتى ${dateMatch[1]}/${dateMatch[2]})` : '';
-                        offersArray.push(`<span class="ticker-item" onclick="openD(${x.id})">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
+                        offersArray.push(`<span class="ticker-item" onclick="openD(${x.id})" style="cursor:pointer">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
                     }
                 });
             }
@@ -617,7 +631,7 @@
 
         let adsHTML = "";
         if (offersArray.length > 0) {
-            adsHTML = offersArray.join('   •   ');
+            adsHTML = offersArray.join('   •   ');
         } else {
             adsHTML = '<span class="ticker-item">📢 لا تتوفر عروض حالياً.. انتظروا أقوى العروض قريباً!</span>';
         }
@@ -684,7 +698,17 @@
             
             // إخفاء العرض المنتهي من الكارت
             let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})\/(\d{1,2})\}/, '').split('\n')[0] : ''; 
-            const offerHTML = (cleanOffer && isOfferValid(x.offer)) ? `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span></div>` : ''; 
+            
+            // 🎁 إضافة تاريخ الانتهاء للعرض داخل الكارت
+            let offerHTML = '';
+            if (cleanOffer && isOfferValid(x.offer)) {
+                let dateMatch = x.offer.match(/\{(\d{1,2})\/(\d{1,2})\}/);
+                let expiryHtml = dateMatch ? `<span class="offer-expiry">⏳ ينتهي: ${dateMatch[1]}/${dateMatch[2]}</span>` : '';
+                offerHTML = `<div class="card-offer-visible">
+                                <span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>
+                                ${expiryHtml}
+                             </div>`;
+            }
             
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG; 
             div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `; g.appendChild(div); 
@@ -754,6 +778,3 @@
 </script>
 </body>
 </html>
-
-
-

@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V4.1: FIREBASE STABLE + ADMIN RESTRICTIONS --- */
+        /* --- HONA V4.2: FIREBASE PRO + CLEAN USER FORM --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -62,26 +62,11 @@
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
         .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
-        
         .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        /* 🎁 تصميم العرض داخل الكارت الرئيسي (Grid Card) */
-        .card-offer-visible { 
-            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
-            color: var(--red); 
-            font-size: 0.75rem; 
-            font-weight: 800; 
-            padding: 8px; 
-            border-radius: 10px; 
-            margin-top: auto; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 2px; 
-            border: 2px dashed #e74c3c; 
-            text-align: center;
-        }
+        .card-offer-visible { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 8px; border-radius: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 2px dashed #e74c3c; text-align: center; }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
@@ -101,12 +86,14 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
-        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
+        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 6000; border-radius: 25px 25px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
-        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 2500; cursor: pointer; transition: 0.3s; pointer-events: auto; }
+        
+        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 7000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
+        
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
@@ -116,12 +103,13 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
         .float-ad:hover .float-txt { display: block; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 8000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 95%; max-width: 450px; border-radius: 25px; padding: 0; position: relative; max-height: 90vh; overflow-y: auto; animation: pop 0.3s; padding-bottom: 20px; }
         .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
         .img-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 250px; background: #eee; }
@@ -129,7 +117,6 @@
         .d-body { padding: 20px; }
         .d-title { margin: 0 0 10px; font-size: 1.5rem; font-weight: 900; color: var(--dark); line-height: 1.2; }
         
-        /* 🎁 كبسولات التصنيف */
         .cat-capsule { display: inline-block; background: var(--dark); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
         .cat-capsule.sub { background: #bdc3c7; color: #333; margin-right: 5px; }
         
@@ -137,7 +124,6 @@
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
         
-        /* 🎁 تصميم صندوق العروض (داخل التفاصيل) */
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -145,7 +131,6 @@
         .offer-text { color: #c0392b; font-weight: 800; font-size: 1rem; }
         .offer-expiry-tag { font-size: 0.75rem; color: #7f8c8d; background: #f9f9f9; padding: 2px 8px; border-radius: 4px; width: fit-content; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }
         .offer-expiry-tag i { color: #e74c3c; font-size: 0.8rem; }
-        
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
         .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; }
         .btn-act:active { transform: scale(0.98); }
@@ -159,12 +144,10 @@
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
-        
         #adminModal .card { margin-bottom: 10px; padding: 10px; border-right: 4px solid var(--gold); }
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .btn-reject { background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        
         .empty-state { grid-column: span 2; text-align: center; padding: 60px 20px; }
         .empty-icon { font-size: 4rem; color: #ddd; margin-bottom: 20px; }
         .empty-text { font-size: 1.5rem; font-weight: 900; color: var(--dark); font-family: 'Reem Kufi'; }
@@ -256,13 +239,14 @@
     <h3 style="text-align:center; color:var(--dark); margin-top:10px;" id="formTitle">إضافة طلب</h3>
     <div style="background:#e8f5e9; padding:10px; border-radius:10px; text-align:center; margin-bottom:15px; font-size:0.8rem; color:#2e7d32;">✨ الإضافة مجانية تماماً لوجه الله</div>
     <form id="reqForm" onsubmit="sendData(event)">
+        <input type="hidden" name="Date" id="finalDateParam" value="New"> 
         <select name="Type" id="reqType" class="form-select" onchange="toggleFields(this.value)">
             <option value="نشاط">📝 إضافة نشاط (محل / مهنة)</option>
             <option value="إعلان">📢 حجز إعلان مميز</option>
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
-        </select>
+            </select>
         
         <label id="lbl_Name" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الاسم / العنوان</label>
         <input type="text" name="Name" id="inp_Name" class="form-input" placeholder="الاسم / العنوان" required>
@@ -337,7 +321,9 @@
             <div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div>
             <div id="dSrcInfo" class="info-row" style="display:none;"></div>
             <div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div>
+            
             <div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div>
+            
             <div class="d-desc" id="dDesc"></div>
             <a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a>
             <div class="share-row">
@@ -385,7 +371,7 @@
 
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
-    const CACHE_KEY = 'hona_v410_stable_nav_fix';
+    const CACHE_KEY = 'hona_v420_firebase_clean';
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -407,19 +393,24 @@
         "أخبار": ["أخبار"]
     };
 
-    let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
+    let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12;
     let favs = JSON.parse(localStorage.getItem('favs_v3_native')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
     let adminClicks = 0;
 
+    // --- MAIN INITIALIZATION ---
     function init() {
         setTimeout(removeSplash, 1500);
         document.getElementById('formModal').style.display = 'none';
         
         // تنظيف الكاش القديم
-        localStorage.removeItem('hona_v295_stable_fab');
-        localStorage.removeItem('hona_v330_firebase_stable_restore');
+        localStorage.removeItem('hona_v179_time_fixed');
+        localStorage.removeItem('hona_v240_final');
+        localStorage.removeItem('hona_v275_clean_dates');
+        localStorage.removeItem('hona_v290_fab_fixed');
+        localStorage.removeItem('hona_v310_firebase_fixed');
 
+        // 1. محاولة قراءة الكاش المحلي (للظهور الفوري)
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
@@ -428,11 +419,13 @@
             } catch(e) { console.log('Cache Invalid'); }
         }
 
-        db.collection("shops").orderBy("created_at", "desc").limit(300).get().then((querySnapshot) => {
+        // 2. جلب البيانات من Firebase (في الخلفية)
+        db.collection("shops").orderBy("created_at", "desc").limit(200).get().then((querySnapshot) => {
             let tempDB = [];
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
                 
+                // تحويل هيكل فايربيس لهيكل التطبيق
                 let hoursStr = ""; let cleanDesc = data.description || "";
                 const timeMatch = cleanDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                 if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = cleanDesc.replace(timeMatch[0], "").trim(); }
@@ -460,6 +453,7 @@
                 });
             });
             
+            // تحديث البيانات
             fullDB = tempDB;
             localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
             updateUI();
@@ -582,7 +576,7 @@
         db.collection("requests").doc(id).delete().then(() => document.getElementById(`req-${id}`).remove());
     }
 
-    // --- UI RENDERING ---
+    // --- UI RENDERING & FILTERING (FIXED) ---
     function renderGrid(isNew) {
         const g = document.getElementById('grid');
         const btn = document.getElementById('loadMore');
@@ -788,7 +782,7 @@
         else filteredDB = fullDB.filter(x => x.cat === c);
         
         page=1; renderGrid(true);
-        // Scroll to top of list if not bottom nav
+        // Scroll to top
         if(el && !el.classList.contains('btm-item')) {
              document.getElementById('searchArea').scrollIntoView({behavior:'smooth'});
         } else {

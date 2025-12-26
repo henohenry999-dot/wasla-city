@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V3.0: FIREBASE EDITION (Native-Like Performance) --- */
+        /* --- HONA V270: STABLE + FLOATING AD + EXPIRY DATE --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -67,7 +67,21 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        .card-offer-visible { background: #fff5f5; color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 8px; border-radius: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 2px dashed #e74c3c; text-align: center; }
+        /* 🎁 تصميم العرض داخل الكارت (منقط) مع تاريخ الانتهاء */
+        .card-offer-visible { 
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
+            color: var(--red); 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            padding: 8px; 
+            border-radius: 10px; 
+            margin-top: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2px; 
+            border: 2px dashed #e74c3c; 
+            text-align: center;
+        }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
@@ -102,6 +116,7 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* 🎁 أيقونة العروض العائمة (تم استرجاعها) */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -220,7 +235,7 @@
     <div style="width:50px"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
-</div>
+    </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
@@ -233,6 +248,7 @@
     <h3 style="text-align:center; color:var(--dark); margin-top:10px;" id="formTitle">إضافة طلب</h3>
     <div style="background:#e8f5e9; padding:10px; border-radius:10px; text-align:center; margin-bottom:15px; font-size:0.8rem; color:#2e7d32;">✨ الإضافة مجانية تماماً لوجه الله</div>
     <form id="reqForm" onsubmit="sendData(event)">
+        <input type="hidden" name="Date" id="finalDateParam" value="New"> 
         <select name="Type" id="reqType" class="form-select" onchange="toggleFields(this.value)">
             <option value="نشاط">📝 إضافة نشاط (محل / مهنة)</option>
             <option value="إعلان">📢 حجز إعلان مميز</option>
@@ -277,30 +293,14 @@
             <select name="UsedCategory" id="usedCatSelect" class="form-select"><option value="">اختر نوع السلعة...</option><option value="موبايلات وإلكترونيات">📱 موبايلات وإلكترونيات</option><option value="أثاث ومنزل">🏠 أثاث ومنزل</option><option value="أجهزة كهربائية">🔌 أجهزة كهربائية</option><option value="سيارات وقطع غيار">🚗 سيارات وقطع غيار</option><option value="ملابس وإكسسوارات">👗 ملابس وإكسسوارات</option><option value="مستلزمات أطفال">👶 مستلزمات أطفال</option><option value="كتب وهوايات">📚 كتب وهوايات</option><option value="حيوانات وطيور">🐦 حيوانات وطيور</option><option value="أخرى">🔄 أخرى</option></select>
         </div>
 
-        <div id="areaDiv">
-            <label id="lbl_Area" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">المنطقة</label>
-            <input type="text" name="Area" id="inp_Area" class="form-input" placeholder="المنطقة / الحي">
-        </div>
-
-        <div id="newsSourceDiv" style="display:none;">
-            <label style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">مصدر الخبر</label>
-            <input type="text" name="NewsSource" class="form-input" placeholder="مثال: الصفحة الرسمية للجهاز">
-        </div>
-
-        <div id="locDiv">
-            <label id="lbl_Location" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">اللوكيشن</label>
-            <input type="text" name="Location" id="inp_Location" class="form-input" placeholder="رابط اللوكيشن">
-        </div>
-
-        <div id="imgDiv">
-            <label id="lbl_Image" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الصورة</label>
-            <input type="text" name="Image" id="inp_Image" class="form-input" placeholder="رابط صورة (أو ارسلها واتساب)">
-            <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:10px; border-radius:8px; text-align:center;"><i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a></div>
-        </div>
-
-        <div id="offerSection" style="display:none; gap:10px;">
+        <input type="text" name="Area" id="inp_Area" class="form-input" placeholder="المنطقة">
+        <input type="text" name="Location" id="inp_Loc" class="form-input" placeholder="رابط اللوكيشن">
+        <input type="text" name="Image" id="inp_Img" class="form-input" placeholder="رابط الصورة (أو ارسلها واتساب)">
+        <div id="waUploadHelp" style="display:none; font-size:0.8rem; color:#27ae60; margin-bottom:15px; background:#e8f5e9; padding:12px; border-radius:12px; text-align:center; font-weight:bold;"><i class="fab fa-whatsapp"></i> بعد إرسال الطلب، <a href="https://wa.me/201014394475" target="_blank" style="text-decoration:underline; color:#145a32;">اضغط هنا لإرسال الصورة</a></div>
+        
+        <div id="offerSection" style="display:none; gap:5px;">
             <input type="text" name="Offer" id="offerInput" class="form-input" placeholder="هل يوجد عرض؟ / السعر" style="flex:2;">
-            <input type="text" id="offerExpiry" class="form-input" placeholder="انتهاء: 30/12" style="flex:1;">
+            <input type="text" id="offerExpiry" class="form-input" placeholder="تاريخ: 20/12" style="flex:1;">
         </div>
 
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
@@ -356,27 +356,19 @@
     </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 1. مفتاح الربط مع مشروع Firebase الخاص بك
-    const firebaseConfig = {
-      apiKey: "AIzaSyAmQY13R7jklfvYCnORkWV8HcTf_kYsx8Y",
-      authDomain: "hona-app-dc99f.firebaseapp.com",
-      projectId: "hona-app-dc99f",
-      storageBucket: "hona-app-dc99f.firebasestorage.app",
-      messagingSenderId: "237392953584",
-      appId: "1:237392953584:web:b10673783af3827b830235"
-    };
-
-    // 2. تهيئة التطبيق
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
+    // 🔴🔴🔴 الرابط الصحيح (الجديد) 🔴🔴🔴
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
+    
+    // إعدادات الشيت القديم (بياناتك الأصلية)
+    const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
-    const CACHE_KEY = 'hona_v3_firebase_cache';
+
+    // ✅ مفتاح كاش جديد لتحديث الكود (V270)
+    const CACHE_KEY = 'hona_v270_final_polish'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -398,76 +390,64 @@
         "أخبار": ["أخبار"]
     };
 
-    let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12;
-    let favs = JSON.parse(localStorage.getItem('favs_v3')) || [];
+    let fullDB = [], filteredDB = [], curCat = 'all', page = 1, limit = 12, floatAdID = null;
+    let favs = JSON.parse(localStorage.getItem('favs_v178')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
-    let adminClicks = 0;
+    let adminClicks = 0; 
 
     function init() {
         setTimeout(removeSplash, 1000);
-        document.getElementById('formModal').style.display = 'none';
-        
-        // محاولة تحميل البيانات من الكاش أولاً للسرعة
+
+        // تنظيف الكاشات القديمة
+        localStorage.removeItem('hona_v260_clean_final'); 
+
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
-                updateUI();
+                const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+                document.getElementById('shopCount').innerText = count;
+                renderGrid(true);
+                setupTickers();
+                setupFloatAd();
                 removeSplash();
-            } catch(e) { console.log('Cache Error'); }
+            } catch(e) { console.log('Cache error'); }
         }
 
-        // جلب البيانات الطازجة من Firebase
-        db.collection("shops").orderBy("created_at", "desc").get().then((querySnapshot) => {
-            let tempDB = [];
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                // تحويل بيانات Firebase إلى صيغة التطبيق (Mapping)
-                let hoursStr = ""; let cleanDesc = data.description || "";
-                const timeMatch = cleanDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
-                if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = cleanDesc.replace(timeMatch[0], "").trim(); }
-                
-                let isActive = data.is_active;
-                if(isActive && hoursStr) isActive = checkIsOpen(hoursStr);
-
-                tempDB.push({
-                    id: doc.id, // استخدام معرف المستند من فايربيس
-                    name: data.name || "",
-                    cat: data.category || "أخرى",
-                    sub: data.sub_category || "",
-                    area: data.area || "",
-                    desc: cleanDesc,
-                    ph: data.phone || "",
-                    wa: data.whatsapp || "",
-                    imgRaw: data.image_url || "",
-                    loc: data.location_url || "",
-                    offer: data.offer || "",
-                    live: isActive,
-                    feat: data.is_featured || false,
-                    date: data.date_added || "",
-                    newsSrc: data.news_source || "",
-                    rating: data.rating || 0
-                });
-            });
-            
-            fullDB = tempDB;
+        document.getElementById('formModal').style.display = 'none';
+        
+        Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
+            let tempDB = res.data.slice(1).map((r, i) => {
+                let offerTxt = r[10] || "";
+                let expiryDateDisplay = ""; 
+                let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
+                const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
+                if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
+                let activeRaw = String(r[11]).toUpperCase();
+                let isActive = activeRaw.includes('TRUE'); 
+                if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
+                let source = r[14]; 
+                if (!source || source.trim() === "") source = "Hona App"; 
+                let featRaw = String(r[12]).toUpperCase();
+                let isFeatured = featRaw.includes('TRUE');
+                return {
+                    id: r[0] || i, name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
+                    desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
+                    offer: String(offerTxt || ""), expiry: expiryDateDisplay, live: isActive, feat: isFeatured, 
+                    date: r[13], newsSrc: String(source), rating: r[16] || "" 
+                };
+            }).reverse();
+            const uniqueMap = new Map();
+            tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
+            fullDB = Array.from(uniqueMap.values());
             localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
-            updateUI();
-            removeSplash();
-        }).catch((error) => {
-            console.log("Error getting documents: ", error);
-            removeSplash();
-        });
+            const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+            document.getElementById('shopCount').innerText = count;
+            renderGrid(true); setupTickers(); setupFloatAd(); removeSplash();
+        }, error: (err) => { console.log("Error loading data:", err); removeSplash(); }});
     }
 
-    function updateUI() {
-        const count = fullDB.filter(x => x.cat !== 'أخبار').length;
-        document.getElementById('shopCount').innerText = count;
-        renderGrid(true);
-        setupTickers();
-    }
-
-    // --- Admin Logic (Firebase) ---
+    // 🛑 Admin Logic
     function triggerAdmin() {
         adminClicks++;
         if (adminClicks === 5) { adminClicks = 0; openModal('adminModal'); }
@@ -475,117 +455,78 @@
 
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
-        if(pass !== "123456") { // كلمة مرور مؤقتة، غيرها لاحقاً
-            alert("كلمة المرور غير صحيحة (جرب: 123456)");
-            return;
-        }
-        
         const list = document.getElementById('pendingList');
         list.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري الجلب...</div>';
-        
-        db.collection("requests").get().then((querySnapshot) => {
-            if(querySnapshot.empty) {
-                list.innerHTML = '<p style="text-align:center;">لا توجد طلبات جديدة ✅</p>';
-                return;
+        const params = new URLSearchParams();
+        params.append('action', 'getPending');
+        params.append('pass', pass);
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(r => r.json())
+        .then(res => {
+            if(res.result === 'error') {
+                list.innerHTML = `<p style="color:red;text-align:center;">❌ ${res.error}</p>`;
+            } else {
+                if(res.data.length === 0) {
+                    list.innerHTML = '<p style="text-align:center;">لا توجد طلبات جديدة ✅</p>';
+                } else {
+                    let html = '';
+                    res.data.forEach(item => {
+                        html += `
+                        <div class="card" id="row-${item.rowIdx}">
+                            <div class="c-title">${item.name} <small>(${item.type})</small></div>
+                            <div class="c-sub">${item.cat} | ${item.sub} | ${item.area}</div>
+                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item.desc}</div>
+                            <div class="admin-actions">
+                                <button class="btn-approve" onclick="approveItem(${item.rowIdx}, '${pass}')">✅ موافقة</button>
+                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx}, '${pass}')">❌ رفض</button>
+                            </div>
+                        </div>`;
+                    });
+                    list.innerHTML = html;
+                }
             }
-            let html = '';
-            querySnapshot.forEach((doc) => {
-                const item = doc.data();
-                html += `
-                <div class="card" id="req-${doc.id}">
-                    <div class="c-title">${item.name} <small>(${item.type})</small></div>
-                    <div class="c-sub">${item.category} | ${item.sub_category} | ${item.area}</div>
-                    <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item.description}</div>
-                    <div class="admin-actions">
-                        <button class="btn-approve" onclick="approveReq('${doc.id}')">✅ موافقة</button>
-                        <button class="btn-reject" onclick="rejectReq('${doc.id}')">❌ رفض</button>
-                    </div>
-                </div>`;
-            });
-            list.innerHTML = html;
         });
     }
 
-    function approveReq(id) {
+    function approveItem(idx, pass) {
         if(!confirm("تأكيد الموافقة؟")) return;
-        // نقل من requests إلى shops
-        db.collection("requests").doc(id).get().then((doc) => {
-            if (doc.exists) {
-                const data = doc.data();
-                // إضافة حقول النظام
-                data.created_at = firebase.firestore.FieldValue.serverTimestamp();
-                data.is_active = true;
-                data.is_featured = (data.type === 'إعلان'); // لو إعلان خليه مميز
-                
-                db.collection("shops").add(data).then(() => {
-                    // حذف الطلب بعد النقل
-                    db.collection("requests").doc(id).delete();
-                    document.getElementById(`req-${id}`).remove();
-                    alert("تمت الموافقة والنشر! 🚀");
-                });
-            }
-        });
+        const params = new URLSearchParams();
+        params.append('action', 'approve');
+        params.append('row', idx);
+        params.append('pass', pass);
+        document.getElementById(`row-${idx}`).style.opacity = '0.5';
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(r => r.json())
+        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تمت الموافقة والنقل بنجاح! 🚀"); } else { alert("Error: " + res.error); } });
     }
 
-    function rejectReq(id) {
-        if(!confirm("حذف الطلب نهائياً؟")) return;
-        db.collection("requests").doc(id).delete().then(() => {
-            document.getElementById(`req-${id}`).remove();
-        });
+    function rejectItem(idx, pass) {
+        if(!confirm("تأكيد الحذف؟ لن يمكن التراجع.")) return;
+        const params = new URLSearchParams();
+        params.append('action', 'reject');
+        params.append('row', idx);
+        params.append('pass', pass);
+        document.getElementById(`row-${idx}`).style.opacity = '0.5';
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(r => r.json())
+        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); } });
     }
 
-    // --- Core Logic ---
-    function sendData(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.disabled = true; btn.innerText = "جاري الإرسال...";
-        
-        const form = document.getElementById('reqForm');
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((v, k) => data[k] = v);
-        
-        // تجهيز البيانات لفايربيس
-        const docData = {
-            type: data.Type,
-            name: data.Name,
-            category: data.Category,
-            sub_category: data.SubCategorySelect || data.SubCategoryInput || (data.UsedCategory || ""),
-            area: data.Area,
-            description: data.Description,
-            phone: data.Contact,
-            whatsapp: data.Whatsapp,
-            image_url: data.Image,
-            location_url: data.Location,
-            offer: data.Offer + (document.getElementById('offerExpiry').value ? ` {${document.getElementById('offerExpiry').value}}` : ""),
-            news_source: data.NewsSource,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        };
-
-        db.collection("requests").add(docData).then(() => {
-            alert("تم إرسال الطلب بنجاح! سيتم مراجعته.");
-            closeModal('formModal');
-            form.reset();
-            btn.disabled = false; btn.innerText = "إرسال 🚀";
-        }).catch((error) => {
-            console.error("Error writing document: ", error);
-            alert("حدث خطأ، حاول مرة أخرى.");
-            btn.disabled = false; btn.innerText = "إرسال 🚀";
-        });
-    }
-
-    // --- Helpers (Same as V260) ---
+    // 💡 تعديل جوهري: العرض ساري حتى آخر ثانية في اليوم
     function isOfferValid(offerStr) {
         if (!offerStr) return false;
         let dateMatch = offerStr.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
         if (!dateMatch) return true;
+        
         const d = parseInt(dateMatch[1]);
-        const m = parseInt(dateMatch[2]) - 1;
+        const m = parseInt(dateMatch[2]) - 1; 
         let year = new Date().getFullYear();
         const now = new Date();
-        if (now.getMonth() === 11 && m === 0) year += 1;
+        if (now.getMonth() === 11 && m === 0) { year += 1; }
+        
         const exp = new Date(year, m, d, 23, 59, 59);
-        return now <= exp;
+        if (now > exp) return false;
+        return true;
     }
 
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
@@ -604,6 +545,8 @@
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => { const cleanName = normalizeText(x.name.toLowerCase()); const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : ""); return cleanName.includes(s) || cleanDesc.includes(s); }); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); }
+    
+    // 💡 فلتر العروض الذكي + شاشة "لا توجد عروض"
     function filter(c, el) { 
         curCat = c; 
         if(el) { 
@@ -622,7 +565,11 @@
         } else if (c === 'fav') { 
             filteredDB = fullDB.filter(x => favs.includes(x.id)); 
         } else if (c === 'offers') { 
-            filteredDB = fullDB.filter(x => { if (x.cat === 'بيع سلعة / مستعمل') return false; return isOfferValid(x.offer) && x.offer.trim().length > 0; }); 
+            // 💡 إصلاح: إظهار العروض السارية فقط + التأكد من عدم إخفاء العروض الدائمة (بدون تاريخ)
+            filteredDB = fullDB.filter(x => { 
+                if (x.cat === 'بيع سلعة / مستعمل') return false; 
+                return isOfferValid(x.offer) && x.offer.trim().length > 0; // إضافة شرط أن العرض ليس فارغاً
+            }); 
         } else if (c === 'souq') { 
             filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 
         } else if (c === 'featured') { 
@@ -638,6 +585,7 @@
         renderGrid(true); 
         setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100); 
     }
+
     function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }
     function filterSub(mainCat, subCat) { filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); }
     function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -649,9 +597,12 @@
     function updateStars(id, n) { const stars = document.querySelectorAll(`#${id} i`); stars.forEach((s, i) => s.classList.toggle('gold', i < n)); }
     function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
+    
+    // ✅ شريط العروض (قابل للضغط)
     function setupTickers() { 
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD('${x.id}')">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } 
+        
         let offersArray = [];
         fullDB.forEach(x => {
             if (x.offer && x.cat !== 'بيع سلعة / مستعمل') {
@@ -659,68 +610,109 @@
                 lines.forEach(line => {
                     let clean = line.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').trim();
                     let dateMatch = line.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
+                    
                     if (isOfferValid(line) && clean) {
                         let expiryTxt = dateMatch ? ` (حتى ${dateMatch[1]}/${dateMatch[2]})` : '';
+                        // ✅ إضافة علامات التنصيص حول ID
                         offersArray.push(`<span class="ticker-item" onclick="openD('${x.id}')" style="cursor:pointer">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
                     }
                 });
             }
         });
+
         let adsHTML = "";
-        if (offersArray.length > 0) { adsHTML = offersArray.join('   •   '); } else { adsHTML = '<span class="ticker-item">📢 لا تتوفر عروض حالياً.. انتظروا أقوى العروض قريباً!</span>'; }
-        document.getElementById('adsBar').style.display='flex'; document.getElementById('adsText').innerHTML = `<span class="scrolling">${adsHTML}</span>`;
+        if (offersArray.length > 0) {
+            adsHTML = offersArray.join('   •   ');
+        } else {
+            adsHTML = '<span class="ticker-item">📢 لا تتوفر عروض حالياً.. انتظروا أقوى العروض قريباً!</span>';
+        }
+        document.getElementById('adsBar').style.display='flex'; 
+        document.getElementById('adsText').innerHTML = `<span class="scrolling">${adsHTML}</span>`;
     }
+
+    // ✅ أيقونة العروض العائمة (المسترجعة)
     function setupFloatAd() { 
         let validAds = [];
         fullDB.forEach(x => {
+            // نأخذ فقط العروض السارية من المحلات المميزة
             if (x.feat && x.offer && x.cat !== 'بيع سلعة / مستعمل') {
                 let lines = x.offer.split('\n');
                 lines.forEach(line => {
                     if (isOfferValid(line)) {
                         let clean = line.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').trim();
-                        if (clean) { validAds.push({ id: x.id, text: clean }); }
+                        if (clean) {
+                            validAds.push({ id: x.id, text: clean });
+                        }
                     }
                 });
             }
         });
+
         if (validAds.length > 0) {
             const randAd = validAds[Math.floor(Math.random() * validAds.length)];
             floatAdID = randAd.id;
             document.getElementById('floatTxt').innerText = randAd.text.substring(0, 25) + '...';
             document.getElementById('floatAd').style.display = 'flex';
             document.getElementById('floatAd').onclick = function() { openD(floatAdID); };
-        } else { document.getElementById('floatAd').style.display = 'none'; }
+        } else {
+            document.getElementById('floatAd').style.display = 'none';
+        }
     }
+    
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
+    
     function renderGrid(isNew) { 
         const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; 
+        
+        // 💡 شاشة "لا توجد عروض"
         if (filteredDB.length === 0 && curCat === 'offers') {
-            g.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-gift"></i></div><div class="empty-text">لا تتوفر عروض حالياً 🎁<br><span style="font-size:0.9rem;font-weight:normal;color:#777">تابعنا قريباً لأقوى الخصومات</span></div></div>`;
-            btn.style.display = 'none'; return;
+            g.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon"><i class="fas fa-gift"></i></div>
+                    <div class="empty-text">لا تتوفر عروض حالياً 🎁<br><span style="font-size:0.9rem;font-weight:normal;color:#777">تابعنا قريباً لأقوى الخصومات</span></div>
+                </div>`;
+            btn.style.display = 'none';
+            return;
         }
+
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); 
         toRender.forEach(x => { 
-            const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; div.onclick = function() { openD(x.id); }; 
-            const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, '${x.id}')"><i class="fas fa-heart"></i></div>`; 
+            const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; 
+            
+            // ✅ تصحيح استدعاء openD
+            div.onclick = function() { openD(String(x.id)); }; 
+            
+            const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`; 
             let liveBadge = ''; if (x.cat === 'بيع سلعة / مستعمل' && !x.live) { liveBadge = `<div class="badge-sold">❌ تم البيع</div>`; } else if (x.live) { liveBadge = `<div class="badge-live"><div class="dot"></div> متاح</div>`; } 
             const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : ''; 
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; 
             let footerHTML = ''; if(isNews) { footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`; } else { footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; } 
+            
             let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').split('\n')[0] : ''; 
+            
+            // ✅ تعديل: عرض تاريخ الانتهاء داخل الكارت (منقط ومميز)
             let offerHTML = '';
             if (cleanOffer && isOfferValid(x.offer)) {
                 let dateMatch = x.offer.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
-                let expiryHtml = dateMatch ? `<div class="offer-date-line">⏳ ينتهي: ${dateMatch[1]}/${dateMatch[2]}</div>` : '';
-                offerHTML = `<div class="card-offer-visible"><span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>${expiryHtml}</div>`;
+                let expiryLine = dateMatch ? `<div class="offer-date-line">⏳ ينتهي: ${dateMatch[1]}/${dateMatch[2]}</div>` : '';
+                offerHTML = `<div class="card-offer-visible">
+                                <span style="color:var(--dark)">🔥 ${cleanOffer.substring(0, 35)}..</span>
+                                ${expiryLine}
+                             </div>`;
             }
+            
             const starsHTML = x.cat !== 'أخبار' ? getStarsHTML(x.rating) : ''; const imgs = getImages(x.imgRaw, isNews); const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG; 
             div.innerHTML += ` ${favBtn} ${!isNews?liveBadge:''} ${!isNews?featBadge:''} ${isNews?newsBadge:''} <img src="${mainImg}" class="c-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'"> <div class="c-body"> <div class="c-title">${x.name}</div> <div style="margin-bottom:5px;">${starsHTML}</div> ${subHTML} ${offerHTML} ${footerHTML} </div> `; g.appendChild(div); 
         }); 
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
     }
     
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v3', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
-    function renderMore() { page++; renderGrid(false); }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v179', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
+    function checkSub(val) { const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput'); if(subList && subList.length > 0) { subSel.style.display = 'block'; subInp.style.display = 'none'; subSel.innerHTML = subList.map(s => `<option value="${s}">${s}</option>`).join(''); } else { subSel.style.display = 'none'; if (val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; } } }
+    function getCat(m,s){ return m; }
+    function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
+    
+    // ✅ التأكد من تمرير ID كنص
     function openD(id) { 
         try {
             const x = fullDB.find(i => String(i.id) === String(id)); 
@@ -753,6 +745,7 @@
                 let lines = x.offer.split('\n'); 
                 const today = new Date(); today.setHours(0,0,0,0); 
                 lines.forEach(line => { 
+                    // 💡 هنا أيضاً نخفي السطر لو منتهي
                     let cleanLine = line.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').trim(); 
                     if(isOfferValid(line) && cleanLine) { offersHTML += `<div class="offer-item">${cleanLine}</div>`; } 
                 }); 
@@ -772,10 +765,7 @@
             openModal('detailsModal'); 
         } catch(e) { console.error(e); alert("خطأ في فتح الكارت: " + e.message); }
     }
-    function checkSub(val) { const subSelect = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput'); const subs = subCategories[val]; if (subs) { subSelect.innerHTML = '<option value="">اختر التخصص...</option>'; subs.forEach(s => { subSelect.innerHTML += `<option value="${s}">${s}</option>`; }); subSelect.style.display = 'block'; subInput.style.display = 'none'; } else { subSelect.style.display = 'none'; if (val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; } } }
-    function getCat(m,s){ return m; }
-    function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
-    
+
     init();
 </script>
 </body>

@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V3.1: FIREBASE ENGINE + FIXED FAB + CLEAN FORM --- */
+        /* --- HONA V3.3: FIREBASE STABLE RESTORED --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -62,26 +62,11 @@
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
         .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
-        
         .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        /* 🎁 تصميم العرض داخل الكارت الرئيسي (Grid Card) */
-        .card-offer-visible { 
-            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
-            color: var(--red); 
-            font-size: 0.75rem; 
-            font-weight: 800; 
-            padding: 8px; 
-            border-radius: 10px; 
-            margin-top: auto; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 2px; 
-            border: 2px dashed #e74c3c; 
-            text-align: center;
-        }
+        .card-offer-visible { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 8px; border-radius: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 2px dashed #e74c3c; text-align: center; }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
@@ -105,8 +90,6 @@
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
-        
-        /* 🔥 زر الإضافة FAB - High Z-Index & Fixed Click */
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 5000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -120,7 +103,6 @@
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
-        /* 🎁 أيقونة العروض العائمة */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -139,7 +121,6 @@
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
         
-        /* 🎁 تصميم صندوق العروض (داخل التفاصيل) */
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -241,10 +222,10 @@
 
 <div class="btm-nav">
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
-    <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
+    <div class="btm-item" onclick="filter('offers', this)"><i class="fas fa-tags"></i>العروض</div>
     <div style="width:50px"></div>
-    <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
-    <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
+    <div class="btm-item" onclick="filter('fav', this)"><i class="fas fa-heart"></i>المفضلة</div>
+    <div class="btm-item" onclick="filter('souq', this)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
@@ -310,7 +291,7 @@
         
         <div id="offerSection" style="display:none; gap:5px;">
             <input type="text" name="Offer" id="offerInput" class="form-input" placeholder="هل يوجد عرض؟ / السعر" style="flex:2;">
-            <input type="text" id="offerExpiry" class="form-input" placeholder="انتهاء: 30/12" style="flex:1;">
+            <input type="text" id="offerExpiry" class="form-input" placeholder="تاريخ: 20/12" style="flex:1;">
         </div>
 
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
@@ -390,7 +371,7 @@
 
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
-    const CACHE_KEY = 'hona_v310_firebase_fixed';
+    const CACHE_KEY = 'hona_v330_firebase_stable_restore';
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -422,12 +403,14 @@
         setTimeout(removeSplash, 1500);
         document.getElementById('formModal').style.display = 'none';
         
-        // تنظيف الكاش القديم
-        localStorage.removeItem('hona_v179_time_fixed');
-        localStorage.removeItem('hona_v240_final');
+        // تنظيف الكاشات القديمة
+        localStorage.removeItem('hona_v260_clean_final'); 
+        localStorage.removeItem('hona_v270_final_polish');
         localStorage.removeItem('hona_v275_clean_dates');
+        localStorage.removeItem('hona_v290_fab_fixed');
+        localStorage.removeItem('hona_v310_firebase_fixed');
 
-        // 1. محاولة قراءة الكاش المحلي (للظهور الفوري)
+        // 1. محاولة قراءة الكاش المحلي
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
@@ -436,8 +419,8 @@
             } catch(e) { console.log('Cache Invalid'); }
         }
 
-        // 2. جلب البيانات من Firebase (في الخلفية)
-        db.collection("shops").orderBy("created_at", "desc").limit(200).get().then((querySnapshot) => {
+        // 2. جلب البيانات من Firebase
+        db.collection("shops").orderBy("created_at", "desc").limit(300).get().then((querySnapshot) => {
             let tempDB = [];
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
@@ -470,7 +453,6 @@
                 });
             });
             
-            // تحديث البيانات
             fullDB = tempDB;
             localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
             updateUI();
@@ -515,6 +497,9 @@
     function getImages(raw, isNews) { if(!raw || raw.length < 5) { return isNews ? [NEWS_PLACEHOLDER] : []; } return raw.split(',').map(u => { let id = u.match(/id=([a-zA-Z0-9_-]+)/) || u.match(/\/d\/([a-zA-Z0-9_-]+)/); return id ? `https://lh3.googleusercontent.com/d/${id[1]}=s600` : u.trim(); }); }
     function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.classList.add('modal-open'); }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.classList.remove('modal-open'); }
+    function openEmergency(e) { e.stopPropagation(); openModal('emergencyModal'); }
+    function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
+    function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
     // --- ADMIN & REQUESTS ---
     function sendData(e) {
@@ -608,7 +593,7 @@
             const isNews = x.cat === 'أخبار';
             const div = document.createElement('div');
             div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`;
-            div.onclick = function() { openD(x.id); }; // ✅ FIXED CLICK
+            div.onclick = function() { openD(x.id); }; 
 
             const imgs = getImages(x.imgRaw, isNews);
             
@@ -677,8 +662,9 @@
         currentShopData = x;
         document.getElementById('dName').innerText = x.name;
         document.getElementById('dDesc').innerText = x.desc;
-        // ... (rest of details logic same as V260)
+        // ... (rest of details logic preserved)
         
+        // Show offer box with date
         const offBox = document.getElementById('dOfferBox');
         if(x.offer && isOfferValid(x.offer)) {
             offBox.style.display = 'block';
@@ -762,12 +748,14 @@
 
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
     
-    // Search & Filter
+    // Search & Filter (Fixed Buttons)
     function doSearch(val) {
         const s = normalizeText(val.toLowerCase());
         filteredDB = fullDB.filter(x => normalizeText(x.name+x.desc).includes(s));
         page=1; renderGrid(true);
     }
+    
+    // ✅ FIXED: Ensures 'this' works for button highlighting
     function filter(c, el) {
         curCat = c;
         document.querySelectorAll('.q-chip, .cat-item, .btm-item').forEach(i => i.classList.remove('active'));
@@ -779,7 +767,10 @@
         else filteredDB = fullDB.filter(x => x.cat === c);
         
         page=1; renderGrid(true);
-        document.getElementById('searchArea').scrollIntoView({behavior:'smooth'});
+        // Scroll to top of list if not bottom nav
+        if(el && !el.classList.contains('btm-item')) {
+             document.getElementById('searchArea').scrollIntoView({behavior:'smooth'});
+        }
     }
 
     init();

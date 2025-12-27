@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V19.0: FINAL FIX (SUBS + SCROLL + OFFERS) --- */
+        /* --- HONA V20.0: FINAL FORCED UPDATE --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -86,10 +86,6 @@
         }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
-        .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
-        .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
-        .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
-        .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
         .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
@@ -103,12 +99,12 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
-        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
+        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 6000; border-radius: 25px 25px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 زر الإضافة */
+        /* 🔥 زر الإضافة (FAB) */
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 5000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -208,29 +204,29 @@
     </div>
 
     <div class="quick-filters">
-        <div class="q-chip" onclick="filter('featured', this)"><i class="fas fa-fire"></i> المميز</div>
-        <div class="q-chip" onclick="filter('latest', this)"><i class="fas fa-clock"></i> الأحدث</div>
+        <div class="q-chip" onclick="applyFilter('featured', this)"><i class="fas fa-fire"></i> المميز</div>
+        <div class="q-chip" onclick="applyFilter('latest', this)"><i class="fas fa-clock"></i> الأحدث</div>
     </div>
 
     <div class="cat-grid">
-        <div class="cat-item active" onclick="filter('all', this)"><div class="cat-icon bg-all"><i class="fas fa-th"></i></div><div class="cat-name">الكل</div></div>
-        <div class="cat-item" onclick="filter('أخبار', this)"><div class="cat-icon bg-news"><i class="fas fa-newspaper"></i></div><div class="cat-name">أخبار</div></div>
-        <div class="cat-item" onclick="filter('مصالح حكومية', this)"><div class="cat-icon bg-gov"><i class="fas fa-landmark"></i></div><div class="cat-name">مصالح<br>حكومية</div></div>
-        <div class="cat-item" onclick="filter('دور عبادة', this)"><div class="cat-icon bg-worship"><i class="fas fa-mosque"></i></div><div class="cat-name">دور<br>عبادة</div></div>
-        <div class="cat-item" onclick="filter('تعليم وحضانات', this)"><div class="cat-icon bg-school"><i class="fas fa-graduation-cap"></i></div><div class="cat-name">تعليم</div></div>
-        <div class="cat-item" onclick="filter('مطاعم ومشروبات', this)"><div class="cat-icon bg-food"><i class="fas fa-utensils"></i></div><div class="cat-name">مطاعم<br>ومشروبات</div></div>
-        <div class="cat-item" onclick="filter('ماركت وعطارة', this)"><div class="cat-icon bg-market"><i class="fas fa-shopping-basket"></i></div><div class="cat-name">ماركت<br>وعطارة</div></div>
-        <div class="cat-item" onclick="filter('صيانة أجهزة منزلية', this)"><div class="cat-icon bg-home"><i class="fas fa-plug"></i></div><div class="cat-name">صيانة<br>أجهزة</div></div>
-        <div class="cat-item" onclick="filter('فنيين وحرف', this)"><div class="cat-icon bg-techs"><i class="fas fa-hammer"></i></div><div class="cat-name">فنيين<br>وحرف</div></div>
-        <div class="cat-item" onclick="filter('خدمات طبية', this)"><div class="cat-icon bg-med"><i class="fas fa-user-md"></i></div><div class="cat-name">خدمات<br>طبية</div></div>
-        <div class="cat-item" onclick="filter('مواصلات', this)"><div class="cat-icon bg-transport"><i class="fas fa-bus"></i></div><div class="cat-name">مواصلات</div></div>
-        <div class="cat-item" onclick="filter('تكنولوجيا وإلكترونيات', this)"><div class="cat-icon bg-tech"><i class="fas fa-mobile-alt"></i></div><div class="cat-name">تكنولوجيا<br>إلكترونيات</div></div>
-        <div class="cat-item" onclick="filter('سيارات ودراجات', this)"><div class="cat-icon bg-auto"><i class="fas fa-car"></i></div><div class="cat-name">سيارات<br>دراجات</div></div>
-        <div class="cat-item" onclick="filter('ملابس وأحذية', this)"><div class="cat-icon bg-fashion"><i class="fas fa-tshirt"></i></div><div class="cat-name">ملابس<br>أحذية</div></div>
-        <div class="cat-item" onclick="filter('منظفات وتجميل', this)"><div class="cat-icon bg-clean"><i class="fas fa-spray-can"></i></div><div class="cat-name">منظفات<br>وتجميل</div></div>
-        <div class="cat-item" onclick="filter('ديكورات', this)"><div class="cat-icon bg-decor"><i class="fas fa-paint-roller"></i></div><div class="cat-name">ديكورات</div></div>
-        <div class="cat-item" onclick="filter('رياضة', this)"><div class="cat-icon bg-sport"><i class="fas fa-dumbbell"></i></div><div class="cat-name">رياضة</div></div>
-        <div class="cat-item" onclick="filter('أخرى', this)"><div class="cat-icon bg-other"><i class="fas fa-ellipsis-h"></i></div><div class="cat-name">أخرى</div></div>
+        <div class="cat-item active" onclick="applyFilter('all', this)"><div class="cat-icon bg-all"><i class="fas fa-th"></i></div><div class="cat-name">الكل</div></div>
+        <div class="cat-item" onclick="applyFilter('أخبار', this)"><div class="cat-icon bg-news"><i class="fas fa-newspaper"></i></div><div class="cat-name">أخبار</div></div>
+        <div class="cat-item" onclick="applyFilter('مصالح حكومية', this)"><div class="cat-icon bg-gov"><i class="fas fa-landmark"></i></div><div class="cat-name">مصالح<br>حكومية</div></div>
+        <div class="cat-item" onclick="applyFilter('دور عبادة', this)"><div class="cat-icon bg-worship"><i class="fas fa-mosque"></i></div><div class="cat-name">دور<br>عبادة</div></div>
+        <div class="cat-item" onclick="applyFilter('تعليم وحضانات', this)"><div class="cat-icon bg-school"><i class="fas fa-graduation-cap"></i></div><div class="cat-name">تعليم</div></div>
+        <div class="cat-item" onclick="applyFilter('مطاعم ومشروبات', this)"><div class="cat-icon bg-food"><i class="fas fa-utensils"></i></div><div class="cat-name">مطاعم<br>ومشروبات</div></div>
+        <div class="cat-item" onclick="applyFilter('ماركت وعطارة', this)"><div class="cat-icon bg-market"><i class="fas fa-shopping-basket"></i></div><div class="cat-name">ماركت<br>وعطارة</div></div>
+        <div class="cat-item" onclick="applyFilter('صيانة أجهزة منزلية', this)"><div class="cat-icon bg-home"><i class="fas fa-plug"></i></div><div class="cat-name">صيانة<br>أجهزة</div></div>
+        <div class="cat-item" onclick="applyFilter('فنيين وحرف', this)"><div class="cat-icon bg-techs"><i class="fas fa-hammer"></i></div><div class="cat-name">فنيين<br>وحرف</div></div>
+        <div class="cat-item" onclick="applyFilter('خدمات طبية', this)"><div class="cat-icon bg-med"><i class="fas fa-user-md"></i></div><div class="cat-name">خدمات<br>طبية</div></div>
+        <div class="cat-item" onclick="applyFilter('مواصلات', this)"><div class="cat-icon bg-transport"><i class="fas fa-bus"></i></div><div class="cat-name">مواصلات</div></div>
+        <div class="cat-item" onclick="applyFilter('تكنولوجيا وإلكترونيات', this)"><div class="cat-icon bg-tech"><i class="fas fa-mobile-alt"></i></div><div class="cat-name">تكنولوجيا<br>إلكترونيات</div></div>
+        <div class="cat-item" onclick="applyFilter('سيارات ودراجات', this)"><div class="cat-icon bg-auto"><i class="fas fa-car"></i></div><div class="cat-name">سيارات<br>دراجات</div></div>
+        <div class="cat-item" onclick="applyFilter('ملابس وأحذية', this)"><div class="cat-icon bg-fashion"><i class="fas fa-tshirt"></i></div><div class="cat-name">ملابس<br>أحذية</div></div>
+        <div class="cat-item" onclick="applyFilter('منظفات وتجميل', this)"><div class="cat-icon bg-clean"><i class="fas fa-spray-can"></i></div><div class="cat-name">منظفات<br>وتجميل</div></div>
+        <div class="cat-item" onclick="applyFilter('ديكورات', this)"><div class="cat-icon bg-decor"><i class="fas fa-paint-roller"></i></div><div class="cat-name">ديكورات</div></div>
+        <div class="cat-item" onclick="applyFilter('رياضة', this)"><div class="cat-icon bg-sport"><i class="fas fa-dumbbell"></i></div><div class="cat-name">رياضة</div></div>
+        <div class="cat-item" onclick="applyFilter('أخرى', this)"><div class="cat-icon bg-other"><i class="fas fa-ellipsis-h"></i></div><div class="cat-name">أخرى</div></div>
     </div>
 
     <div id="subCatNav" class="sub-cat-nav"></div>
@@ -243,10 +239,10 @@
 
 <div class="btm-nav">
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
-    <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
+    <div class="btm-item" onclick="applyFilter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
     <div style="width:50px"></div>
-    <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
-    <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
+    <div class="btm-item" onclick="applyFilter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
+    <div class="btm-item" onclick="applyFilter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
@@ -279,7 +275,7 @@
         <input type="text" name="Name" id="inp_Name" class="form-input" placeholder="الاسم / العنوان" required>
         
         <div id="catDiv">
-            <select name="Category" id="inp_Category" class="form-select" onchange="checkSub(this.value)">
+            <select name="Category" id="inp_Category" class="form-select" onchange="updateSubCats(this.value)">
                 <option value="">اختر التصنيف...</option>
                 <option value="مطاعم ومشروبات">مطاعم ومشروبات</option>
                 <option value="ماركت وعطارة">ماركت وعطارة</option>
@@ -395,8 +391,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد لتحديث الكود (V19.0)
-    const CACHE_KEY = 'hona_v1900_final_fix_all'; 
+    // ✅ مفتاح كاش جديد لتحديث الكود (V20.0)
+    const CACHE_KEY = 'hona_v2000_nav_scroll_subs'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -422,18 +418,12 @@
     let favs = JSON.parse(localStorage.getItem('favs_v178')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
     let adminClicks = 0; 
-    let formAdminClicks = 0; // 🕵️‍♂️ عداد ضغطات الأدمن السري
+    let formAdminClicks = 0; 
 
     function init() {
         setTimeout(removeSplash, 1000);
-
-        // تنظيف الكاشات القديمة
-        localStorage.removeItem('hona_v260_clean_final'); 
-        localStorage.removeItem('hona_v270_final_polish');
-        localStorage.removeItem('hona_v275_clean_dates');
-        localStorage.removeItem('hona_v300_final_stable');
-        localStorage.removeItem('hona_v16_manual_fix');
-
+        localStorage.removeItem('hona_v295_final_gold_fix');
+        
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
@@ -562,13 +552,11 @@
         if (!offerStr || offerStr.trim().length < 2) return false;
         let dateMatch = offerStr.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
         if (!dateMatch) return true; // عرض ساري إذا لم يكن له تاريخ
-        
         const d = parseInt(dateMatch[1]);
         const m = parseInt(dateMatch[2]) - 1; 
         let year = new Date().getFullYear();
         const now = new Date();
         if (now.getMonth() === 11 && m === 0) { year += 1; }
-        
         const exp = new Date(year, m, d, 23, 59, 59);
         return now <= exp;
     }
@@ -588,20 +576,14 @@
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); 
         form.reset(); 
-        
-        // إخفاء كل شيء بأمان
         const safeHide = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'none'; };
         ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv'].forEach(safeHide);
-
         const contactDiv = document.getElementById('contactDiv');
         if(contactDiv) contactDiv.style.display = 'block';
-        
-        // إخفاء خيارات الأدمن افتراضياً
         document.querySelectorAll('.admin-opt').forEach(el => el.style.display = 'none');
         document.querySelectorAll('.admin-cat').forEach(el => el.style.display = 'none');
         document.getElementById('formTitle').style.color = 'var(--dark)';
         formAdminClicks = 0;
-
         if(type) { 
             document.getElementById('reqType').value = type; 
             toggleFields(type); 
@@ -614,28 +596,15 @@
     
     // 🔥 دالة التبديل الآمنة
     function toggleFields(val) { 
-        let showCat = false; 
-        let showHours = false; 
-        let showUsed = false; 
-        let showImgLink = false; 
-        let showOffer = false; 
-        let showNewsSrc = false; 
-        let showContact = true; 
-        let showArea = true; 
-        
-        // إعادة تعيين النصوص الافتراضية
+        let showCat = false; let showHours = false; let showUsed = false; let showImgLink = false; let showOffer = false; let showNewsSrc = false; let showContact = true; let showArea = true; 
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان"; 
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان"; 
         document.querySelector('input[name="Contact"]').required = true; 
         document.querySelector('input[name="Area"]').required = false; 
-        
-        if (val === 'نشاط') { 
-            showCat = true; 
-            showHours = true; 
-        } else if (val === 'إعلان') { 
-            showCat = true; 
-            showOffer = true; 
-        } else if (val === 'خبر') { 
+
+        if (val === 'نشاط') { showCat = true; showHours = true; } 
+        else if (val === 'إعلان') { showCat = true; showOffer = true; } 
+        else if (val === 'خبر') { 
             document.getElementById('lbl_Name').innerText = "عنوان الخبر"; 
             document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي"; 
             showNewsSrc = true; showContact = false; showArea = false; 
@@ -650,7 +619,6 @@
         else if (val === 'بيع سلعة / مستعمل') { showUsed = true; } 
         else if (val === 'مخالفة') { showImgLink = true; } 
         
-        // استخدام Safe Check لتجنب الأخطاء
         const safeShow = (id, show) => { const el = document.getElementById(id); if(el) el.style.display = show ? (id==='workHoursDiv' || id==='offerSection' ? 'flex':'block') : 'none'; };
         
         safeShow('catDiv', showCat);
@@ -666,37 +634,36 @@
         document.getElementById('reqType').value = val; 
     }
 
-    // 🔥🔥 إصلاح مشكلة عدم ظهور القوائم الفرعية (SubCategories Fix)
-    function checkSub(val) {
+    // 🔥🔥 إصلاح جذري للقوائم الفرعية (SubCategories Fix)
+    function updateSubCats(val) {
         const subList = subCategories[val];
         const subSel = document.getElementById('subCatSelect');
         const subInput = document.getElementById('subCatInput');
 
-        // أولاً: نخفي الاثنين
         if(subSel) subSel.style.display = 'none';
         if(subInput) subInput.style.display = 'none';
 
         if (subList && subList.length > 0) {
-            // إذا كان هناك قائمة فرعية، نظهرها ونملؤها
             if(subSel) {
                 subSel.style.display = 'block';
                 subSel.innerHTML = '<option value="">اختر التخصص...</option>' + subList.map(s => `<option value="${s}">${s}</option>`).join('');
             }
         } else {
-            // إذا اخترنا "أخرى"، نظهر حقل الكتابة اليدوية
             if(val === 'أخرى' && subInput) {
                 subInput.style.display = 'block';
             }
         }
     }
+    // Alias for old calls just in case
+    function checkSub(val) { updateSubCats(val); }
 
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => { const cleanName = normalizeText(x.name.toLowerCase()); const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : ""); return cleanName.includes(s) || cleanDesc.includes(s); }); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); }
     
-    // 💡 فلتر العروض الذكي + شاشة "لا توجد عروض"
-    function filter(c, el) { 
+    // 💡 فلتر العروض الذكي + شاشة "لا توجد عروض" (مع ScrollTo Fix)
+    function applyFilter(c, el) { 
         curCat = c; 
         if(el) { 
             document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
@@ -714,7 +681,6 @@
         } else if (c === 'fav') { 
             filteredDB = fullDB.filter(x => favs.includes(x.id)); 
         } else if (c === 'offers') { 
-            // 💡 إصلاح: السماح بظهور العروض حتى لو كانت بدون تاريخ محدد بدقة
             filteredDB = fullDB.filter(x => { 
                 if (x.cat === 'بيع سلعة / مستعمل') return false; 
                 return isOfferValid(x.offer); 
@@ -730,6 +696,7 @@
             filteredDB = fullDB.filter(x => x.cat === c); 
             filteredDB.sort((a,b) => (b.feat - a.feat)); 
         } 
+        
         page = 1; 
         renderGrid(true); 
         
@@ -740,10 +707,12 @@
              window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
+    // Alias for old calls just in case
+    function filter(c, el) { applyFilter(c, el); }
 
-    function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }
+    function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); applyFilter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }
     function filterSub(mainCat, subCat) { filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); }
-    function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); applyFilter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
     function sendAppRate() { if(appRating===0) return alert("اختر نجوماً"); submitReview("تقييم التطبيق", "Hona App", appRating); closeModal('rateAppModal'); }
     function openShopRate() { document.getElementById('rateShopName').innerText = currentShopData.name; openModal('rateShopModal'); }
@@ -862,8 +831,7 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
     }
     
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v179', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
-    function checkSub(val) { const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput'); if(subList && subList.length > 0) { subSel.style.display = 'block'; subInp.style.display = 'none'; subSel.innerHTML = subList.map(s => `<option value="${s}">${s}</option>`).join(''); } else { subSel.style.display = 'none'; if (val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; } } }
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v179', JSON.stringify(favs)); if(curCat === 'fav') applyFilter('fav', null); }
     function getCat(m,s){ return m; }
     function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
     

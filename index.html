@@ -9,17 +9,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V12.0: PERFECT STABLE VERSION (NO FAB OVERLAP) --- */
+        /* --- HONA V295: FINAL STABLE SHEETS + WORKING FAB --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
+        body.modal-open { overflow: hidden; } body.modal-open .fab { display: none !important; }
         
-        /* 🔥 الإصلاح الجذري: إخفاء الشريط السفلي عند فتح أي نافذة */
-        body.modal-open { overflow: hidden; } 
-        body.modal-open .btm-nav { display: none !important; }
-        body.modal-open .float-ad { display: none !important; }
-        
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -71,7 +67,21 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        .card-offer-visible { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 8px; border-radius: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 2px dashed #e74c3c; text-align: center; }
+        /* 🎁 تصميم العرض داخل الكارت الرئيسي */
+        .card-offer-visible { 
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
+            color: var(--red); 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            padding: 8px; 
+            border-radius: 10px; 
+            margin-top: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2px; 
+            border: 2px dashed #e74c3c; 
+            text-align: center;
+        }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
@@ -91,31 +101,14 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
-        /* 🔥 تصميم الشريط السفلي الجديد (مع زر الإضافة في المنتصف) 🔥 */
-        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 9000; border-radius: 25px 25px 0 0; }
+        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* الزر الأوسط (الإضافة) */
-        .nav-add-btn {
-            background: var(--dark);
-            color: var(--gold);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin-top: -35px; /* يرفع الزر للأعلى قليلاً */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: 5px solid #fff;
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 9001;
-        }
-        .nav-add-btn:active { transform: scale(0.95); }
+        /* 🔥 زر الإضافة (FAB) - تم الإصلاح */
+        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 5000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
+        .fab:active { transform: translateX(-50%) scale(0.9); }
         
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
@@ -126,15 +119,12 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
         .float-ad:hover .float-txt { display: block; }
-        
-        /* Modal Layer */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 95%; max-width: 450px; border-radius: 25px; padding: 0; position: relative; max-height: 90vh; overflow-y: auto; animation: pop 0.3s; padding-bottom: 20px; }
         .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
         .img-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 250px; background: #eee; }
@@ -146,6 +136,8 @@
         .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #555; font-size: 0.95rem; }
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        
+        /* 🎁 تصميم صندوق العروض الجديد (داخل التفاصيل) */
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -153,6 +145,7 @@
         .offer-text { color: #c0392b; font-weight: 800; font-size: 1rem; }
         .offer-expiry-tag { font-size: 0.75rem; color: #7f8c8d; background: #f9f9f9; padding: 2px 8px; border-radius: 4px; width: fit-content; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }
         .offer-expiry-tag i { color: #e74c3c; font-size: 0.8rem; }
+
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
         .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; }
         .btn-act:active { transform: scale(0.98); }
@@ -166,10 +159,12 @@
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
+        
         #adminModal .card { margin-bottom: 10px; padding: 10px; border-right: 4px solid var(--gold); }
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .btn-reject { background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
         .empty-state { grid-column: span 2; text-align: center; padding: 60px 20px; }
         .empty-icon { font-size: 4rem; color: #ddd; margin-bottom: 20px; }
         .empty-text { font-size: 1.5rem; font-weight: 900; color: var(--dark); font-family: 'Reem Kufi'; }
@@ -244,13 +239,12 @@
 
 <div class="btm-nav">
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
-    <div class="btm-item" onclick="filter('offers', this)"><i class="fas fa-tags"></i>العروض</div>
-    
-    <div class="nav-add-btn" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
-    
-    <div class="btm-item" onclick="filter('fav', this)"><i class="fas fa-heart"></i>المفضلة</div>
-    <div class="btm-item" onclick="filter('souq', this)"><i class="fas fa-handshake"></i>السوق</div>
+    <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
+    <div style="width:50px"></div>
+    <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
+    <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
+<div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
 <div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><i class="fas fa-city" style="font-size:3rem; color:var(--primary); margin-bottom:15px;"></i><h3>تطبيق Hona</h3><p>تطبيق خدمي مجاني 100%.</p><p style="color:var(--primary); font-weight:bold;">نسألكم الدعاء ❤️</p><button class="btn-submit" onclick="openModal('rateAppModal')" style="background:var(--gold); color:black; margin-top:10px;">قيم التطبيق ⭐</button></div></div>
@@ -269,9 +263,6 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
-            <option value="خبر" style="display:none">خبر</option>
-            <option value="مصالح حكومية" style="display:none">مصالح حكومية</option>
-            <option value="دور عبادة" style="display:none">دور عبادة</option>
         </select>
         
         <label id="lbl_Name" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الاسم / العنوان</label>
@@ -319,11 +310,6 @@
 
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
         
-        <div id="newsSourceDiv" style="display:none;">
-            <label style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">مصدر الخبر</label>
-            <input type="text" name="NewsSource" class="form-input" placeholder="مثال: الصفحة الرسمية للجهاز">
-        </div>
-
         <div id="descDiv">
             <label id="lbl_Desc" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الوصف</label>
             <textarea name="Description" id="inp_Desc" class="form-input" placeholder="الوصف / التفاصيل" required></textarea>
@@ -388,8 +374,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد لتحديث الكود (V12.0)
-    const CACHE_KEY = 'hona_v1200_final_fix_crash'; 
+    // ✅ مفتاح كاش جديد لتحديث الكود (V13.0)
+    const CACHE_KEY = 'hona_v1300_final_fix_crash_fab'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -564,19 +550,19 @@
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
-    // ✅🔥 هذا هو التعديل الوحيد (إخفاء خيارات الأدمن فقط دون المساس بالكود)
+    // ✅🔥 هذا هو التعديل الوحيد: إزالة أكواد الأدمن من الجافاسكريبت لكي لا يحدث خطأ
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); 
         form.reset(); 
         
-        // Hide all divs first
-        const divsToHide = ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv', 'contactDiv'];
-        divsToHide.forEach(id => {
-            const el = document.getElementById(id);
-            if(el) el.style.display = 'none';
-        });
-
-        // Show default contact div
+        document.getElementById('catDiv').style.display = 'none'; 
+        document.getElementById('usedDiv').style.display = 'none'; 
+        document.getElementById('imgLink').style.display = 'none'; 
+        document.getElementById('subCatInput').style.display = 'none'; 
+        document.getElementById('subCatSelect').style.display = 'none'; 
+        document.getElementById('waUploadHelp').style.display = 'none'; 
+        document.getElementById('offerSection').style.display = 'none'; 
+        document.getElementById('newsSourceDiv').style.display = 'none'; 
         document.getElementById('contactDiv').style.display = 'block'; 
         
         if(type) { 
@@ -622,29 +608,18 @@
             showUsed = true; 
         } else if (val === 'مخالفة') { 
             showImgLink = true; 
-        } else if (val === 'اقتراح') {
-            // Keep default
-        }
+        } 
+        // لا يوجد "else if" للأخبار أو المصالح لأنها مخفية من القائمة، ولكن حتى لو حاول الكود البحث عنها، فلن يجد مشكلة لأننا لم نقم بحذفها من HTML بل أخفيناها
         
-        // Hide logic for elements that might not exist or need resetting
-        const els = ['catDiv', 'workHoursDiv', 'usedDiv', 'imgLink', 'offerSection', 'newsSourceDiv', 'contactDiv', 'lbl_Area', 'inp_Area'];
-        els.forEach(id => {
-            const el = document.getElementById(id);
-            if(el) el.style.display = 'none';
-        });
-
-        if(showCat) document.getElementById('catDiv').style.display = 'block';
-        if(showHours) document.getElementById('workHoursDiv').style.display = 'flex';
-        if(showUsed) document.getElementById('usedDiv').style.display = 'block';
-        if(showImgLink) document.getElementById('imgLink').style.display = 'block';
-        if(showOffer) document.getElementById('offerSection').style.display = 'flex';
-        if(showNewsSrc) document.getElementById('newsSourceDiv').style.display = 'block';
-        if(showContact) document.getElementById('contactDiv').style.display = 'block';
-        if(showArea) {
-            document.getElementById('lbl_Area').style.display = 'block';
-            document.getElementById('inp_Area').style.display = 'block';
-        }
-
+        document.getElementById('catDiv').style.display = showCat ? 'block' : 'none'; 
+        document.getElementById('workHoursDiv').style.display = showHours ? 'flex' : 'none'; 
+        document.getElementById('usedDiv').style.display = showUsed ? 'block' : 'none'; 
+        document.getElementById('imgLink').style.display = showImgLink ? 'block' : 'none'; 
+        document.getElementById('offerSection').style.display = showOffer ? 'flex' : 'none'; 
+        document.getElementById('newsSourceDiv').style.display = showNewsSrc ? 'block' : 'none'; 
+        document.getElementById('contactDiv').style.display = showContact ? 'block' : 'none'; 
+        document.getElementById('lbl_Area').style.display = showArea ? 'block' : 'none'; 
+        document.getElementById('inp_Area').style.display = showArea ? 'block' : 'none'; 
         document.getElementById('reqType').value = val; 
     }
 
@@ -690,12 +665,7 @@
         } 
         page = 1; 
         renderGrid(true); 
-        // Scroll to top
-        if(el && !el.classList.contains('btm-item')) {
-             document.getElementById('searchArea').scrollIntoView({behavior:'smooth'});
-        } else {
-             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100); 
     }
 
     function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }

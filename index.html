@@ -9,34 +9,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V-MAX: FULL ORIGINAL CODE + CENTER BUTTON FIX --- */
-        
-        :root { 
-            --primary: #27ae60; 
-            --dark: #2c3e50; 
-            --gold: #f1c40f; 
-            --bg: #f4f7f6; 
-            --white: #ffffff; 
-            --red: #e74c3c; 
-            --text-bold: #1a1a1a; 
-            --gray: #95a5a6;
-        }
-
+        /* --- HONA V-MASTER: ORIGINAL STABLE CODE (REPAIRED) --- */
+        :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 100px; user-select: none; overflow-x: hidden; color: #333; }
-        
-        /* إخفاء العناصر العائمة عند فتح المودال */
+        body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
         body.modal-open { overflow: hidden; } 
-        body.modal-open .btm-nav { display: none !important; }
-        body.modal-open .float-ad { display: none !important; }
-
-        /* --- شاشة الترحيب --- */
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
+        body.modal-open .fab { display: none !important; }
+        
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* --- الهيدر --- */
         header { margin-top: 62px; background: linear-gradient(135deg, var(--primary), #1abc9c); color: white; padding: 20px 20px 40px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.15); display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .geo-logo { width: 48px; height: 48px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: var(--primary); font-size: 1.6rem; }
@@ -47,52 +31,28 @@
         .shop-counter-num { font-size: 1.1rem; font-weight: 800; color: var(--gold); line-height: 1; }
         .shop-counter-lbl { font-size: 0.6rem; color: #fff; opacity: 0.9; }
         
-        /* --- المحتوى الرئيسي --- */
         #mainView { padding: 0 15px; margin-top: -35px; position: relative; z-index: 10; }
         .search-wrap { background: white; padding: 5px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
         .search-inp { flex: 1; border: none; padding: 12px 20px; outline: none; font-family: 'Tajawal'; font-size: 1rem; background: transparent; }
         .search-btn { color: var(--primary); padding: 0 20px; cursor: pointer; font-size: 1.2rem; }
         
-        /* --- الفلاتر السريعة --- */
         .quick-filters { display: flex; gap: 10px; margin-bottom: 20px; padding: 0 2px; }
         .q-chip { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.03); border: 1px solid #eee; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; transition: 0.2s; color: #555; }
         .q-chip.active { background: var(--dark); color: white; border-color: var(--dark); } .q-chip.active i { color: var(--gold); }
         
-        /* --- شبكة التصنيفات (الألوان الكاملة) --- */
         .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 10px; background: white; padding: 20px 10px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; }
         .cat-icon { width: 50px; height: 50px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white; transition: 0.2s; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
         .cat-name { font-size: 0.7rem; font-weight: 600; color: #555; text-align: center; line-height: 1.2; }
         .cat-item.active .cat-icon { transform: scale(1.1) translateY(-3px); border: 2px solid var(--gold); }
+        .bg-all{background:var(--dark)}.bg-news{background:#c0392b}.bg-gov{background:#8e44ad}.bg-worship{background:#16a085}.bg-school{background:#2980b9}.bg-food{background:#e67e22}.bg-market{background:#27ae60}.bg-home{background:#7f8c8d}.bg-techs{background:#34495e}.bg-tech{background:#3498db}.bg-fashion{background:#9b59b6}.bg-auto{background:#2c3e50}.bg-decor{background:#f39c12}.bg-med{background:#e74c3c}.bg-sport{background:#d35400}.bg-transport{background:#3498db}.bg-clean{background:#d81b60}.bg-other{background:#95a5a6}
         
-        /* ألوان التصنيفات */
-        .bg-all{background:var(--dark)}
-        .bg-news{background:#c0392b}
-        .bg-gov{background:#8e44ad}
-        .bg-worship{background:#16a085}
-        .bg-school{background:#2980b9}
-        .bg-food{background:#e67e22}
-        .bg-market{background:#27ae60}
-        .bg-home{background:#7f8c8d}
-        .bg-techs{background:#34495e}
-        .bg-tech{background:#3498db}
-        .bg-fashion{background:#9b59b6}
-        .bg-auto{background:#2c3e50}
-        .bg-decor{background:#f39c12}
-        .bg-med{background:#e74c3c}
-        .bg-sport{background:#d35400}
-        .bg-transport{background:#3498db}
-        .bg-clean{background:#d81b60}
-        .bg-other{background:#95a5a6}
-        
-        /* --- القوائم الفرعية --- */
         .sub-cat-nav { display: none; overflow-x: auto; gap: 12px; padding: 10px 5px 20px; margin-bottom: 5px; scrollbar-width: none; white-space: nowrap; -webkit-overflow-scrolling: touch; }
         .sub-cat-nav::-webkit-scrollbar { display: none; }
         .sub-chip { background: white; border: 1px solid #f0f0f0; padding: 10px 24px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; color: #555; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.04); min-width: max-content; }
         .sub-chip:active { transform: scale(0.95); }
         .sub-chip.active { background: linear-gradient(135deg, var(--primary), #2ecc71); color: white; border-color: transparent; box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3); transform: translateY(-3px); }
 
-        /* --- الكروت والشبكة --- */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.04); position: relative; overflow: hidden; cursor: pointer; border: 1px solid #f0f0f0; transition: transform 0.1s; }
         .card:active { transform: scale(0.98); }
@@ -108,7 +68,7 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        /* 🔥 تصميم العرض داخل الكارت (المصحح) */
+        /* 🎁 تصميم العرض داخل الكارت الرئيسي */
         .card-offer-visible { 
             background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
             color: var(--red); 
@@ -125,11 +85,15 @@
         }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
+        .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
+        .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
+        .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
+        .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
+        .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
+        .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
-        
-        /* أزرار المفضلة والشارات */
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
         .card-fav-btn.active i { color: var(--red); }
         .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.9); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; backdrop-filter: blur(2px); }
@@ -138,33 +102,15 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
-        /* 🔥 الشريط السفلي الجديد (تصميم متصل مع زر في المنتصف) 🔥 */
-        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 9000; border-radius: 25px 25px 0 0; align-items: flex-end; }
-        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; margin-bottom: 5px; }
+        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
+        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 زر الإضافة الأوسط الجديد 🔥 */
-        .nav-add-btn {
-            background: var(--dark);
-            color: var(--gold);
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 15px; /* يرفع الزر للأعلى */
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-            border: 6px solid #fff; /* حدود بيضاء لدمجه مع الخلفية */
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 9001;
-        }
-        .nav-add-btn:active { transform: scale(0.9); }
-
-        /* --- شريط الأخبار --- */
+        /* 🔥 زر الإضافة (FAB) */
+        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 5000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
+        .fab:active { transform: translateX(-50%) scale(0.9); }
+        
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
@@ -174,20 +120,14 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        
-        /* --- الأيقونة العائمة --- */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
         .float-ad:hover .float-txt { display: block; }
-        
-        /* --- المودال (النوافذ المنبثقة) --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 95%; max-width: 450px; border-radius: 25px; padding: 0; position: relative; max-height: 90vh; overflow-y: auto; animation: pop 0.3s; padding-bottom: 20px; }
         .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
-        
-        /* --- تفاصيل الكارت --- */
         .img-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 250px; background: #eee; }
         .img-slider img { width: 100%; height: 100%; object-fit: cover; scroll-snap-align: center; flex-shrink: 0; }
         .d-body { padding: 20px; }
@@ -198,7 +138,7 @@
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
         
-        /* 🎁 صندوق العروض في التفاصيل */
+        /* 🎁 تصميم صندوق العروض الجديد (داخل التفاصيل) */
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -217,12 +157,10 @@
         .btn-small { background: #f0f0f0; color: #555; padding: 8px 15px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: none; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         .btn-small:hover { background: #e0e0e0; }
         .btn-small i.fa-whatsapp { color: #25D366; font-size: 1.1rem; }
-        
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
         
-        /* تنسيقات الأدمن */
         #adminModal .card { margin-bottom: 10px; padding: 10px; border-right: 4px solid var(--gold); }
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
@@ -303,12 +241,11 @@
 <div class="btm-nav">
     <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="filter('offers', null)"><i class="fas fa-tags"></i>العروض</div>
-    
-    <div class="nav-add-btn" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
-
+    <div style="width:50px"></div>
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
+<div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
 <div id="aboutModal" class="modal"><div class="modal-content" style="text-align:center; padding:30px;"><div class="modal-close" onclick="closeModal('aboutModal')">✕</div><i class="fas fa-city" style="font-size:3rem; color:var(--primary); margin-bottom:15px;"></i><h3>تطبيق Hona</h3><p>تطبيق خدمي مجاني 100%.</p><p style="color:var(--primary); font-weight:bold;">نسألكم الدعاء ❤️</p><button class="btn-submit" onclick="openModal('rateAppModal')" style="background:var(--gold); color:black; margin-top:10px;">قيم التطبيق ⭐</button></div></div>
@@ -327,9 +264,9 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
-            <option value="خبر" style="display:none">خبر</option>
-            <option value="مصالح حكومية" style="display:none">مصالح حكومية</option>
-            <option value="دور عبادة" style="display:none">دور عبادة</option>
+            <option value="خبر" style="display:none !important">خبر</option>
+            <option value="مصالح حكومية" style="display:none !important">مصالح حكومية</option>
+            <option value="دور عبادة" style="display:none !important">دور عبادة</option>
         </select>
         
         <label id="lbl_Name" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الاسم / العنوان</label>
@@ -351,10 +288,10 @@
                 <option value="ديكورات">ديكورات</option>
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
-                <option value="مصالح حكومية" id="opt_gov" style="display:none">مصالح حكومية</option>
-                <option value="دور عبادة" id="opt_worship" style="display:none">دور عبادة</option>
+                <option value="مصالح حكومية" id="opt_gov" style="display:none !important">مصالح حكومية</option>
+                <option value="دور عبادة" id="opt_worship" style="display:none !important">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
-                <option value="أخبار" id="opt_news" style="display:none">أخبار (System)</option>
+                <option value="أخبار" id="opt_news" style="display:none !important">أخبار (System)</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
@@ -449,8 +386,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد لتحديث الكود (V-MAX)
-    const CACHE_KEY = 'hona_vmax_final'; 
+    // ✅ مفتاح كاش جديد لتحديث الكود (V14.5)
+    const CACHE_KEY = 'hona_v1450_final_fix_offer'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -484,6 +421,7 @@
         localStorage.removeItem('hona_v260_clean_final'); 
         localStorage.removeItem('hona_v270_final_polish');
         localStorage.removeItem('hona_v275_clean_dates');
+        localStorage.removeItem('hona_v300_final_stable');
 
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -598,19 +536,19 @@
 
     // 💡 تعديل جوهري: العرض ساري حتى آخر ثانية في اليوم
     function isOfferValid(offerStr) {
-        if (!offerStr || offerStr.trim().length < 2) return false; // 🔥 تحسين: لا يعرض العروض الفارغة
+        if (!offerStr || offerStr.trim().length < 2) return false;
         let dateMatch = offerStr.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
-        if (!dateMatch) return true;
+        if (!dateMatch) return true; // العرض ساري إذا لم يكن به تاريخ
         
         const d = parseInt(dateMatch[1]);
         const m = parseInt(dateMatch[2]) - 1; 
         let year = new Date().getFullYear();
         const now = new Date();
+        // تصحيح السنة إذا كان الشهر القادم في السنة الجديدة
         if (now.getMonth() === 11 && m === 0) { year += 1; }
         
         const exp = new Date(year, m, d, 23, 59, 59);
-        if (now > exp) return false;
-        return true;
+        return now <= exp;
     }
 
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
@@ -624,10 +562,11 @@
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
-    // 🔥 FAB CLICK HANDLER (FIXED FOR SHEETS VERSION)
+    // ✅🔥 هذا هو التعديل الوحيد: إزالة أكواد الأدمن من الجافاسكريبت لكي لا يحدث خطأ
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); 
         form.reset(); 
+        
         document.getElementById('catDiv').style.display = 'none'; 
         document.getElementById('usedDiv').style.display = 'none'; 
         document.getElementById('imgLink').style.display = 'none'; 
@@ -638,11 +577,6 @@
         document.getElementById('newsSourceDiv').style.display = 'none'; 
         document.getElementById('contactDiv').style.display = 'block'; 
         
-        // Reset Admin Defaults (Hidden via CSS but logic needs them reset)
-        document.getElementById('opt_gov').style.display = 'none';
-        document.getElementById('opt_worship').style.display = 'none';
-        document.getElementById('opt_news').style.display = 'none';
-
         if(type) { 
             document.getElementById('reqType').value = type; 
             toggleFields(type); 
@@ -652,42 +586,43 @@
         } 
         openModal('formModal'); 
     }
-
+    
+    // 🔥 تم تنظيف هذه الدالة لتعمل فقط مع الخيارات المتاحة
     function toggleFields(val) { 
-        let showCat = false; let showHours = false; let showUsed = false; let showImgLink = false; let showOffer = false; let showNewsSrc = false; let showContact = true; let showArea = true; 
+        let showCat = false; 
+        let showHours = false; 
+        let showUsed = false; 
+        let showImgLink = false; 
+        let showOffer = false; 
+        let showNewsSrc = false; 
+        let showContact = true; 
+        let showArea = true; 
         
-        // Reset defaults
+        // إعادة تعيين النصوص الافتراضية
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان"; 
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان"; 
+        document.getElementById('lbl_Desc').innerText = "الوصف"; 
+        document.getElementById('inp_Desc').placeholder = "الوصف / التفاصيل"; 
+        document.getElementById('lbl_Location').innerText = "اللوكيشن"; 
+        document.getElementById('inp_Location').placeholder = "رابط اللوكيشن"; 
+        document.getElementById('lbl_Image').innerText = "الصورة"; 
+        document.getElementById('inp_Image').placeholder = "رابط صورة (أو ارسلها واتساب)"; 
         document.querySelector('input[name="Contact"]').required = true; 
         document.querySelector('input[name="Area"]').required = false; 
-        document.getElementById('opt_gov').style.display = 'none';
-        document.getElementById('opt_worship').style.display = 'none';
-        document.getElementById('opt_news').style.display = 'none';
-
-        if (val === 'نشاط') { showCat = true; showHours = true; } 
-        else if (val === 'إعلان') { showCat = true; showOffer = true; } 
-        else if (val === 'خبر') { 
-            document.getElementById('lbl_Name').innerText = "عنوان الخبر"; 
-            document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي"; 
-            showNewsSrc = true; showContact = false; showArea = false; 
-            document.querySelector('input[name="Contact"]').required = false; 
-            document.getElementById('opt_news').style.display = 'block';
-            document.getElementById('inp_Category').value = 'أخبار'; 
-        } 
-        else if (val === 'مصالح حكومية' || val === 'دور عبادة') {
-            showCat = true;
-            if(val === 'مصالح حكومية') { 
-                document.getElementById('opt_gov').style.display = 'block'; 
-                document.getElementById('inp_Category').value = 'مصالح حكومية';
-            }
-            if(val === 'دور عبادة') { 
-                document.getElementById('opt_worship').style.display = 'block'; 
-                document.getElementById('inp_Category').value = 'دور عبادة';
-            }
+        
+        if (val === 'نشاط') { 
+            showCat = true; 
+            showHours = true; 
+        } else if (val === 'إعلان') { 
+            showCat = true; 
+            showOffer = true; 
+        } else if (val === 'بيع سلعة / مستعمل') { 
+            showUsed = true; 
+        } else if (val === 'مخالفة') { 
+            showImgLink = true; 
+        } else if (val === 'اقتراح') {
+            // Keep default
         }
-        else if (val === 'بيع سلعة / مستعمل') { showUsed = true; } 
-        else if (val === 'مخالفة') { showImgLink = true; } 
         
         document.getElementById('catDiv').style.display = showCat ? 'block' : 'none'; 
         document.getElementById('workHoursDiv').style.display = showHours ? 'flex' : 'none'; 
@@ -743,7 +678,7 @@
         } 
         page = 1; 
         renderGrid(true); 
-        // Scroll to top of list if not bottom nav
+        // Scroll to top
         if(el && !el.classList.contains('btm-item')) {
              document.getElementById('searchArea').scrollIntoView({behavior:'smooth'});
         } else {

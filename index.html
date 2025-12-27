@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V16: MANUAL FIX (NO CRASHES) --- */
+        /* --- HONA V17.0: MASTER EDITION (SECRET ADMIN + FIXED OFFERS) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -68,7 +68,7 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        /* 🎁 تصميم العرض داخل الكارت الرئيسي (Grid Card) */
+        /* 🎁 تصميم العرض داخل الكارت (Fix: Always Visible) */
         .card-offer-visible { 
             background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
             color: var(--red); 
@@ -107,7 +107,6 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 زر الإضافة (FAB) */
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 5000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -256,7 +255,7 @@
 
 <div id="formModal" class="modal"><div class="modal-content" style="padding:20px;">
     <div class="modal-close" onclick="closeModal('formModal')">✕</div>
-    <h3 style="text-align:center; color:var(--dark); margin-top:10px;" id="formTitle">إضافة طلب</h3>
+    <h3 style="text-align:center; color:var(--dark); margin-top:10px; cursor:pointer;" id="formTitle" onclick="toggleAdminMode()">إضافة طلب</h3>
     <div style="background:#e8f5e9; padding:10px; border-radius:10px; text-align:center; margin-bottom:15px; font-size:0.8rem; color:#2e7d32;">✨ الإضافة مجانية تماماً لوجه الله</div>
     <form id="reqForm" onsubmit="sendData(event)">
         <input type="hidden" name="Date" id="finalDateParam" value="New"> 
@@ -266,6 +265,10 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
+            
+            <option value="خبر" id="admin_opt_1" style="display:none">📰 إضافة خبر (Admin)</option>
+            <option value="مصالح حكومية" id="admin_opt_2" style="display:none">🏛️ مصلحة حكومية (Admin)</option>
+            <option value="دور عبادة" id="admin_opt_3" style="display:none">🕌 دور عبادة (Admin)</option>
         </select>
         
         <label id="lbl_Name" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الاسم / العنوان</label>
@@ -287,7 +290,10 @@
                 <option value="ديكورات">ديكورات</option>
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
+                <option value="مصالح حكومية" id="opt_gov" style="display:none">مصالح حكومية</option>
+                <option value="دور عبادة" id="opt_worship" style="display:none">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
+                <option value="أخبار" id="opt_news" style="display:none">أخبار (System)</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
@@ -313,6 +319,11 @@
 
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
         
+        <div id="newsSourceDiv" style="display:none;">
+            <label style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">مصدر الخبر</label>
+            <input type="text" name="NewsSource" class="form-input" placeholder="مثال: الصفحة الرسمية للجهاز">
+        </div>
+
         <div id="descDiv">
             <label id="lbl_Desc" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الوصف</label>
             <textarea name="Description" id="inp_Desc" class="form-input" placeholder="الوصف / التفاصيل" required></textarea>
@@ -368,17 +379,14 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الصحيح (الجديد) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
-    
-    // إعدادات الشيت القديم (بياناتك الأصلية)
     const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد لتحديث الكود (V16)
-    const CACHE_KEY = 'hona_v16_manual_fix'; 
+    // ✅ تحديث الكاش لإظهار العروض الجديدة
+    const CACHE_KEY = 'hona_v1700_final_master'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -404,6 +412,7 @@
     let favs = JSON.parse(localStorage.getItem('favs_v178')) || [];
     let appRating = 0, shopRating = 0, currentShopData = {};
     let adminClicks = 0; 
+    let adminMode = false; // 🕵️‍♂️ وضع الأدمن السري
 
     function init() {
         setTimeout(removeSplash, 1000);
@@ -412,6 +421,7 @@
         localStorage.removeItem('hona_v260_clean_final'); 
         localStorage.removeItem('hona_v270_final_polish');
         localStorage.removeItem('hona_v275_clean_dates');
+        localStorage.removeItem('hona_v295_final_gold_fix');
 
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -430,8 +440,6 @@
         
         Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
             let tempDB = res.data.slice(1).map((r, i) => {
-                let offerTxt = r[10] || "";
-                let expiryDateDisplay = ""; 
                 let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                 const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                 if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
@@ -445,7 +453,7 @@
                 return {
                     id: r[0] || i, name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
                     desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
-                    offer: String(offerTxt || ""), expiry: expiryDateDisplay, live: isActive, feat: isFeatured, 
+                    offer: String(r[10] || ""), live: isActive, feat: isFeatured, 
                     date: r[13], newsSrc: String(source), rating: r[16] || "" 
                 };
             }).reverse();
@@ -463,6 +471,19 @@
     function triggerAdmin() {
         adminClicks++;
         if (adminClicks === 5) { adminClicks = 0; openModal('adminModal'); }
+    }
+
+    // 🔥 دالة تفعيل وضع الأدمن السري في الاستمارة
+    function toggleAdminMode() {
+        adminClicks++;
+        if(adminClicks >= 3) {
+            alert("🔓 تم تفعيل وضع الأدمن!");
+            document.getElementById('admin_opt_1').style.display = 'block';
+            document.getElementById('admin_opt_2').style.display = 'block';
+            document.getElementById('admin_opt_3').style.display = 'block';
+            document.getElementById('formTitle').style.color = '#e74c3c';
+            adminClicks = 0;
+        }
     }
 
     function loadPending() {
@@ -524,12 +545,11 @@
         .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); } });
     }
 
-    // 💡 تعديل جوهري: تخفيف شروط العرض ليظهر أي شيء مكتوب
+    // 💡 تعديل جوهري: العرض ساري حتى آخر ثانية في اليوم
     function isOfferValid(offerStr) {
         if (!offerStr || offerStr.trim().length < 2) return false;
-        // إذا كان هناك تاريخ، نتحقق منه. إذا لم يكن، نعرض العرض كما هو.
         let dateMatch = offerStr.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
-        if (!dateMatch) return true;
+        if (!dateMatch) return true; // عرض ساري إذا لم يكن له تاريخ
         
         const d = parseInt(dateMatch[1]);
         const m = parseInt(dateMatch[2]) - 1; 
@@ -538,8 +558,7 @@
         if (now.getMonth() === 11 && m === 0) { year += 1; }
         
         const exp = new Date(year, m, d, 23, 59, 59);
-        if (now > exp) return false;
-        return true;
+        return now <= exp;
     }
 
     function removeSplash() { const s = document.getElementById('splashScreen'); if(s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 500); } }
@@ -553,20 +572,25 @@
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
-    // 🔥 إصلاح زر الإضافة: تنظيف الدالة من الإشارة لعناصر محذوفة
+    // ✅🔥 فتح الاستمارة وتنظيف الحقول
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); 
         form.reset(); 
         
-        // إخفاء الأقسام بأمان (نتأكد من وجود العنصر أولاً)
-        const divs = ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'contactDiv'];
-        divs.forEach(id => {
+        const divsToHide = ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv', 'contactDiv'];
+        divsToHide.forEach(id => {
             const el = document.getElementById(id);
             if(el) el.style.display = 'none';
         });
 
-        const contactDiv = document.getElementById('contactDiv');
-        if(contactDiv) contactDiv.style.display = 'block';
+        document.getElementById('contactDiv').style.display = 'block'; 
+        
+        // إعادة إخفاء خيارات الأدمن عند كل فتح جديد
+        document.getElementById('admin_opt_1').style.display = 'none';
+        document.getElementById('admin_opt_2').style.display = 'none';
+        document.getElementById('admin_opt_3').style.display = 'none';
+        document.getElementById('formTitle').style.color = 'var(--dark)';
+        adminClicks = 0;
 
         if(type) { 
             document.getElementById('reqType').value = type; 
@@ -577,25 +601,51 @@
         } 
         openModal('formModal'); 
     }
-
+    
     function toggleFields(val) { 
-        let showCat = false; let showHours = false; let showUsed = false; let showImgLink = false; let showOffer = false; let showContact = true; let showArea = true; 
+        let showCat = false; 
+        let showHours = false; 
+        let showUsed = false; 
+        let showImgLink = false; 
+        let showOffer = false; 
+        let showNewsSrc = false; 
+        let showContact = true; 
+        let showArea = true; 
         
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان"; 
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان"; 
         
         if (val === 'نشاط') { showCat = true; showHours = true; } 
         else if (val === 'إعلان') { showCat = true; showOffer = true; } 
+        else if (val === 'خبر') { 
+            document.getElementById('lbl_Name').innerText = "عنوان الخبر"; 
+            document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي"; 
+            showNewsSrc = true; showContact = false; showArea = false; 
+            document.getElementById('inp_Category').value = 'أخبار'; 
+        } 
+        else if (val === 'مصالح حكومية' || val === 'دور عبادة') {
+            showCat = true;
+            if(val === 'مصالح حكومية') { 
+                document.getElementById('opt_gov').style.display = 'block'; 
+                document.getElementById('inp_Category').value = 'مصالح حكومية';
+            }
+            if(val === 'دور عبادة') { 
+                document.getElementById('opt_worship').style.display = 'block'; 
+                document.getElementById('inp_Category').value = 'دور عبادة';
+            }
+        }
         else if (val === 'بيع سلعة / مستعمل') { showUsed = true; } 
         else if (val === 'مخالفة') { showImgLink = true; } 
         
-        // ✅ استخدام (Safe Check)
-        const elCat = document.getElementById('catDiv'); if(elCat) elCat.style.display = showCat ? 'block' : 'none';
-        const elHours = document.getElementById('workHoursDiv'); if(elHours) elHours.style.display = showHours ? 'flex' : 'none';
-        const elUsed = document.getElementById('usedDiv'); if(elUsed) elUsed.style.display = showUsed ? 'block' : 'none';
-        const elImgLink = document.getElementById('imgLink'); if(elImgLink) elImgLink.style.display = showImgLink ? 'block' : 'none';
-        const elOffer = document.getElementById('offerSection'); if(elOffer) elOffer.style.display = showOffer ? 'flex' : 'none';
-        
+        document.getElementById('catDiv').style.display = showCat ? 'block' : 'none'; 
+        document.getElementById('workHoursDiv').style.display = showHours ? 'flex' : 'none'; 
+        document.getElementById('usedDiv').style.display = showUsed ? 'block' : 'none'; 
+        document.getElementById('imgLink').style.display = showImgLink ? 'block' : 'none'; 
+        document.getElementById('offerSection').style.display = showOffer ? 'flex' : 'none'; 
+        document.getElementById('newsSourceDiv').style.display = showNewsSrc ? 'block' : 'none'; 
+        document.getElementById('contactDiv').style.display = showContact ? 'block' : 'none'; 
+        document.getElementById('lbl_Area').style.display = showArea ? 'block' : 'none'; 
+        document.getElementById('inp_Area').style.display = showArea ? 'block' : 'none'; 
         document.getElementById('reqType').value = val; 
     }
 
@@ -623,10 +673,10 @@
         } else if (c === 'fav') { 
             filteredDB = fullDB.filter(x => favs.includes(x.id)); 
         } else if (c === 'offers') { 
-            // 💡 إصلاح: إظهار العروض السارية فقط + التأكد من عدم إخفاء العروض الدائمة (بدون تاريخ)
+            // 💡 إصلاح: السماح بظهور العروض حتى لو كانت بدون تاريخ محدد بدقة
             filteredDB = fullDB.filter(x => { 
                 if (x.cat === 'بيع سلعة / مستعمل') return false; 
-                return isOfferValid(x.offer) && x.offer.trim().length > 0; // إضافة شرط أن العرض ليس فارغاً
+                return isOfferValid(x.offer); 
             }); 
         } else if (c === 'souq') { 
             filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 
@@ -641,8 +691,12 @@
         } 
         page = 1; 
         renderGrid(true); 
-        // 🚀 إصلاح التنقل: الصعود للأعلى
-        setTimeout(() => window.scrollTo(0, 0), 100); 
+        // 🚀 إصلاح التنقل: الصعود لأعلى الشاشة بسلاسة عند الضغط
+        if(el && !el.classList.contains('btm-item')) {
+             document.getElementById('searchArea').scrollIntoView({behavior:'smooth'});
+        } else {
+             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 
     function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }
@@ -750,9 +804,9 @@
             
             let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').split('\n')[0] : ''; 
             
-            // ✅ تعديل: عرض تاريخ الانتهاء داخل الكارت (منقط ومميز)
+            // ✅ تعديل: عرض أي نص موجود في خانة العرض فوراً
             let offerHTML = '';
-            if (cleanOffer && isOfferValid(x.offer)) {
+            if (isOfferValid(x.offer)) {
                 let dateMatch = x.offer.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
                 let expiryLine = dateMatch ? `<div class="offer-date-line">⏳ ينتهي: ${dateMatch[1]}/${dateMatch[2]}</div>` : '';
                 offerHTML = `<div class="card-offer-visible">

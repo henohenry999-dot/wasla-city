@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V34.0: FINAL STABLE RELEASE --- */
+        /* --- HONA V35.0: EMERGENCY FIX --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -59,10 +59,10 @@
         .card:active { transform: scale(0.98); }
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
-        
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
+        .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
         
         .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
@@ -78,9 +78,6 @@
 
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
-        
-        .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
-        .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
         
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
@@ -224,7 +221,7 @@
 </div>
 
 <div class="btm-nav">
-    <div class="btm-item active" onclick="applyFilter('all', this)"><i class="fas fa-home"></i>الرئيسية</div>
+    <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="applyFilter('offers', this)"><i class="fas fa-tags"></i>العروض</div>
     
     <div class="nav-add-btn" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
@@ -250,7 +247,6 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
-            
             <option value="خبر" class="admin-opt" style="display:none">📰 إضافة خبر (Admin)</option>
             <option value="مصالح حكومية" class="admin-opt" style="display:none">🏛️ مصلحة حكومية (Admin)</option>
             <option value="دور عبادة" class="admin-opt" style="display:none">🕌 دور عبادة (Admin)</option>
@@ -275,7 +271,6 @@
                 <option value="ديكورات">ديكورات</option>
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
-                
                 <option value="مصالح حكومية" class="admin-cat" style="display:none">مصالح حكومية</option>
                 <option value="دور عبادة" class="admin-cat" style="display:none">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
@@ -335,9 +330,7 @@
             <div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div>
             <div id="dSrcInfo" class="info-row" style="display:none;"></div>
             <div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div>
-            
             <div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div>
-            
             <div class="d-desc" id="dDesc"></div>
             <a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a>
             <div class="share-row">
@@ -365,21 +358,21 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 الرابط الصحيح (الجديد) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥🔥🔥 الحل الفاصل: استخدام رابط GVIZ الذي يجبر الشيت على قراءة الصفحة المحددة (GID) 🔥🔥🔥🔥
-    // هذا الرابط يتجاوز مشاكل الكاش تماماً
-    const sheet = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/gviz/tq?tqx=out:csv&gid=965965865";
+    // 🔥🔥 استخدام رابط GVIZ API لإجبار قراءة شيت Live_Data
+    const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
+    const sheetGID = "965965865"; // رقم صفحة Live_Data
     
-    // نستخدم بروكسي مختلف لأنه يدعم روابط GVIZ بشكل أفضل
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&timestamp=" + Date.now();
+    // رابط مباشر بصيغة CSV للصفحة المحددة
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${sheetGID}`;
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(csvUrl) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V34.0)
-    const CACHE_KEY = 'hona_v3400_final_fix_gviz'; 
+    // ✅ مفتاح كاش جديد (V35.0)
+    const CACHE_KEY = 'hona_v3500_final_gviz'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -409,10 +402,11 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        // Clean all old caches to force fresh load
+        // Clean all old caches
         localStorage.removeItem('hona_v295_final_gold_fix');
         localStorage.removeItem('hona_v2700_original_news');
         localStorage.removeItem('hona_v3000_live_gid_fix');
+        localStorage.removeItem('hona_v3400_final_fix_gviz');
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -429,7 +423,7 @@
 
         document.getElementById('formModal').style.display = 'none';
         
-        // 🔥🔥 معالج الملفات المكسورة (CSV Fixer) + GID LOADER 🔥🔥
+        // 🔥🔥 قراءة الشيت المخصص (Live_Data) عبر GID
         Papa.parse(proxy, { 
             download:true, 
             header:false, 
@@ -438,25 +432,29 @@
                 let cleanData = [];
                 let currentItem = null;
 
+                // إصلاح الأسطر المكسورة (Multi-line Fix)
                 res.data.forEach(row => {
-                    const isNewRow = row[0] && row[0].match(/\d{1,2}\/\d{1,2}\/\d{4}/);
+                    // التحقق من وجود "تاريخ" في العمود الأول لتمييز بداية الصف
+                    const isNewRow = row[0] && (row[0].includes('/') || row[0].includes(':'));
                     if (isNewRow) {
                         if (currentItem) cleanData.push(currentItem);
                         currentItem = row;
                     } else {
                         if (currentItem) {
-                            currentItem[currentItem.length - 1] += "\n" + row.join(" "); 
+                            // دمج النص مع آخر عمود
+                            currentItem[currentItem.length - 1] += " " + row.join(" "); 
                         }
                     }
                 });
                 if (currentItem) cleanData.push(currentItem);
 
+                // تحويل البيانات
                 let tempDB = cleanData.slice(1).map((r, i) => {
                     let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                     const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                     if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
                     
-                    // 🔥🔥 إلغاء الشرط الصارم تماماً: إذا كانت الخانة فارغة، فهو نشط
+                    // قبول أي حالة نشاط (حتى لو فارغة)
                     let activeRaw = String(r[11] || "").toUpperCase();
                     let isActive = !activeRaw.includes('FALSE') && !activeRaw.includes('NO'); 
                     if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
@@ -487,17 +485,19 @@
                 
                 localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
                 
-                // 🔥🔥 رسالة تأكيد (يمكنك حذفها لاحقاً) لتعرف عدد المحلات التي تم جلبها
                 const count = fullDB.filter(x => x.cat !== 'أخبار').length;
-                // alert("تم استرجاع " + fullDB.length + " كارت/محل"); 
-
                 document.getElementById('shopCount').innerText = count;
                 renderGrid(true); 
                 setupTickers(); 
                 setupFloatAd(); 
                 removeSplash();
             }, 
-            error: (err) => { console.log("Error loading data:", err); removeSplash(); }
+            error: (err) => { 
+                console.log("Error loading data:", err); 
+                // Fallback to direct link if proxy fails
+                alert("جاري محاولة الاتصال البديل...");
+                window.location.reload();
+            }
         });
     }
 

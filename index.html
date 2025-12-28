@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V36.0: FINAL FIX & REVIEW --- */
+        /* --- HONA V37.0: YOUR FAVORITE V275 + FIXED FAB --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -58,9 +58,8 @@
         .card:active { transform: scale(0.98); }
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
-        
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
-        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
+        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
         .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
@@ -69,7 +68,7 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        /* 🔥 تصميم عرض الكارت */
+        /* 🎁 تصميم العرض داخل الكارت الرئيسي (Grid Card) */
         .card-offer-visible { 
             background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
             color: var(--red); 
@@ -82,19 +81,16 @@
             flex-direction: column; 
             gap: 2px; 
             border: 2px dashed #e74c3c; 
-            text-align: center; 
+            text-align: center;
         }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
-        /* 🔥 كبسولات الخبر */
         .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
         .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
-        
         .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
         .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
@@ -111,10 +107,30 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 الزر العائم (FAB) - استرجاع التصميم */
-        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1100; cursor: pointer; transition: 0.3s; }
+        /* 🔥🔥 إصلاح زر الإضافة (FAB) - تحسين مكانه وجعله فوق الجميع 🔥🔥 */
+        .fab { 
+            position: fixed; 
+            bottom: 35px; /* رفعناه قليلاً */
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 70px; /* تكبير بسيط */
+            height: 70px; 
+            background: linear-gradient(135deg, var(--dark), #34495e); /* تدرج لوني فخم */
+            color: var(--gold); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 2rem; 
+            border: 4px solid white; /* إطار أبيض واضح */
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3); /* ظل أقوى */
+            z-index: 2000; /* طبقة عالية جداً */
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* تأثير وثب */
+        }
         .fab:active { transform: translateX(-50%) scale(0.9); }
-        
+        .fab i { animation: pulse 2s infinite; }
+
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
@@ -124,6 +140,7 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* 🎁 أيقونة العروض العائمة (تم استرجاعها) */
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -141,6 +158,8 @@
         .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #555; font-size: 0.95rem; }
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        
+        /* 🎁 تصميم صندوق العروض الجديد (داخل التفاصيل) */
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -148,6 +167,7 @@
         .offer-text { color: #c0392b; font-weight: 800; font-size: 1rem; }
         .offer-expiry-tag { font-size: 0.75rem; color: #7f8c8d; background: #f9f9f9; padding: 2px 8px; border-radius: 4px; width: fit-content; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }
         .offer-expiry-tag i { color: #e74c3c; font-size: 0.8rem; }
+
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
         .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; }
         .btn-act:active { transform: scale(0.98); }
@@ -161,10 +181,12 @@
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
+        
         #adminModal .card { margin-bottom: 10px; padding: 10px; border-right: 4px solid var(--gold); }
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .btn-reject { background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
         .empty-state { grid-column: span 2; text-align: center; padding: 60px 20px; }
         .empty-icon { font-size: 4rem; color: #ddd; margin-bottom: 20px; }
         .empty-text { font-size: 1.5rem; font-weight: 900; color: var(--dark); font-family: 'Reem Kufi'; }
@@ -253,9 +275,7 @@
 
 <div id="formModal" class="modal"><div class="modal-content" style="padding:20px;">
     <div class="modal-close" onclick="closeModal('formModal')">✕</div>
-    
-    <h3 style="text-align:center; color:var(--dark); margin-top:10px; cursor:pointer;" id="formTitle" onclick="enableAdminOptions()">إضافة طلب</h3>
-    
+    <h3 style="text-align:center; color:var(--dark); margin-top:10px;" id="formTitle" onclick="enableAdminOptions()">إضافة طلب</h3>
     <div style="background:#e8f5e9; padding:10px; border-radius:10px; text-align:center; margin-bottom:15px; font-size:0.8rem; color:#2e7d32;">✨ الإضافة مجانية تماماً لوجه الله</div>
     <form id="reqForm" onsubmit="sendData(event)">
         <input type="hidden" name="Date" id="finalDateParam" value="New"> 
@@ -265,7 +285,6 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
-            
             <option value="خبر" class="admin-opt" style="display:none">📰 إضافة خبر (Admin)</option>
             <option value="مصالح حكومية" class="admin-opt" style="display:none">🏛️ مصلحة حكومية (Admin)</option>
             <option value="دور عبادة" class="admin-opt" style="display:none">🕌 دور عبادة (Admin)</option>
@@ -290,11 +309,10 @@
                 <option value="ديكورات">ديكورات</option>
                 <option value="مواصلات">مواصلات</option>
                 <option value="رياضة">رياضة</option>
-                
-                <option value="مصالح حكومية" class="admin-cat" style="display:none">مصالح حكومية</option>
-                <option value="دور عبادة" class="admin-cat" style="display:none">دور عبادة</option>
+                <option value="مصالح حكومية" id="opt_gov" style="display:none">مصالح حكومية</option>
+                <option value="دور عبادة" id="opt_worship" style="display:none">دور عبادة</option>
                 <option value="أخرى">أخرى</option>
-                <option value="أخبار" class="admin-cat" style="display:none">أخبار (System)</option>
+                <option value="أخبار" id="opt_news" style="display:none">أخبار (System)</option>
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
@@ -380,17 +398,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
+    // 🔴🔴🔴 رابط السكريبت الجديد (يجب التأكد أنه متصل بالشيت الجديد) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥🔥🔥 الحل الفاصل: استخدام رابط GVIZ API لإجبار قراءة شيت Live_Data
-    const sheet = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/gviz/tq?tqx=out:csv&gid=965965865";
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&t=" + Date.now();
+    // ✅🔥 استخدام رابط GVIZ API لإجبار قراءة شيت Live_Data
+    const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
+    const sheetGID = "965965865"; // رقم صفحة Live_Data
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${sheetGID}`;
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(csvUrl) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V36.0)
-    const CACHE_KEY = 'hona_v3600_final_release'; 
+    // ✅ مفتاح كاش جديد (V37.0)
+    const CACHE_KEY = 'hona_v3700_your_fav_fixed'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -420,11 +441,7 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        // Clean all old caches
-        localStorage.removeItem('hona_v295_final_gold_fix');
-        localStorage.removeItem('hona_v2700_original_news');
-        localStorage.removeItem('hona_v3000_live_gid_fix');
-        localStorage.removeItem('hona_v3400_final_fix_gviz');
+        localStorage.removeItem('hona_v275_clean_dates');
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -441,7 +458,7 @@
 
         document.getElementById('formModal').style.display = 'none';
         
-        // 🔥🔥 قراءة الشيت المخصص (Live_Data) عبر GID + تنظيف الأسطر المكسورة
+        // 🔥🔥 معالج الأسطر المكسورة + GID الصحيح 🔥🔥
         Papa.parse(proxy, { 
             download:true, 
             header:false, 
@@ -464,7 +481,6 @@
                 });
                 if (currentItem) cleanData.push(currentItem);
 
-                // تخطي صف العناوين
                 let tempDB = cleanData.slice(1).map((r, i) => {
                     let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                     const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
@@ -475,10 +491,22 @@
                     if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
                     
                     return {
-                        id: r[0] || i, name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
-                        desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
-                        offer: String(r[10] || ""), live: isActive, feat: String(r[12] || "").toUpperCase().includes('TRUE'), 
-                        date: r[13], newsSrc: String(r[14] || ""), rating: r[16] || "" 
+                        id: r[0] || i, 
+                        name: String(r[1] || ""), 
+                        cat: getCat(r[2], r[3]), 
+                        sub: r[3], 
+                        area: r[4], 
+                        desc: cleanDesc, 
+                        ph: String(r[6] || ""), 
+                        wa: String(r[7] || ""), 
+                        imgRaw: String(r[8] || ""), 
+                        loc: String(r[9] || ""), 
+                        offer: String(r[10] || ""), 
+                        live: isActive, 
+                        feat: String(r[12] || "").toUpperCase().includes('TRUE'), 
+                        date: r[13], 
+                        newsSrc: String(r[14] || ""), 
+                        rating: r[16] || "" 
                     };
                 }).reverse();
 
@@ -618,13 +646,13 @@
         safeShow('catDiv', showCat); safeShow('workHoursDiv', showHours); safeShow('usedDiv', showUsed); safeShow('imgLink', showImgLink); safeShow('offerSection', showOffer); safeShow('newsSourceDiv', showNewsSrc); safeShow('contactDiv', showContact); safeShow('lbl_Area', showArea); safeShow('inp_Area', showArea); document.getElementById('reqType').value = val; 
     }
 
-    // 🔥 دالة SubCats الجديدة
-    function updateSubCats(val) {
+    function checkSub(val) {
         const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput');
         if(subSel) subSel.style.display = 'none'; if(subInput) subInput.style.display = 'none';
         if (subList && subList.length > 0) { if(subSel) { subSel.style.display = 'block'; subSel.innerHTML = '<option value="">اختر التخصص...</option>' + subList.map(s => `<option value="${s}">${s}</option>`).join(''); } } else { if(val === 'أخرى' && subInput) { subInput.style.display = 'block'; } }
     }
-    function checkSub(val) { updateSubCats(val); }
+    // Rename for compatibility
+    function updateSubCats(val) { checkSub(val); }
 
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
@@ -635,7 +663,32 @@
     function filter(c, el) { 
         curCat = c; 
         if(el) { document.querySelectorAll('.cat-item, .btm-item, .q-chip').forEach(e => e.classList.remove('active')); el.classList.add('active'); }
-        document.getElementById('search').value = ''; generateSubCats(c); 
+        document.getElementById('search').value = ''; 
+        // استدعاء دالة checkSub لتحديث القوائم الفرعية
+        checkSub(c); 
+        // هنا نقوم بتحديث شريط القوائم الفرعية بناءً على التصنيف المختار
+        const container = document.getElementById('subCatNav'); 
+        container.innerHTML = ''; 
+        
+        let predefinedSubs = subCategories[c] || []; 
+        const items = fullDB.filter(x => x.cat === c); 
+        const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== c))]; 
+        const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; 
+        
+        if (finalSubs.length > 0 && c !== 'all' && c !== 'fav' && c !== 'offers' && c !== 'souq' && c !== 'featured' && c !== 'latest') { 
+            container.style.display = 'flex'; 
+            let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; 
+            allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(c, null); }; 
+            container.appendChild(allBtn); 
+            finalSubs.forEach(s => { 
+                let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; 
+                btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(c, s); }; 
+                container.appendChild(btn); 
+            }); 
+        } else {
+            container.style.display = 'none';
+        }
+
         if (c === 'all') filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
         else if (c === 'fav') filteredDB = fullDB.filter(x => favs.includes(x.id)); 
         else if (c === 'offers') filteredDB = fullDB.filter(x => isOfferValid(x.offer)); 
@@ -647,9 +700,11 @@
         if(el && !el.classList.contains('btm-item')) { document.getElementById('searchArea').scrollIntoView({behavior:'smooth'}); } else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     }
     
-    // 🔥 الاسم القديم للدالة (هام جداً)
+    // Alias for compatibility
     function applyFilter(c, el) { filter(c, el); }
+    function generateSubCats(mainCat) { /* Handled inside filter now */ }
 
+    function filterSub(mainCat, subCat) { filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); }
     function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
     function sendAppRate() { if(appRating===0) return alert("اختر نجوماً"); submitReview("تقييم التطبيق", "Hona App", appRating); closeModal('rateAppModal'); }
@@ -672,6 +727,7 @@
                 lines.forEach(line => {
                     let clean = line.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').trim();
                     let dateMatch = line.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
+                    
                     if (isOfferValid(line) && clean) {
                         let expiryTxt = dateMatch ? ` (حتى ${dateMatch[1]}/${dateMatch[2]})` : '';
                         offersArray.push(`<span class="ticker-item" onclick="openD('${x.id}')" style="cursor:pointer">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
@@ -745,7 +801,6 @@
             
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; 
             
-            // 🔥🔥 استرجاع تصميم ذيل الخبر (الكبسولات)
             let footerHTML = ''; 
             if(isNews) { 
                 footerHTML = `<div class="news-footer-card">

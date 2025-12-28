@@ -9,13 +9,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V28.0: LIVE DATA TARGETING FIX --- */
+        /* --- HONA ORIGINAL RESTORED (V295 STRUCTURE) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
         
         body.modal-open { overflow: hidden; } 
-        body.modal-open .fab, body.modal-open .btm-nav, body.modal-open .float-ad { display: none !important; }
+        body.modal-open .btm-nav, body.modal-open .nav-add-btn { display: none !important; }
         
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
@@ -60,7 +60,7 @@
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         
-        /* 🔥 تصميم كارت الخبر الأصلي 🔥 */
+        /* 🔥 تصميم كارت الخبر (النسخة الأصلية) 🔥 */
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
@@ -74,18 +74,10 @@
         .card-offer-visible { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 8px; border-radius: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 2px dashed #e74c3c; text-align: center; }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
-        /* 🔥 استرجاع شكل كبسولات الخبر في الكارت 🔥 */
-        .news-footer-card { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-top: auto; 
-            padding-top: 8px; 
-            border-top: 1px dashed #eee; 
-            width: 100%; 
-        }
+        /* 🔥 كبسولات الخبر الأصلية (استرجاع) 🔥 */
+        .news-footer-card { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; border-top: 1px dashed #eee; width: 100%; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
-        .news-date-txt { color: #7f8c8d; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
 
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
@@ -102,15 +94,17 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
-        /* 🔥 الشريط السفلي والزر العائم */
+        /* 🔥 الشريط السفلي (مع السماح للزر العائم بالخروج) */
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 20px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 8000; border-radius: 25px 25px 0 0; overflow: visible !important; }
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; display: flex; flex-direction: column; align-items: center; }
         .btm-item.active { color: var(--primary); font-weight: 900; transform: translateY(-3px); }
-        .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+        .btm-item.active i { color: var(--primary); }
+        .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; transition: color 0.2s; }
         
+        /* 🔥 زر الإضافة العائم */
         .nav-add-btn {
             position: absolute;
-            bottom: 25px;
+            bottom: 25px; /* يرفع الزر للأعلى */
             left: 50%;
             transform: translateX(-50%);
             width: 65px;
@@ -541,6 +535,7 @@
         }
     }
 
+    // باقي الدوال (بدون تغيير لضمان الاستقرار)
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');

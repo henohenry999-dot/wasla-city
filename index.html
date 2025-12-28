@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V27.0: ORIGINAL NEWS DESIGN RESTORED --- */
+        /* --- HONA V28.0: LIVE DATA TARGETING FIX --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -77,7 +77,7 @@
         /* 🔥 استرجاع شكل كبسولات الخبر في الكارت 🔥 */
         .news-footer-card { 
             display: flex; 
-            justify-content: space-between; /* تباعد العنصرين */
+            justify-content: space-between; 
             align-items: center; 
             margin-top: auto; 
             padding-top: 8px; 
@@ -401,14 +401,14 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
     // ✅ تحديث رابط الشيت الجديد
-    const sheet = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/export?format=csv";
+    const sheet = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/export?format=csv&gid=965965865";
     const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
     // ✅ مفتاح كاش جديد لتحديث الكود (V27.0)
-    const CACHE_KEY = 'hona_v2700_news_design_restored'; 
+    const CACHE_KEY = 'hona_v2700_original_news'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -485,6 +485,7 @@
                     
                     let activeRaw = String(r[11] || "").toUpperCase();
                     let isActive = activeRaw.includes('TRUE') || activeRaw.includes('YES') || activeRaw.includes('متاح'); 
+                    if (!r[11]) isActive = true; // 🔥 الافتراضي نشط إذا كان فارغاً
                     if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
                     
                     return {
@@ -540,7 +541,6 @@
         }
     }
 
-    // باقي الدوال (بدون تغيير لضمان الاستقرار)
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');
@@ -623,7 +623,6 @@
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
-    // ✅🔥 فتح الاستمارة بشكل آمن تماماً
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); form.reset(); 
         const safeHide = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'none'; };

@@ -9,12 +9,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V275 ORIGINAL + FIXED FAB (NO OTHER CHANGES) --- */
+        /* --- HONA V38.0: ORIGINAL V275 + FAB FIX + DIRECT LINK --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
+        
         body.modal-open { overflow: hidden; } 
-        body.modal-open .fab { display: none !important; }
+        body.modal-open .fab, body.modal-open .btm-nav, body.modal-open .float-ad { display: none !important; }
         
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
@@ -58,8 +59,9 @@
         .card:active { transform: scale(0.98); }
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
+        
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
-        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
+        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
         .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
@@ -68,30 +70,19 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        .card-offer-visible { 
-            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
-            color: var(--red); 
-            font-size: 0.75rem; 
-            font-weight: 800; 
-            padding: 8px; 
-            border-radius: 10px; 
-            margin-top: auto; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 2px; 
-            border: 2px dashed #e74c3c; 
-            text-align: center;
-        }
+        .card-offer-visible { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 8px; border-radius: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 2px dashed #e74c3c; text-align: center; }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
-        .news-footer-card { display: flex; justify-content: space-between; margin-top: auto; padding-top: 8px; font-size: 0.6rem; color: #999; width: 100%; border-top: 1px dashed #eee; margin-top: 8px; }
-        .news-meta-row { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
+        .news-footer-card { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; border-top: 1px dashed #eee; width: 100%; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
+        
         .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
         .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
+        
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
         .card-fav-btn.active i { color: var(--red); }
@@ -106,7 +97,7 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥🔥 إصلاح زر الإضافة وتثبيت مكانه بوضوح 🔥🔥 */
+        /* 🔥🔥 إصلاح زر الإضافة وتثبيته فوق الجميع 🔥🔥 */
         .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 4px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 5000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -590,54 +581,86 @@
     function openEmergency(e) { e.stopPropagation(); openModal('emergencyModal'); }
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
-    function openFormClean(type) { const form = document.getElementById('reqForm'); form.reset(); document.getElementById('catDiv').style.display = 'none'; document.getElementById('usedDiv').style.display = 'none'; document.getElementById('imgLink').style.display = 'none'; document.getElementById('subCatInput').style.display = 'none'; document.getElementById('subCatSelect').style.display = 'none'; document.getElementById('waUploadHelp').style.display = 'none'; document.getElementById('offerSection').style.display = 'none'; document.getElementById('newsSourceDiv').style.display = 'none'; document.getElementById('contactDiv').style.display = 'block'; if(type) { document.getElementById('reqType').value = type; toggleFields(type); } else { document.getElementById('reqType').value = 'نشاط'; toggleFields('نشاط'); } openModal('formModal'); }
-    function toggleFields(val) { let showCat = false; let showHours = false; let showUsed = false; let showImgLink = false; let showOffer = false; let showNewsSrc = false; let showContact = true; let showArea = true; const isAdmin = document.getElementById('reqType').querySelector('option[value="خبر"]'); if (!isAdmin) { document.getElementById('opt_gov').style.display = 'none'; document.getElementById('opt_worship').style.display = 'none'; document.getElementById('opt_news').style.display = 'none'; } document.getElementById('lbl_Name').innerText = "الاسم / العنوان"; document.getElementById('inp_Name').placeholder = "الاسم / العنوان"; document.getElementById('lbl_Desc').innerText = "الوصف"; document.getElementById('inp_Desc').placeholder = "الوصف / التفاصيل"; document.getElementById('lbl_Location').innerText = "اللوكيشن"; document.getElementById('inp_Location').placeholder = "رابط اللوكيشن"; document.getElementById('lbl_Image').innerText = "الصورة"; document.getElementById('inp_Image').placeholder = "رابط صورة (أو ارسلها واتساب)"; document.querySelector('input[name="Contact"]').required = true; document.querySelector('input[name="Area"]').required = false; if (val === 'نشاط') { showCat = true; showHours = true; } else if (val === 'إعلان') { showCat = true; showOffer = true; } else if (val === 'خبر') { document.getElementById('lbl_Name').innerText = "عنوان الخبر"; document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي"; document.getElementById('lbl_Desc').innerText = "تفاصيل الخبر"; document.getElementById('inp_Desc').placeholder = "اكتب تفاصيل الخبر هنا..."; document.getElementById('lbl_Location').innerText = "رابط الخبر"; document.getElementById('inp_Location').placeholder = "رابط المصدر (فيسبوك، موقع..)"; document.getElementById('lbl_Image').innerText = "صورة الخبر"; document.getElementById('inp_Image').placeholder = "رابط صورة الخبر"; showNewsSrc = true; showContact = false; showArea = false; document.querySelector('input[name="Contact"]').required = false; document.getElementById('inp_Category').value = 'أخبار'; } else if (val === 'بيع سلعة / مستعمل') { showUsed = true; } else if (val === 'مخالفة') { showImgLink = true; } document.getElementById('catDiv').style.display = showCat ? 'block' : 'none'; document.getElementById('workHoursDiv').style.display = showHours ? 'flex' : 'none'; document.getElementById('usedDiv').style.display = showUsed ? 'block' : 'none'; document.getElementById('imgLink').style.display = showImgLink ? 'block' : 'none'; document.getElementById('offerSection').style.display = showOffer ? 'flex' : 'none'; document.getElementById('newsSourceDiv').style.display = showNewsSrc ? 'block' : 'none'; document.getElementById('contactDiv').style.display = showContact ? 'block' : 'none'; document.getElementById('lbl_Area').style.display = showArea ? 'block' : 'none'; document.getElementById('inp_Area').style.display = showArea ? 'block' : 'none'; document.getElementById('reqType').value = val; }
+    
+    function openFormClean(type) { 
+        const form = document.getElementById('reqForm'); form.reset(); 
+        const safeHide = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'none'; };
+        ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv'].forEach(safeHide);
+        const contactDiv = document.getElementById('contactDiv'); if(contactDiv) contactDiv.style.display = 'block';
+        document.querySelectorAll('.admin-opt').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.admin-cat').forEach(el => el.style.display = 'none');
+        document.getElementById('formTitle').style.color = 'var(--dark)';
+        formAdminClicks = 0;
+        if(type) { document.getElementById('reqType').value = type; toggleFields(type); } else { document.getElementById('reqType').value = 'نشاط'; toggleFields('نشاط'); } 
+        openModal('formModal'); 
+    }
+    
+    function toggleFields(val) { 
+        let showCat = false; let showHours = false; let showUsed = false; let showImgLink = false; let showOffer = false; let showNewsSrc = false; let showContact = true; let showArea = true; 
+        document.getElementById('lbl_Name').innerText = "الاسم / العنوان"; document.getElementById('inp_Name').placeholder = "الاسم / العنوان"; document.querySelector('input[name="Contact"]').required = true; document.querySelector('input[name="Area"]').required = false; 
+        if (val === 'نشاط') { showCat = true; showHours = true; } else if (val === 'إعلان') { showCat = true; showOffer = true; } else if (val === 'خبر') { document.getElementById('lbl_Name').innerText = "عنوان الخبر"; document.getElementById('inp_Name').placeholder = "عنوان الخبر الرئيسي"; showNewsSrc = true; showContact = false; showArea = false; document.querySelector('input[name="Contact"]').required = false; const catInp = document.getElementById('inp_Category'); if(catInp) catInp.value = 'أخبار'; } else if (val === 'مصالح حكومية' || val === 'دور عبادة') { showCat = true; const catInp = document.getElementById('inp_Category'); if(catInp) catInp.value = val; } else if (val === 'بيع سلعة / مستعمل') { showUsed = true; } else if (val === 'مخالفة') { showImgLink = true; } 
+        const safeShow = (id, show) => { const el = document.getElementById(id); if(el) el.style.display = show ? (id==='workHoursDiv' || id==='offerSection' ? 'flex':'block') : 'none'; };
+        safeShow('catDiv', showCat); safeShow('workHoursDiv', showHours); safeShow('usedDiv', showUsed); safeShow('imgLink', showImgLink); safeShow('offerSection', showOffer); safeShow('newsSourceDiv', showNewsSrc); safeShow('contactDiv', showContact); safeShow('lbl_Area', showArea); safeShow('inp_Area', showArea); document.getElementById('reqType').value = val; 
+    }
+
+    function checkSub(val) {
+        const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput');
+        if(subSel) subSel.style.display = 'none'; if(subInput) subInput.style.display = 'none';
+        if (subList && subList.length > 0) { if(subSel) { subSel.style.display = 'block'; subSel.innerHTML = '<option value="">اختر التخصص...</option>' + subList.map(s => `<option value="${s}">${s}</option>`).join(''); } } else { if(val === 'أخرى' && subInput) { subInput.style.display = 'block'; } }
+    }
+    // Rename for compatibility with new name if used
+    function updateSubCats(val) { checkSub(val); }
+
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
     function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
     function doSearch(val) { const s = normalizeText(val.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => { const cleanName = normalizeText(x.name.toLowerCase()); const cleanDesc = normalizeText(x.desc ? x.desc.toLowerCase() : ""); return cleanName.includes(s) || cleanDesc.includes(s); }); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); if(val.length > 0) setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 300); }
     
-    // 💡 فلتر العروض الذكي + شاشة "لا توجد عروض"
     function filter(c, el) { 
         curCat = c; 
-        if(el) { 
-            document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
-            document.querySelectorAll('.btm-item').forEach(b => b.classList.remove('active')); 
-            if(el.classList.contains('cat-item') || el.classList.contains('btm-item')) el.classList.add('active'); 
-            document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); 
-            if(el.classList.contains('q-chip')) el.classList.add('active'); 
-        } 
+        if(el) { document.querySelectorAll('.cat-item, .btm-item, .q-chip').forEach(e => e.classList.remove('active')); el.classList.add('active'); }
         document.getElementById('search').value = ''; 
-        generateSubCats(c); 
         
-        if (c === 'all') { 
-            filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
-            filteredDB.sort((a,b) => (b.feat - a.feat)); 
-        } else if (c === 'fav') { 
-            filteredDB = fullDB.filter(x => favs.includes(x.id)); 
-        } else if (c === 'offers') { 
-            // 💡 إصلاح: إظهار العروض السارية فقط + التأكد من عدم إخفاء العروض الدائمة (بدون تاريخ)
-            filteredDB = fullDB.filter(x => { 
-                if (x.cat === 'بيع سلعة / مستعمل') return false; 
-                return isOfferValid(x.offer) && x.offer.trim().length > 0; // إضافة شرط أن العرض ليس فارغاً
+        // Handle subcats manually since we reverted to old code structure
+        const container = document.getElementById('subCatNav'); 
+        container.innerHTML = ''; 
+        let predefinedSubs = subCategories[c] || []; 
+        const items = fullDB.filter(x => x.cat === c); 
+        const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== c))]; 
+        const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; 
+        
+        if (finalSubs.length > 0 && c !== 'all' && c !== 'fav' && c !== 'offers' && c !== 'souq' && c !== 'featured' && c !== 'latest') { 
+            container.style.display = 'flex'; 
+            let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; 
+            allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(c, null); }; 
+            container.appendChild(allBtn); 
+            finalSubs.forEach(s => { 
+                let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; 
+                btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(c, s); }; 
+                container.appendChild(btn); 
             }); 
-        } else if (c === 'souq') { 
-            filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 
-        } else if (c === 'featured') { 
-            filteredDB = fullDB.filter(x => x.feat === true); 
-        } else if (c === 'latest') { 
-            filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
-            filteredDB.sort((a,b) => b.id - a.id); 
-        } else { 
-            filteredDB = fullDB.filter(x => x.cat === c); 
-            filteredDB.sort((a,b) => (b.feat - a.feat)); 
-        } 
+        } else {
+            container.style.display = 'none';
+        }
+
+        if (c === 'all') filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); 
+        else if (c === 'fav') filteredDB = fullDB.filter(x => favs.includes(x.id)); 
+        else if (c === 'offers') filteredDB = fullDB.filter(x => isOfferValid(x.offer)); 
+        else if (c === 'souq') filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل'); 
+        else if (c === 'featured') filteredDB = fullDB.filter(x => x.feat === true); 
+        else if (c === 'latest') { filteredDB = fullDB.filter(x => x.cat !== 'أخبار' && x.cat !== 'مصالح حكومية' && x.cat !== 'دور عبادة' && x.cat !== 'تعليم وحضانات' && x.cat !== 'بيع سلعة / مستعمل' && x.cat !== 'أخرى'); filteredDB.sort((a,b) => b.id - a.id); } 
+        else filteredDB = fullDB.filter(x => x.cat === c); 
+        
         page = 1; 
         renderGrid(true); 
-        setTimeout(() => document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100); 
+        
+        // Scroll Fix
+        if(el && !el.classList.contains('btm-item')) { document.getElementById('searchArea').scrollIntoView({behavior:'smooth'}); } else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     }
+    
+    // Alias for compatibility
+    function applyFilter(c, el) { filter(c, el); }
 
-    function generateSubCats(mainCat) { const container = document.getElementById('subCatNav'); container.innerHTML = ''; if(mainCat === 'all' || mainCat === 'fav' || mainCat === 'offers' || mainCat === 'souq' || mainCat === 'featured' || mainCat === 'latest') { container.style.display = 'none'; return; } let predefinedSubs = subCategories[mainCat] || []; const items = fullDB.filter(x => x.cat === mainCat); const existingSubs = [...new Set(items.map(i => i.sub).filter(s => s && s.trim() !== '' && s !== mainCat))]; const finalSubs = [...new Set([...predefinedSubs, ...existingSubs])]; if (finalSubs.length === 0) { container.style.display = 'none'; return; } container.style.display = 'flex'; let allBtn = document.createElement('div'); allBtn.className = 'sub-chip active'; allBtn.innerText = 'الكل'; allBtn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filter(mainCat, null); }; container.appendChild(allBtn); finalSubs.forEach(s => { let btn = document.createElement('div'); btn.className = 'sub-chip'; btn.innerText = s; btn.onclick = function() { document.querySelectorAll('.sub-chip').forEach(b => b.classList.remove('active')); this.classList.add('active'); filterSub(mainCat, s); }; container.appendChild(btn); }); }
     function filterSub(mainCat, subCat) { filteredDB = fullDB.filter(x => x.cat === mainCat && x.sub === subCat); filteredDB.sort((a,b) => (b.feat - a.feat)); page = 1; renderGrid(true); }
     function resetApp(el) { document.getElementById('search').value=''; document.querySelectorAll('.q-chip').forEach(q => q.classList.remove('active')); filter('all', document.querySelector('.cat-item')); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function setAppRate(n) { appRating = n; updateStars('appStars', n); }
@@ -649,7 +672,7 @@
     function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
     
-    // ✅ شريط العروض (قابل للضغط)
+    // ✅ شريط العروض
     function setupTickers() { 
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD('${x.id}')">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } 
@@ -664,7 +687,6 @@
                     
                     if (isOfferValid(line) && clean) {
                         let expiryTxt = dateMatch ? ` (حتى ${dateMatch[1]}/${dateMatch[2]})` : '';
-                        // ✅ إضافة علامات التنصيص حول ID
                         offersArray.push(`<span class="ticker-item" onclick="openD('${x.id}')" style="cursor:pointer">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
                     }
                 });
@@ -681,11 +703,10 @@
         document.getElementById('adsText').innerHTML = `<span class="scrolling">${adsHTML}</span>`;
     }
 
-    // ✅ أيقونة العروض العائمة (المسترجعة)
+    // ✅ أيقونة العروض
     function setupFloatAd() { 
         let validAds = [];
         fullDB.forEach(x => {
-            // نأخذ فقط العروض السارية من المحلات المميزة
             if (x.feat && x.offer && x.cat !== 'بيع سلعة / مستعمل') {
                 let lines = x.offer.split('\n');
                 lines.forEach(line => {
@@ -712,10 +733,10 @@
     
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
     
+    // ✅ ريندر الكروت
     function renderGrid(isNew) { 
         const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; 
         
-        // 💡 شاشة "لا توجد عروض"
         if (filteredDB.length === 0 && curCat === 'offers') {
             g.innerHTML = `
                 <div class="empty-state">
@@ -729,8 +750,6 @@
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); 
         toRender.forEach(x => { 
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; 
-            
-            // ✅ تصحيح استدعاء openD
             div.onclick = function() { openD(String(x.id)); }; 
             
             const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`; 
@@ -738,11 +757,20 @@
             const featBadge = x.feat ? `<div class="badge-feat">🔥 مميز</div>` : ''; const newsBadge = isNews ? `<div class="badge-news">خبر</div>` : ''; 
             
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; 
-            let footerHTML = ''; if(isNews) { footerHTML = `<div class="news-meta-row"><span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span></div>`; } else { footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; } 
+            
+            // 🔥🔥 استرجاع تصميم ذيل الخبر (الكبسولات)
+            let footerHTML = ''; 
+            if(isNews) { 
+                footerHTML = `<div class="news-footer-card">
+                                <span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> 
+                                <span class="news-date-txt"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span>
+                              </div>`; 
+            } else { 
+                footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; 
+            } 
             
             let cleanOffer = x.offer ? x.offer.replace(/\{(\d{1,2})[\/\-](\d{1,2})\}/, '').split('\n')[0] : ''; 
             
-            // ✅ تعديل: عرض تاريخ الانتهاء داخل الكارت (منقط ومميز)
             let offerHTML = '';
             if (cleanOffer && isOfferValid(x.offer)) {
                 let dateMatch = x.offer.match(/\{(\d{1,2})[\/\-](\d{1,2})\}/);
@@ -759,81 +787,6 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
     }
     
-    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v179', JSON.stringify(favs)); if(curCat === 'fav') filter('fav', null); }
-    function checkSub(val) { const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput'); if(subList && subList.length > 0) { subSel.style.display = 'block'; subInp.style.display = 'none'; subSel.innerHTML = subList.map(s => `<option value="${s}">${s}</option>`).join(''); } else { subSel.style.display = 'none'; if (val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; } } }
-    function getCat(m,s){ return m; }
-    function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
-    
-    // ✅ التأكد من تمرير ID كنص + عرض التاريخ بجوار كل عرض
-    function openD(id) { 
-        try {
-            const x = fullDB.find(i => String(i.id) === String(id)); 
-            if(!x) { console.error("Item not found", id); return; }
-            currentShopData = x; 
-            document.getElementById('dName').innerText = x.name; 
-            document.getElementById('dCatMain').innerText = x.cat; 
-            const sub = (x.sub && x.sub !== x.cat) ? x.sub : ""; 
-            if(sub) { document.getElementById('dCatSub').style.display = 'inline-block'; document.getElementById('dCatSub').innerText = sub; } else { document.getElementById('dCatSub').style.display = 'none'; } 
-            document.getElementById('dArea').innerText = x.area || "غير محدد"; 
-            document.getElementById('dDesc').innerText = x.desc; 
-            if(x.cat === 'أخبار') { 
-                document.getElementById('dSrcInfo').style.display = 'block'; 
-                document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; 
-                if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } 
-            } else { 
-                document.getElementById('dSrcInfo').style.display = 'none'; 
-                document.getElementById('dNewsLink').style.display = 'none'; 
-            } 
-            const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
-            const slider = document.getElementById('imgSlider'); 
-            const dImg = document.getElementById('dImg'); 
-            slider.innerHTML = ''; 
-            if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; } 
-            document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : ''; 
-            
-            // 🔥 معالجة العروض بالتفصيل
-            const offBox = document.getElementById('dOfferBox'); 
-            if(x.offer) { 
-                offBox.style.display='block'; 
-                let offersHTML = ''; 
-                let lines = x.offer.split('\n'); 
-                
-                lines.forEach(line => { 
-                    // استخراج التاريخ وتنظيف النص
-                    let dateMatch = line.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
-                    let cleanLine = line.replace(/\{(\d{1,2})[\/\-\s](\d{1,2})\s*\}/, '').trim();
-                    
-                    if(isOfferValid(line) && cleanLine) { 
-                        let dateHtml = '';
-                        if(dateMatch) {
-                            // عرض التاريخ في كبسولة أنيقة
-                            dateHtml = `<div class="offer-expiry-tag"><i class="far fa-clock"></i> ينتهي في: ${dateMatch[1]}/${dateMatch[2]}</div>`;
-                        }
-                        
-                        offersHTML += `<div class="offer-item">
-                                         <div class="offer-text">🔥 ${cleanLine}</div>
-                                         ${dateHtml}
-                                       </div>`;
-                    } 
-                }); 
-                if (offersHTML === '') { offBox.style.display='none'; } else { document.getElementById('dOfferTxt').innerHTML = offersHTML; } 
-            } else { offBox.style.display='none'; } 
-            
-            const container = document.getElementById('actionBtns'); 
-            container.innerHTML = ''; 
-            if (x.ph) {
-                let phones = x.ph.split(/[\/\-&]/); 
-                phones.forEach((num, idx) => { let cleanNum = num.trim().replace(/'/g, ''); if(cleanNum) { let btn = document.createElement('a'); btn.href = `tel:${cleanNum}`; btn.className = 'btn-act btn-call'; btn.innerHTML = `<i class="fas fa-phone-alt"></i> اتصال ${phones.length > 1 ? idx+1 : ''}`; container.appendChild(btn); } }); 
-            }
-            if (x.wa) {
-                let waNum = x.wa.trim().replace(/'/g, ''); if(waNum) { let btnWa = document.createElement('a'); btnWa.href = `https://wa.me/2${waNum}`; btnWa.className = 'btn-act btn-wa'; btnWa.innerHTML = `<i class="fab fa-whatsapp"></i> واتساب`; container.appendChild(btnWa); } 
-            }
-            const loc = document.getElementById('dLoc'); 
-            if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none'; 
-            openModal('detailsModal'); 
-        } catch(e) { console.error(e); alert("خطأ في فتح الكارت: " + e.message); }
-    }
-
     // 🔥 دالة الإرسال المعدلة لدعم "أخبار" وإرسال القيم الافتراضية
     function sendData(e) { 
         e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "جاري..."; 

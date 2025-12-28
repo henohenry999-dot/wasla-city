@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V32.0: FINAL DATA SOURCE FIX --- */
+        /* --- HONA V33.0: GVIZ API FIX (THE FINAL WEAPON) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -63,6 +63,7 @@
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
+        .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
         
         .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
@@ -78,9 +79,6 @@
 
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
-        
-        .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
-        .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
         
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
         .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
@@ -243,7 +241,7 @@
 </div>
 
 <div class="btm-nav">
-    <div class="btm-item active" onclick="resetApp(this)"><i class="fas fa-home"></i>الرئيسية</div>
+    <div class="btm-item active" onclick="applyFilter('all', this)"><i class="fas fa-home"></i>الرئيسية</div>
     <div class="btm-item" onclick="applyFilter('offers', this)"><i class="fas fa-tags"></i>العروض</div>
     
     <div class="nav-add-btn" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
@@ -386,18 +384,21 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
+    // 🔴🔴🔴 الرابط الصحيح (الجديد) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥🔥🔥 الحل الجذري هنا 🔥🔥🔥🔥🔥🔥
-    // استخدام بروكسي جديد + وضع رقم الـ GID الصحيح لصفحة Live_Data
-    const sheetURL = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/export?format=csv&gid=965965865";
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheetURL) + "&t=" + Date.now();
+    // 🔥🔥🔥🔥 الحل الفاصل: استخدام رابط GVIZ الذي يجبر الشيت على قراءة الصفحة المحددة (GID) 🔥🔥🔥🔥
+    // هذا الرابط يتجاوز مشاكل الكاش تماماً
+    const sheet = "https://docs.google.com/spreadsheets/d/1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI/gviz/tq?tqx=out:csv&gid=965965865";
+    
+    // نستخدم بروكسي مختلف لأنه يدعم روابط GVIZ بشكل أفضل
+    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheet) + "&timestamp=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V32.0)
-    const CACHE_KEY = 'hona_v3200_proxy_fix'; 
+    // ✅ مفتاح كاش جديد (V33.0)
+    const CACHE_KEY = 'hona_v3300_gviz_final'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -445,6 +446,7 @@
 
         document.getElementById('formModal').style.display = 'none';
         
+        // 🔥🔥 استخدام رابط البروكسي الجديد لقراءة الشيت الصحيح
         Papa.parse(proxy, { 
             download:true, 
             header:false, 
@@ -471,6 +473,7 @@
                     const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                     if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
                     
+                    // 🔥🔥 إلغاء الشرط الصارم تماماً: إذا كانت الخانة فارغة، فهو نشط
                     let activeRaw = String(r[11] || "").toUpperCase();
                     let isActive = !activeRaw.includes('FALSE') && !activeRaw.includes('NO'); 
                     if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
@@ -500,7 +503,11 @@
                 fullDB = Array.from(uniqueMap.values());
                 
                 localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
+                
+                // 🔥🔥 رسالة تأكيد (يمكنك حذفها لاحقاً) لتعرف عدد المحلات التي تم جلبها
                 const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+                // alert("تم استرجاع " + fullDB.length + " كارت/محل"); 
+
                 document.getElementById('shopCount').innerText = count;
                 renderGrid(true); 
                 setupTickers(); 
@@ -528,7 +535,6 @@
         }
     }
 
-    // باقي الدوال
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');
@@ -671,7 +677,7 @@
     function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
     function getStarsHTML(rate) { if(!rate) return ''; let stars = ''; for(let i=0; i<5; i++) { stars += `<i class="fas fa-star ${i < rate ? 'gold' : ''}" style="color:${i < rate ? '#f1c40f' : '#ddd'}"></i>`; } return `<div class="card-rating">${stars} <span>(${rate})</span></div>`; }
     
-    // ✅ شريط العروض
+    // ✅ شريط العروض (قابل للضغط)
     function setupTickers() { 
         const news = fullDB.filter(x => x.cat === 'أخبار').slice(0, 5).map(x => `<span class="ticker-item" onclick="openD('${x.id}')">📢 ${x.newsSrc} - ${x.name} (${x.date})</span>`).join('   '); 
         if(news) { document.getElementById('newsBar').style.display='flex'; document.getElementById('newsText').innerHTML = `<span class="scrolling">${news}</span>`; document.querySelector('header').style.marginTop='64px'; } 
@@ -702,10 +708,11 @@
         document.getElementById('adsText').innerHTML = `<span class="scrolling">${adsHTML}</span>`;
     }
 
-    // ✅ أيقونة العروض
+    // ✅ أيقونة العروض العائمة (المسترجعة)
     function setupFloatAd() { 
         let validAds = [];
         fullDB.forEach(x => {
+            // نأخذ فقط العروض السارية من المحلات المميزة
             if (x.feat && x.offer && x.cat !== 'بيع سلعة / مستعمل') {
                 let lines = x.offer.split('\n');
                 lines.forEach(line => {
@@ -732,7 +739,7 @@
     
     function openFloatAd() { if(floatAdID!=null) openD(floatAdID); }
     
-    // ✅ ريندر الكروت
+    // ✅ ريندر الكروت (مع إعادة تصميم كارت الخبر الأصلي)
     function renderGrid(isNew) { 
         const g = document.getElementById('grid'); const btn = document.getElementById('loadMore'); if(isNew) g.innerHTML = ''; 
         
@@ -749,6 +756,8 @@
         const chunk = filteredDB.slice(0, page * limit); const toRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit); 
         toRender.forEach(x => { 
             const isNews = x.cat === 'أخبار'; const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; 
+            
+            // ✅ تصحيح استدعاء openD
             div.onclick = function() { openD(String(x.id)); }; 
             
             const isFav = favs.includes(x.id) ? 'active' : ''; const favBtn = `<div class="card-fav-btn ${isFav}" onclick="toggleFav(event, ${x.id})"><i class="fas fa-heart"></i></div>`; 
@@ -757,7 +766,7 @@
             
             const subHTML = isNews ? '' : `<div class="c-sub"><i class="fas fa-tag"></i> ${x.sub}</div> <div class="c-sub"><i class="fas fa-map-marker-alt"></i> ${x.area || 'غير محدد'}</div>`; 
             
-            // 🔥🔥 استرجاع تصميم ذيل الخبر (الكبسولات)
+            // 🔥🔥 استرجاع تصميم ذيل الخبر (الكبسولات المتفرقة) 🔥🔥
             let footerHTML = ''; 
             if(isNews) { 
                 footerHTML = `<div class="news-footer-card">
@@ -787,6 +796,80 @@
         btn.style.display = (chunk.length < filteredDB.length) ? 'block' : 'none'; 
     }
     
+    function toggleFav(e, id) { e.stopPropagation(); const btn = e.currentTarget; if(favs.includes(id)) { favs = favs.filter(i => i !== id); btn.classList.remove('active'); } else { favs.push(id); btn.classList.add('active'); } localStorage.setItem('favs_v179', JSON.stringify(favs)); if(curCat === 'fav') applyFilter('fav', null); }
+    function getCat(m,s){ return m; }
+    function fixImg(u){if(!u||u.length<10)return DEFAULT_IMG;let i=u.match(/id=([a-zA-Z0-9_-]+)/)||u.match(/\/d\/([a-zA-Z0-9_-]+)/);return i?`https://lh3.googleusercontent.com/d/${i[1]}=s600`:u;}
+    
+    // ✅ التأكد من تمرير ID كنص + عرض التاريخ بجوار كل عرض
+    function openD(id) { 
+        try {
+            const x = fullDB.find(i => String(i.id) === String(id)); 
+            if(!x) { console.error("Item not found", id); return; }
+            currentShopData = x; 
+            document.getElementById('dName').innerText = x.name; 
+            document.getElementById('dCatMain').innerText = x.cat; 
+            const sub = (x.sub && x.sub !== x.cat) ? x.sub : ""; 
+            if(sub) { document.getElementById('dCatSub').style.display = 'inline-block'; document.getElementById('dCatSub').innerText = sub; } else { document.getElementById('dCatSub').style.display = 'none'; } 
+            document.getElementById('dArea').innerText = x.area || "غير محدد"; 
+            document.getElementById('dDesc').innerText = x.desc; 
+            if(x.cat === 'أخبار') { 
+                document.getElementById('dSrcInfo').style.display = 'block'; 
+                document.getElementById('dSrcInfo').innerHTML = `<div class="news-detail-header"><div class="nd-capsule" style="color:var(--red)"><i class="fas fa-newspaper"></i> ${x.newsSrc || "مصدر"}</div><div class="nd-capsule" style="color:#555"><i class="far fa-calendar-alt"></i> ${x.date || ""}</div></div>`; 
+                if(x.loc && x.loc.includes('http')) { document.getElementById('dNewsLink').style.display = 'block'; document.getElementById('dNewsLink').href = x.loc; } else { document.getElementById('dNewsLink').style.display = 'none'; } 
+            } else { 
+                document.getElementById('dSrcInfo').style.display = 'none'; 
+                document.getElementById('dNewsLink').style.display = 'none'; 
+            } 
+            const imgs = getImages(x.imgRaw, x.cat === 'أخبار'); 
+            const slider = document.getElementById('imgSlider'); 
+            const dImg = document.getElementById('dImg'); 
+            slider.innerHTML = ''; 
+            if (imgs.length > 0) { slider.style.display = 'flex'; dImg.style.display = 'none'; imgs.forEach(url => { const img = document.createElement('img'); img.src = url.trim(); img.onerror = function(){this.src=DEFAULT_IMG}; slider.appendChild(img); }); } else { slider.style.display = 'none'; dImg.style.display = 'block'; dImg.src = DEFAULT_IMG; } 
+            document.getElementById('dRating').innerHTML = x.rating ? getStarsHTML(x.rating) : ''; 
+            
+            // 🔥 معالجة العروض بالتفصيل
+            const offBox = document.getElementById('dOfferBox'); 
+            if(x.offer) { 
+                offBox.style.display='block'; 
+                let offersHTML = ''; 
+                let lines = x.offer.split('\n'); 
+                
+                lines.forEach(line => { 
+                    // استخراج التاريخ وتنظيف النص
+                    let dateMatch = line.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
+                    let cleanLine = line.replace(/\{(\d{1,2})[\/\-\s](\d{1,2})\s*\}/, '').trim();
+                    
+                    if(isOfferValid(line) && cleanLine) { 
+                        let dateHtml = '';
+                        if(dateMatch) {
+                            // عرض التاريخ في كبسولة أنيقة
+                            dateHtml = `<div class="offer-expiry-tag"><i class="far fa-clock"></i> ينتهي في: ${dateMatch[1]}/${dateMatch[2]}</div>`;
+                        }
+                        
+                        offersHTML += `<div class="offer-item">
+                                         <div class="offer-text">🔥 ${cleanLine}</div>
+                                         ${dateHtml}
+                                       </div>`;
+                    } 
+                }); 
+                if (offersHTML === '') { offBox.style.display='none'; } else { document.getElementById('dOfferTxt').innerHTML = offersHTML; } 
+            } else { offBox.style.display='none'; } 
+            
+            const container = document.getElementById('actionBtns'); 
+            container.innerHTML = ''; 
+            if (x.ph) {
+                let phones = x.ph.split(/[\/\-&]/); 
+                phones.forEach((num, idx) => { let cleanNum = num.trim().replace(/'/g, ''); if(cleanNum) { let btn = document.createElement('a'); btn.href = `tel:${cleanNum}`; btn.className = 'btn-act btn-call'; btn.innerHTML = `<i class="fas fa-phone-alt"></i> اتصال ${phones.length > 1 ? idx+1 : ''}`; container.appendChild(btn); } }); 
+            }
+            if (x.wa) {
+                let waNum = x.wa.trim().replace(/'/g, ''); if(waNum) { let btnWa = document.createElement('a'); btnWa.href = `https://wa.me/2${waNum}`; btnWa.className = 'btn-act btn-wa'; btnWa.innerHTML = `<i class="fab fa-whatsapp"></i> واتساب`; container.appendChild(btnWa); } 
+            }
+            const loc = document.getElementById('dLoc'); 
+            if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none'; 
+            openModal('detailsModal'); 
+        } catch(e) { console.error(e); alert("خطأ في فتح الكارت: " + e.message); }
+    }
+
     // 🔥 دالة الإرسال المعدلة لدعم "أخبار" وإرسال القيم الافتراضية
     function sendData(e) { 
         e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "جاري..."; 

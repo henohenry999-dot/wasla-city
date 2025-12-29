@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V46.0: DUAL SHEET CONNECTION (LIVE + PENDING) --- */
+        /* --- HONA V47.0: CORRECT GIDs MAPPING + V275 DESIGN --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -59,6 +59,7 @@
         .card:active { transform: scale(0.98); }
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
+        
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
@@ -96,29 +97,30 @@
         .btm-item.active i { color: var(--primary); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; transition: color 0.2s; }
         
-        .fab {
-            position: fixed;
-            bottom: 35px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 70px;
-            background: var(--dark);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-            border: 4px solid white;
-            cursor: pointer;
-            z-index: 99999;
-            transition: all 0.3s;
-            pointer-events: auto !important;
+        /* 🔥🔥 زر الإضافة - طبقة عليا 🔥🔥 */
+        .fab { 
+            position: fixed; 
+            bottom: 35px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 70px; 
+            height: 70px; 
+            background: var(--dark); 
+            color: white; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 2rem; 
+            border: 4px solid white; 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3); 
+            z-index: 99999; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            pointer-events: auto !important; 
         }
         .fab:active { transform: translateX(-50%) scale(0.9); }
-
+        
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
         .ads-bar { height: 30px; background: #fff9c4; color: black; display: flex; align-items: center; border-bottom: 1px solid #eee; font-size: 0.8rem; }
@@ -133,7 +135,7 @@
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
         .float-ad:hover .float-txt { display: block; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 95%; max-width: 450px; border-radius: 25px; padding: 0; position: relative; max-height: 90vh; overflow-y: auto; animation: pop 0.3s; padding-bottom: 20px; }
         .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
         .img-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 250px; background: #eee; }
@@ -267,6 +269,7 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
+            
             <option value="خبر" class="admin-opt" style="display:none">📰 إضافة خبر (Admin)</option>
             <option value="مصالح حكومية" class="admin-opt" style="display:none">🏛️ مصلحة حكومية (Admin)</option>
             <option value="دور عبادة" class="admin-opt" style="display:none">🕌 دور عبادة (Admin)</option>
@@ -380,25 +383,25 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 رابط السكريبت الجديد (يجب التأكد أنه متصل بالشيت الجديد) 🔴🔴🔴
+    // 🔴🔴🔴 رابط السكريبت الجديد (تأكد من أنه متصل بالشيت الجديد) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
     // ✅🔥 استخدام رابط GVIZ API لإجبار قراءة شيت Live_Data (GID: 965965865)
     // ⚠️⚠️ ملاحظة: يجب التأكد أن الشيت الجديد منشور على الويب
-    // الرابط التالي يقرأ Live_Data فقط
     const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
-    const liveGID = "965965865"; 
-    // رابط لقراءة Pending Sheet مباشرة من أجل لوحة الأدمن السريعة
-    const pendingGID = "1363387045"; 
+    const sheetGID = "965965865"; 
+    // رابط لقراءة Pending Sheet مباشرة من أجل لوحة الأدمن السريعة (ID الشيت 27016104)
+    const pendingGID = "27016104"; 
 
-    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${liveGID}`;
-    const proxy = "https://corsproxy.io/?" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
+    // رابط CSV المباشر (أفضل طريقة لتفادي الكاش والمشاكل)
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${sheetGID}`;
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(csvUrl) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V46.0)
-    const CACHE_KEY = 'hona_v4600_final_linked_all'; 
+    // ✅ مفتاح كاش جديد (V47.0)
+    const CACHE_KEY = 'hona_v4700_final_linked_all_v2'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -428,10 +431,13 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        localStorage.removeItem('hona_v275_clean_dates');
+        // Clean all old caches to force fresh load
+        localStorage.removeItem('hona_v295_final_gold_fix');
+        localStorage.removeItem('hona_v2700_original_news');
+        localStorage.removeItem('hona_v3000_live_gid_fix');
+        localStorage.removeItem('hona_v3400_final_fix_gviz');
         localStorage.removeItem('hona_v3700_your_fav_fixed');
-        localStorage.removeItem('hona_v4000_final_original_restored_2');
-        localStorage.removeItem('hona_v4300_final_original_restored_clean');
+        localStorage.removeItem('hona_v4200_final_original_fixed_fab');
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -536,7 +542,7 @@
         }
     }
 
-    // 🔥🔥🔥 لوحة الأدمن تقرأ الآن مباشرة من شيت Pending 🔥🔥🔥
+    // 🔥🔥🔥 لوحة الأدمن تقرأ الآن مباشرة من شيت Pending (27016104) 🔥🔥🔥
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');

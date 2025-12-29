@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V290: STABLE SHEETS EDITION + FIXED FAB --- */
+        /* --- HONA V295: FINAL STABLE SHEETS + WORKING FAB --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -67,7 +67,7 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        /* 🎁 تصميم العروض */
+        /* 🎁 تصميم العرض داخل الكارت الرئيسي */
         .card-offer-visible { 
             background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); 
             color: var(--red); 
@@ -106,8 +106,8 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 زر الإضافة FAB - تم التأكد من ظهوره */
-        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 2000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
+        /* 🔥 زر الإضافة (FAB) - تم الإصلاح */
+        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 5000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -119,7 +119,6 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -138,7 +137,7 @@
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
         
-        /* 🎁 تصميم صندوق العروض */
+        /* 🎁 تصميم صندوق العروض الجديد (داخل التفاصيل) */
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -397,8 +396,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد لتحديث الكود (V290)
-    const CACHE_KEY = 'hona_v290_fab_fixed'; 
+    // ✅ مفتاح كاش جديد لتحديث الكود (V295)
+    const CACHE_KEY = 'hona_v295_stable_fab'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -571,7 +570,8 @@
     function openEmergency(e) { e.stopPropagation(); openModal('emergencyModal'); }
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
-    // 🔥 FAB CLICK HANDLER (FIXED)
+    
+    // 🔥 FAB CLICK HANDLER (FIXED FOR SHEETS VERSION)
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); 
         form.reset(); 

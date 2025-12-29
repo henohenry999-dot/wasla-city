@@ -9,14 +9,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V275: ORIGINAL DESIGN + FIXED ADD BUTTON ONLY --- */
+        /* --- HONA V55.0: STABLE RESTORE (CLEAN CODE) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
         
+        /* إخفاء الزر فقط عند فتح القوائم المنبثقة */
         body.modal-open { overflow: hidden; } 
         body.modal-open .fab { display: none !important; }
-        
+
         #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
@@ -97,10 +98,10 @@
         .btm-item.active i { color: var(--primary); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; transition: color 0.2s; }
         
-        /* 🔥🔥 إصلاح زر الإضافة النهائي 🔥🔥 */
+        /* 🔥 الزر العائم في طبقة مستقلة تماماً 🔥 */
         .fab { 
             position: fixed; 
-            bottom: 35px; /* ارتفاع مناسب فوق الشريط السفلي */
+            bottom: 35px; 
             left: 50%; 
             transform: translateX(-50%); 
             width: 70px; 
@@ -114,10 +115,10 @@
             font-size: 2rem; 
             border: 4px solid white; 
             box-shadow: 0 5px 25px rgba(0,0,0,0.3); 
-            z-index: 999999; /* رقم عالي جداً لضمان الظهور */
+            z-index: 20000; /* طبقة عالية جداً */
             cursor: pointer; 
             transition: 0.3s; 
-            pointer-events: auto !important; /* فرض قبول النقرة */
+            pointer-events: auto !important; /* تفعيل اللمس */
         }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -250,6 +251,7 @@
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
+
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
@@ -269,7 +271,6 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
-            
             <option value="خبر" class="admin-opt" style="display:none">📰 إضافة خبر (Admin)</option>
             <option value="مصالح حكومية" class="admin-opt" style="display:none">🏛️ مصلحة حكومية (Admin)</option>
             <option value="دور عبادة" class="admin-opt" style="display:none">🕌 دور عبادة (Admin)</option>
@@ -385,20 +386,24 @@
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥🔥🔥 الحل الفاصل: استخدام رابط GVIZ API لإجبار قراءة الصفحات الصحيحة 🔥🔥🔥🔥
+    // 🔥🔥🔥🔥 إعدادات الشيت الصحيحة 🔥🔥🔥🔥
+    // ID الملف الجديد
     const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
-    const liveGID = "965965865"; // صفحة Live Data
-    const pendingGID = "27016104"; // صفحة Pending
+    // GID صفحة Live_Data (للعرض)
+    const liveGID = "965965865"; 
+    // GID صفحة Pending (للأدمن)
+    const pendingGID = "27016104"; 
 
-    // رابط CSV لصفحة Live Data (للواجهة الرئيسية)
-    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${liveGID}`;
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
+    // رابط CSV المباشر (الأكثر استقراراً) مدعوم ببروكسي
+    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${liveGID}`;
+    // إضافة Date.now() لإجبار المتصفح على جلب أحدث نسخة
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V50.0) لتفريغ الذاكرة القديمة تماماً
-    const CACHE_KEY = 'hona_v50_super_reset'; 
+    // ✅ مفتاح كاش جديد (V55.0)
+    const CACHE_KEY = 'hona_v55_emergency_fix'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -428,13 +433,13 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        // مسح كل أنواع الكاش السابقة
         localStorage.removeItem('hona_v275_clean_dates');
         localStorage.removeItem('hona_v3700_your_fav_fixed');
         localStorage.removeItem('hona_v4000_final_original_restored_2');
         localStorage.removeItem('hona_v4300_final_original_restored_clean');
         localStorage.removeItem('hona_v4600_final_linked_all');
         localStorage.removeItem('hona_v4700_final_linked_all_v2');
+        localStorage.removeItem('hona_v50_super_reset');
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -451,7 +456,7 @@
 
         document.getElementById('formModal').style.display = 'none';
         
-        // 🔥🔥 قراءة Live_Data من الشيت الصحيح باستخدام GVIZ (الأكثر دقة)
+        // 🔥🔥 قراءة Live_Data من الشيت الصحيح باستخدام الرابط المباشر
         Papa.parse(proxy, { 
             download:true, 
             header:false, 
@@ -519,7 +524,11 @@
                 setupFloatAd(); 
                 removeSplash();
             }, 
-            error: (err) => { console.log("Error loading data:", err); removeSplash(); }
+            error: (err) => { 
+                console.log("Error loading data:", err); 
+                alert("تعذر الاتصال بقاعدة البيانات. يرجى التحقق من الإنترنت.");
+                removeSplash(); 
+            }
         });
     }
 
@@ -539,20 +548,20 @@
         }
     }
 
-    // 🔥🔥🔥 لوحة الأدمن تقرأ الآن مباشرة من شيت Pending باستخدام GVIZ (27016104) 🔥🔥🔥
+    // 🔥🔥🔥 لوحة الأدمن تقرأ الآن مباشرة من شيت Pending (27016104) 🔥🔥🔥
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');
         list.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري الجلب...</div>';
         
-        // قراءة CSV لشيت Pending باستخدام GVIZ لضمان الدقة وتجاوز الكاش
-        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${pendingGID}`;
-        const pendingProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
+        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${pendingGID}`;
+        const pendingProxy = "https://corsproxy.io/?" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
 
         Papa.parse(pendingProxy, {
             download: true,
             header: false,
             complete: (results) => {
+                // فلترة الصفوف الفارغة وتخطي العنوان
                 const data = results.data.slice(1).filter(r => r[0] && r[1]); 
                 
                 if(data.length === 0) {
@@ -560,13 +569,14 @@
                 } else {
                     let html = '';
                     data.forEach((item, i) => {
-                        // في GVIZ الترتيب قد يختلف قليلاً، لذا نتأكد من الاندكس
-                        // عادة GVIZ يعيد الأعمدة بنفس الترتيب: Date, Name, Category...
+                        // الترتيب في شيت Pending عادة يكون:
+                        // 0:Time, 1:Name, 2:Cat, 3:Sub, 4:Area, 5:Desc, 6:Phone...
+                        // نستخدم i + 2 لرقم الصف لأننا تخطينا الهيدر (1) والاندكس يبدأ من 0
                         html += `
                         <div class="card" id="row-${i + 2}">
                             <div class="c-title">${item[1]} <small>(${item[2]})</small></div>
-                            <div class="c-sub">${item[3]} | ${item[4]} | ${item[5]}</div>
-                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item[6]}</div>
+                            <div class="c-sub">${item[3]} | ${item[4]}</div>
+                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item[5]}</div>
                             <div class="admin-actions">
                                 <button class="btn-approve" onclick="approveItem(${i + 2}, '${pass}')">✅ موافقة</button>
                                 <button class="btn-reject" onclick="rejectItem(${i + 2}, '${pass}')">❌ رفض</button>
@@ -588,10 +598,25 @@
         params.append('action', 'approve');
         params.append('row', idx);
         params.append('pass', pass);
-        document.getElementById(`row-${idx}`).style.opacity = '0.5';
+        // تغيير شكل الكارت ليدل على المعالجة
+        const card = document.getElementById(`row-${idx}`);
+        if(card) card.style.opacity = '0.5';
+        
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
-        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تمت الموافقة والنقل بنجاح! 🚀"); } else { alert("Error: " + res.error); } });
+        .then(res => { 
+            if(res.result === 'success') { 
+                if(card) card.remove(); 
+                alert("تمت الموافقة والنقل بنجاح! 🚀"); 
+            } else { 
+                alert("Error: " + res.error); 
+                if(card) card.style.opacity = '1';
+            } 
+        })
+        .catch(err => {
+            alert("خطأ في الاتصال بالسيرفر");
+            if(card) card.style.opacity = '1';
+        });
     }
 
     function rejectItem(idx, pass) {
@@ -600,10 +625,20 @@
         params.append('action', 'reject');
         params.append('row', idx);
         params.append('pass', pass);
-        document.getElementById(`row-${idx}`).style.opacity = '0.5';
+        const card = document.getElementById(`row-${idx}`);
+        if(card) card.style.opacity = '0.5';
+
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
-        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); } });
+        .then(res => { 
+            if(res.result === 'success') { 
+                if(card) card.remove(); 
+                alert("تم الحذف."); 
+            } else { 
+                alert("Error: " + res.error); 
+                if(card) card.style.opacity = '1';
+            } 
+        });
     }
 
     function isOfferValid(offerStr) {

@@ -9,15 +9,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V275: ORIGINAL (NO CHANGES EXCEPT FAB Z-INDEX) --- */
+        /* --- HONA V60.0: FAB RELOCATED & DATA RAW LINK --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
         
-        body.modal-open { overflow: hidden; } 
-        body.modal-open .fab { display: none !important; } /* إخفاء الزر عند فتح المودال */
-
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 2147483647; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -60,6 +57,7 @@
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         
+        /* تصميم كارت الخبر الأصلي */
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
@@ -95,30 +93,6 @@
         .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
-        
-        /* 🔥🔥🔥 الحل النهائي لزر الإضافة: طبقة عليا + تفعيل اللمس 🔥🔥🔥 */
-        .fab { 
-            position: fixed; 
-            bottom: 35px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 70px; 
-            height: 70px; 
-            background: var(--dark); 
-            color: white; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 2rem; 
-            border: 4px solid white; 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
-            z-index: 2147483647; /* أقصى قيمة Z-Index ممكنة في المتصفح */
-            cursor: pointer; 
-            transition: 0.3s; 
-            pointer-events: auto !important; /* إجبار استقبال اللمس */
-        }
-        .fab:active { transform: translateX(-50%) scale(0.9); }
         
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .news-bar { height: 32px; background: var(--dark); color: white; display: flex; align-items: center; font-size: 0.8rem; }
@@ -173,6 +147,10 @@
         .empty-state { grid-column: span 2; text-align: center; padding: 60px 20px; }
         .empty-icon { font-size: 4rem; color: #ddd; margin-bottom: 20px; }
         .empty-text { font-size: 1.5rem; font-weight: 900; color: var(--dark); font-family: 'Reem Kufi'; }
+        
+        /* 🔥 الزر العائم في مكانه الجديد 🔥 */
+        .fab { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 4px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 2147483647; cursor: pointer; transition: 0.3s; pointer-events: auto !important; }
+        .fab:active { transform: translateX(-50%) scale(0.9); }
     </style>
 </head>
 <body>
@@ -249,6 +227,7 @@
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
+
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
@@ -268,7 +247,6 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
-            
             <option value="خبر" class="admin-opt" style="display:none">📰 إضافة خبر (Admin)</option>
             <option value="مصالح حكومية" class="admin-opt" style="display:none">🏛️ مصلحة حكومية (Admin)</option>
             <option value="دور عبادة" class="admin-opt" style="display:none">🕌 دور عبادة (Admin)</option>
@@ -382,23 +360,24 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴🔴🔴 رابط السكريبت (تأكد من أنه صحيح) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥 استخدام GVIZ API لإجبار قراءة الصفحات الصحيحة 🔥🔥
+    // 🔥🔥🔥🔥🔥🔥 الرابط المباشر للداتا 🔥🔥🔥🔥
+    // GID لصفحة Live_Data: 965965865
+    // GID لصفحة Pending: 27016104
     const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
-    const liveGID = "965965865"; // Live Data (للعرض)
-    const pendingGID = "27016104"; // Pending (للأدمن)
+    const liveGID = "965965865"; 
+    const pendingGID = "27016104"; 
 
-    // رابط CSV لصفحة Live Data (للواجهة الرئيسية) باستخدام tqx=out:csv
-    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${liveGID}`;
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
+    // رابط CSV لصفحة Live Data (للواجهة الرئيسية) - Using standard export format
+    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${liveGID}`;
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
     // ✅ مفتاح كاش جديد لتفريغ الذاكرة
-    const CACHE_KEY = 'hona_v55_final_reset'; 
+    const CACHE_KEY = 'hona_v60_nuclear_reset'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -428,14 +407,9 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        
-        // مسح الذاكرة القديمة
-        const keysToRemove = [
-            'hona_v275_clean_dates', 'hona_v3700_your_fav_fixed',
-            'hona_v4000_final_original_restored_2', 'hona_v4300_final_original_restored_clean',
-            'hona_v4600_final_linked_all', 'hona_v4700_final_linked_all_v2'
-        ];
-        keysToRemove.forEach(k => localStorage.removeItem(k));
+        // مسح كل أنواع الكاش السابقة
+        const oldKeys = ['hona_v275_clean_dates', 'hona_v3700_your_fav_fixed', 'hona_v4000_final_original_restored_2', 'hona_v4300_final_original_restored_clean', 'hona_v4600_final_linked_all', 'hona_v4700_final_linked_all_v2', 'hona_v50_super_reset'];
+        oldKeys.forEach(k => localStorage.removeItem(k));
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -452,7 +426,7 @@
 
         document.getElementById('formModal').style.display = 'none';
         
-        // 🔥🔥 قراءة Live_Data من الشيت باستخدام GVIZ (أدق وأسرع)
+        // 🔥🔥 قراءة Live_Data من الشيت الصحيح باستخدام PapaParse المباشر (الأكثر توافقاً)
         Papa.parse(proxy, { 
             download:true, 
             header:false, 
@@ -545,9 +519,8 @@
         const list = document.getElementById('pendingList');
         list.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري الجلب...</div>';
         
-        // قراءة CSV لشيت Pending باستخدام GVIZ
-        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${pendingGID}`;
-        const pendingProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
+        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${pendingGID}`;
+        const pendingProxy = "https://corsproxy.io/?" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
 
         Papa.parse(pendingProxy, {
             download: true,

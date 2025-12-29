@@ -9,16 +9,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V55.0: STABLE RESTORE (CLEAN CODE) --- */
+        /* --- HONA V275: ORIGINAL (NO CHANGES EXCEPT FAB Z-INDEX) --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
         
-        /* إخفاء الزر فقط عند فتح القوائم المنبثقة */
         body.modal-open { overflow: hidden; } 
-        body.modal-open .fab { display: none !important; }
+        body.modal-open .fab { display: none !important; } /* إخفاء الزر عند فتح المودال */
 
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -92,13 +91,12 @@
         .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
-        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 20px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 8000; border-radius: 25px 25px 0 0; overflow: visible !important; }
-        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; display: flex; flex-direction: column; align-items: center; }
-        .btm-item.active { color: var(--primary); font-weight: 900; transform: translateY(-3px); }
-        .btm-item.active i { color: var(--primary); }
-        .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; transition: color 0.2s; }
+        .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
+        .btm-item { text-align: center; color: #bdc3c7; font-size: 0.65rem; cursor: pointer; transition: 0.2s; min-width: 55px; }
+        .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
+        .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 الزر العائم في طبقة مستقلة تماماً 🔥 */
+        /* 🔥🔥🔥 الحل النهائي لزر الإضافة: طبقة عليا + تفعيل اللمس 🔥🔥🔥 */
         .fab { 
             position: fixed; 
             bottom: 35px; 
@@ -114,11 +112,11 @@
             justify-content: center; 
             font-size: 2rem; 
             border: 4px solid white; 
-            box-shadow: 0 5px 25px rgba(0,0,0,0.3); 
-            z-index: 20000; /* طبقة عالية جداً */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+            z-index: 2147483647; /* أقصى قيمة Z-Index ممكنة في المتصفح */
             cursor: pointer; 
             transition: 0.3s; 
-            pointer-events: auto !important; /* تفعيل اللمس */
+            pointer-events: auto !important; /* إجبار استقبال اللمس */
         }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -136,7 +134,7 @@
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
         .float-ad:hover .float-txt { display: block; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 95%; max-width: 450px; border-radius: 25px; padding: 0; position: relative; max-height: 90vh; overflow-y: auto; animation: pop 0.3s; padding-bottom: 20px; }
         .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
         .img-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 250px; background: #eee; }
@@ -251,7 +249,6 @@
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
-
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
@@ -271,6 +268,7 @@
             <option value="بيع سلعة / مستعمل">💰 بيع سلعة / مستعمل</option>
             <option value="مخالفة">⚠️ إبلاغ عن مخالفة</option>
             <option value="اقتراح">💡 اقتراح</option>
+            
             <option value="خبر" class="admin-opt" style="display:none">📰 إضافة خبر (Admin)</option>
             <option value="مصالح حكومية" class="admin-opt" style="display:none">🏛️ مصلحة حكومية (Admin)</option>
             <option value="دور عبادة" class="admin-opt" style="display:none">🕌 دور عبادة (Admin)</option>
@@ -384,26 +382,23 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
+    // 🔴🔴🔴 رابط السكريبت (تأكد من أنه صحيح) 🔴🔴🔴
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥 إعدادات الشيت الصحيحة 🔥🔥🔥🔥
-    // ID الملف الجديد
+    // 🔥🔥 استخدام GVIZ API لإجبار قراءة الصفحات الصحيحة 🔥🔥
     const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
-    // GID صفحة Live_Data (للعرض)
-    const liveGID = "965965865"; 
-    // GID صفحة Pending (للأدمن)
-    const pendingGID = "27016104"; 
+    const liveGID = "965965865"; // Live Data (للعرض)
+    const pendingGID = "27016104"; // Pending (للأدمن)
 
-    // رابط CSV المباشر (الأكثر استقراراً) مدعوم ببروكسي
-    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${liveGID}`;
-    // إضافة Date.now() لإجبار المتصفح على جلب أحدث نسخة
-    const proxy = "https://corsproxy.io/?" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
+    // رابط CSV لصفحة Live Data (للواجهة الرئيسية) باستخدام tqx=out:csv
+    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${liveGID}`;
+    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد (V55.0)
-    const CACHE_KEY = 'hona_v55_emergency_fix'; 
+    // ✅ مفتاح كاش جديد لتفريغ الذاكرة
+    const CACHE_KEY = 'hona_v55_final_reset'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -433,13 +428,14 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        localStorage.removeItem('hona_v275_clean_dates');
-        localStorage.removeItem('hona_v3700_your_fav_fixed');
-        localStorage.removeItem('hona_v4000_final_original_restored_2');
-        localStorage.removeItem('hona_v4300_final_original_restored_clean');
-        localStorage.removeItem('hona_v4600_final_linked_all');
-        localStorage.removeItem('hona_v4700_final_linked_all_v2');
-        localStorage.removeItem('hona_v50_super_reset');
+        
+        // مسح الذاكرة القديمة
+        const keysToRemove = [
+            'hona_v275_clean_dates', 'hona_v3700_your_fav_fixed',
+            'hona_v4000_final_original_restored_2', 'hona_v4300_final_original_restored_clean',
+            'hona_v4600_final_linked_all', 'hona_v4700_final_linked_all_v2'
+        ];
+        keysToRemove.forEach(k => localStorage.removeItem(k));
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -456,7 +452,7 @@
 
         document.getElementById('formModal').style.display = 'none';
         
-        // 🔥🔥 قراءة Live_Data من الشيت الصحيح باستخدام الرابط المباشر
+        // 🔥🔥 قراءة Live_Data من الشيت باستخدام GVIZ (أدق وأسرع)
         Papa.parse(proxy, { 
             download:true, 
             header:false, 
@@ -487,7 +483,6 @@
                     let isActive = !activeRaw.includes('FALSE') && !activeRaw.includes('NO'); 
                     if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
                     
-                    // تنظيف البيانات
                     let category = String(r[2] || "").trim();
                     let subCategory = String(r[3] || "").trim();
 
@@ -524,11 +519,7 @@
                 setupFloatAd(); 
                 removeSplash();
             }, 
-            error: (err) => { 
-                console.log("Error loading data:", err); 
-                alert("تعذر الاتصال بقاعدة البيانات. يرجى التحقق من الإنترنت.");
-                removeSplash(); 
-            }
+            error: (err) => { console.log("Error loading data:", err); removeSplash(); }
         });
     }
 
@@ -548,20 +539,20 @@
         }
     }
 
-    // 🔥🔥🔥 لوحة الأدمن تقرأ الآن مباشرة من شيت Pending (27016104) 🔥🔥🔥
+    // 🔥🔥🔥 لوحة الأدمن تقرأ الآن مباشرة من شيت Pending باستخدام GVIZ (27016104) 🔥🔥🔥
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');
         list.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري الجلب...</div>';
         
-        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${pendingGID}`;
-        const pendingProxy = "https://corsproxy.io/?" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
+        // قراءة CSV لشيت Pending باستخدام GVIZ
+        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${pendingGID}`;
+        const pendingProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
 
         Papa.parse(pendingProxy, {
             download: true,
             header: false,
             complete: (results) => {
-                // فلترة الصفوف الفارغة وتخطي العنوان
                 const data = results.data.slice(1).filter(r => r[0] && r[1]); 
                 
                 if(data.length === 0) {
@@ -569,14 +560,11 @@
                 } else {
                     let html = '';
                     data.forEach((item, i) => {
-                        // الترتيب في شيت Pending عادة يكون:
-                        // 0:Time, 1:Name, 2:Cat, 3:Sub, 4:Area, 5:Desc, 6:Phone...
-                        // نستخدم i + 2 لرقم الصف لأننا تخطينا الهيدر (1) والاندكس يبدأ من 0
                         html += `
                         <div class="card" id="row-${i + 2}">
                             <div class="c-title">${item[1]} <small>(${item[2]})</small></div>
-                            <div class="c-sub">${item[3]} | ${item[4]}</div>
-                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item[5]}</div>
+                            <div class="c-sub">${item[3]} | ${item[4]} | ${item[5]}</div>
+                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item[6]}</div>
                             <div class="admin-actions">
                                 <button class="btn-approve" onclick="approveItem(${i + 2}, '${pass}')">✅ موافقة</button>
                                 <button class="btn-reject" onclick="rejectItem(${i + 2}, '${pass}')">❌ رفض</button>
@@ -598,25 +586,10 @@
         params.append('action', 'approve');
         params.append('row', idx);
         params.append('pass', pass);
-        // تغيير شكل الكارت ليدل على المعالجة
-        const card = document.getElementById(`row-${idx}`);
-        if(card) card.style.opacity = '0.5';
-        
+        document.getElementById(`row-${idx}`).style.opacity = '0.5';
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
-        .then(res => { 
-            if(res.result === 'success') { 
-                if(card) card.remove(); 
-                alert("تمت الموافقة والنقل بنجاح! 🚀"); 
-            } else { 
-                alert("Error: " + res.error); 
-                if(card) card.style.opacity = '1';
-            } 
-        })
-        .catch(err => {
-            alert("خطأ في الاتصال بالسيرفر");
-            if(card) card.style.opacity = '1';
-        });
+        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تمت الموافقة والنقل بنجاح! 🚀"); } else { alert("Error: " + res.error); } });
     }
 
     function rejectItem(idx, pass) {
@@ -625,20 +598,10 @@
         params.append('action', 'reject');
         params.append('row', idx);
         params.append('pass', pass);
-        const card = document.getElementById(`row-${idx}`);
-        if(card) card.style.opacity = '0.5';
-
+        document.getElementById(`row-${idx}`).style.opacity = '0.5';
         fetch(scriptURL, { method: 'POST', body: params })
         .then(r => r.json())
-        .then(res => { 
-            if(res.result === 'success') { 
-                if(card) card.remove(); 
-                alert("تم الحذف."); 
-            } else { 
-                alert("Error: " + res.error); 
-                if(card) card.style.opacity = '1';
-            } 
-        });
+        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); } });
     }
 
     function isOfferValid(offerStr) {
@@ -843,7 +806,7 @@
             if(isNews) { 
                 footerHTML = `<div class="news-footer-card">
                                 <span class="news-capsule"><i class="fas fa-bullhorn"></i> ${x.newsSrc||'Hona'}</span> 
-                                <span class="news-date-txt"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span>
+                                <span class="news-date-capsule"><i class="far fa-clock"></i> ${x.date || 'الآن'}</span>
                               </div>`; 
             } else { 
                 footerHTML = x.date ? `<div class="shop-added-date">تم الإضافة<br><span>${x.date}</span></div>` : ''; 

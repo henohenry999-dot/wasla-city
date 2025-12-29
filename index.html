@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V50.0: THE FINAL RESET (V275 DESIGN + FORCE UPDATE) --- */
+        /* --- HONA V275: ORIGINAL DESIGN + FIXED ADD BUTTON ONLY --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -69,7 +69,6 @@
         .c-sub { font-size: 0.75rem; color: #444; display: flex; align-items: center; gap: 5px; font-weight: 700; margin-bottom: 6px; }
         .c-sub i { color: var(--primary); font-size: 0.85rem; }
         
-        /* تصميم العرض الأصلي */
         .card-offer-visible { background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%); color: var(--red); font-size: 0.75rem; font-weight: 800; padding: 8px; border-radius: 10px; margin-top: auto; display: flex; flex-direction: column; gap: 2px; border: 2px dashed #e74c3c; text-align: center; }
         .offer-date-line { font-size: 0.65rem; color: #c0392b; font-weight: 600; margin-top: 2px; border-top: 1px dashed rgba(231,76,60,0.3); padding-top: 2px; }
         
@@ -98,10 +97,10 @@
         .btm-item.active i { color: var(--primary); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; transition: color 0.2s; }
         
-        /* 🔥 الزر العائم (FAB) - إصلاح نهائي للظهور والضغط 🔥 */
+        /* 🔥🔥 إصلاح زر الإضافة النهائي 🔥🔥 */
         .fab { 
             position: fixed; 
-            bottom: 35px; 
+            bottom: 35px; /* ارتفاع مناسب فوق الشريط السفلي */
             left: 50%; 
             transform: translateX(-50%); 
             width: 70px; 
@@ -115,10 +114,10 @@
             font-size: 2rem; 
             border: 4px solid white; 
             box-shadow: 0 5px 25px rgba(0,0,0,0.3); 
-            z-index: 999999; /* رقم فلكي لضمان الظهور */
+            z-index: 999999; /* رقم عالي جداً لضمان الظهور */
             cursor: pointer; 
             transition: 0.3s; 
-            pointer-events: auto !important; /* ضمان استقبال النقرات */
+            pointer-events: auto !important; /* فرض قبول النقرة */
         }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -386,7 +385,7 @@
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥🔥🔥 الحل الفاصل: استخدام رابط GVIZ API لقراءة الصفحات الصحيحة 🔥🔥🔥🔥
+    // 🔥🔥🔥🔥🔥🔥 الحل الفاصل: استخدام رابط GVIZ API لإجبار قراءة الصفحات الصحيحة 🔥🔥🔥🔥
     const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
     const liveGID = "965965865"; // صفحة Live Data
     const pendingGID = "27016104"; // صفحة Pending

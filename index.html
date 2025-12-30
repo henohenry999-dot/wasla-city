@@ -9,13 +9,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V300: FINAL FIXED EDITION --- */
+        /* --- HONA V290: USER VERSION + SUB-CATS & ADMIN SECRET ONLY --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
         body.modal-open { overflow: hidden; } body.modal-open .fab { display: none !important; }
         
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -92,8 +92,8 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 زر الإضافة - طبقة عليا */
-        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 4px solid white; box-shadow: 0 5px 25px rgba(0,0,0,0.3); z-index: 999999; cursor: pointer; transition: 0.3s; pointer-events: auto !important; }
+        /* 🔥 زر الإضافة */
+        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 2000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -105,6 +105,7 @@
         .scrolling { display: inline-block; animation: scroll 60s linear infinite; padding-right: 20px; font-weight: 600; cursor: pointer;}
         .ticker-item { display: inline-block; margin-left: 40px; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        
         .float-ad { position: fixed; top: 160px; left: -5px; z-index: 3000; background: white; border: 2px solid var(--gold); border-left: none; border-radius: 0 20px 20px 0; padding: 5px; width: 45px; height: 45px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 3px 3px 15px rgba(0,0,0,0.1); pointer-events: auto; }
         .float-ad:hover { width: 200px; padding: 10px; left: 0; }
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
@@ -122,6 +123,7 @@
         .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #555; font-size: 0.95rem; }
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -129,6 +131,7 @@
         .offer-text { color: #c0392b; font-weight: 800; font-size: 1rem; }
         .offer-expiry-tag { font-size: 0.75rem; color: #7f8c8d; background: #f9f9f9; padding: 2px 8px; border-radius: 4px; width: fit-content; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }
         .offer-expiry-tag i { color: #e74c3c; font-size: 0.8rem; }
+
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
         .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; }
         .btn-act:active { transform: scale(0.98); }
@@ -142,10 +145,12 @@
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
+        
         #adminModal .card { margin-bottom: 10px; padding: 10px; border-right: 4px solid var(--gold); }
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .btn-reject { background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
         .empty-state { grid-column: span 2; text-align: center; padding: 60px 20px; }
         .empty-icon { font-size: 4rem; color: #ddd; margin-bottom: 20px; }
         .empty-text { font-size: 1.5rem; font-weight: 900; color: var(--dark); font-family: 'Reem Kufi'; }
@@ -225,7 +230,6 @@
     <div class="btm-item" onclick="filter('fav', null)"><i class="fas fa-heart"></i>المفضلة</div>
     <div class="btm-item" onclick="filter('souq', null)"><i class="fas fa-handshake"></i>السوق</div>
 </div>
-
 <div class="fab" id="mainFab" onclick="openFormClean()"><i class="fas fa-plus"></i></div>
 
 <div id="emergencyModal" class="modal"><div class="modal-content" style="padding:20px;"><div class="modal-close" onclick="closeModal('emergencyModal')">✕</div><h3 style="text-align:center; color:var(--red);">🚨 أرقام الطوارئ</h3><ul class="emergency-list"><li><span>🚓 النجدة</span> <a href="tel:122" class="call-em-btn">122</a></li><li><span>🚑 الإسعاف</span> <a href="tel:123" class="call-em-btn">123</a></li><li><span>🚒 المطافئ</span> <a href="tel:180" class="call-em-btn">180</a></li><li><span>⚡ الكهرباء</span> <a href="tel:121" class="call-em-btn">121</a></li><li><span>🚰 المياه</span> <a href="tel:125" class="call-em-btn">125</a></li><li><span>🔥 الغاز</span> <a href="tel:129" class="call-em-btn">129</a></li></ul></div></div>
@@ -276,6 +280,7 @@
             </select>
             <select name="SubCategorySelect" id="subCatSelect" class="form-select" style="display:none;"><option value="">اختر التخصص...</option></select>
             <input type="text" name="SubCategoryInput" id="subCatInput" class="form-input" placeholder="التخصص (مثال: سباك، نجار...)" style="display:none;">
+            
             <div id="workHoursDiv" style="display:flex; gap:10px; margin-bottom:12px;">
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">مفتوح من 🕘</label><input type="time" id="openTime" class="form-input" style="margin-bottom:0;"></div>
                 <div style="flex:1;"><label style="font-size:0.7rem; color:#555; font-weight:bold;">إلى 🕚</label><input type="time" id="closeTime" class="form-input" style="margin-bottom:0;"></div>
@@ -371,20 +376,14 @@
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥🔥 إعدادات البيانات الصحيحة لـ 38 محل 🔥🔥🔥🔥🔥
-    const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
-    const liveGID = "965965865"; 
-    const pendingGID = "27016104"; 
-
-    // رابط CSV لصفحة Live Data المباشر (تجاوز الكاش)
-    const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${liveGID}`;
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
-    
+    // إعدادات الشيت القديم (بياناتك الأصلية)
+    const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxk-tGJ65-hOGtlnVUHDmDUohw1zFIFLDlIng-OlmH35mti_kqInGBCl3gNpUUeL9j5VRMx_x7A8bn/pub?gid=965965865&single=true&output=csv";
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(sheet);
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح كاش جديد لتفريغ الذاكرة
-    const CACHE_KEY = 'hona_v290_final_subcats_admin'; 
+    // ✅ مفتاح كاش جديد لتحديث الكود (V305)
+    const CACHE_KEY = 'hona_v305_gold_edition'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -414,10 +413,7 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        // مسح الكاشات القديمة
-        localStorage.removeItem('hona_v275_clean_dates');
-        localStorage.removeItem('hona_v290_fab_fixed');
-        localStorage.removeItem('hona_v50_super_reset');
+        localStorage.removeItem('hona_v290_fab_fixed'); // Clear old cache
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -434,74 +430,35 @@
 
         document.getElementById('formModal').style.display = 'none';
         
-        Papa.parse(proxy, { 
-            download:true, 
-            header:false, 
-            skipEmptyLines:true, 
-            complete: (res) => {
-                let cleanData = [];
-                let currentItem = null;
-
-                res.data.forEach(row => {
-                    const isNewRow = row[0] && (row[0].match(/\d{1,2}\/\d{1,2}\/\d{4}/) || row[0].includes(':'));
-                    if (isNewRow) {
-                        if (currentItem) cleanData.push(currentItem);
-                        currentItem = row;
-                    } else {
-                        if (currentItem) {
-                            currentItem[currentItem.length - 1] += " " + row.join(" "); 
-                        }
-                    }
-                });
-                if (currentItem) cleanData.push(currentItem);
-
-                let tempDB = cleanData.slice(1).map((r, i) => {
-                    let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
-                    const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
-                    if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
-                    
-                    let activeRaw = String(r[11] || "").toUpperCase();
-                    let isActive = !activeRaw.includes('FALSE') && !activeRaw.includes('NO'); 
-                    if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
-                    
-                    let category = String(r[2] || "").trim();
-                    let subCategory = String(r[3] || "").trim();
-
-                    return {
-                        id: r[0] || i, 
-                        name: String(r[1] || ""), 
-                        cat: category, 
-                        sub: subCategory, 
-                        area: r[4], 
-                        desc: cleanDesc, 
-                        ph: String(r[6] || ""), 
-                        wa: String(r[7] || ""), 
-                        imgRaw: String(r[8] || ""), 
-                        loc: String(r[9] || ""), 
-                        offer: String(r[10] || ""), 
-                        live: isActive, 
-                        feat: String(r[12] || "").toUpperCase().includes('TRUE'), 
-                        date: r[13], 
-                        newsSrc: String(r[14] || ""), 
-                        rating: r[16] || "" 
-                    };
-                }).reverse();
-
-                const uniqueMap = new Map();
-                tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
-                fullDB = Array.from(uniqueMap.values());
-                
-                localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
-                
-                const count = fullDB.filter(x => x.cat !== 'أخبار').length;
-                document.getElementById('shopCount').innerText = count;
-                renderGrid(true); 
-                setupTickers(); 
-                setupFloatAd(); 
-                removeSplash();
-            }, 
-            error: (err) => { console.log("Error loading data:", err); removeSplash(); }
-        });
+        Papa.parse(proxy, { download:true, header:false, skipEmptyLines:true, complete: (res) => {
+            let tempDB = res.data.slice(1).map((r, i) => {
+                let offerTxt = r[10] || "";
+                let expiryDateDisplay = ""; 
+                let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
+                const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
+                if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
+                let activeRaw = String(r[11]).toUpperCase();
+                let isActive = activeRaw.includes('TRUE'); 
+                if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
+                let source = r[14]; 
+                if (!source || source.trim() === "") source = "Hona App"; 
+                let featRaw = String(r[12]).toUpperCase();
+                let isFeatured = featRaw.includes('TRUE');
+                return {
+                    id: r[0] || i, name: String(r[1] || ""), cat: getCat(r[2], r[3]), sub: r[3], area: r[4], 
+                    desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
+                    offer: String(offerTxt || ""), expiry: expiryDateDisplay, live: isActive, feat: isFeatured, 
+                    date: r[13], newsSrc: String(source), rating: r[16] || "" 
+                };
+            }).reverse();
+            const uniqueMap = new Map();
+            tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
+            fullDB = Array.from(uniqueMap.values());
+            localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
+            const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+            document.getElementById('shopCount').innerText = count;
+            renderGrid(true); setupTickers(); setupFloatAd(); removeSplash();
+        }, error: (err) => { console.log("Error loading data:", err); removeSplash(); }});
     }
 
     function triggerAdmin() {
@@ -520,41 +477,37 @@
         }
     }
 
-    // 🔥 لوحة الأدمن تقرأ من صفحة Pending الصحيحة (27016104)
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');
         list.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري الجلب...</div>';
-        
-        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${pendingGID}`;
-        const pendingProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
-
-        Papa.parse(pendingProxy, {
-            download: true,
-            header: false,
-            complete: (results) => {
-                const data = results.data.slice(1).filter(r => r[0] && r[1]); 
-                if(data.length === 0) {
+        const params = new URLSearchParams();
+        params.append('action', 'getPending');
+        params.append('pass', pass);
+        fetch(scriptURL, { method: 'POST', body: params })
+        .then(r => r.json())
+        .then(res => {
+            if(res.result === 'error') {
+                list.innerHTML = `<p style="color:red;text-align:center;">❌ ${res.error}</p>`;
+            } else {
+                if(res.data.length === 0) {
                     list.innerHTML = '<p style="text-align:center;">لا توجد طلبات جديدة ✅</p>';
                 } else {
                     let html = '';
-                    data.forEach((item, i) => {
+                    res.data.forEach(item => {
                         html += `
-                        <div class="card" id="row-${i + 2}">
-                            <div class="c-title">${item[1]} <small>(${item[2]})</small></div>
-                            <div class="c-sub">${item[3]} | ${item[4]} | ${item[5]}</div>
-                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item[6]}</div>
+                        <div class="card" id="row-${item.rowIdx}">
+                            <div class="c-title">${item.name} <small>(${item.type})</small></div>
+                            <div class="c-sub">${item.cat} | ${item.sub} | ${item.area}</div>
+                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item.desc}</div>
                             <div class="admin-actions">
-                                <button class="btn-approve" onclick="approveItem(${i + 2}, '${pass}')">✅ موافقة</button>
-                                <button class="btn-reject" onclick="rejectItem(${i + 2}, '${pass}')">❌ رفض</button>
+                                <button class="btn-approve" onclick="approveItem(${item.rowIdx}, '${pass}')">✅ موافقة</button>
+                                <button class="btn-reject" onclick="rejectItem(${item.rowIdx}, '${pass}')">❌ رفض</button>
                             </div>
                         </div>`;
                     });
                     list.innerHTML = html;
                 }
-            },
-            error: (err) => {
-                 list.innerHTML = `<p style="color:red;text-align:center;">❌ خطأ في الاتصال: ${err}</p>`;
             }
         });
     }
@@ -584,11 +537,13 @@
     }
 
     function isOfferValid(offerStr) {
-        if (!offerStr || offerStr.trim().length < 2) return false;
+        if (!offerStr) return false;
         let dateMatch = offerStr.match(/\{\s*(\d{1,2})[\/\-\s](\d{1,2})\s*\}/);
         if (!dateMatch) return true;
-        const d = parseInt(dateMatch[1]); const m = parseInt(dateMatch[2]) - 1; 
-        let year = new Date().getFullYear(); const now = new Date();
+        const d = parseInt(dateMatch[1]);
+        const m = parseInt(dateMatch[2]) - 1; 
+        let year = new Date().getFullYear();
+        const now = new Date();
         if (now.getMonth() === 11 && m === 0) { year += 1; }
         const exp = new Date(year, m, d, 23, 59, 59);
         if (now > exp) return false;
@@ -608,10 +563,17 @@
     
     // 🔥 FAB CLICK HANDLER (FIXED)
     function openFormClean(type) { 
-        const form = document.getElementById('reqForm'); form.reset(); 
-        const safeHide = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'none'; };
-        ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv'].forEach(safeHide);
-        const contactDiv = document.getElementById('contactDiv'); if(contactDiv) contactDiv.style.display = 'block';
+        const form = document.getElementById('reqForm'); 
+        form.reset(); 
+        document.getElementById('catDiv').style.display = 'none'; 
+        document.getElementById('usedDiv').style.display = 'none'; 
+        document.getElementById('imgLink').style.display = 'none'; 
+        document.getElementById('subCatInput').style.display = 'none'; 
+        document.getElementById('subCatSelect').style.display = 'none'; 
+        document.getElementById('waUploadHelp').style.display = 'none'; 
+        document.getElementById('offerSection').style.display = 'none'; 
+        document.getElementById('newsSourceDiv').style.display = 'none'; 
+        document.getElementById('contactDiv').style.display = 'block'; 
         
         // Reset Admin Defaults
         document.querySelectorAll('.admin-opt').forEach(el => el.style.display = 'none');
@@ -674,24 +636,6 @@
         document.getElementById('inp_Area').style.display = showArea ? 'block' : 'none'; 
         document.getElementById('reqType').value = val; 
     }
-
-    // 🔥 دالة التحقق من التخصصات (تعبئة القائمة المنسدلة)
-    function checkSub(val) {
-        const subList = subCategories[val]; 
-        const subSel = document.getElementById('subCatSelect'); 
-        const subInput = document.getElementById('subCatInput');
-        
-        if (subList && subList.length > 0) { 
-            subSel.style.display = 'block'; 
-            subInput.style.display = 'none'; 
-            subSel.innerHTML = '<option value="">اختر التخصص...</option>' + subList.map(s => `<option value="${s}">${s}</option>`).join(''); 
-        } else { 
-            subSel.style.display = 'none'; 
-            if(val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; }
-        }
-    }
-    // Rename for compatibility with new name if used
-    function updateSubCats(val) { checkSub(val); }
 
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
@@ -785,7 +729,7 @@
     function setShopRate(n) { shopRating = n; updateStars('shopStars', n); }
     function sendShopRate() { if(shopRating===0) return alert("اختر نجوماً"); submitReview("تقييم محل", currentShopData.name, shopRating); closeModal('rateShopModal'); }
     function updateStars(id, n) { const stars = document.querySelectorAll(`#${id} i`); stars.forEach((s, i) => s.classList.toggle('gold', i < n)); }
-    function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${r} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
+    function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
     function sendData(e) { e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.disabled = true; btn.innerText = "جاري..."; const form = document.getElementById('reqForm'); const openVal = document.getElementById('openTime').value; const closeVal = document.getElementById('closeTime').value; const typeVal = document.getElementById('reqType').value; let hoursTag = ""; if((typeVal === 'نشاط' || typeVal === 'إعلان') && openVal && closeVal) { hoursTag = ' | ⏰ ' + openVal + ' - ' + closeVal; } const formData = new FormData(form); const data = {}; formData.forEach((v, k) => data[k] = v); 
     
     // تصحيح اختيار التخصص
@@ -979,12 +923,6 @@
             if(x.loc && x.loc.length > 5 && x.cat !== 'أخبار') { loc.style.display='block'; loc.href = x.loc; } else loc.style.display='none'; 
             openModal('detailsModal'); 
         } catch(e) { console.error(e); alert("خطأ في فتح الكارت: " + e.message); }
-    }
-    
-    // 🔥🔥 دالة عرض المزيد (المفقودة) 🔥🔥
-    function renderMore() {
-        page++; 
-        renderGrid(false);
     }
 
     init();

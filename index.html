@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V330: INSTANT SYNC + AUTO REFRESH --- */
+        /* --- HONA V335: GOLD STABLE + AUTO SYNC + DATA FIX --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -286,19 +286,30 @@
             <select name="UsedCategory" id="usedCatSelect" class="form-select"><option value="">اختر نوع السلعة...</option><option value="موبايلات وإلكترونيات">📱 موبايلات وإلكترونيات</option><option value="أثاث ومنزل">🏠 أثاث ومنزل</option><option value="أجهزة كهربائية">🔌 أجهزة كهربائية</option><option value="سيارات وقطع غيار">🚗 سيارات وقطع غيار</option><option value="ملابس وإكسسوارات">👗 ملابس وإكسسوارات</option><option value="مستلزمات أطفال">👶 مستلزمات أطفال</option><option value="كتب وهوايات">📚 كتب وهوايات</option><option value="حيوانات وطيور">🐦 حيوانات وطيور</option><option value="أخرى">🔄 أخرى</option></select>
         </div>
 
-        <input type="text" name="Area" id="inp_Area" class="form-input" placeholder="المنطقة">
-        <input type="text" name="Location" id="inp_Loc" class="form-input" placeholder="رابط اللوكيشن">
-        <input type="text" name="Image" id="inp_Img" class="form-input" placeholder="رابط الصورة (أو ارسلها واتساب)">
-        <div id="waUploadHelp" style="display:none; font-size:0.8rem; color:#27ae60; margin-bottom:15px; background:#e8f5e9; padding:12px; border-radius:12px; text-align:center; font-weight:bold;"><i class="fab fa-whatsapp"></i> بعد إرسال الطلب، <a href="https://wa.me/201014394475" target="_blank" style="text-decoration:underline; color:#145a32;">اضغط هنا لإرسال الصورة</a></div>
-        
-        <div id="offerSection" style="display:none; gap:5px;">
-            <input type="text" name="Offer" id="offerInput" class="form-input" placeholder="هل يوجد عرض؟ / السعر" style="flex:2;">
-            <input type="text" id="offerExpiry" class="form-input" placeholder="تاريخ: 20/12" style="flex:1;">
+        <div id="areaDiv">
+            <label id="lbl_Area" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">المنطقة</label>
+            <input type="text" name="Area" id="inp_Area" class="form-input" placeholder="المنطقة / الحي">
         </div>
 
         <div id="newsSourceDiv" style="display:none;">
             <label style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">مصدر الخبر</label>
             <input type="text" name="NewsSource" class="form-input" placeholder="مثال: الصفحة الرسمية للجهاز">
+        </div>
+
+        <div id="locDiv">
+            <label id="lbl_Location" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">اللوكيشن</label>
+            <input type="text" name="Location" id="inp_Location" class="form-input" placeholder="رابط اللوكيشن">
+        </div>
+
+        <div id="imgDiv">
+            <label id="lbl_Image" style="font-size:0.75rem; color:#666; font-weight:bold; margin-bottom:4px; display:block;">الصورة</label>
+            <input type="text" name="Image" id="inp_Image" class="form-input" placeholder="رابط صورة (أو ارسلها واتساب)">
+            <div id="waUploadHelp" style="display:none; font-size:0.75rem; color:#2e7d32; margin-bottom:10px; background:#e8f5e9; padding:10px; border-radius:8px; text-align:center;"><i class="fab fa-whatsapp"></i> بعد الإرسال، <a href="https://wa.me/201014394475" target="_blank" style="font-weight:bold; text-decoration:underline;">اضغط هنا لإرسال الصورة</a></div>
+        </div>
+
+        <div id="offerSection" style="display:none; gap:10px;">
+            <input type="text" name="Offer" id="offerInput" class="form-input" placeholder="هل يوجد عرض؟ / السعر" style="flex:2;">
+            <input type="text" id="offerExpiry" class="form-input" placeholder="انتهاء: 30/12" style="flex:1;">
         </div>
 
         <input type="text" name="ImageLink" id="imgLink" class="form-input" placeholder="رابط صورة المخالفة (اختياري)" style="display:none;">
@@ -374,7 +385,8 @@
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    const CACHE_KEY = 'hona_v330_auto_sync'; 
+    // ✅ مفتاح كاش جديد لتفريغ الذاكرة
+    const CACHE_KEY = 'hona_v335_final_sync'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -404,12 +416,14 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        // مسح الكاشات القديمة
+        
+        // تنظيف الكاشات القديمة
         localStorage.removeItem('hona_v290_fab_fixed');
         localStorage.removeItem('hona_v300_fixed_final');
         localStorage.removeItem('hona_v300_gold_final');
         localStorage.removeItem('hona_v310_loadmore_fixed');
         localStorage.removeItem('hona_v315_gold_loadmore_fix');
+        localStorage.removeItem('hona_v320_datafix');
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
@@ -426,9 +440,10 @@
 
         document.getElementById('formModal').style.display = 'none';
         
+        // جلب البيانات الأول
         fetchData();
         
-        // 🔥🔥 AUTO SYNC: التحديث التلقائي كل 10 ثوانٍ
+        // 🔥🔥 AUTO SYNC: التحديث التلقائي كل 10 ثوانٍ 🔥🔥
         setInterval(() => {
             fetchData(true);
         }, 10000);
@@ -510,6 +525,7 @@
         if (adminClicks === 5) { adminClicks = 0; openModal('adminModal'); }
     }
 
+    // 🔥 دالة تفعيل وضع الأدمن السري (جديد)
     function enableAdminOptions() {
         formAdminClicks++;
         if(formAdminClicks >= 5) {
@@ -606,12 +622,14 @@
     function openAbout(e) { e.stopPropagation(); openModal('aboutModal'); }
     function openAppRate(e) { e.stopPropagation(); openModal('rateAppModal'); }
     
+    // 🔥 FAB CLICK HANDLER (FIXED)
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); form.reset(); 
         const safeHide = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'none'; };
         ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv'].forEach(safeHide);
         const contactDiv = document.getElementById('contactDiv'); if(contactDiv) contactDiv.style.display = 'block';
         
+        // Reset Admin Defaults
         document.querySelectorAll('.admin-opt').forEach(el => el.style.display = 'none');
         document.getElementById('formTitle').style.color = 'var(--dark)';
 
@@ -628,6 +646,7 @@
     function toggleFields(val) { 
         let showCat = false; let showHours = false; let showUsed = false; let showImgLink = false; let showOffer = false; let showNewsSrc = false; let showContact = true; let showArea = true; 
         
+        // Reset defaults
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان"; 
         document.getElementById('inp_Name').placeholder = "الاسم / العنوان"; 
         document.querySelector('input[name="Contact"]').required = true; 
@@ -672,6 +691,7 @@
         document.getElementById('reqType').value = val; 
     }
 
+    // 🔥 دالة التحقق من التخصصات (تعبئة القائمة المنسدلة)
     function checkSub(val) {
         const subList = subCategories[val]; 
         const subSel = document.getElementById('subCatSelect'); 
@@ -686,6 +706,7 @@
             if(val === 'أخرى') { subInput.style.display = 'block'; } else { subInput.style.display = 'none'; }
         }
     }
+    // Rename for compatibility with new name if used
     function updateSubCats(val) { checkSub(val); }
 
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
@@ -703,6 +724,8 @@
             if(el.classList.contains('q-chip')) el.classList.add('active'); 
         } 
         document.getElementById('search').value = ''; 
+        
+        // 💡 توليد التخصصات الفرعية
         checkSub(c);
 
         const container = document.getElementById('subCatNav'); 
@@ -760,9 +783,9 @@
     function setShopRate(n) { shopRating = n; updateStars('shopStars', n); }
     function sendShopRate() { if(shopRating===0) return alert("اختر نجوماً"); submitReview("تقييم محل", currentShopData.name, shopRating); closeModal('rateShopModal'); }
     function updateStars(id, n) { const stars = document.querySelectorAll(`#${id} i`); stars.forEach((s, i) => s.classList.toggle('gold', i < n)); }
-    function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${r} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
+    function submitReview(type, name, rate) { const btn = document.querySelector('#rateShopModal .btn-submit'); if(btn) btn.innerText = "جاري..."; const params = new URLSearchParams(); params.append("Date", "New"); params.append("Type", "تقييم"); params.append("Name", name); params.append("Category", type); params.append("Description", `التقييم: ${rate} نجوم`); params.append("Contact", ""); fetch(scriptURL, { method: 'POST', body: params }).then(response => response.json()).then(result => { alert("شكراً لتقييمك! ❤️ سيتم مراجعته."); if(btn) btn.innerText = "إرسال 🚀"; }).catch(() => { alert("تم الإرسال بنجاح!"); if(btn) btn.innerText = "إرسال 🚀"; }); closeModal('rateAppModal'); closeModal('rateShopModal'); }
     
-    // 🔥🔥 إصلاح الإرسال: إرسال كل الخانات المطلوبة 🔥🔥
+    // 🔥🔥 تعديل دالة الإرسال لضمان تعبئة الأعمدة 🔥🔥
     function sendData(e) { 
         e.preventDefault(); 
         const btn = document.getElementById('submitBtn'); 
@@ -846,6 +869,7 @@
                     
                     if (isOfferValid(line) && clean) {
                         let expiryTxt = dateMatch ? ` (حتى ${dateMatch[1]}/${dateMatch[2]})` : '';
+                        // ✅ إضافة علامات التنصيص حول ID
                         offersArray.push(`<span class="ticker-item" onclick="openD('${x.id}')" style="cursor:pointer">🔥 ${x.name}: ${clean} ${expiryTxt}</span>`);
                     }
                 });

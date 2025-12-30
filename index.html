@@ -9,13 +9,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V65.0: THE PERFECT SYNC (DESIGN V275 + CORE FIXES) --- */
+        /* --- استعادة كامل ميزات وتصميم V275 الأصلي --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
-        body.modal-open { overflow: hidden; } 
+        body.modal-open { overflow: hidden; } body.modal-open .fab { display: none !important; }
         
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
+        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #27ae60, #2c3e50); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; cursor: pointer; }
         .rocket-icon { font-size: 5rem; color: white; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         .splash-text { color: white; font-family: 'Reem Kufi'; font-size: 1.5rem; letter-spacing: 2px; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
@@ -57,7 +57,6 @@
         .card:active { transform: scale(0.98); }
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
-        
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
         .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
@@ -73,17 +72,8 @@
         .news-footer-card { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; border-top: 1px dashed #eee; width: 100%; }
         .news-capsule { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3); }
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
-        
-        .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
-        .card-fav-btn { position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.95); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.15); z-index: 10; pointer-events: auto !important; color: #bdc3c7; }
-        .card-fav-btn.active i { color: var(--red); }
-        .badge-live { position: absolute; top: 10px; right: 10px; background: rgba(39,174,96,0.9); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; backdrop-filter: blur(2px); }
-        .badge-sold { position: absolute; top: 10px; right: 10px; background: var(--dark); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
-        .badge-feat { position: absolute; top: 0; left: 0; background: var(--gold); color: black; padding: 4px 10px; border-radius: 0 0 10px 0; font-size: 0.65rem; font-weight: bold; z-index: 4; }
-        .badge-news { position: absolute; top: 10px; right: 10px; background: var(--red); color: white; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: bold; z-index: 4; }
         .load-more { display: block; margin: 25px auto; padding: 12px 40px; background: white; border: 1px solid #eee; border-radius: 30px; color: var(--dark); font-weight: bold; cursor: pointer; grid-column: span 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
         .btm-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 10px 0 25px; display: flex; justify-content: space-around; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; border-radius: 25px 25px 0 0; }
@@ -91,8 +81,8 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥🔥 إصلاح زر الإضافة (FAB) - طبقة عليا مطلقة 🔥🔥 */
-        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 4px solid white; box-shadow: 0 5px 25px rgba(0,0,0,0.3); z-index: 999999; cursor: pointer; transition: 0.3s; pointer-events: auto !important; }
+        /* 🔥 إصلاح زر الإضافة النهائي 🔥 */
+        .fab { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); width: 70px; height: 70px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 4px solid white; box-shadow: 0 5px 25px rgba(0,0,0,0.3); z-index: 99999; cursor: pointer; transition: 0.3s; pointer-events: auto !important; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -203,7 +193,7 @@
         <div class="cat-item" onclick="filter('تكنولوجيا وإلكترونيات', this)"><div class="cat-icon bg-tech"><i class="fas fa-mobile-alt"></i></div><div class="cat-name">تكنولوجيا<br>إلكترونيات</div></div>
         <div class="cat-item" onclick="filter('سيارات ودراجات', this)"><div class="cat-icon bg-auto"><i class="fas fa-car"></i></div><div class="cat-name">سيارات<br>دراجات</div></div>
         <div class="cat-item" onclick="filter('ملابس وأحذية', this)"><div class="cat-icon bg-fashion"><i class="fas fa-tshirt"></i></div><div class="cat-name">ملابس<br>أحذية</div></div>
-        <div class="cat-item" onclick="filter('منظفات وتجميل', this)"><div class="cat-icon bg-clean"><i class="fas fa-spray-can"></i></div><div class="cat-name">منظفات<br>وتجميل</div></div>
+        <div class="cat-item" onclick="filter('منظفات وتجميل', this)"><div class="cat-icon bg-clean"><i class="fas fa-spray-can"></i></div><div class="cat-name">منظفات<br>تجميل</div></div>
         <div class="cat-item" onclick="filter('ديكورات', this)"><div class="cat-icon bg-decor"><i class="fas fa-paint-roller"></i></div><div class="cat-name">ديكورات</div></div>
         <div class="cat-item" onclick="filter('رياضة', this)"><div class="cat-icon bg-sport"><i class="fas fa-dumbbell"></i></div><div class="cat-name">رياضة</div></div>
         <div class="cat-item" onclick="filter('أخرى', this)"><div class="cat-icon bg-other"><i class="fas fa-ellipsis-h"></i></div><div class="cat-name">أخرى</div></div>
@@ -357,34 +347,28 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    // 🔴 الرابط المباشر للسكريبت (Backend)
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyx91sQePWzGvq68GLwh6c3G08M6-IHJAvkaCZJiULwT578W9EcHcg-Ksp5xP_iTUduMw/exec';
     
-    // 🔥🔥🔥🔥🔥 إعدادات الشيت والبيانات 🔥🔥🔥🔥🔥
-    // ID ملف الإكسيل
+    // 🔥🔥🔥🔥🔥 إعدادات البيانات الصحيحة لـ 38 محل 🔥🔥🔥🔥🔥
     const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
-    // أرقام الصفحات (GIDs) الصحيحة
-    const liveGID = "965965865";      // صفحة Live_Data (للمستخدمين)
-    const pendingGID = "27016104";    // صفحة Pending (للأدمن)
-    const responsesGID = "1363387045"; // الصفحة الأولى (الخام)
+    const liveGID = "965965865"; 
+    const pendingGID = "27016104"; 
 
-    // رابط قراءة صفحة Live_Data مباشرة
+    // رابط CSV لصفحة Live Data المباشر (تجاوز الكاش)
     const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${liveGID}`;
-    
-    // استخدام بروكسي لتجاوز الحماية ومنع المتصفح من الكاش القديم
     const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    // ✅ مفتاح ذاكرة فريد لمنع استعادة بيانات معطوبة قديمة
-    const CACHE_KEY = 'hona_v65_final_restored_original'; 
+    // ✅ مفتاح كاش نهائي
+    const CACHE_KEY = 'hona_v275_stable_final_fix'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
         "خدمات طبية": ["صيدلية", "معمل تحاليل", "مركز أشعة", "عيادة أسنان", "عيادة عيون", "عيادة باطنة وأطفال", "نساء وتوليد", "عيادة جلدية", "علاج طبيعي", "عظام ومفاصل", "أنف وأذن وحنجرة", "مخ وأعصاب", "طب بيطري", "مستلزمات طبية", "نظارات وبصريات", "تمريض منزلي", "وحدة طب الاسرة"],
         "تكنولوجيا وإلكترونيات": ["بيع وشراء موبايلات", "إكسسوارات موبايل", "لابتوب وكمبيوتر", "مستلزمات كمبيوتر", "كاميرات مراقبة", "أنظمة أمنية", "ألعاب فيديو وبلايستيشن", "طابعات وأحبار", "أنظمة صوتية وسماعات", "شبكات وإنترنت", "صيانة إلكترونيات دقيقة", "ساعات ذكية", "دش مركزي وستالايت", "إضاءة حديثة وليد"],
-        "فنيين وحرف": ["سباك", "كهربائي منازل", "نجار باب وشباك", "نجار موبيليا", "نقاش ودهانات", "فني تكييف وتبريد", "فني دش وستالايت", "فني فلاتر مياه", "ألوميتال وشيش حصيرة", "حداد وكريتال", "جبس بورد", "سيراميك وبورسلين", "زجاج ومرايات", "رخام وجرانيت", "مفاتيح وكوالين", "تنجيد وستائر", "مكافحة حشرات"],
+        "فنيين وحرف": ["سباك", "كهربائي منازل", "نجار باب وشباك", "نجار موبيليا", "نقاش ودهانات", "فني تكييف وتبريد", "فني دش وستالايت", "فني فلاتر مياه", "ألوميتال وشيش حصيرة", "حداد وكريتال", "جبس بورد", "سيراميك وبورسلين", "زجاج ومرايات", "رخام جرايد", "مفاتيح وكوالين", "تنجيد وستائر", "مكافحة حشرات"],
         "صيانة أجهزة منزلية": ["صيانة غسالات وثلاجات", "صيانة بوتاجازات وسخانات", "صيانة شاشات وكمبيوتر", "صيانة موبايل", "صيانة ريسيفر وبرمجة", "صيانة أجهزة دقيقة", "صيانة مايكروويف", "شحن فريون"],
         "ماركت وعطارة": ["سوبر ماركت وبقالة", "خضار وفاكهة", "جزارة ولحوم", "طيور ودواجن", "أسماك طازجة", "عطارة وبقوليات", "سرجة وزيوت", "محمصة ولب", "مجمدات", "مخللات وطرشي", "ألبان ومنتجاتها", "جملة المواد الغذائية"],
         "سيارات ودراجات": ["ميكانيكي سيارات", "كهربائي سيارات", "عفشة وموتور", "سمكري ودوكو", "إطارات وبطاريات", "زيوت وفلاتر", "قطع غيار سيارات", "كماليات سيارات", "غسيل وكار كير", "سروجي سيارات", "ميكانيكي موتوسيكلات", "عجل ودراجات", "ونش إنقاذ"],
@@ -408,15 +392,16 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        // تنظيف شامل للذاكرة
-        const keysToRemove = ['hona_v275_clean_dates', 'hona_v50_super_reset', 'hona_v290_fab_fixed'];
-        keysToRemove.forEach(k => localStorage.removeItem(k));
+        // تنظيف شامل
+        localStorage.removeItem('hona_v275_clean_dates');
+        localStorage.removeItem('hona_v50_super_reset');
         
         const cached = localStorage.getItem(CACHE_KEY);
         if(cached) {
             try {
                 fullDB = JSON.parse(cached);
-                updateCount();
+                const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+                document.getElementById('shopCount').innerText = count;
                 renderGrid(true);
                 setupTickers();
                 setupFloatAd();
@@ -431,23 +416,7 @@
             header:false, 
             skipEmptyLines:true, 
             complete: (res) => {
-                let cleanData = [];
-                let currentItem = null;
-
-                res.data.forEach(row => {
-                    const isNewRow = row[0] && (row[0].match(/\d{1,2}\/\d{1,2}\/\d{4}/) || row[0].includes(':'));
-                    if (isNewRow) {
-                        if (currentItem) cleanData.push(currentItem);
-                        currentItem = row;
-                    } else {
-                        if (currentItem) {
-                            currentItem[currentItem.length - 1] += " " + row.join(" "); 
-                        }
-                    }
-                });
-                if (currentItem) cleanData.push(currentItem);
-
-                let tempDB = cleanData.slice(1).map((r, i) => {
+                let tempDB = res.data.slice(1).map((r, i) => {
                     let fullDesc = r[5] || ""; let hoursStr = ""; let cleanDesc = fullDesc;
                     const timeMatch = fullDesc.match(/\|\s*⏰\s*(\d{2}:\d{2}\s*-\s*\d{2}:\d{2})/);
                     if(timeMatch) { hoursStr = timeMatch[1]; cleanDesc = fullDesc.replace(timeMatch[0], "").trim(); }
@@ -481,7 +450,8 @@
                 fullDB = Array.from(uniqueMap.values());
                 
                 localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
-                updateCount();
+                const count = fullDB.filter(x => x.cat !== 'أخبار').length;
+                document.getElementById('shopCount').innerText = count;
                 renderGrid(true); 
                 setupTickers(); 
                 setupFloatAd(); 
@@ -491,33 +461,14 @@
         });
     }
 
-    function updateCount() {
-        const count = fullDB.filter(x => x.cat !== 'أخبار').length;
-        document.getElementById('shopCount').innerText = count;
-    }
+    function triggerAdmin() { adminClicks++; if (adminClicks === 5) { adminClicks = 0; openModal('adminModal'); } }
+    function enableAdminOptions() { formAdminClicks++; if(formAdminClicks >= 5) { alert("🔓 وضع الأدمن!"); document.querySelectorAll('.admin-opt').forEach(el => el.style.display = 'block'); document.getElementById('formTitle').style.color = '#e74c3c'; formAdminClicks = 0; } }
 
-    function triggerAdmin() {
-        adminClicks++;
-        if (adminClicks === 5) { adminClicks = 0; openModal('adminModal'); }
-    }
-
-    function enableAdminOptions() {
-        formAdminClicks++;
-        if(formAdminClicks >= 5) {
-            alert("🔓 تم تفعيل وضع الأدمن!");
-            document.querySelectorAll('.admin-opt').forEach(el => el.style.display = 'block');
-            document.getElementById('formTitle').style.color = '#e74c3c';
-            formAdminClicks = 0;
-        }
-    }
-
-    // 🔥 لوحة الأدمن تقرأ من صفحة Pending الصحيحة (27016104)
     function loadPending() {
         const pass = document.getElementById('adminPass').value;
         const list = document.getElementById('pendingList');
         list.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري الجلب...</div>';
-        
-        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${pendingGID}`;
+        const pendingCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${pendingGID}`;
         const pendingProxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(pendingCsvUrl) + "&t=" + Date.now();
 
         Papa.parse(pendingProxy, {
@@ -525,16 +476,15 @@
             header: false,
             complete: (results) => {
                 const data = results.data.slice(1).filter(r => r[0] && r[1]); 
-                if(data.length === 0) {
-                    list.innerHTML = '<p style="text-align:center;">لا توجد طلبات جديدة ✅</p>';
-                } else {
+                if(data.length === 0) { list.innerHTML = '<p style="text-align:center;">لا توجد طلبات جديدة ✅</p>'; }
+                else {
                     let html = '';
                     data.forEach((item, i) => {
                         html += `
                         <div class="card" id="row-${i + 2}">
                             <div class="c-title">${item[1]} <small>(${item[2]})</small></div>
-                            <div class="c-sub">${item[3]} | ${item[4]} | ${item[5]}</div>
-                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item[6]}</div>
+                            <div class="c-sub">${item[3]} | ${item[4]}</div>
+                            <div style="font-size:0.8rem;color:#666;margin:5px 0;">${item[5]}</div>
                             <div class="admin-actions">
                                 <button class="btn-approve" onclick="approveItem(${i + 2}, '${pass}')">✅ موافقة</button>
                                 <button class="btn-reject" onclick="rejectItem(${i + 2}, '${pass}')">❌ رفض</button>
@@ -548,27 +498,23 @@
     }
 
     function approveItem(idx, pass) {
-        if(!confirm("تأكيد الموافقة؟")) return;
+        if(!confirm("موافقة؟")) return;
         const params = new URLSearchParams();
         params.append('action', 'approve');
         params.append('row', idx);
         params.append('pass', pass);
         document.getElementById(`row-${idx}`).style.opacity = '0.5';
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(r => r.json())
-        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تمت الموافقة والنقل بنجاح! 🚀"); } else { alert("Error: " + res.error); } });
+        fetch(scriptURL, { method: 'POST', body: params }).then(r => r.json()).then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تمت الموافقة! 🚀"); } });
     }
 
     function rejectItem(idx, pass) {
-        if(!confirm("تأكيد الحذف؟ لن يمكن التراجع.")) return;
+        if(!confirm("حذف؟")) return;
         const params = new URLSearchParams();
         params.append('action', 'reject');
         params.append('row', idx);
         params.append('pass', pass);
         document.getElementById(`row-${idx}`).style.opacity = '0.5';
-        fetch(scriptURL, { method: 'POST', body: params })
-        .then(r => r.json())
-        .then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } else { alert("Error: " + res.error); } });
+        fetch(scriptURL, { method: 'POST', body: params }).then(r => r.json()).then(res => { if(res.result === 'success') { document.getElementById(`row-${idx}`).remove(); alert("تم الحذف."); } });
     }
 
     function isOfferValid(offerStr) {
@@ -594,8 +540,8 @@
     
     function openFormClean(type) { 
         const form = document.getElementById('reqForm'); form.reset(); 
-        const hideArr = ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv'];
-        hideArr.forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+        const hArr = ['catDiv', 'usedDiv', 'imgLink', 'subCatInput', 'subCatSelect', 'waUploadHelp', 'offerSection', 'newsSourceDiv'];
+        hArr.forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
         document.getElementById('contactDiv').style.display = 'block';
         document.querySelectorAll('.admin-opt').forEach(el => el.style.display = 'none');
         document.getElementById('formTitle').style.color = 'var(--dark)';
@@ -604,26 +550,27 @@
     }
     
     function toggleFields(val) { 
-        let sCat = false, sHour = false, sUsed = false, sImgLink = false, sOffer = false, sNews = false, sContact = true, sArea = true; 
+        let sc=false, sh=false, su=false, si=false, so=false, sn=false, sCo=true, sAr=true; 
         document.getElementById('lbl_Name').innerText = "الاسم / العنوان";
-        if (val === 'نشاط') { sCat = true; sHour = true; } else if (val === 'إعلان') { sCat = true; sOffer = true; } else if (val === 'خبر') { document.getElementById('lbl_Name').innerText = "عنوان الخبر"; sNews = true; sContact = false; sArea = false; document.getElementById('inp_Category').value = 'أخبار'; } else if (val === 'بيع سلعة / مستعمل') { sUsed = true; } else if (val === 'مخالفة') { sImgLink = true; } 
-        document.getElementById('catDiv').style.display = sCat ? 'block' : 'none';
-        document.getElementById('workHoursDiv').style.display = sHour ? 'flex' : 'none';
-        document.getElementById('usedDiv').style.display = sUsed ? 'block' : 'none';
-        document.getElementById('imgLink').style.display = sImgLink ? 'block' : 'none';
-        document.getElementById('offerSection').style.display = sOffer ? 'flex' : 'none';
-        document.getElementById('newsSourceDiv').style.display = sNews ? 'block' : 'none';
-        document.getElementById('contactDiv').style.display = sContact ? 'block' : 'none';
-        document.getElementById('lbl_Area').style.display = sArea ? 'block' : 'none';
-        document.getElementById('inp_Area').style.display = sArea ? 'block' : 'none';
+        if (val === 'نشاط') { sc=true; sh=true; } else if (val === 'إعلان') { sc=true; so=true; } else if (val === 'خبر') { document.getElementById('lbl_Name').innerText = "عنوان الخبر"; sn=true; sCo=false; sAr=false; document.getElementById('inp_Category').value = 'أخبار'; } else if (val === 'بيع سلعة / مستعمل') { su=true; } else if (val === 'مخالفة') { si=true; } 
+        document.getElementById('catDiv').style.display = sc ? 'block' : 'none';
+        document.getElementById('workHoursDiv').style.display = sh ? 'flex' : 'none';
+        document.getElementById('usedDiv').style.display = su ? 'block' : 'none';
+        document.getElementById('imgLink').style.display = si ? 'block' : 'none';
+        document.getElementById('offerSection').style.display = so ? 'flex' : 'none';
+        document.getElementById('newsSourceDiv').style.display = sn ? 'block' : 'none';
+        document.getElementById('contactDiv').style.display = sCo ? 'block' : 'none';
+        document.getElementById('lbl_Area').style.display = sAr ? 'block' : 'none';
+        document.getElementById('inp_Area').style.display = sAr ? 'block' : 'none';
     }
 
     function checkSub(val) {
         const subList = subCategories[val]; const subSel = document.getElementById('subCatSelect'); const subInput = document.getElementById('subCatInput');
         if(subList && subList.length > 0) { subSel.style.display = 'block'; subInput.style.display = 'none'; subSel.innerHTML = subList.map(s => `<option value="${s}">${s}</option>`).join(''); } else { subSel.style.display = 'none'; if (val === 'أخرى') subInput.style.display = 'block'; else subInput.style.display = 'none'; }
     }
+    function updateSubCats(val) { checkSub(val); }
 
-    function shareShop() { const t = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(t).then(() => alert("✅ تم نسخ التفاصيل!")); }
+    function shareShop() { const t = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(t).then(() => alert("✅ تم النسخ!")); }
     function shareShopViaWhatsapp() { const t = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(t)}`, '_blank'); }
     function normalizeText(t) { return t ? t.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي') : ""; }
     function doSearch(v) { const s = normalizeText(v.toLowerCase()); if (curCat !== 'all') { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); document.querySelector('.cat-item').classList.add('active'); curCat = 'all'; document.getElementById('subCatNav').style.display='none'; } filteredDB = fullDB.filter(x => normalizeText(x.name.toLowerCase()).includes(s) || normalizeText(x.desc.toLowerCase()).includes(s)); filteredDB.sort((a,b) => b.feat - a.feat); page = 1; renderGrid(true); }

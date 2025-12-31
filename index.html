@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hona | دليلك في جيبك</title>
+    <title>Hona | دليلك في جيبك (V370)</title>
     <meta name="theme-color" content="#27ae60">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V360: GOLD EDITION + LIVE DATA FIX --- */
+        /* --- HONA V370: STABLE PROXY + LIVE SYNC FIX --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -92,8 +92,8 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 زر الإضافة - ثابت ومفعل */
-        .fab { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 2000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
+        /* 🔥 زر الإضافة - في مكانه الأصلي */
+        .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 2000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
         .ticker-container { position: fixed; top: 0; width: 100%; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -328,33 +328,6 @@
     </form>
 </div></div>
 
-<div id="detailsModal" class="modal" onclick="if(event.target==this)closeModal('detailsModal')">
-    <div class="modal-content">
-        <div class="modal-close" onclick="closeModal('detailsModal')">✕</div>
-        <div id="imgSlider" class="img-slider"></div>
-        <img id="dImg" src="" style="width:100%; height:250px; object-fit:cover; display:none;">
-        <div class="d-body">
-            <h2 id="dName" class="d-title"></h2>
-            <div><span class="cat-capsule" id="dCatMain"></span><span class="cat-capsule sub" id="dCatSub" style="display:none;"></span></div>
-            <div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div>
-            <div id="dSrcInfo" class="info-row" style="display:none;"></div>
-            <div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div>
-            
-            <div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div>
-            
-            <div class="d-desc" id="dDesc"></div>
-            <a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a>
-            <div class="share-row">
-                <button class="btn-small" onclick="shareShopViaWhatsapp()"><i class="fab fa-whatsapp"></i> مشاركة</button>
-                <button class="btn-small" onclick="shareShop()"><i class="fas fa-copy"></i> نسخ</button>
-                <button class="btn-small" onclick="openShopRate()"><i class="fas fa-star" style="color:var(--gold)"></i> تقييم</button>
-            </div>
-            <div id="actionBtns" class="action-btns"></div>
-            <a id="dLoc" href="#" target="_blank" class="btn-submit" style="text-align:center; background:#f39c12; margin-top:10px; display:block;">الموقع</a>
-        </div>
-    </div>
-</div>
-
 <div id="adminModal" class="modal">
     <div class="modal-content" style="padding:20px;">
         <div class="modal-close" onclick="closeModal('adminModal')">✕</div>
@@ -378,15 +351,16 @@
 
     // 🔥 دالة الحصول على الرابط المتجدد (Cache Busting)
     function getLiveUrl() {
+        // نستخدم corsproxy.io لأنه أكثر استقراراً
         const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${liveGID}`;
-        return "https://api.allorigins.win/raw?url=" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
+        return "https://corsproxy.io/?" + encodeURIComponent(liveCsvUrl + "&t=" + Date.now());
     }
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
     // ✅ مفتاح كاش جديد لتفريغ الذاكرة
-    const CACHE_KEY = 'hona_v360_live_and_stable'; 
+    const CACHE_KEY = 'hona_v370_stable_live'; 
 
     const subCategories = {
         "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
@@ -448,11 +422,6 @@
         
         // جلب البيانات الأول
         fetchData();
-        
-        // 🔥🔥 AUTO SYNC: التحديث التلقائي كل 10 ثوانٍ 🔥🔥
-        setInterval(() => {
-            fetchData(true);
-        }, 10000);
     }
 
     function fetchData(isBackground = false) {
@@ -513,23 +482,18 @@
                 tempDB.forEach(item => { if(!uniqueMap.has(item.name)){ uniqueMap.set(item.name, item); } });
                 const newData = Array.from(uniqueMap.values());
                 
-                // تحديث البيانات فقط إذا كان هناك تغيير (أو أول مرة)
-                if(!isBackground || newData.length !== fullDB.length) {
+                if(newData.length > 0) {
                     fullDB = newData;
                     localStorage.setItem(CACHE_KEY, JSON.stringify(fullDB));
                     const count = fullDB.filter(x => x.cat !== 'أخبار').length;
                     document.getElementById('shopCount').innerText = count;
-                    
-                    // إذا كان في الخلفية، لا نعيد رسم كل شيء إلا إذا كان المستخدم في الصفحة الرئيسية
-                    if (!isBackground || (curCat === 'all' && document.getElementById('search').value === '')) {
-                        renderGrid(true); 
-                        setupTickers(); 
-                        setupFloatAd(); 
-                    }
-                    if(!isBackground) removeSplash();
+                    renderGrid(true); 
+                    setupTickers(); 
+                    setupFloatAd();
+                    removeSplash();
                 }
             }, 
-            error: (err) => { console.log("Error loading data:", err); if(!isBackground) removeSplash(); }
+            error: (err) => { console.log("Error loading data:", err); removeSplash(); }
         });
     }
 

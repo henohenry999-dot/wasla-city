@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- HONA V315 GOLD: STABLE STRUCTURE --- */
+        /* --- النسخة الذهبية المستقرة V315 مع الإصلاحات البرمجية فقط --- */
         :root { --primary: #27ae60; --dark: #2c3e50; --gold: #f1c40f; --bg: #f4f7f6; --white: #ffffff; --red: #e74c3c; --text-bold: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Tajawal', sans-serif; margin: 0; background-color: var(--bg); padding-bottom: 90px; user-select: none; overflow-x: hidden; color: #333; }
@@ -58,9 +58,8 @@
         .card * { pointer-events: none; } .card .card-fav-btn { pointer-events: auto; }
         .card.featured { border: 2px solid var(--gold); background: #fffcf9; }
         .card.news-card { grid-column: span 2; flex-direction: row; padding: 10px; border-right: 4px solid var(--red); }
-        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; }
+        .card.news-card .c-img { width: 100px; height: 100px; margin: 0; border-radius: 12px; border:none; }
         .c-img { width: 100%; height: 120px; object-fit: cover; background: #eee; display: block; border-bottom: 1px solid #f0f0f0; }
-        .card.news-card .c-img { border-radius: 12px; border:none; }
         .c-body { padding: 10px; flex: 1; display: flex; flex-direction: column; }
         
         .c-title { margin: 0 0 6px; font-size: 1rem; font-weight: 900; color: var(--text-bold); line-height: 1.3; }
@@ -76,6 +75,7 @@
         .news-date-capsule { background: #f0f0f0; color: #555; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         .shop-added-date { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-size: 0.65rem; color: #7f8c8d; font-weight: bold; padding: 6px 0; border-top: 1px dashed #eee; margin-top: auto; line-height: 1.2; width: 100%; }
         .shop-added-date span { color: var(--dark); font-weight: 800; font-size: 0.7rem; }
+        
         .news-detail-header { background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--red); display: flex; gap: 10px; align-items: center; }
         .nd-capsule { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: bold; }
         .card-rating { font-size: 0.6rem; color: #f1c40f; margin-bottom: 5px; }
@@ -92,7 +92,6 @@
         .btm-item.active { color: var(--primary); font-weight: bold; transform: translateY(-5px); }
         .btm-item i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
         
-        /* 🔥 زر الإضافة - ثابت ومفعل */
         .fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 65px; height: 65px; background: var(--dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 5px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 2000; cursor: pointer; transition: 0.3s; pointer-events: auto; }
         .fab:active { transform: translateX(-50%) scale(0.9); }
         
@@ -111,6 +110,7 @@
         .float-icon { font-size: 1.4rem; color: var(--red); margin-right: 8px; animation: wig 2s infinite; min-width: 30px; text-align: center; }
         .float-txt { display: none; font-size: 0.75rem; white-space: nowrap; font-weight: bold; color: var(--dark); }
         .float-ad:hover .float-txt { display: block; }
+        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: #fff; width: 95%; max-width: 450px; border-radius: 25px; padding: 0; position: relative; max-height: 90vh; overflow-y: auto; animation: pop 0.3s; padding-bottom: 20px; }
         .modal-close { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-weight: bold; }
@@ -123,6 +123,7 @@
         .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #555; font-size: 0.95rem; }
         .info-row i { color: var(--primary); width: 20px; text-align: center; font-size: 1.1rem; }
         .d-desc { line-height: 1.7; color: #666; font-size: 0.95rem; margin: 15px 0; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        
         .offer-box-modal { margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 2px dashed var(--red); border-radius: 15px; position: relative; }
         .offer-box-modal::before { content: '🎁 العروض'; position: absolute; top: -10px; right: 15px; background: var(--red); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
         .offer-item { padding: 10px 0; border-bottom: 1px dashed rgba(231, 76, 60, 0.3); display: flex; flex-direction: column; gap: 4px; }
@@ -130,6 +131,7 @@
         .offer-text { color: #c0392b; font-weight: 800; font-size: 1rem; }
         .offer-expiry-tag { font-size: 0.75rem; color: #7f8c8d; background: #f9f9f9; padding: 2px 8px; border-radius: 4px; width: fit-content; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }
         .offer-expiry-tag i { color: #e74c3c; font-size: 0.8rem; }
+        
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
         .btn-act { flex: 1; padding: 14px; border-radius: 15px; text-align: center; color: white; font-weight: bold; text-decoration: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; }
         .btn-act:active { transform: scale(0.98); }
@@ -140,13 +142,16 @@
         .btn-small { background: #f0f0f0; color: #555; padding: 8px 15px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: none; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         .btn-small:hover { background: #e0e0e0; }
         .btn-small i.fa-whatsapp { color: #25D366; font-size: 1.1rem; }
+        
         .form-input, .form-select { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: 'Tajawal'; outline: none; background: #f9f9f9; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .loading { text-align: center; padding: 50px; color: #bdc3c7; grid-column: span 2; }
+        
         #adminModal .card { margin-bottom: 10px; padding: 10px; border-right: 4px solid var(--gold); }
         .admin-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-approve { background: var(--primary); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .btn-reject { background: var(--red); color: white; flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
         .empty-state { grid-column: span 2; text-align: center; padding: 60px 20px; }
         .empty-icon { font-size: 4rem; color: #ddd; margin-bottom: 20px; }
         .empty-text { font-size: 1.5rem; font-weight: 900; color: var(--dark); font-family: 'Reem Kufi'; }
@@ -340,9 +345,7 @@
             <div class="info-row"><i class="fas fa-map-marker-alt"></i> <span id="dArea"></span></div>
             <div id="dSrcInfo" class="info-row" style="display:none;"></div>
             <div id="dRating" style="color:#f1c40f; font-size:1rem; margin:10px 0;"></div>
-            
             <div id="dOfferBox" class="offer-box-modal" style="display:none;"><div id="dOfferTxt"></div></div>
-            
             <div class="d-desc" id="dDesc"></div>
             <a id="dNewsLink" class="news-link" href="#" target="_blank" style="display:none">🔗 اقرأ التفاصيل كاملة</a>
             <div class="share-row">
@@ -375,16 +378,17 @@
     // 🔥🔥 رابط البيانات المباشر (تجاوز الكاش) 🔥🔥
     const sheetID = "1vj8MMIG8Qbz6_0temKX-N_jAVX_wBnjOQjBuzJB8iRI";
     const liveGID = "965965865"; 
+    const pendingGID = "27016104"; 
     const liveCsvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:csv&gid=${liveGID}`;
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(liveCsvUrl) + "&t=" + Date.now();
+    const proxy = "https://corsproxy.io/?" + encodeURIComponent(liveCsvUrl + "&t=" + Date.now());
     
     const DEFAULT_IMG = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V7l8-4 8 4v14'/%3E%3Cpath d='M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11H9V10Z'/%3E%3C/svg%3E";
     const NEWS_PLACEHOLDER = "https://cdn-icons-png.flaticon.com/512/2965/2965879.png"; 
 
-    const CACHE_KEY = 'hona_v315_stable_final_fix'; 
+    const CACHE_KEY = 'hona_v315_stable_final_fixes'; 
 
     const subCategories = {
-        "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", " عصائر ومثلجات", "حلويات شرقية"],
+        "مطاعم ومشروبات": ["مشويات وكباب", "وجبات سريعة", "كشري وطواجن", "فول وطعمية", "شاورما وسوري", "بيتزا وكريب", "مأكولات بحرية وسمك", "كبدة وسجق", "أكل بيتي ومحاشي", "مخبز وحلواني", "كافيه", "عصائر ومثلجات", "حلويات شرقية"],
         "خدمات طبية": ["صيدلية", "معمل تحاليل", "مركز أشعة", "عيادة أسنان", "عيادة عيون", "عيادة باطنة وأطفال", "نساء وتوليد", "عيادة جلدية", "علاج طبيعي", "عظام ومفاصل", "أنف وأذن وحنجرة", "مخ وأعصاب", "طب بيطري", "مستلزمات طبية", "نظارات وبصريات", "تمريض منزلي", "وحدة طب الاسرة"],
         "تكنولوجيا وإلكترونيات": ["بيع وشراء موبايلات", "إكسسوارات موبايل", "لابتوب وكمبيوتر", "مستلزمات كمبيوتر", "كاميرات مراقبة", "أنظمة أمنية", "ألعاب فيديو وبلايستيشن", "طابعات وأحبار", "أنظمة صوتية وسماعات", "شبكات وإنترنت", "صيانة إلكترونيات دقيقة", "ساعات ذكية", "دش مركزي وستالايت", "إضاءة حديثة وليد"],
         "فنيين وحرف": ["سباك", "كهربائي منازل", "نجار باب وشباك", "نجار موبيليا", "نقاش ودهانات", "فني تكييف وتبريد", "فني دش وستالايت", "فني فلاتر مياه", "ألوميتال وشيش حصيرة", "حداد وكريتال", "جبس بورد", "سيراميك وبورسلين", "زجاج ومرايات", "رخام وجرانيت", "مفاتيح وكوالين", "تنجيد وستائر", "مكافحة حشرات"],
@@ -411,7 +415,7 @@
 
     function init() {
         setTimeout(removeSplash, 1000);
-        localStorage.clear(); // تفريغ الكاش تماماً
+        localStorage.clear(); 
         document.getElementById('formModal').style.display = 'none';
         
         Papa.parse(proxy, { 
@@ -445,10 +449,22 @@
                     if(isActive && hoursStr) { isActive = checkIsOpen(hoursStr); }
                     
                     return {
-                        id: r[0] || i, name: String(r[1] || ""), cat: String(r[2] || "").trim(), sub: String(r[3] || "").trim(), area: r[4], 
-                        desc: cleanDesc, ph: String(r[6] || ""), wa: String(r[7] || ""), imgRaw: String(r[8] || ""), loc: String(r[9] || ""), 
-                        offer: String(r[10] || ""), live: isActive, feat: String(r[12] || "").toUpperCase().includes('TRUE'), 
-                        date: r[13], newsSrc: String(r[14] || "Hona App"), rating: r[16] || "" 
+                        id: r[0] || i, 
+                        name: String(r[1] || ""), 
+                        cat: String(r[2] || "").trim(), 
+                        sub: String(r[3] || "").trim(), 
+                        area: r[4], 
+                        desc: cleanDesc, 
+                        ph: String(r[6] || ""), 
+                        wa: String(r[7] || ""), 
+                        imgRaw: String(r[8] || ""), 
+                        loc: String(r[9] || ""), 
+                        offer: String(r[10] || ""), 
+                        live: isActive, 
+                        feat: String(r[12] || "").toUpperCase().includes('TRUE'), 
+                        date: r[13], 
+                        newsSrc: String(r[14] || "Hona App"), 
+                        rating: r[16] || "" 
                     };
                 }).reverse();
 
@@ -458,7 +474,10 @@
                 
                 const count = fullDB.filter(x => x.cat !== 'أخبار').length;
                 document.getElementById('shopCount').innerText = count;
-                renderGrid(true); setupTickers(); setupFloatAd(); removeSplash();
+                renderGrid(true); 
+                setupTickers(); 
+                setupFloatAd(); 
+                removeSplash();
             }, 
             error: (err) => { console.log("Error loading data:", err); removeSplash(); }
         });
@@ -522,7 +541,8 @@
 
     function shareShop() { const text = `*${currentShopData.name}*\n${currentShopData.cat}\n📍 ${currentShopData.area}\n\n${currentShopData.desc}\n\n📞 ت: ${currentShopData.ph}\n*Hona App*`; navigator.clipboard.writeText(text).then(() => alert("✅ تم نسخ تفاصيل الكارت بنجاح!")); }
     function shareShopViaWhatsapp() { const text = `*${currentShopData.name}*\n${currentShopData.desc}\n${window.location.href}`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }
-    function doSearch(val) { const s = val.toLowerCase(); filteredDB = fullDB.filter(x => x.name.toLowerCase().includes(s) || x.desc.toLowerCase().includes(s)); page = 1; renderGrid(true); }
+    function normalizeText(text) { if (!text) return ""; return text.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي'); }
+    function doSearch(val) { const s = normalizeText(val.toLowerCase()); filteredDB = fullDB.filter(x => normalizeText(x.name.toLowerCase()).includes(s) || normalizeText(x.desc.toLowerCase()).includes(s)); page = 1; renderGrid(true); }
     
     function filter(c, el) { 
         curCat = c; 
@@ -531,6 +551,8 @@
         else if (c === 'fav') filteredDB = fullDB.filter(x => favs.includes(x.id));
         else if (c === 'offers') filteredDB = fullDB.filter(x => x.cat !== 'بيع سلعة / مستعمل' && isOfferValid(x.offer) && x.offer.trim().length > 0);
         else if (c === 'souq') filteredDB = fullDB.filter(x => x.cat === 'بيع سلعة / مستعمل');
+        else if (c === 'featured') filteredDB = fullDB.filter(x => x.feat === true);
+        else if (c === 'latest') filteredDB = fullDB.sort((a,b) => b.id - a.id);
         else filteredDB = fullDB.filter(x => x.cat === c);
         page = 1; renderGrid(true); 
     }
@@ -548,11 +570,18 @@
         e.preventDefault(); const btn = document.getElementById('submitBtn'); btn.innerText = "جاري..."; 
         const data = new FormData(document.getElementById('reqForm'));
         const params = new URLSearchParams();
-        params.append("Date", "New"); params.append("Type", data.get("Type")); params.append("RequestType", data.get("Type"));
-        params.append("Name", data.get("Name")); params.append("Category", data.get("Category")); params.append("SubCategory", data.get("SubCategorySelect") || data.get("SubCategoryInput") || "");
-        params.append("Area", data.get("Area") || ""); params.append("Description", data.get("Description"));
-        params.append("NewsSource", data.get("NewsSource") || "تطبيق Hona"); params.append("Contact", data.get("Contact"));
-        fetch(scriptURL, { method: 'POST', body: params }).then(() => { alert("تم الإرسال!"); closeModal('formModal'); btn.innerText = "إرسال 🚀"; });
+        params.append("Date", "New"); 
+        params.append("Type", data.get("Type")); 
+        params.append("RequestType", data.get("Type"));
+        params.append("Name", data.get("Name")); 
+        params.append("Category", data.get("Category")); 
+        params.append("SubCategory", data.get("SubCategorySelect") || data.get("SubCategoryInput") || "");
+        params.append("Area", data.get("Area") || ""); 
+        params.append("Description", data.get("Description"));
+        params.append("Offer", data.get("Offer") || "");
+        params.append("NewsSource", data.get("NewsSource") || "تطبيق Hona"); 
+        params.append("Contact", data.get("Contact"));
+        fetch(scriptURL, { method: 'POST', body: params }).then(() => { alert("تم الإرسال بنجاح!"); closeModal('formModal'); btn.innerText = "إرسال 🚀"; });
     }
     
     function setupTickers() { 
@@ -569,22 +598,48 @@
 
     function renderGrid(isNew) { 
         const g = document.getElementById('grid'); if(isNew) g.innerHTML = ''; 
-        const chunk = filteredDB.slice((page-1)*limit, page*limit);
+        const chunk = filteredDB.slice(0, page * limit);
         if (filteredDB.length === 0) { g.innerHTML = '<div class="empty-state">لا يوجد بيانات حالياً</div>'; return; }
-        chunk.forEach(x => { 
-            const div = document.createElement('div'); div.className = `card ${x.feat?'featured':''} ${x.cat==='أخبار'?'news-card':''}`; 
+        
+        const itemsToRender = isNew ? chunk : chunk.slice((page-1)*limit, page*limit);
+        itemsToRender.forEach(x => { 
+            const isNews = x.cat === 'أخبار';
+            const div = document.createElement('div'); 
+            div.className = `card ${x.feat?'featured':''} ${isNews?'news-card':''}`; 
             div.onclick = () => openD(x.id);
-            div.innerHTML = `<img src="${getImages(x.imgRaw, x.cat==='أخبار')[0] || DEFAULT_IMG}" class="c-img"> <div class="c-body"><div class="c-title">${x.name}</div><div class="c-sub">${x.sub}</div></div>`;
+            const imgs = getImages(x.imgRaw, isNews);
+            const mainImg = imgs.length > 0 ? imgs[0] : DEFAULT_IMG;
+            
+            let footer = isNews ? `<div class="news-footer-card"><span class="news-capsule">${x.newsSrc}</span></div>` : `<div class="shop-added-date">تم الإضافة: ${x.date}</div>`;
+            div.innerHTML = `<img src="${mainImg}" class="c-img" loading="lazy"> <div class="c-body"><div class="c-title">${x.name}</div><div class="c-sub">${x.sub}</div>${footer}</div>`;
             g.appendChild(div); 
         }); 
         document.getElementById('loadMore').style.display = (page * limit < filteredDB.length) ? 'block' : 'none';
     }
 
     function openD(id) { 
-        const x = fullDB.find(i => String(i.id) === String(id)); if(!x) return; currentShopData = x;
-        document.getElementById('dName').innerText = x.name; document.getElementById('dDesc').innerText = x.desc;
+        const x = fullDB.find(i => String(i.id) === String(id)); 
+        if(!x) return; currentShopData = x;
+        document.getElementById('dName').innerText = x.name; 
+        document.getElementById('dDesc').innerText = x.desc;
+        document.getElementById('dCatMain').innerText = x.cat;
+        document.getElementById('dArea').innerText = x.area;
+        const slider = document.getElementById('imgSlider');
+        const imgs = getImages(x.imgRaw, x.cat === 'أخبار');
+        slider.innerHTML = '';
+        imgs.forEach(url => { const img = document.createElement('img'); img.src = url; slider.appendChild(img); });
+        
+        const actionBtns = document.getElementById('actionBtns');
+        actionBtns.innerHTML = '';
+        if(x.ph) { const a = document.createElement('a'); a.href=`tel:${x.ph}`; a.className='btn-act btn-call'; a.innerHTML='<i class="fas fa-phone"></i> اتصال'; actionBtns.appendChild(a); }
+        if(x.wa) { const a = document.createElement('a'); a.href=`https://wa.me/${x.wa}`; a.className='btn-act btn-wa'; a.innerHTML='<i class="fab fa-whatsapp"></i> واتساب'; actionBtns.appendChild(a); }
+        
         openModal('detailsModal');
     }
+
+    function setAppRate(n) { appRating = n; updateStars('appStars', n); }
+    function setShopRate(n) { shopRating = n; updateStars('shopStars', n); }
+    function updateStars(id, n) { const stars = document.querySelectorAll(`#${id} i`); stars.forEach((s, i) => s.style.color = i < n ? '#f1c40f' : '#ddd'); }
 
     init();
 </script>
